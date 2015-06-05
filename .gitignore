@@ -27,6 +27,7 @@
 /test/*
 /.ruby-version
 /.ruby-gemset
+/.env
 
 # Ignore database config file
 /config/database.yml
