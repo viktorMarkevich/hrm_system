@@ -36,7 +36,9 @@ set :keep_releases, 3
 
 namespace :deploy do
   task :restart do
-    invoke 'unicorn:reload'
+    on "deployer@192.168.137.75" do
+      execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -USR2 `cat #{fetch(:unicorn_pid)}`; else cd #{fetch(:deploy_to)}/current && bundle exec unicorn -c #{fetch(:unicorn_conf)} -E #{fetch(:rails_env)} -D; fi"
+    end
   end
 
   task :start do
@@ -56,6 +58,5 @@ namespace :deploy do
     run "cd #{current_path} && bundle exec rake db:reset RAILS_ENV=#{rails_env}"
   end
 end
-after 'deploy:publishing', 'deploy:restart'
 after "deploy:restart", "deploy:cleanup"
 #after "deploy:update", "db:insert_statuses"
