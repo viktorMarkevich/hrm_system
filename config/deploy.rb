@@ -36,9 +36,7 @@ set :keep_releases, 3
 
 namespace :deploy do
   task :restart do
-    on "deployer@192.168.137.75" do
-      invoke 'unicorn:restart'
-    end
+    invoke 'unicorn:reload'
   end
 
   task :start do
@@ -58,5 +56,6 @@ namespace :deploy do
     run "cd #{current_path} && bundle exec rake db:reset RAILS_ENV=#{rails_env}"
   end
 end
+after 'deploy:publishing', 'deploy:restart'
 after "deploy:restart", "deploy:cleanup"
 #after "deploy:update", "db:insert_statuses"
