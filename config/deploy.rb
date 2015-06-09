@@ -1,6 +1,6 @@
 # config valid only for Capistrano 3.4
 
-SSHKit.config.command_map[:rake]  = "bundle exec rake" #8
+SSHKit.config.command_map[:rake]  = 'bundle exec rake'
 
 lock '3.4.0'
 
@@ -12,7 +12,7 @@ set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 
 set :rvm_type, :user
 
-set :rvm_ruby_version, 'ruby-2.1.2@chat'      # Defaults to: 'default'
+set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm --create'      # Defaults to: 'default'
 
 
 # Имя пользователя на сервере и папка с проектом
