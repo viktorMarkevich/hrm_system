@@ -15,6 +15,7 @@ require 'capistrano/deploy'
 #   https://github.com/capistrano/rails
 #   https://github.com/capistrano/passenger
 #
+require 'capistrano3/unicorn'
 require 'capistrano/rvm'
 require 'capistrano/bundler'
 require 'capistrano/rails'
