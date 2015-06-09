@@ -26,7 +26,7 @@ set :linked_files, %w{config/database.yml .env config/unicorn.rb}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 set :unicorn_conf, "#{fetch(:deploy_to)}/current/config/unicorn.rb"
-set :unicorn_pid, "#{fetch(:deploy_to)}/shared/tmp/pids/unicorn.pid"
+set :unicorn_pid, "#{fetch(:deploy_to)}/shared/pids/unicorn.pid"
 
 set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
@@ -36,11 +36,8 @@ set :keep_releases, 3
 
 namespace :deploy do
   task :restart do
-    p '*'*1000
-    puts fetch(:unicorn_pid)
-    p '/'*1000
     on "deployer@192.168.137.75" do
-      execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -USR2 cat #{fetch(:unicorn_pid)}`; else cd #{fetch(:deploy_to)}/current && bundle exec unicorn -c #{fetch(:unicorn_conf)} -E #{fetch(:rails_env)} -D; fi"
+      execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -USR2 `cat #{fetch(:unicorn_pid)}`; else cd #{fetch(:deploy_to)}/current && bundle exec unicorn -c #{fetch(:unicorn_conf)} -E #{fetch(:rails_env)} -D; fi"
     end
   end
 
