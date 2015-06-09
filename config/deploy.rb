@@ -12,7 +12,7 @@ set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 
 set :rvm_type, :user
 
-set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm --create'      # Defaults to: 'default'
+set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm'      # Defaults to: 'default'
 
 
 # Имя пользователя на сервере и папка с проектом
