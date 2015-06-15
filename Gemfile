@@ -13,6 +13,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'dotenv-rails'
 gem 'unicorn'
 gem 'unicorn-rails'
+gem 'haml-rails'
 
 group :development do
   gem 'capistrano'
