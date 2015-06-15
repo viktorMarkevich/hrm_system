@@ -6,4 +6,10 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    = yield
+    .row
+      .col-md-3
+        %h1
+          left sidebar
+      .col-md-9
+        = yield
+
