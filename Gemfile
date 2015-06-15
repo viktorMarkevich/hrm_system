@@ -27,10 +27,12 @@ group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem "factory_girl_rails", "~> 4.0"
+  gem 'capybara'
+  gem 'rspec-rails', '~> 3.0'
 end
 
 group :test do
+  gem 'selenium-webdriver'
   gem 'simplecov', require: false
 end
-
-
