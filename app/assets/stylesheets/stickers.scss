@@ -1,0 +1,40 @@
+// Place all the styles related to the stickers controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.sticker-info {
+  width: 950px;
+  height: 100%;
+  margin: 0px auto;
+}
+
+#stickers-wrapper{
+  width: 950px;
+  height: 100%;
+  margin: 0px auto;
+
+  #add-sticker-panel {
+    height: 30px;
+    padding: 5px 0px;
+    border-bottom: 1px solid #e7e7e7;
+  }
+
+  .sticker {
+    background: rgba(49, 96, 245, 0.5);
+    height: 125px;
+    padding: 5px 10px;
+    margin: 10px 10px 20px 10px;
+    width: 300px;
+    float: left;
+  }
+
+  .sticker-title {
+    border-bottom: 1px solid #e7e7e7;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+
+    .sticker-actions {
+      float: right;
+    }
+
+  }
+}

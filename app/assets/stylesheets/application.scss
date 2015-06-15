@@ -13,3 +13,20 @@
  *= require_tree .
  *= require_self
  */
+
+
+.form-group {
+  margin-bottom: 25px;
+
+  label {
+    vertical-align: top;
+  }
+  
+  .label-theme {
+    padding-right: 50px;
+  }
+  
+  .label-desc {
+    padding-right: 15px;
+  }
+}

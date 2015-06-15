@@ -13,6 +13,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'dotenv-rails'
 gem 'unicorn'
 gem 'unicorn-rails'
+gem 'haml-rails', '~> 0.9.0'
 
 group :development do
   gem 'capistrano'
@@ -25,10 +26,14 @@ group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'rspec-rails'
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'capybara'
 end
 
 group :test do
+  gem 'selenium-webdriver'
   gem 'simplecov', require: false
 end
-
-
