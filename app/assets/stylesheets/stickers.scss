@@ -19,22 +19,40 @@
   }
 
   .sticker {
-    background: rgba(49, 96, 245, 0.5);
-    height: 125px;
-    padding: 5px 10px;
-    margin: 10px 10px 20px 10px;
-    width: 300px;
+    background-color: rgba(228, 122, 141, 0.75);
+    box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.5);
+    display: inline-block;
     float: left;
-  }
+    margin: 10px 10px 20px 10px;
+    padding: 5px 10px;
+    position: relative;
+    width: 240px;
 
-  .sticker-title {
-    border-bottom: 1px solid #e7e7e7;
-    margin-bottom: 5px;
-    padding-bottom: 5px;
+    .sticker-title {
+      border-bottom: 1px solid #e7e7e7;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 18px;
+      min-height: 25px;
+      padding-left: 15px;
+      text-align: left;
 
-    .sticker-actions {
-      float: right;
+      a {
+        text-decoration: none;
+      }
+
+      .sticker-toolbar {
+        float: right;
+      }
     }
 
+    .sticker-desc {
+      box-sizing: border-box;
+      font-size: 16px;
+      line-height: 1.5em;
+      min-height: 100px;
+      max-height: 150px;
+      padding: 15px;
+    }
   }
 }
