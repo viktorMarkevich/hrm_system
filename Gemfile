@@ -13,6 +13,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'dotenv-rails'
 gem 'unicorn'
 gem 'unicorn-rails'
+gem 'devise'
+gem 'haml-rails'
 
 group :development do
   gem 'capistrano'
@@ -22,13 +24,12 @@ group :development do
 end
 
 group :development, :test do
-  gem 'byebug'
-  gem 'web-console', '~> 2.0'
-  gem 'spring'
+  gem 'rspec-rails', '~> 3.0'
 end
 
 group :test do
+  gem 'capybara'
+  gem 'factory_girl_rails', '~> 4.0'
   gem 'simplecov', require: false
+  gem 'database_cleaner'
 end
-
-
