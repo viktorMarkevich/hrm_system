@@ -6,7 +6,7 @@ describe 'the signin process', type: :feature do
     visit 'users/sign_in'
   end
 
-  it 'sign_in me' do
+  scenario 'sign_in me' do
     within('#new_user') do
       fill_in 'Email', with: @user.email
       fill_in 'Password', with: @user.password
@@ -15,7 +15,7 @@ describe 'the signin process', type: :feature do
     expect(page).to have_content 'logout'
   end
 
-  it 'sign_in with wrong Email' do
+  scenario 'sign_in with wrong Email' do
     within('#new_user') do
       fill_in 'Email', with: 'aaa@aaa.aaa'
       fill_in 'Password', with: @user.password
@@ -24,7 +24,7 @@ describe 'the signin process', type: :feature do
     expect(page).to have_content 'sign_in'
   end
 
-  it 'sign_in with wrong Password' do
+  scenario 'sign_in with wrong Password' do
     within('#new_user') do
       fill_in 'Email', with: @user.email
       fill_in 'Password', with: 'aaaaaaaa'
@@ -33,7 +33,7 @@ describe 'the signin process', type: :feature do
     expect(page).to have_content 'sign_in'
   end
 
-  it 'sign_in with wrong Password and Email' do
+  scenario 'sign_in with wrong Password and Email' do
     within('#new_user') do
       fill_in 'Email', with: 'aaa@aaa.aaa'
       fill_in 'Password', with: 'aaaaaaaa'

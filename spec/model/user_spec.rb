@@ -32,7 +32,7 @@ describe User do
   end
 
   it 'should require a email' do
-    user = User.create(email: '')
+    user = build(:user, email: '')
     user.valid?
     expect(user.errors).to have_key(:email)
   end
