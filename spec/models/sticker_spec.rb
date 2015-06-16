@@ -20,16 +20,19 @@ RSpec.describe Sticker, :type => :model do
 
     it 'has error message when title is too short' do
       sticker = FactoryGirl.build(:sticker, title: 'test')
+      expect(sticker).to_not be_valid
       expect(sticker.errors[:title]).to include('is too short')
     end
 
     it 'has error message when title is too long' do
       sticker = FactoryGirl.build(:sticker, title: 'This is too long title')
+      expect(sticker).to_not be_valid
       expect(sticker.errors[:title]).to include('is too long')
     end
 
     it 'has error message when description is too long' do
       sticker = FactoryGirl.build(:sticker, description: 'test' * 15)
+      expect(sticker).to_not be_valid
       expect(sticker.errors[:description]).to include('is too long')
     end
   end

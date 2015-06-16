@@ -1,12 +1,14 @@
 # coding: utf-8
 
 class StickersController < ApplicationController
+
+  before_filter :get_sticker, only: [:show, :update, :edit, :destroy]
+
   def index
     @stickers = Sticker.all
   end
 
   def show
-    @sticker = Sticker.find(params[:id])
   end
 
   def new
@@ -24,11 +26,10 @@ class StickersController < ApplicationController
   end
 
   def edit
-    @sticker = Sticker.find(params[:id])
+
   end
 
   def update
-    @sticker = Sticker.find(params[:id])
     if @sticker.update(sticker_params)
       flash[:notice] = 'Стикер был успешно обновлен.'
       redirect_to stickers_path
@@ -38,7 +39,6 @@ class StickersController < ApplicationController
   end
 
   def destroy
-    @sticker = Sticker.find(params[:id])
     if @sticker.destroy
       flash[:notice] = 'Стикер был успешно удален.'
       redirect_to stickers_path
@@ -48,5 +48,9 @@ class StickersController < ApplicationController
   private
    def sticker_params
      params.require(:sticker).permit(:title, :description)
+   end
+
+   def get_sticker
+     @sticker = Sticker.find(params[:id])
    end
 end
