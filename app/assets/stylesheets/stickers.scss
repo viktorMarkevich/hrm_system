@@ -37,6 +37,10 @@
       padding-left: 15px;
       text-align: left;
 
+      .edit-sticker, .remove-sticker {
+        font-size: 12px;
+      }
+
       a {
         text-decoration: none;
       }
@@ -53,6 +57,7 @@
       min-height: 100px;
       max-height: 150px;
       padding: 15px;
+      word-wrap: break-word;
     }
   }
 }

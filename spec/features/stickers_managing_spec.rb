@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Managing stickers', type: :feature do
   before do
-    @sticker = FactoryGirl.create(:sticker)
+    @sticker = create(:sticker)
   end
 
   it 'goes on new sticker page' do

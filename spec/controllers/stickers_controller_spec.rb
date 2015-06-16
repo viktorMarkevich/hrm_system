@@ -6,7 +6,7 @@ RSpec.describe StickersController, type: :controller do
       get :index
     end
 
-    let(:stickers_list) { FactoryGirl.create_list(:sticker, 3) }
+    let(:stickers_list) { create_list(:sticker, 3) }
 
     it 'has successfull response' do
       expect(response).to be_success
@@ -52,7 +52,7 @@ RSpec.describe StickersController, type: :controller do
       end
 
       it 'redirects to stickers list page' do
-        post :create, sticker: FactoryGirl.attributes_for(:sticker)
+        post :create, sticker: attributes_for(:sticker)
         expect(response).to redirect_to(stickers_path)
       end
     end
@@ -72,7 +72,7 @@ RSpec.describe StickersController, type: :controller do
   end
 
   context '#show' do
-    let(:sticker) { FactoryGirl.create(:sticker) }
+    let(:sticker) { create(:sticker) }
 
     before(:each) do
       get :show, id: sticker.id
@@ -88,7 +88,7 @@ RSpec.describe StickersController, type: :controller do
   end
 
   context '#update' do
-    let(:sticker) { FactoryGirl.create(:sticker) }
+    let(:sticker) { create(:sticker) }
 
     before(:each) do
       get :edit, id: sticker.id
@@ -107,7 +107,7 @@ RSpec.describe StickersController, type: :controller do
     let(:sticker_attrs) { {title: 'new title', description: 'new description' } }
 
     before(:each) do
-      @sticker = FactoryGirl.create(:sticker)
+      @sticker = create(:sticker)
 
       put :update, :id => @sticker.id, :sticker => sticker_attrs
       @sticker.reload
@@ -140,16 +140,16 @@ RSpec.describe StickersController, type: :controller do
 
   context '#destroy' do
     before do
-      @sticker = FactoryGirl.create(:sticker)
+      @sticker = create(:sticker)
     end
     it 'destroys sticker' do
       expect{
-        delete :destroy, :id => @sticker.id
+        delete :destroy, id: @sticker.id
       }.to change(Sticker, :count).by(-1)
     end
 
     it 'redirects to stickers list page' do
-      delete :destroy, :id => @sticker.id
+      delete :destroy, id: @sticker.id
       expect(response).to redirect_to(stickers_path)
     end
   end
