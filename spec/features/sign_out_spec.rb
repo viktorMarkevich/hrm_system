@@ -19,8 +19,4 @@ describe 'the sign_out process', type: :feature do
     click_link 'logout'
     expect(page).to have_content 'sign_in'
   end
-
-  after :each do
-   User.destroy_all
-  end
 end

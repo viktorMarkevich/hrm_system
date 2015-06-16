@@ -41,8 +41,4 @@ describe 'the signin process', type: :feature do
     click_button 'Log in'
     expect(page).to have_content 'sign_in'
   end
-
-  after :each do
-    User.destroy_all
-  end
 end

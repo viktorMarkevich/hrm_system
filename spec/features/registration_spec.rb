@@ -66,8 +66,4 @@ describe 'the signup process', type: :feature do
     click_button 'Sign up'
     expect(page).to have_content "Password confirmation doesn't match Password"
   end
-
-  after :each do
-    User.destroy_all
-  end
 end
