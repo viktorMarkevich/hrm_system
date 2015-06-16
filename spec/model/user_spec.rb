@@ -2,16 +2,16 @@ require 'rails_helper'
 
 describe User do
 
-  describe 'instantiation' do
-    let!(:user) { build(:user) }
+  let!(:user) { build(:user) }
 
+  describe 'instantiation' do
     it 'instantiates a list' do
       expect(user.class.name).to eq('User')
     end
   end
 
   it 'should have valid factory' do
-    expect(build(:user)).to be_valid
+    expect(user).to be_valid
   end
 
   it "email can't be blank?" do
@@ -23,17 +23,11 @@ describe User do
   end
 
   it 'fails validation without unique email' do
-    create(:user)
-    expect(build(:user, email: User.last.email)).to_not be_valid
+    user = create(:user)
+    expect(build(:user, email: user.email)).to_not be_valid
   end
 
   it "password can't be blank?" do
     expect(build(:user, password: '')).to_not be_valid
-  end
-
-  it 'should require a email' do
-    user = build(:user, email: '')
-    user.valid?
-    expect(user.errors).to have_key(:email)
   end
 end
