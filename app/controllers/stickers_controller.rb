@@ -2,13 +2,10 @@
 
 class StickersController < ApplicationController
 
-  before_filter :get_sticker, only: [:show, :update, :edit, :destroy]
+  before_filter :get_sticker, only: [:update, :edit, :destroy]
 
   def index
     @stickers = Sticker.all
-  end
-
-  def show
   end
 
   def new

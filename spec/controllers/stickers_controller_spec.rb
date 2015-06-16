@@ -71,22 +71,6 @@ RSpec.describe StickersController, type: :controller do
     end
   end
 
-  context '#show' do
-    let(:sticker) { create(:sticker) }
-
-    before(:each) do
-      get :show, id: sticker.id
-    end
-
-    it 'responds with HTTP 200 status code' do
-      expect(response).to have_http_status(200)
-    end
-
-    it 'renders "show" template' do
-      expect(response).to render_template('show')
-    end
-  end
-
   context '#update' do
     let(:sticker) { create(:sticker) }
 

@@ -30,19 +30,6 @@ describe 'Managing stickers', type: :feature do
     expect(page).to have_content 'Добавить стикер'
   end
 
-  it 'goes to stickers#show page' do
-    visit '/stickers'
-    click_link @sticker.title
-    expect(page).to have_content 'Информация о стикере'
-  end
-
-  it 'goes back from stickers#show page to stickers#index page' do
-    visit '/stickers'
-    click_link @sticker.title
-    click_link 'Назад'
-    expect(page).to have_content 'Добавить стикер'
-  end
-
   it 'goes to stickers#edit page' do
     visit '/stickers'
     click_link 'Редактировать'
