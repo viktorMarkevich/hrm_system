@@ -1,0 +1,11 @@
+.sticker
+  .sticker-title
+    = link_to sticker.title, sticker_path(sticker)
+    .sticker-toolbar
+      %span.edit-sticker
+        = link_to 'Редактировать', edit_sticker_path(sticker)
+      |
+      %span.remove-sticker
+        = link_to 'Удалить', sticker_path(sticker), method: :delete,  data: { confirm: 'Вы действительно хотите удалить стикер?' }
+  .sticker-desc
+    = sticker.description
