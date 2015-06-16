@@ -61,7 +61,7 @@ describe 'the signup process', type: :feature do
     within('#new_user') do
       fill_in 'Email', with: @user.email
       fill_in 'Password', with: @user.password
-      fill_in 'Password confirmation', :with => nil
+      fill_in 'Password confirmation', with: nil
     end
     click_button 'Sign up'
     expect(page).to have_content "Password confirmation doesn't match Password"
