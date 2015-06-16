@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe User do
 
@@ -32,7 +32,7 @@ describe User do
   end
 
   it "should require a email" do
-    user = User.create(:email => "")
+    user = build(:user, :email => "")
     user.valid?
     user.errors.should have_key(:email)
   end

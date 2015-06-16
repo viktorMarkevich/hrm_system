@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'the sign_out process', type: :feature do
   before :each do
