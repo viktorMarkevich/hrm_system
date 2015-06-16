@@ -93,7 +93,7 @@ RSpec.describe StickersController, type: :controller do
     before(:each) do
       @sticker = create(:sticker)
 
-      put :update, :id => @sticker.id, :sticker => sticker_attrs
+      put :update, id: @sticker.id, sticker: sticker_attrs
       @sticker.reload
     end
 
