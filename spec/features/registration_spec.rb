@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'the signup process', type: :feature do
   before :each do
@@ -65,9 +65,5 @@ describe 'the signup process', type: :feature do
     end
     click_button 'Sign up'
     expect(page).to have_content "Password confirmation doesn't match Password"
-  end
-
-  after :each do
-    User.destroy_all
   end
 end
