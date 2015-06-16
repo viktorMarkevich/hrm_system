@@ -36,9 +36,4 @@ describe User do
     user.valid?
     expect(user.errors).to have_key(:email)
   end
-
-  after :each do
-    User.destroy_all
-  end
-
 end
