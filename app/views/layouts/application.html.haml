@@ -6,56 +6,56 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-
-  - if user_signed_in?
-    = link_to current_user.email, user_path(current_user)
-    = link_to 'logout', destroy_user_session_path, method: :delete
-  -else
-    = link_to  'sign_up', new_user_registration_path
-    = 'or'
-    = link_to  'sign_in', new_user_session_path
-
-  %div{ style: 'padding-top: 50px' }
-  %nav.navbar.navbar-default{ role: 'navigation' }
+    %div.top
+      %nav.navbar.navbar-default
+        .nav.container-fluid
+          .row
+            .col-xs-1
+              = link_to "Faseit-HRM<br>system".html_safe, '#', class: 'navbar-brand'
+            .col-xs-11
+              .row
+                .col-xs-1.col-xs-offset-3
+                .col-xs-5
+                  .btn-group.btn-group-lg
+                    .btn.btn-default Органайзер
+                    .btn.btn-default Вакансии
+                    .btn.btn-default Кандидаты
+                    .btn.btn-default Компании
+                .col-xs-3
+                  %ul.nav.navbar-nav.navbar-right
+                    %li
+                      - if user_signed_in?
+                        = link_to 'Выйти', destroy_user_session_path, method: :delete
+              .row
+                .col-xs-1.col-xs-offset-3
+                .col-xs-5
+                  .btn-group.btn-group-lg
+                    .btn.btn-default
+                      %a{ href: '#' }
+                        %i.glyphicon.glyphicon-calendar
+                    .btn.btn-default
+                      %a{ href: '#' }
+                        %i.glyphicon.glyphicon-plus
+                    .btn.btn-default
+                      %a{ href: '#' }
+                        %i.glyphicon.glyphicon-plus
+                    .btn.btn-default
+                      %a{ href: '#' }
+                        %i.glyphicon.glyphicon-plus
+                .col-xs-3
+                  %ul.nav.navbar-nav.navbar-right
+                    %li.d
+                      %p.sign
+                        - if user_signed_in?
+                          = link_to current_user.email, user_path(current_user)
+                        -else
+                          = link_to  'Зарегистрироваться', new_user_registration_path
+                          = 'или'
+                          = link_to  'Войти', new_user_session_path
     .container-fluid
-      .navbar-header
-        %a.navbar-brand.span.glyphicon.glyphicon-thumbs-up{ href: '#' } Faseit-HRM system
-      #bs-example-navbar-collapse-1.collapse.navbar-collapse
-        %div.col-xs-offset-3.col-xs-4
-          %ul.menu.nav.navbar-nav
-            %li.a.active
-              %a{ href: '#' } Органайзер
-            %li.b.active
-              %a{ href: '#' } Вакансии
-            %li.v.active
-              %a{ href: '#' } Кандидаты
-            %li.g.active
-              %a{ href: '#' } Компании
-        %ul.nav.navbar-nav.navbar-right
-          %li
-            %a{ href: '#' } Разлогиниться
-      %div{ style: 'padding-left: 130px' }
-        %div.col-xs-offset-4.col-xs-4
-          %ul.nav.navbar-nav
-            %li
-              %a{ href: '#' }
-                %i.glyphicon.glyphicon-calendar
-            %li
-              %a{ href: '#' }
-                %i.glyphicon.glyphicon-plus
-            %li
-              %a{ href: '#' }
-                %i.glyphicon.glyphicon-plus
-            %li
-              %a{ href: '#' }
-                %i.glyphicon.glyphicon-plus
-        %ul.nav.navbar-nav.navbar-right
-          %li.d
-            %a{ href: '#' } Иванов Иван
-  .container-fluid
-    .row
-      .col-xs-offset-1.col-xs-2.sidebar_left
-        %h1
-          left sidebar
-      .col-xs-offset-1.col-xs-7.col-xs-offset-1.wraper
-        = yield
+      .row
+        .col-xs-offset-1.col-xs-2.sidebar_left
+          %h1
+            left sidebar
+        .col-xs-offset-1.col-xs-7.col-xs-offset-1.wraper
+          = yield
