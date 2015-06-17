@@ -15,25 +15,47 @@
     = 'or'
     = link_to  'sign_in', new_user_session_path
 
-
+  %div{ style: 'padding-top: 50px' }
+  %nav.navbar.navbar-default{ role: 'navigation' }
+    .container-fluid
+      .navbar-header
+        %a.navbar-brand.span.glyphicon.glyphicon-thumbs-up{ href: '#' } Faseit-HRM system
+      #bs-example-navbar-collapse-1.collapse.navbar-collapse
+        %div.col-xs-offset-3.col-xs-4
+          %ul.menu.nav.navbar-nav
+            %li.a.active
+              %a{ href: '#' } Органайзер
+            %li.b.active
+              %a{ href: '#' } Вакансии
+            %li.v.active
+              %a{ href: '#' } Кандидаты
+            %li.g.active
+              %a{ href: '#' } Компании
+        %ul.nav.navbar-nav.navbar-right
+          %li
+            %a{ href: '#' } Разлогиниться
+      %div{ style: 'padding-left: 130px' }
+        %div.col-xs-offset-4.col-xs-4
+          %ul.nav.navbar-nav
+            %li
+              %a{ href: '#' }
+                %i.glyphicon.glyphicon-calendar
+            %li
+              %a{ href: '#' }
+                %i.glyphicon.glyphicon-plus
+            %li
+              %a{ href: '#' }
+                %i.glyphicon.glyphicon-plus
+            %li
+              %a{ href: '#' }
+                %i.glyphicon.glyphicon-plus
+        %ul.nav.navbar-nav.navbar-right
+          %li.d
+            %a{ href: '#' } Иванов Иван
   .container-fluid
     .row
-      .col-md-3
+      .col-xs-offset-1.col-xs-2.sidebar_left
         %h1
           left sidebar
-      .col-md-9
+      .col-xs-offset-1.col-xs-7.col-xs-offset-1.wraper
         = yield
-        %nav
-          %ul.pagination
-            %li
-              %a{"aria-label" => "Previous", :href => "#"}
-                %span{"aria-hidden" => "true"} «
-            %li
-              %a{:href => "#"} 1
-            %li
-              %a{:href => "#"} 2
-            %li
-              %a{:href => "#"} 3
-            %li
-              %a{"aria-label" => "Next", :href => "#"}
-                %span{"aria-hidden" => "true"} »
