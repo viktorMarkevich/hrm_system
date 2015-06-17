@@ -6,102 +6,43 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    %div{style: 'padding-top: 50px'}
-    %nav.navbar.navbar-default{:role => "navigation"}
+    %div{ style: 'padding-top: 50px' }
+    %nav.navbar.navbar-default{ role: 'navigation' }
       .container-fluid
-        / Brand and toggle get grouped for better mobile display
         .navbar-header
-          %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
-            %span.sr-only Toggle navigation
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          %a.navbar-brand{:href => "#"} Brand
-        / Collect the nav links, forms, and other content for toggling
+          %a.navbar-brand.span.glyphicon.glyphicon-thumbs-up{ href: '#' } Faseit-HRM system
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
-          %ul.nav.navbar-nav
-            %li.active
-              %a{:href => "#"} Ссылка
-            %li
-              %a{:href => "#"} Ссылка
-            %li.dropdown
-              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                Dropdown
-                %b.caret
-              %ul.dropdown-menu
-                %li
-                  %a{:href => "#"} Действие
-                %li
-                  %a{:href => "#"} Другое действие
-                %li
-                  %a{:href => "#"} Что-то еще
-                %li.divider
-                %li
-                  %a{:href => "#"} Отдельная ссылка
-                %li.divider
-                %li
-                  %a{:href => "#"} Еще одна отдельная ссылка
-          %form.navbar-form.navbar-left{:role => "search"}
-            .form-group
-              %input.form-control{:placeholder => "Search", :type => "text"}/
-            %button.btn.btn-default{:type => "submit"} Отправить
+          %div.col-xs-offset-3.col-xs-4
+            %ul.menu.nav.navbar-nav
+              %li.a.active
+                %a{ href: '#' } Органайзер
+              %li.b.active
+                %a{ href: '#' } Вакансии
+              %li.v.active
+                %a{ href: '#' } Кандидаты
+              %li.g.active
+                %a{ href: '#' } Компании
           %ul.nav.navbar-nav.navbar-right
             %li
-              %a{:href => "#"} Ссылка
-            %li.dropdown
-              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                Dropdown
-                %b.caret
-              %ul.dropdown-menu
-                %li
-                  %a{:href => "#"} Действие
-                %li
-                  %a{:href => "#"} Другое действие
-                %li
-                  %a{:href => "#"} Что-то еще
-                %li.divider
-                %li
-                  %a{:href => "#"} Отдельная ссылка
-    -#.container
-    -#  .row
-    -#    .col-xs-2
-    -#      %h2
-    -#        Faseit-HRM system
-    -#        %span.glyphicon.glyphicon-thumbs-up
-    -#    .col-xs-9.col-xs-offset-1
-    -#      %table.table.table-condensed
-    -#        %br
-    -#        %tr
-    -#          %td
-    -#            %a{ href: '#' } Органайзер
-    -#          %td
-    -#            %a{ href: '#' } Вакансии
-    -#          %td
-    -#            %a{ href: '#' } Кандидаты
-    -#          %td
-    -#            %a{ href: '#' } Компании
-    -#          %td
-    -#          %td
-    -#          %td
-    -#            %a.pull-right{ href: '#' } Разлогиниться
-    -#
-    -#        %tr
-    -#          %td
-    -#            %a{ href: '#' }
-    -#              %span.glyphicon.glyphicon-calendar
-    -#          %td
-    -#            %a{ href: '#' }
-    -#              %span.glyphicon.glyphicon-plus
-    -#          %td
-    -#            %a{ href: '#' }
-    -#              %span.glyphicon.glyphicon-plus
-    -#          %td
-    -#            %a{ href: '#' }
-    -#              %span.glyphicon.glyphicon-plus
-    -#          %td
-    -#          %td
-    -#          %td
-    -#            %a.pull-right{ href: '#' } Иванов Иван
+              %a{ href: '#' } Разлогиниться
+        %div{ style: 'padding-left: 130px' }
+          %div.col-xs-offset-4.col-xs-4
+            %ul.nav.navbar-nav
+              %li
+                %a{ href: '#' }
+                  %i.glyphicon.glyphicon-calendar
+              %li
+                %a{ href: '#' }
+                  %i.glyphicon.glyphicon-plus
+              %li
+                %a{ href: '#' }
+                  %i.glyphicon.glyphicon-plus
+              %li
+                %a{ href: '#' }
+                  %i.glyphicon.glyphicon-plus
+          %ul.nav.navbar-nav.navbar-right
+            %li.d
+              %a{ href: '#' } Иванов Иван
     .container-fluid
       .row
         .col-xs-offset-1.col-xs-2.sidebar_left
@@ -109,19 +50,4 @@
             left sidebar
         .col-xs-offset-1.col-xs-7.col-xs-offset-1.wraper
           = yield
-      .row
-        .col-xs-8.col-xs-offset-4
-          %ul.pagination
-            %li
-              %a{ 'aria-label' => 'Previous', href: '#' }
-                %span{ 'aria-hidden' => 'true' } « Previous
-            %li
-              %a{ href: '#' } 1
-            %li
-              %a{ href: '#' } 2
-            %li
-              %a{ href: '#' } 3
-            %li
-              %a{ 'aria-label' => 'Next', href: '#' }
-                %span{ 'aria-hidden' => 'true' } Next »
 
