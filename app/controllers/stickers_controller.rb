@@ -1,0 +1,53 @@
+# coding: utf-8
+
+class StickersController < ApplicationController
+
+  before_filter :get_sticker, only: [:update, :edit, :destroy]
+
+  def index
+    @stickers = Sticker.all
+  end
+
+  def new
+    @sticker = Sticker.new
+  end
+
+  def create
+    @sticker = Sticker.new(sticker_params)
+    if @sticker.save
+      flash[:notice] = 'Стикер был успешно создан.'
+      redirect_to stickers_path
+    else
+      render 'new'
+    end
+  end
+
+  def edit
+
+  end
+
+  def update
+    if @sticker.update(sticker_params)
+      flash[:notice] = 'Стикер был успешно обновлен.'
+      redirect_to stickers_path
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    if @sticker.destroy
+      flash[:notice] = 'Стикер был успешно удален.'
+      redirect_to stickers_path
+    end
+  end
+
+  private
+   def sticker_params
+     params.require(:sticker).permit(:title, :description)
+   end
+
+   def get_sticker
+     @sticker = Sticker.find(params[:id])
+   end
+end

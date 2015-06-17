@@ -1,0 +1,16 @@
+= form_for @sticker do |f|
+  - if @sticker.errors.any?
+    %h2 Возникшие ошибки:
+    %ul
+      - @sticker.errors.full_messages.each do |message|
+        %li
+          = message
+  .form-group
+    %label.label-theme Тема
+    = f.text_field :title
+  .form-group
+    %label.label-desc Описание
+    = f.text_area :description, cols: 30, rows: 10
+  %br
+  = f.submit @sticker.new_record? ? 'Создать' : 'Обновить'
+  = link_to 'Назад', :back, class: 'btn-back'
