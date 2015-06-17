@@ -2,6 +2,7 @@
 
 class StickersController < ApplicationController
 
+  before_filter :authenticate_user!
   before_filter :get_sticker, only: [:update, :edit, :destroy]
 
   def index

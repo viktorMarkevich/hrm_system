@@ -4,16 +4,19 @@ require 'rails_helper'
 
 describe 'Managing stickers', type: :feature do
   before do
+    @user = create(:user, email: 'test_user@mail.com')
     @sticker = create(:sticker)
+
+    sign_in @user
   end
 
-  it 'goes on new sticker page' do
+  scenario 'goes on new sticker page' do
     visit '/stickers'
     click_link 'Добавить стикер'
     expect(page).to have_content 'Добавить новый стикер'
   end
 
-  it 'creates new sticker' do
+  scenario 'creates new sticker' do
     visit '/stickers/new'
     within '#new_sticker' do
       fill_in 'sticker_title', with: 'New sticker'
@@ -23,29 +26,38 @@ describe 'Managing stickers', type: :feature do
     expect(page).to have_content 'Стикер был успешно создан.'
   end
 
-  it 'goes to stickers#index page from stickers#new page' do
+  scenario 'goes to stickers#index page from stickers#new page' do
     visit '/stickers'
     click_link 'Добавить стикер'
     click_link 'Назад'
     expect(page).to have_content 'Добавить стикер'
   end
 
-  it 'goes to stickers#edit page' do
+  scenario 'goes to stickers#edit page' do
     visit '/stickers'
     click_link 'Редактировать'
     expect(page).to have_content 'Редактировать стикер'
   end
 
-  it 'goes back from stickers#edit page to stickers#index page' do
+  scenario 'goes back from stickers#edit page to stickers#index page' do
     visit '/stickers'
     click_link 'Редактировать'
     click_link 'Назад'
     expect(page).to have_content('Добавить стикер')
   end
 
-  it 'deletes sticker' do
+  scenario 'deletes sticker' do
     visit '/stickers'
     click_link 'Удалить'
     expect(page).to_not have_content @sticker.title
+  end
+
+  def sign_in(user)
+    visit new_user_session_path
+    within('#new_user') do
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: user.password
+      click_button 'Log in'
+    end
   end
 end
