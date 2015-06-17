@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe StickersController, type: :controller do
-  include Devise::TestHelpers
 
   before(:each) do
     user = create(:user)
