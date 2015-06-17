@@ -6,7 +6,22 @@
   .field
     = f.label :email
     %br
-    = f.email_field :email, autofocus: true
+    = f.text_field :email, autofocus: true
+
+  .field
+    = f.label 'Имя'
+    %br
+    = f.text_field :first_name
+
+  .field
+    = f.label 'Фамилия'
+    %br
+    = f.text_field :last_name
+
+  .field
+    = f.label 'Должность'
+    %br
+    = f.text_field :post
 
   .field
     = f.label :password

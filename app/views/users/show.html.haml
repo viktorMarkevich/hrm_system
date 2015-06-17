@@ -1,0 +1,18 @@
+%p
+ Фамилия Имя: #{@user.last_name} #{@user.first_name}
+
+%p
+ Email: #{@user.email}
+
+%p
+ Должность: #{@user.post}
+
+%p
+ Skype: #{@user.skype}
+
+%p
+ Телефон: #{@user.phone}
+
+= link_to 'Редактировать', edit_user_path
+|
+= link_to 'Назад', root_path

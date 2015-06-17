@@ -1,0 +1,29 @@
+= link_to 'Назад', user_path
+
+= form_for @user do |f|
+
+  = f.label 'Имя: '
+  = f.text_field :first_name
+  %br
+
+  = f.label 'Фамилия: '
+  = f.text_field :last_name
+  %br
+
+  = f.label 'Email: '
+  = f.text_field :email
+  %br
+
+  = f.label 'Должность: '
+  = f.text_field :post
+  %br
+
+  = f.label 'Skype: '
+  = f.text_field :skype
+  %br
+
+  = f.label 'Телефон: '
+  = f.text_field :phone
+  %br
+
+  = f.button 'Обновить'
