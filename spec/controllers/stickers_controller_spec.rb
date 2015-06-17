@@ -88,7 +88,7 @@ RSpec.describe StickersController, type: :controller do
   end
 
   context '#update' do
-    let(:sticker_attrs) { {title: 'new title', description: 'new description' } }
+    let(:sticker_attrs) { attributes_for :sticker }
 
     before(:each) do
       @sticker = create(:sticker)
@@ -116,7 +116,7 @@ RSpec.describe StickersController, type: :controller do
 
     context 'when failed' do
       it 'should render "edit" template on failing' do
-        put :edit, id: @sticker.id, sticker: sticker_attrs
+        put :update, id: @sticker.id, sticker: (attributes_for :invalid_sticker)
         expect(response).to render_template('edit')
       end
     end
