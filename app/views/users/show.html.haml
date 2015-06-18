@@ -1,23 +1,35 @@
-%p
- = flash[:notice]
+= flash[:notice]
 
-%p
- Фамилия Имя: #{@user.last_name} #{@user.first_name}
+#user_profile
 
-%p
- Email: #{@user.email}
+  #head_user_profile
+    %em #{@user.last_name} #{@user.first_name}
 
-%p
- Должность: #{@user.post}
+    = link_to 'хочу изменить свой пороль', '#', class: 'btn btn-link'
 
-%p
- Skype: #{@user.skype}
+  #container_user_profile
+    #left_column_user_profile
+      %p
+        %em Email:
+      %p
+        %em Должность:
+      %p
+        %em Skype:
+      %p
+        %em Телефон:
 
-%p
- Телефон: #{@user.phone}
+    #right_column_user_profile
+      %p
+        %em #{@user.email}
+      %p
+        %em #{@user.post}
+      %p
+        %em #{@user.skype}
+      %p
+        %em #{@user.phone}
 
-= link_to 'Редактировать', edit_user_path
-|
-= link_to 'Назад', root_path
+  #footer_user_profile
+    = link_to 'Редактировать', edit_user_path, class: 'btn btn-link'
+    = link_to 'Назад', root_path, class: 'btn btn-link'
 
 - content_for :left_sidebar, render(partial: 'left_sidebar')
