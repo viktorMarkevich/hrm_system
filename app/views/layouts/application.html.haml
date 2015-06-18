@@ -5,10 +5,9 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  %body
+  %body.jumbotron
     .container-fluid
-      .top
-      .row.navbar.navbar-default{style: 'background-color: white'}
+      .row.navbar.navbar-default
         .col-xs-12
           .row.vertical-align
             .col-xs-2
@@ -47,9 +46,13 @@
               %ul.nav.navbar-nav.navbar-right
                 - if user_signed_in?
                   %li
-                    = link_to current_user.email, user_path(current_user)
+                    = link_to user_path(current_user) do
+                      %i.glyphicon.glyphicon-user
+                      = current_user.email
                   %li
-                    = link_to 'Выйти', destroy_user_session_path, method: :delete
+                    = link_to destroy_user_session_path, method: :delete do
+                      %i.glyphicon.glyphicon-remove-circle
+                      = 'Выйти'
                 - else
                   %li
                     = link_to  'Зарегистрироваться', new_user_registration_path
@@ -58,9 +61,13 @@
                       = 'или'
                   %li
                     = link_to  'Войти', new_user_session_path
-      .row
-        .col-xs-offset-1.col-xs-2.left_sidebar
-          %h2
-            left sidebar
-        .col-xs-offset-1.col-xs-7.col-xs-offset-1.center_wrapper
-          = yield
+      .row.well
+        .col-xs-2
+          .panel.panel-default
+            .panel-body
+              %h2
+                left sidebar
+        .col-xs-10
+          .panel.panel-default
+            .panel-body
+              = yield
