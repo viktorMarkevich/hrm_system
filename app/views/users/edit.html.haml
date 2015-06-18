@@ -1,6 +1,6 @@
 = link_to 'Назад', user_path
 
-= form_for @user do |f|
+= form_for @user, html: { multipart: true } do |f|
 
   = f.label 'Имя: '
   = f.text_field :first_name
@@ -26,4 +26,9 @@
   = f.text_field :phone
   %br
 
+  = f.file_field :avatar
+  %br
+
   = f.button 'Обновить'
+
+- content_for :left_sidebar, render(partial: 'left_sidebar')

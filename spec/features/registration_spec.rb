@@ -48,14 +48,37 @@ describe 'the signup process', type: :feature do
     expect(page).to have_content %q{Password can't be blank}
   end
 
-  scenario %q{registration Email and Password can't be blank} do
+  scenario %q{registration Post can't be blank} do
     within('#new_user') do
-      fill_in 'Email', with: nil
-      fill_in 'Password', with: nil
-      fill_in 'Password confirmation', with: nil
+      fill_in 'Email', with: @user.email
+      fill_in 'Password', with: @user.password
+      fill_in 'Password confirmation', with: @user.password
+      fill_in 'user_post', with: nil
     end
     click_button 'Sign up'
-    expect(page).to have_content '2 errors prohibited this user from being saved:'
+    expect(page).to have_content "Post can't be blank"
+  end
+
+  scenario %q{registration First Name can't be blank} do
+    within('#new_user') do
+      fill_in 'Email', with: @user.email
+      fill_in 'Password', with: @user.password
+      fill_in 'Password confirmation', with: @user.password
+      fill_in 'user_first_name', with: nil
+    end
+    click_button 'Sign up'
+    expect(page).to have_content "First name can't be blank"
+  end
+
+  scenario %q{registration Last Name can't be blank} do
+    within('#new_user') do
+      fill_in 'Email', with: @user.email
+      fill_in 'Password', with: @user.password
+      fill_in 'Password confirmation', with: @user.password
+      fill_in 'user_last_name', with: nil
+    end
+    click_button 'Sign up'
+    expect(page).to have_content "Last name can't be blank"
   end
 
   scenario %q{registration Password confirmation doesn't match Password} do
@@ -71,6 +94,9 @@ describe 'the signup process', type: :feature do
   def sign_up_user
     within('#new_user') do
       fill_in 'Email', with: @user.email
+      fill_in 'user_first_name', with: @user.first_name
+      fill_in 'user_last_name', with: @user.last_name
+      fill_in 'user_post', with: @user.post
       fill_in 'Password', with: @user.password
       fill_in 'Password confirmation', with: @user.password
     end

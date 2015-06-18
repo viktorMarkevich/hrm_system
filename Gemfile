@@ -16,6 +16,7 @@ gem 'devise'
 gem 'haml-rails'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
+gem "paperclip", "~> 4.2"
 
 group :development do
   gem 'capistrano'
