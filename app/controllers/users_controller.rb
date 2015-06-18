@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_user!
   before_action :find_user, only: [:edit, :update, :show]
 
   def show
@@ -11,6 +12,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
+      flash[:notice] = 'Профайл успешно обновлен!'
       redirect_to action: 'show', id: @user
     else
       render action: 'edit'

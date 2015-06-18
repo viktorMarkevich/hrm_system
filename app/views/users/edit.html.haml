@@ -2,6 +2,13 @@
 
 = form_for @user, html: { multipart: true } do |f|
 
+  - if @user.errors.any?
+    %h3 Возникшие ошибки:
+    %ul
+      - @user.errors.full_messages.each do |message|
+        %li
+          = message
+
   = f.label 'Имя: '
   = f.text_field :first_name
   %br
