@@ -7,55 +7,19 @@
     = csrf_meta_tags
   %body
     %div.top
-      %nav.navbar.navbar-default
-        .nav.container-fluid
-          .row
-            .col-xs-1
-              = link_to "Faseit-HRM<br>system".html_safe, '#', class: 'navbar-brand'
-            .col-xs-11
-              .row
-                .col-xs-1.col-xs-offset-3
-                .col-xs-5
-                  .btn-group.btn-group-lg
-                    .btn.btn-default Органайзер
-                    .btn.btn-default Вакансии
-                    .btn.btn-default Кандидаты
-                    .btn.btn-default Компании
-                .col-xs-3
-                  %ul.nav.navbar-nav.navbar-right
-                    %li
-                      - if user_signed_in?
-                        = link_to 'Выйти', destroy_user_session_path, method: :delete
-              .row
-                .col-xs-1.col-xs-offset-3
-                .col-xs-5
-                  .btn-group.btn-group-lg
-                    .btn.btn-default
-                      %a{ href: '#' }
-                        %i.glyphicon.glyphicon-calendar
-                    .btn.btn-default
-                      %a{ href: '#' }
-                        %i.glyphicon.glyphicon-plus
-                    .btn.btn-default
-                      %a{ href: '#' }
-                        %i.glyphicon.glyphicon-plus
-                    .btn.btn-default
-                      %a{ href: '#' }
-                        %i.glyphicon.glyphicon-plus
-                .col-xs-3
-                  %ul.nav.navbar-nav.navbar-right
-                    %li.d
-                      %p.sign
-                        - if user_signed_in?
-                          = link_to current_user.email, user_path(current_user)
-                        -else
-                          = link_to  'Зарегистрироваться', new_user_registration_path
-                          = 'или'
-                          = link_to  'Войти', new_user_session_path
+    .wrapper#brand
+      .row
+        .brand
+          %a.navbar-brand{ href: '#' }
+            Faseit-HRM
+            %br/
+            system
+    .wrapper
+      .row
     .container-fluid
       .row
         .col-xs-offset-1.col-xs-2.sidebar_left
-          %h1
+          %h2
             left sidebar
-        .col-xs-offset-1.col-xs-7.col-xs-offset-1.wraper
+        .wrapper.col-xs-offset-1.col-xs-7.col-xs-offset-1.wraper
           = yield
