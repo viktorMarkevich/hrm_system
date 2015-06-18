@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   validates :skype, format: { with: /\A[a-zA-Z][a-zA-Z0-9\.,\-_]{5,31}\z/,
-                                 message: 'Wrong format skype' }, if: 'skype.present?'
+                                 message: 'is invalid.' }, if: 'skype.present?'
 
   validates :first_name, :last_name, :post, presence: true
   validates :skype, uniqueness: true, if: 'skype.present?'
