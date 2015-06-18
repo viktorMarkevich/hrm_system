@@ -8,7 +8,7 @@ describe 'the signup process', type: :feature do
 
   scenario 'sign_up me' do
     sign_up_user
-    expect(page).to have_content 'logout'
+    expect(page).to have_content 'Выйти'
   end
 
   scenario 'visit stickers#index page when signed up' do

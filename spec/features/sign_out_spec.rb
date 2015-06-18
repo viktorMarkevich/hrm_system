@@ -16,7 +16,7 @@ describe 'the sign_out process', type: :feature do
   end
 
   it 'sign_out me' do
-    click_link 'logout'
-    expect(page).to have_content 'sign_in'
+    click_link 'Выйти'
+    expect(page).to have_content 'Log in'
   end
 end

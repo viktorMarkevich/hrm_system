@@ -8,7 +8,7 @@ describe 'the signin process', type: :feature do
 
   scenario 'sign_in me' do
     sign_in_user
-    expect(page).to have_content 'logout'
+    expect(page).to have_content 'Выйти'
   end
 
   scenario 'visit stickers#index page when signed in' do
@@ -23,7 +23,7 @@ describe 'the signin process', type: :feature do
       fill_in 'Password', with: @user.password
     end
     click_button 'Log in'
-    expect(page).to have_content 'sign_in'
+    expect(page).to have_content 'Войти'
   end
 
   scenario 'sign_in with wrong Password' do
@@ -32,7 +32,7 @@ describe 'the signin process', type: :feature do
       fill_in 'Password', with: 'aaaaaaaa'
     end
     click_button 'Log in'
-    expect(page).to have_content 'sign_in'
+    expect(page).to have_content 'Войти'
   end
 
   scenario 'sign_in with wrong Password and Email' do
@@ -41,7 +41,7 @@ describe 'the signin process', type: :feature do
       fill_in 'Password', with: 'aaaaaaaa'
     end
     click_button 'Log in'
-    expect(page).to have_content 'sign_in'
+    expect(page).to have_content 'Войти'
   end
 
   def sign_in_user
