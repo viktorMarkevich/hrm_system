@@ -15,6 +15,8 @@
     = 'or'
     = link_to  'sign_in', new_user_session_path
 
+  = flash[:notice]
+
   %div{ style: 'padding-top: 50px' }
   %nav.navbar.navbar-default{ role: 'navigation' }
     .container-fluid
@@ -53,9 +55,11 @@
           %li.d
             %a{ href: '#' } Иванов Иван
   .container-fluid
+
     .row
       .col-xs-offset-1.col-xs-2.sidebar_left
         %h1
           = yield :left_sidebar
+
       .col-xs-offset-1.col-xs-7.col-xs-offset-1.wraper
         = yield
