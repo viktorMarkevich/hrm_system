@@ -44,7 +44,7 @@ RSpec.describe StickersController, type: :controller do
       expect(response).to render_template('new')
     end
 
-    it 'creates instanse of Sticker class' do
+    it 'creates an instance of Sticker class' do
       expect(assigns(:sticker)).to be_a_new(Sticker)
     end
   end
@@ -77,14 +77,14 @@ RSpec.describe StickersController, type: :controller do
     end
   end
 
-  context '#update' do
+  context '#edit' do
     let(:sticker) { create(:sticker) }
 
     before(:each) do
       get :edit, id: sticker.id
     end
 
-    it 'reponds with HTTP status 200' do
+    it 'responds with HTTP status 200' do
       expect(response).to have_http_status(200)
     end
 
@@ -94,7 +94,7 @@ RSpec.describe StickersController, type: :controller do
   end
 
   context '#update' do
-    let(:sticker_attrs) { attributes_for :sticker }
+    let(:sticker_attrs) { { title: 'updated title', description: 'updated description' } }
 
     before(:each) do
       @sticker = create(:sticker)
@@ -113,11 +113,6 @@ RSpec.describe StickersController, type: :controller do
        expect(@sticker.description).to eql sticker_attrs[:description]
       end
 
-      it 'responds successfully with HTTP 200 status code' do
-       put :edit, id: @sticker.id, sticker: sticker_attrs
-       expect(response).to be_success
-       expect(response).to have_http_status(200)
-      end
     end
 
     context 'when failed' do

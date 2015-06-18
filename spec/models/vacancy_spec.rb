@@ -1,5 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Vacancy, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'has valid factory' do
+    expect(build(:vacancy)).to be_valid
+  end
+
+  it 'is valid without "name"' do
+    vacancy = build(:vacancy, name: nil)
+    expect(vacancy).to be_valid
+  end
 end
