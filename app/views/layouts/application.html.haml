@@ -28,7 +28,7 @@
             %li.b.active
               = link_to 'Вакансии', vacancies_path
             %li.v.active
-              %a{ href: '#' } Кандидаты
+              = link_to 'Кандидаты', candidates_path
             %li.g.active
               %a{ href: '#' } Компании
         %ul.nav.navbar-nav.navbar-right
@@ -44,7 +44,7 @@
               %a{ href: '/vacancies/new', id: 'add-vacancy'}
                 %i.glyphicon.glyphicon-plus
             %li
-              %a{ href: '#' }
+              %a{ href: '/candidates/new', id: 'add-candidate' }
                 %i.glyphicon.glyphicon-plus
             %li
               %a{ href: '#' }

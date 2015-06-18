@@ -1,0 +1,38 @@
+= content_for :left_sidebar do
+  = image_tag '#', class: 'profile-photo center-block'
+
+#candidate-profile
+  %span
+    = @candidate.name
+  %button.btn.btn-default.pull-right Хочу изменить свой пароль
+  %table.table#info
+    %thead
+      %tbody
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Должность:
+          %td.fourty-percent-width-column
+            = @candidate.desired_position
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Email:
+          %td.fourty-percent-width-column
+            hr-manager@ivan.iv
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Skype:
+          %td.fourty-percent-width-column
+            hr-manager
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Телефон:
+          %td.fourty-percent-width-column +3 8 050 000 00 00
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Регион:
+          %td.fourty-percent-width-column
+            Запорожье
+          %td.fake-column
+  .col-md-offset-2
+    #toolbar
+      = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-default'
+      = link_to 'Назад', :back, class: 'btn btn-default'

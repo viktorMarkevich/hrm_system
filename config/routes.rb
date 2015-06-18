@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   resources :users, only: [:update, :edit, :show]
 
   resources :vacancies, except: [:destroy]
+
+  resources :candidates, except: [:destroy]
 end

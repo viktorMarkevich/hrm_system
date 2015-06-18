@@ -5,14 +5,24 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-vacancies = ['Программист, язык ruby', 'Программист, язык php']
-regions = ['Запорожье', 'Львов']
-for i in  1..15 do
-  Vacancy.create(
-      name: vacancies[rand(1)],
-      region: regions[rand(1)],
-      salary: '300-350',
-      languages: 'Английский',
-      status: 'В процессе'
+#vacancies = ['Программист, язык ruby', 'Программист, язык php']
+#regions = ['Запорожье', 'Львов']
+#for i in  1..15 do
+#  Vacancy.create(
+#      name: vacancies[rand(1)],
+#      region: regions[rand(1)],
+#      salary: '300-350',
+#      languages: 'Английский',
+#      status: 'В процессе'
+#  )
+#end
+
+for i in 1..10 do
+  Candidate.create(
+      name: 'Тирион Ланистер',
+      desired_position: 'Программист, язык руби',
+      city_of_residence: 'Запорожье',
+      salary: '300-500 USD',
+      status: 'в процессе'
   )
 end

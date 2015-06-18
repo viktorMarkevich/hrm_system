@@ -1,0 +1,70 @@
+= form_for @candidate, html:{ class: 'form-horizontal' } do |f|
+  .title
+    %p Добавить кандидата
+  .form-group
+    = f.label :name, 'Имя:', class: 'col-md-1'
+    .col-md-3
+      = f.text_field :name, class: 'form-control'
+    = f.label :city_of_residence, 'Место проживания:', class: 'col-md-1'
+    .col-md-3
+      = f.text_field :city_of_residence, class: 'form-control'
+    = f.label :email, 'Почта:', class: 'col-md-1'
+    .col-md-3
+      = email_field_tag 'email', nil, class: 'form-control'
+  .form-group
+    = f.label :birthday, 'День рождения:', class: 'col-md-1'
+    .col-md-3
+      = f.select(:birthday, [], {}, class: 'form-control')
+    = f.label :desired_position, 'На должность:', class: 'col-md-1'
+    .col-md-3
+      = text_field_tag :desired_position, nil, class: 'form-control'
+    = f.label :phone, 'Телефон:', class: 'col-md-1'
+    .col-md-3
+      = text_field_tag 'phone', nil, class: 'form-control'
+  .form-group
+    = f.label :salary, 'Желаемая ЗП:', class: 'col-md-1'
+    .col-md-3
+      = f.text_field :salary, class: 'form-control'
+    = f.label :experience, 'Опыт:', class: 'col-md-1'
+    .col-md-3
+      = f.text_field :experience, class: 'form-control'
+    = f.label :page, 'Страничка:', class: 'col-md-1'
+    .col-md-3
+      = text_field_tag 'page', nil, class: 'form-control'
+  .form-group
+    = f.label :education, 'Образование', class: 'col-md-1'
+    .col-md-3
+      = f.text_field :education, class: 'form-control'
+    = f.label :status, 'Статус', class: 'col-md-1'
+    .col-md-3
+      = f.select(:status, ['status1', 'status2', 'status3'], {}, class: 'form-control')
+    = f.label :linkedin, 'Linkedin', class: 'col-md-1'
+    .col-md-3
+      = text_field_tag 'linkedin', nil, class: 'form-control'
+  .form-group
+    = f.label :languages, 'Языки:', class: 'col-md-1'
+    .col-md-3
+      = f.text_field :languages, class: 'form-control'
+    = f.label :ready_to_relocate, 'Готов к переезду:', class: 'col-md-1'
+    .col-md-3
+      = f.check_box :ready_to_relocate
+    = f.label :facebook, class: 'col-md-1'
+    .col-md-3
+      = text_field_tag 'facebook', nil, class: 'form-control'
+  .form-group
+    = f.label :vkontakte, class: 'col-md-1 col-md-offset-8'
+    .col-md-3
+      = text_field_tag 'vkontakte', nil, class: 'form-control'
+  .form-group
+    = f.label :google_plus,class: 'col-md-1 col-md-offset-8'
+    .col-md-3
+      = text_field_tag 'google_plus', nil, class: 'form-control'
+  .form-group
+    = f.label :full_info, 'Полная информация', class: 'col-md-1'
+    .col-md-11
+      = text_area_tag 'full_info', nil, rows: 5, class: 'form-control'
+  .form-group
+    .col-md-12
+      .buttons.pull-right
+        = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
+        = link_to 'Назад', :back, class: 'btn btn-default'
