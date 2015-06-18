@@ -26,7 +26,7 @@
             %li.a.active
               %a{ href: '#' } Органайзер
             %li.b.active
-              %a{ href: '#' } Вакансии
+              = link_to 'Вакансии', vacancies_path
             %li.v.active
               %a{ href: '#' } Кандидаты
             %li.g.active
@@ -38,10 +38,10 @@
         %div.col-xs-offset-4.col-xs-4
           %ul.nav.navbar-nav
             %li
-              %a{ href: '#' }
+              %a{ href: '#'}
                 %i.glyphicon.glyphicon-calendar
             %li
-              %a{ href: '#' }
+              %a{ href: '/vacancies/new', id: 'add-vacancy'}
                 %i.glyphicon.glyphicon-plus
             %li
               %a{ href: '#' }
