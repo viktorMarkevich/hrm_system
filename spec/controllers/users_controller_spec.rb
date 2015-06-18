@@ -2,6 +2,11 @@ require 'rails_helper'
 
 describe UsersController, type: :controller do
 
+  before(:each) do
+    @user = create(:user)
+    sign_in @user
+  end
+
   context '#show' do
     let(:user) { create(:user) }
 
@@ -38,8 +43,6 @@ describe UsersController, type: :controller do
     let(:user_attrs) { attributes_for :user }
 
     before(:each) do
-      @user = create(:user)
-
       put :update, id: @user.id, user: user_attrs
       @user.reload
     end
