@@ -1,41 +1,51 @@
-= link_to 'Назад', user_path
+#edit_user_profile
+  #head_user_profile
+    %em #{@user.last_name} #{@user.first_name}
 
-= form_for @user, html: { multipart: true } do |f|
+  #container_user_profile
 
-  - if @user.errors.any?
-    %h3 Возникшие ошибки:
-    %ul
-      - @user.errors.full_messages.each do |message|
-        %li
-          = message
+    - if @user.errors.any?
+      %h3 Возникшие ошибки:
+      %ul
+        - @user.errors.full_messages.each do |message|
+          %li
+            = message
 
-  = f.label 'Имя: '
-  = f.text_field :first_name
-  %br
+    #left_column_user_profile
+      %p
+        %em Имя:
+      %p
+        %em Фамилия:
+      %p
+        %em Email:
+      %p
+        %em Должность:
+      %p
+        %em Skype:
+      %p
+        %em Телефон:
+      %p
+        %em Аватар:
 
-  = f.label 'Фамилия: '
-  = f.text_field :last_name
-  %br
+    #right_column_user_profile
+      = form_for @user, html: { multipart: true } do |f|
 
-  = f.label 'Email: '
-  = f.text_field :email
-  %br
+        %p
+          = f.text_field :first_name
+        %p
+          = f.text_field :last_name
+        %p
+          = f.text_field :email
+        %p
+          = f.text_field :post
+        %p
+          = f.text_field :skype
+        %p
+          = f.text_field :phone
+        %p
+          = f.file_field :avatar
 
-  = f.label 'Должность: '
-  = f.text_field :post
-  %br
-
-  = f.label 'Skype: '
-  = f.text_field :skype
-  %br
-
-  = f.label 'Телефон: '
-  = f.text_field :phone
-  %br
-
-  = f.file_field :avatar
-  %br
-
-  = f.button 'Обновить'
+        = f.button 'Обновить', class: 'btn btn-link'
+        = link_to 'Назад', user_path, class: 'btn btn-link'
 
 - content_for :left_sidebar, render(partial: 'left_sidebar')
