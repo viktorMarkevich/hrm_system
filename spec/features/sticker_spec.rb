@@ -11,8 +11,9 @@ describe 'Managing stickers', type: :feature do
   end
 
   scenario 'goes on new sticker page' do
-    visit '/stickers'
-    click_link 'Добавить стикер'
+    visit '/stickers/new'
+    click_button 'Создать'
+    click_link 'Назад'
     expect(page).to have_content 'Добавить новый стикер'
   end
 
@@ -28,9 +29,9 @@ describe 'Managing stickers', type: :feature do
 
   scenario 'goes to stickers#index page from stickers#new page' do
     visit '/stickers'
-    click_link 'Добавить стикер'
+    click_link 'Редактировать'
     click_link 'Назад'
-    expect(page).to have_content 'Добавить стикер'
+    expect(page).to have_content @sticker.title
   end
 
   scenario 'goes to stickers#edit page' do
@@ -43,7 +44,7 @@ describe 'Managing stickers', type: :feature do
     visit '/stickers'
     click_link 'Редактировать'
     click_link 'Назад'
-    expect(page).to have_content('Добавить стикер')
+    expect(page).to have_content @sticker.title
   end
 
   scenario 'deletes sticker' do
