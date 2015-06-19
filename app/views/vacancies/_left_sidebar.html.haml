@@ -1,4 +1,11 @@
-= content_for :left_sidebar do
-  .sidebar-title
-    %span
-  %hr
+- content_for :left_sidebar do
+  .panel-success
+    .panel-heading
+      Управление
+  .panel-body
+    - if status.present?
+      %code= "Статус: #{status}"
+    -else
+      %code= "Статус: в процессе"
+    %br
+    %code= "Ответственный: #{current_user.first_name} #{current_user.last_name}"
