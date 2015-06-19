@@ -34,7 +34,7 @@
           %th{scope: 'row'}
             = index + 1
           %td
-            = link_to candidate.name, candidate_path(candidate)
+            = link_to candidate.name, candidate_path(candidate), id: 'profile-name'
           %td
             = candidate.desired_position
           %td
