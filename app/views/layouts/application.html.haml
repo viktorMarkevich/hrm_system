@@ -15,6 +15,7 @@
                 %a.navbar-brand{ href: 'http://localhost:3000' } Faseit-HRM system
             .col-xs-7
               .row
+                = flash[:notice]
                 .col-xs-offset-4.col-xs-7
                   %ul.nav.nav-pills
                     %li
@@ -24,7 +25,7 @@
                     %li
                       = link_to 'Кандидаты', '#', class: 'btn'
                     %li
-                      = link_to 'Компании', '#', class: 'btn'
+                      = link_to 'Компании', companies_path, class: 'btn'
                 .col-xs-1
               .row
                 .col-xs-offset-4.col-xs-7
@@ -39,7 +40,7 @@
                       = link_to '#', class: 'btn' do
                         %i.glyphicon.glyphicon-plus
                     %li
-                      = link_to '#', class: 'btn' do
+                      = link_to new_company_path, class: 'btn' do
                         %i.glyphicon.glyphicon-plus
                 .col-xs-1
             .col-xs-3
