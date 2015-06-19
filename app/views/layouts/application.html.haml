@@ -61,25 +61,30 @@
                       = 'или'
                   %li
                     = link_to  'Войти', new_user_session_path
-      - if controller.controller_name == 'stickers'
-        .row.well
-          .col-xs-8
-            .panel.panel-default
-              .panel-body
-                %h2
-                  = yield :left_sidebar
-          .col-xs-4
-            .panel.panel-default
-              .panel-body
-                = yield
-      - else
-        .row.well
-          .col-xs-2
-            .panel.panel-default
-              .panel-body
-                %h2
-                  = yield :left_sidebar
-          .col-xs-10
-            .panel.panel-default
-              .panel-body
-                = yield
+      .row.well
+        - if controller.controller_name == 'stickers'
+          .row
+            .col-xs-8
+              .row
+                .col-xs-12
+                  .panel.panel-default
+                    .panel-body
+              .row
+                .col-xs-12
+                  .panel.panel-default
+                    .panel-body
+            .col-xs-4
+              .panel.panel-default
+                .panel-body
+                  = yield
+        - else
+          .row.well
+            .col-xs-2
+              .panel.panel-default
+                .panel-body
+                  %h2
+                    = yield :left_sidebar
+            .col-xs-10
+              .panel.panel-default
+                .panel-body
+                  = yield
