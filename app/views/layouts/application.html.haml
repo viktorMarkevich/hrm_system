@@ -12,7 +12,7 @@
           .row.vertical-align
             .col-xs-2
               .navbar-header
-                %a.navbar-brand{ href: '#' } Faseit-HRM system
+                = link_to 'Faseit-HRM system', root_path, class: 'navbar-brand'
             .col-xs-7
               .row
                 .col-xs-offset-4.col-xs-7
@@ -51,7 +51,7 @@
                       = current_user.email
                   %li
                     = link_to destroy_user_session_path, method: :delete do
-                      %i.glyphicon.glyphicon-remove-circle
+                      %i.glyphicon.glyphicon-off
                       = 'Выйти'
                 - else
                   %li
@@ -61,13 +61,25 @@
                       = 'или'
                   %li
                     = link_to  'Войти', new_user_session_path
-      .row.well
-        .col-xs-2
-          .panel.panel-default
-            .panel-body
-              %h2
-                = yield :left_sidebar
-        .col-xs-10
-          .panel.panel-default
-            .panel-body
-              = yield
+      - if controller.controller_name == 'stickers'
+        .row.well
+          .col-xs-8
+            .panel.panel-default
+              .panel-body
+                %h2
+                  = yield :left_sidebar
+          .col-xs-4
+            .panel.panel-default
+              .panel-body
+                = yield
+      - else
+        .row.well
+          .col-xs-2
+            .panel.panel-default
+              .panel-body
+                %h2
+                  = yield :left_sidebar
+          .col-xs-10
+            .panel.panel-default
+              .panel-body
+                = yield
