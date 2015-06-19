@@ -1,13 +1,13 @@
 .col-xs-6
-  .panel.panel-info
+  .panel.panel-primary
     .panel-heading
-      .row.panel-title
-        .col-xs-6
-          = link_to sticker.title, sticker_path(sticker)
-        .col-xs-offset-2.col-xs-4
+      .row
+        .col-xs-6.panel-title
+          = sticker.title
+        .col-xs-offset-2.col-xs-4.panel-title
           = link_to edit_sticker_path(sticker) do
             %i.glyphicon.glyphicon-pencil
-          = link_to sticker_path(sticker), method: :delete,
+          = link_to sticker_path(sticker), method: :delete, class: 'glyph_destroy_link',
                                             data: { confirm: 'Вы действительно хотите удалить стикер?' } do
             %i.glyphicon.glyphicon-remove-circle
     .panel-body
