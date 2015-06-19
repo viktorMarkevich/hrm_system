@@ -1,0 +1,37 @@
+= content_for :left_sidebar do
+  %form
+    .sidebar-title
+      %span Поиск
+    %hr
+    .search-field
+      = text_field(:company, :name, class: 'form-control')
+    = submit_tag 'Найти', class: 'btn btn-success pull-right'
+
+%table.table.table-bordered#companies-list
+  %thead
+    %tr
+      %th №
+      %th Имя
+      %th Страница
+      %th Кандидаты
+      %th Регион
+      %th Дата регистрации
+      %th Краткое описание
+
+  %tbody
+    - @companies.each_with_index do |company, index|
+      %tr
+        %th{scope: 'row'}
+          = index + 1
+        %td
+          = link_to company.name, company_path(company), id: 'company-name'
+        %td
+          = company.url
+        %td
+          = '777'
+        %td
+          = company.region
+        %td
+          = company.created_at
+        %td
+          = company.description
