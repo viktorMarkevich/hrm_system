@@ -12,7 +12,7 @@
           .row.vertical-align
             .col-xs-2
               .navbar-header
-                %a.navbar-brand{ href: '#' } Faseit-HRM system
+                %a.navbar-brand{ href: 'http://localhost:3000' } Faseit-HRM system
             .col-xs-7
               .row
                 .col-xs-offset-4.col-xs-7
@@ -33,7 +33,7 @@
                       = link_to new_sticker_path, class: 'btn' do
                         %i.glyphicon.glyphicon-plus
                     %li
-                      = link_to new_vacancy_path, class: 'btn' do
+                      = link_to new_vacancy_path, class: 'btn', id:'add-vacancy' do
                         %i.glyphicon.glyphicon-plus
                     %li
                       = link_to '#', class: 'btn' do

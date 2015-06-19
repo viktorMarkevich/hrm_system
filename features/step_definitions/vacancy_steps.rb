@@ -3,7 +3,10 @@
 Given(/^I have logged in user$/) do
   User.create(
       email: 'user@mail.com',
-      password: 'password'
+      password: 'password',
+      post: 'tester',
+      first_name: 'Vasya',
+      last_name: 'Pro'
   )
 
   visit new_user_session_path
@@ -27,14 +30,14 @@ When(/^I click add vacancy sign$/) do
 end
 
 When(/^I fill in vacancy form$/) do
-  within '#new_vacancy' do
-    fill_in 'vacancy_name', with: 'Тестер'
-    fill_in 'vacancy_salary', with: '450'
-    choose 'vacancy_salary_format_usd'
-    fill_in 'vacancy_region', with: 'Запорожье'
+  within('#new_vacancy') do
+    fill_in('vacancy_name', with: 'Тестер')
+    fill_in('vacancy_salary', with: '450')
+    choose('vacancy_salary_format_usd')
+    fill_in('vacancy_region', with: 'Запорожье')
     select('status1', from: 'Статус')
-    fill_in 'vacancy_languages', with: 'Английский, Русский'
-    fill_in 'vacancy_requirements', with: 'Ответственный'
+    fill_in('vacancy_languages', with: 'Английский, Русский')
+    fill_in('vacancy_requirements', with: 'Ответственный')
   end
 end
 
