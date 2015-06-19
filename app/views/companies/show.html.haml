@@ -1,27 +1,27 @@
-= content_for :left_sidebar
+= render partial: 'companies/left_sidebar'
 
-#company
-  %p.name
+.panel.panel-success
+  .panel-heading.panel-title
     = @company.name
-  %table.table#info
-    %thead
-      %tbody
-        %tr
-          %th{scope: 'row', class: 'ten-percent-width-column'} Страница компании:
-          %td.fourty-percent-width-column
-            = @company.url
-          %td.fake-column
-        %tr
-          %th{scope: 'row', class: 'ten-percent-width-column'} Регион:
-          %td.fourty-percent-width-column
-            = @company.region
-          %td.fake-column
+  .panel-body
+    %table.table#info
+      %thead
+        %tbody
+          %tr
+            %th{scope: 'row', class: 'ten-percent-width-column'} Страница компании:
+            %td.fourty-percent-width-column
+              = @company.url
+            %td.fake-column
+          %tr
+            %th{scope: 'row', class: 'ten-percent-width-column'} Регион:
+            %td.fourty-percent-width-column
+              = @company.region
+            %td.fake-column
+          %tr
+            %th{scope: 'row', class: 'ten-percent-width-column'} Полная информация:
+            %td.fourty-percent-width-column
+              = @company.description
+            %td.fake-column
 
-  #requirements
-    %p#title Полная информация:
-
-    %p#content
-      #{@company.description}
-    #toolbar
-      = link_to 'Редактировать', edit_company_path(@company), class: 'btn btn-default'
-      = link_to 'Назад', companies_path, class: 'btn btn-default'
+= link_to 'Редактировать', edit_company_path(@company), class: 'btn btn-default'
+= link_to 'Назад', companies_path, class: 'btn btn-default'

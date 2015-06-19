@@ -1,6 +1,7 @@
-= render partial: 'vacancies/left_sidebar'
+.panel.panel-success
+  .panel-heading.panel-title
+    Изменить данные компании
+  .panel-body
+    = render partial: 'companies/form'
 
-#company
-  #company-title
-    %p Изменить данные компании
-  = render partial: 'form'
+= render partial: 'companies/left_sidebar'

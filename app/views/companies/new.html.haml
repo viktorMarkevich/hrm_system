@@ -1,6 +1,7 @@
-= render partial: 'vacancies/left_sidebar'
+.panel.panel-success
+  .panel-heading.panel-title
+    Добавить новую компанию
+  .panel-body
+    = render partial: 'companies/form'
 
-#company
-  #company-title
-    %p Добавить новую компанию
-  = render partial: 'form'
+= render partial: 'companies/left_sidebar'
