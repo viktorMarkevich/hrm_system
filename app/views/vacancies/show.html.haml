@@ -1,48 +1,40 @@
-= content_for :left_sidebar do
-  .sidebar-title
-    %span Управление
-  %hr
-  #description
-    .status
-      %span Статус:
-      = @vacancy.status
-    .charge-person
-      %span Ответственный:
-      Иванов Иван
-#vacancy
-  %p.name
-    = @vacancy.name
-  %table.table#info
-    %thead
-      %tbody
-        %tr
-          %th{scope: 'row', class: 'ten-percent-width-column'} Зарплата:
-          %td.fourty-percent-width-column
-            = @vacancy.salary
-          %td.fake-column
-        %tr
-          %th{scope: 'row', class: 'ten-percent-width-column'} Регион:
-          %td.fourty-percent-width-column
-            = @vacancy.region
-          %td.fake-column
-        %tr
-          %th{scope: 'row', class: 'ten-percent-width-column'} Языки:
-          %td.fourty-percent-width-column
-            = @vacancy.languages
-          %td.fake-column
-        %tr
-          %th{scope: 'row', class: 'ten-percent-width-column'} Добавлено:
-          %td.fourty-percent-width-column Иванов Иван 20-05-2015
-          %td.fake-column
-  #requirements
-    %p#title Требования:
+= render partial: 'vacancies/left_sidebar', locals: { status: @vacancy.status }
 
-    %p#content
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-      when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-      It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-      and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-    #toolbar
-      = link_to 'Редактировать', edit_vacancy_path(@vacancy), class: 'btn btn-default'
-      = link_to 'Назад', :back, class: 'btn btn-default'
+.panel.panel-success
+  .panel-heading.panel-title
+    = @vacancy.name
+  .panel-body
+    %table.table#info
+      %thead
+        %tbody
+          %tr
+            %th{scope: 'row', class: 'ten-percent-width-column'} Зарплата:
+            %td.fourty-percent-width-column
+              = @vacancy.salary
+            %td.fake-column
+          %tr
+            %th{scope: 'row', class: 'ten-percent-width-column'} Регион:
+            %td.fourty-percent-width-column
+              = @vacancy.region
+            %td.fake-column
+          %tr
+            %th{scope: 'row', class: 'ten-percent-width-column'} Языки:
+            %td.fourty-percent-width-column
+              = @vacancy.languages
+            %td.fake-column
+          %tr
+            %th{scope: 'row', class: 'ten-percent-width-column'} Добавлено:
+            %td.fourty-percent-width-column Иванов Иван 20-05-2015
+            %td.fake-column
+          %tr
+            %th{scope: 'row', class: 'ten-percent-width-column'} Требования:
+            %td.fourty-percent-width-column
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+              It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+              essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+              and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            %td.fake-column
+= link_to 'Редактировать', edit_vacancy_path(@vacancy), class: 'btn btn-default'
+= link_to 'Назад', :back, class: 'btn btn-default'

@@ -1,6 +1,7 @@
-= render partial: 'vacancies/left_sidebar'
+.panel.panel-success
+  .panel-heading.panel-title
+    Редактировать новую вакансию
+  .panel-body
+    = render partial: 'vacancies/form'
 
-#vacancy
-  #vacancy-title
-    %p Отредактировать вакансию
-  = render partial: 'form'
+= render partial: 'vacancies/left_sidebar', locals: { status: nil }

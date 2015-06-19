@@ -1,49 +1,51 @@
-= content_for :left_sidebar do
-  %form
-    .sidebar-title
-      %span Поиск
-    %hr
-    .search-field
-      = text_field(:candidate, :name, class: 'form-control')
-    = submit_tag 'Найти', class: 'btn btn-success pull-right'
-
-#candidates-wrapper
-  #toolbar
-    #look_at.pull-left
-      %span Искать в
+.well
+  .row
+    .col-xs-6
+      %code Искать в
       %button.btn.btn-default В Linkedin
       %button.btn.btn-default В Интернет
-    #import-from.pull-right
-      %span Импортировать с
+    .col-xs-offset-3.col-xs-3
+      %code Импортировать с
       %button.btn.btn-default Почты
       %button.btn.btn-default Файла
-  %table.table.table-bordered#candidates-list
-    %thead
+
+%table.table.table-bordered.table-hover
+  %thead
+    %tr
+      %th №
+      %th Кандидат
+      %th Должность
+      %th Регион
+      %th Зарплата
+      %th Ответственный
+      %th Статус
+      %th Добавлен
+  %tbody
+    - @candidates.each_with_index do |candidate, index|
       %tr
-        %th №
-        %th Кандидат
-        %th Должность
-        %th Регион
-        %th Зарплата
-        %th Ответственный
-        %th Статус
-        %th Добавлен
-    %tbody
-      - @candidates.each_with_index do |candidate, index|
-        %tr
-          %th{scope: 'row'}
-            = index + 1
-          %td
-            = link_to candidate.name, candidate_path(candidate), id: 'profile-name'
-          %td
-            = candidate.desired_position
-          %td
-            Запорожье
-          %td
-            = candidate.salary
-          %td
-            Иванов Иван
-          %td
-            = candidate.status
-          %td
-            = candidate.created_at.strftime('%F')
+        %th
+          = index + 1
+        %td
+          = link_to candidate.name, candidate_path(candidate), id: 'profile-name'
+        %td
+          = candidate.desired_position
+        %td
+          Запорожье
+        %td
+          = candidate.salary
+        %td
+          Иванов Иван
+        %td
+          = candidate.status
+        %td
+          = candidate.created_at.strftime('%F')
+
+- content_for :left_sidebar do
+  .panel-success
+    .panel-heading
+      Поиск
+    .panel-body
+      .form-group
+        %input#inputEmail3.form-control{ placeholder: 'Введите слово' }
+      .form-group
+        %button.btn.btn-success{ type: 'submit' } Найти

@@ -105,11 +105,8 @@
         - else
           .row
             .col-xs-2
-              .panel.panel-default
-                .panel-body
-                  %h2
-                    = yield :left_sidebar
+              .panel.panel-body
+                = yield :left_sidebar
             .col-xs-10
-              .panel.panel-default
-                .panel-body
-                  = yield
+              .panel.panel-body
+                = yield

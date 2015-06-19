@@ -1,6 +1,7 @@
-= content_for :left_sidebar do
-  = image_tag '#', class: 'profile-photo center-block'
-.form-wrapper
-  .form-title
-    %p Добавить кандидата
-  = render partial: 'candidates/form'
+.panel.panel-success
+  .panel-heading.panel-title
+    Добавить кандидата
+  .panel-body
+    = render partial: 'candidates/form'
+
+= render partial: 'candidates/left_sidebar'
