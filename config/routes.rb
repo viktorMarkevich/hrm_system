@@ -10,4 +10,7 @@ Rails.application.routes.draw do
   resources :vacancies, except: [:destroy]
 
   resources :companies
+
+  resources :candidates, except: [:destroy]
+
 end

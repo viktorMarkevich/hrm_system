@@ -1,0 +1,99 @@
+= content_for :left_sidebar do
+  = image_tag '#', class: 'profile-photo center-block'
+
+#candidate-profile
+  %span
+    = @candidate.name
+  %button.btn.btn-default.pull-right Хочу изменить свой пароль
+  %table.table#info
+    %thead
+      %tbody
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} День рождения:
+          %td.fourty-percent-width-column
+            = @candidate.birthday
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Зарплата:
+          %td.fourty-percent-width-column
+            = "#{@candidate.salary} #{@candidate.salary_format}"
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Образование:
+          %td.fourty-percent-width-column
+            = @candidate.education
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Языки:
+          %td.fourty-percent-width-column
+            = @candidate.languages
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Место проживания:
+          %td.fourty-percent-width-column
+            = @candidate.city_of_residence
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} На должность:
+          %td.fourty-percent-width-column
+            = @candidate.desired_position
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Опыт:
+          %td.fourty-percent-width-column
+            = @candidate.experience
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Статус:
+          %td.fourty-percent-width-column
+            = @candidate.status
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Описание:
+          %td.fourty-percent-width-column
+            = @candidate.description
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Почта:
+          %td.fourty-percent-width-column
+            = @candidate.email
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Телефон:
+          %td.fourty-percent-width-column
+            = @candidate.phone
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Домашняя страница:
+          %td.fourty-percent-width-column
+            = @candidate.home_page
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Skype:
+          %td.fourty-percent-width-column
+            = @candidate.skype
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Linkedin:
+          %td.fourty-percent-width-column
+            = @candidate.linkedin
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Facebook:
+          %td.fourty-percent-width-column
+            = @candidate.facebook
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Vkontakte:
+          %td.fourty-percent-width-column
+            = @candidate.vkontakte
+          %td.fake-column
+        %tr
+          %th{scope: 'row', class: 'ten-percent-width-column'} Google+:
+          %td.fourty-percent-width-column
+            = @candidate.google_plus
+          %td.fake-column
+  .col-md-offset-2
+    #toolbar
+      = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-default'
+      = link_to 'Назад', :back, class: 'btn btn-default'

@@ -4,9 +4,9 @@ Given(/^I have logged in user$/) do
   User.create(
       email: 'user@mail.com',
       password: 'password',
-      post: 'tester',
       first_name: 'Vasya',
-      last_name: 'Pro'
+      last_name: 'Pro',
+      post: 'tester'
   )
 
   visit new_user_session_path
@@ -52,24 +52,4 @@ end
 
 Then(/^new vacancy should be created$/) do
   expect(Vacancy.count).to eq(1)
-end
-
-Given(/^I have valid vacancy$/) do
-  Vacancy.create(
-      name: 'Тестер',
-      region: 'Запорожье',
-      salary: '300-350',
-      salary_format: 'USD',
-      languages: 'Английский',
-      status: 'В процессе',
-      requirements: 'ОТветственный'
-  )
-end
-
-When(/^I click on the vacancy title$/) do
-  click_link 'vacancy-name'
-end
-
-Then(/^I should see vacancy edit page$/) do
-  expect(page).to have_content('Отредактировать вакансию')
 end

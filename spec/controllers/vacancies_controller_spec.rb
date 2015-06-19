@@ -68,7 +68,7 @@ RSpec.describe VacanciesController, type: :controller do
 
     context 'when successfull' do
 
-      it 'has update name and salary' do
+      it 'has updated name and salary' do
         expect(@vacancy.name).to eql vacancy_attrs[:name]
         expect(@vacancy.salary).to eql vacancy_attrs[:salary]
       end

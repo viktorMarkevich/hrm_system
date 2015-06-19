@@ -11,10 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150619072537) do
+ActiveRecord::Schema.define(version: 20150619110346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "candidates", force: :cascade do |t|
+    t.string   "name"
+    t.string   "birthday"
+    t.string   "salary"
+    t.string   "salary_format"
+    t.string   "education"
+    t.string   "languages"
+    t.string   "city_of_residence"
+    t.string   "ready_to_relocate"
+    t.string   "desired_position"
+    t.string   "experience"
+    t.string   "status"
+    t.string   "source"
+    t.string   "description"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "email"
+    t.string   "phone"
+    t.string   "linkedin"
+    t.string   "facebook"
+    t.string   "vkontakte"
+    t.string   "google_plus"
+    t.string   "home_page"
+    t.string   "skype"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"

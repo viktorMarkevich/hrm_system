@@ -1,0 +1,82 @@
+= form_for @candidate, html:{ class: 'form-horizontal' } do |f|
+  .row
+    .col-md-4
+      .form-group
+        = f.label :name, 'Имя:', class: 'col-md-4'
+        .col-md-8
+          = f.text_field :name, class: 'form-control'
+      .form-group
+        = f.label :birthday, 'День рождения:', class: 'col-md-4'
+        .col-md-8
+          = f.select(:birthday, ['1989-12-09', '1987-07-04'], {}, class: 'form-control')
+      .form-group
+        = f.label :salary, 'Желаемая ЗП:', class: 'col-md-4'
+        .col-md-8
+          = f.text_field :salary, class: 'form-control'
+      .form-group
+        = f.label :education, 'Образование', class: 'col-md-4'
+        .col-md-8
+          = f.text_field :education, class: 'form-control'
+    .col-md-4
+      .form-group
+        = f.label :city_of_residence, 'Место проживания:', class: 'col-md-4'
+        .col-md-8
+          = f.text_field :city_of_residence, class: 'form-control'
+      .form-group
+        = f.label :desired_position, 'На должность:', class: 'col-md-4'
+        .col-md-8
+          = f.select(:desired_position, ['Тестер', 'Программист'], {}, class: 'form-control')
+      .form-group
+        = f.label :experience, 'Опыт:', class: 'col-md-4'
+        .col-md-8
+          = f.text_field :experience, class: 'form-control'
+      .form-group
+        = f.label :status, 'Статус', class: 'col-md-4'
+        .col-md-8
+          = f.text_field :status, class: 'form-control'
+      .form-group
+        = f.label :ready_to_relocate, 'Готов к переезду:', class: 'col-md-5'
+        .col-md-7
+          = f.check_box :ready_to_relocate
+    .col-md-4
+      .form-group
+        = f.label :email, 'Почта:', class: 'col-md-4'
+        .col-md-8
+          = f.email_field :email, class: 'form-control'
+      .form-group
+        = f.label :phone, 'Телефон:', class: 'col-md-4'
+        .col-md-8
+          = f.text_field :phone, class: 'form-control'
+      .form-group
+        = f.label :skype, 'Skype:', class: 'col-md-4'
+        .col-md-8
+          = f.text_field :skype, class: 'form-control'
+      .form-group
+        = f.label :home_page, 'Страничка:', class: 'col-md-4'
+        .col-md-8
+          = f.text_field :home_page, class: 'form-control'
+      .form-group
+        = f.label :linkedin, 'Linkedin:', class: 'col-md-4'
+        .col-md-8
+          = f.text_field :linkedin, class: 'form-control'
+      .form-group
+        = f.label :facebook,  'Facebook:', class: 'col-md-4'
+        .col-md-8
+          = f.text_field :facebook, class: 'form-control'
+      .form-group
+        = f.label :vkontakte, 'Vkontakte:' ,class: 'col-md-4'
+        .col-md-8
+          = f.text_field :vkontakte, class: 'form-control'
+      .form-group
+        = f.label :google_plus, 'Google+ :' ,class: 'col-md-4'
+        .col-md-8
+          = f.text_field :google_plus, class: 'form-control'
+    .form-group
+      = f.label :description, 'Описание:', class: 'col-md-2'
+      .col-md-10
+        = f.text_area :description, rows: 5, class: 'form-control'
+  .form-group
+    .col-md-12
+      .buttons.pull-right
+        = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
+        = link_to 'Назад', :back, class: 'btn btn-default'
