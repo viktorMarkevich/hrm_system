@@ -22,9 +22,11 @@
       %p
         %em #{@user.post}
       %p
-        %em #{@user.skype}
+        %em
+          = @user.skype.present? ? @user.skype : 'Поле не заполнено'
       %p
-        %em #{@user.phone}
+        %em
+          = @user.phone.present? ? @user.phone : 'Поле не заполнено'
 
   #footer_user_profile
     = link_to 'Редактировать', edit_user_path, class: 'btn btn-link'
