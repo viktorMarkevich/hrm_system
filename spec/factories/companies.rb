@@ -1,8 +1,8 @@
 FactoryGirl.define do
-  factory :company do |obj|
-    obj.sequence(:name) { |n| "Компания#{n}" }
-    obj.url 'vkontakte.com.ua'
-    obj.region 'Запорожье'
-    obj.description 'В процессе'
+  factory :company do
+    sequence(:name) { |n| "Компания#{n}" }
+    url 'vkontakte.com.ua'
+    region 'Запорожье'
+    description 'В процессе'
   end
 end

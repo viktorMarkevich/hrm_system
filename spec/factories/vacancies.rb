@@ -1,13 +1,13 @@
 # coding: utf-8
 
 FactoryGirl.define do
-  factory :vacancy do |obj|
-    obj.sequence(:name) { |n| "Вакансия#{n}" }
-    obj.salary '550'
-    obj.salary_format  'usd'
-    obj.region 'Запорожье'
-    obj.status 'В процессе'
-    obj.languages 'Английский, Русский'
-    obj.requirements 'Ответственный'
+  factory :vacancy do
+    sequence(:name) { |n| "Вакансия#{n}" }
+    salary '550'
+    salary_format  'usd'
+    region 'Запорожье'
+    status 'В процессе'
+    languages 'Английский, Русский'
+    requirements 'Ответственный'
   end
 end

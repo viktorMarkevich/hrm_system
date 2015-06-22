@@ -8,7 +8,7 @@ FactoryGirl.define do
     post 'Author'
   end
 
-  factory :invalid_user, parent: :user do |f|
-    f.email nil
+  factory :invalid_user, parent: :user do
+    email nil
   end
 end
