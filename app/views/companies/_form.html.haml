@@ -1,4 +1,10 @@
 = form_for @company do |f|
+  - if @company.errors.any?
+    %h2 Возникшие ошибки:
+    %ul
+      - @company.errors.full_messages.each do |message|
+        %li
+          = message
   .row
     .col-xs-6
       .form-group

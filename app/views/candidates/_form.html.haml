@@ -1,4 +1,10 @@
 = form_for @candidate do |f|
+  - if @candidate.errors.any?
+    %h2 Возникшие ошибки:
+    %ul
+      - @candidate.errors.full_messages.each do |message|
+        %li
+          = message
   .row
     .col-md-4
       .form-group
