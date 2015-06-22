@@ -5,7 +5,7 @@ FactoryGirl.define do
     obj.sequence(:name) { |n| "Вакансия#{n}" }
     obj.salary '550'
     obj.salary_format  'usd'
-    obj.region 'Запорожье'
+    obj.region_id 1
     obj.status 'В процессе'
     obj.languages 'Английский, Русский'
     obj.requirements 'Ответственный'

@@ -5,17 +5,19 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-#vacancies = ['Программист, язык ruby', 'Программист, язык php']
-regions = ['Запорожье', 'Львов']
-#for i in  1..15 do
-#  Vacancy.create(
-#      name: vacancies[rand(1)],
-#      region: regions[rand(1)],
-#      salary: '300-350',
-#      languages: 'Английский',
-#      status: 'В процессе'
-#  )
-#end
+Vacancy.delete_all
+Candidate.delete_all
+Company.delete_all
+
+for i in 1..10 do
+  Vacancy.create(
+    name: 'Программист руби',
+    salary: '500',
+    salary_format: 'USD',
+    status: 'В процессе',
+    region_id: 1
+  )
+end
 
 for i in 1..10 do
   Candidate.create(
@@ -30,9 +32,21 @@ end
 for i in  1..15 do
   Company.create(
       name: 'veloonline',
-      region: regions[rand(1)],
+      region: REGIONS[rand(1)],
       url: 'http://www.veloonline.com/view.shtml?id=8933',
       description: 'Купить Шатуны Shimano FC-M361 ACERA 48/38/28 по хорошей цене в интернет-магазине VeloOnline.com,
                     мы предлагаем широкий ассортимент Shimano и привлекательные цены на Шатуны для велосипеда.'
   )
+end
+
+REGIONS = [
+  'Запорожье', 'Донецк', 'Луганск', 'Херсон', 'Харьков',
+  'Днепропетровск', 'Николаев', 'Одесса', 'Кировоград', 'Полтава',
+  'Сумы', 'Винница', 'Черкассы', 'Чернигов', 'Киев',
+  'Черновцы', 'Тернополь', 'Хмельницкий', 'Житомир', 'Ровно',
+  'Луцк', 'Львов', 'Ивано-Франковск', 'Ужгород', 'АР Крым'
+]
+
+REGIONS.each do |region|
+  Region.create(name: region)
 end

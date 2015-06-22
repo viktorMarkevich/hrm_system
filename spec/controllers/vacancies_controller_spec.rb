@@ -38,6 +38,19 @@ RSpec.describe VacanciesController, type: :controller do
         expect(response).to redirect_to vacancies_path
       end
     end
+
+    context 'when failed' do
+      let(:vacancy_params) { { vacancy: attributes_for(:vacancy, region_id: nil) } }
+
+      it %q{ doesn't create record on failing} do
+        expect { post :create, vacancy_params }.to change(Vacancy, :count).by(0)
+      end
+
+      it 'renders "new" template on failing' do
+        post :create, vacancy_params
+        expect(response).to render_template('new')
+      end
+    end
   end
 
   context '#edit' do

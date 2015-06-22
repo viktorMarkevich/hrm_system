@@ -22,7 +22,10 @@
     = f.label 'Должность'
     %br
     = f.text_field :post
-
+  .field
+    = f.label 'Регион'
+    %br
+    = f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }), {})
   .field
     = f.label :password
     - if @minimum_password_length

@@ -11,3 +11,11 @@ Feature: Manage vacancies
     And I fill in vacancy form
     And I press "Создать"
     Then new vacancy should be created
+
+  Scenario: Update vacancy
+    Given I have valid vacancy
+    And I have logged in user
+    And I am on the vacancy edit page
+    And I change region in edit form
+    And I press "Обновить"
+    Then I should see successfull message
