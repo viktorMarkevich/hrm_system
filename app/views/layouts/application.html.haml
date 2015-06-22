@@ -51,7 +51,7 @@
                       %i.glyphicon.glyphicon-user
                       = current_user.email
                   %li
-                    = link_to destroy_user_session_path, method: :delete do
+                    = link_to destroy_user_session_path do
                       %i.glyphicon.glyphicon-off
                       = 'Выйти'
                 - else
