@@ -33,6 +33,7 @@ set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 3
 # RVM установлена не системно
 
+set :assets_roles, [:web, :app]
 
 namespace :deploy do
   task :restart do
