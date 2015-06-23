@@ -4,7 +4,6 @@
     %title Faceit-hrm
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application'
-    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js'
     = csrf_meta_tags
   %body.jumbotron
     .container-fluid
@@ -20,19 +19,19 @@
                 .col-xs-offset-4.col-xs-7
                   %ul.nav.nav-pills#main-nav
                     %li
-                      = link_to 'Органайзер', stickers_path, class: 'btn', id: 'stickers-link'
+                      = link_to 'Органайзер', stickers_path, class: 'btn'
                     %li
-                      = link_to 'Вакансии', vacancies_path, class: 'btn', id: 'vacancies-link'
+                      = link_to 'Вакансии', vacancies_path, class: 'btn'
                     %li
-                      = link_to 'Кандидаты', candidates_path, class: 'btn', id: 'candidates-link'
+                      = link_to 'Кандидаты', candidates_path, class: 'btn'
                     %li
-                      = link_to 'Компании', companies_path, class: 'btn', id: 'companies-link'
+                      = link_to 'Компании', companies_path, class: 'btn'
                 .col-xs-1
               .row
                 .col-xs-offset-4.col-xs-7
                   %ul.nav.nav-pills
                     %li
-                      = link_to new_sticker_path, class: 'btn', id: 'add-sticker' do
+                      = link_to new_sticker_path, class: 'btn' do
                         %i.glyphicon.glyphicon-plus
                     %li
                       = link_to new_vacancy_path, class: 'btn', id:'add-vacancy' do
@@ -41,7 +40,7 @@
                       = link_to new_candidate_path, class: 'btn', id: 'add-candidate' do
                         %i.glyphicon.glyphicon-plus
                     %li
-                      = link_to new_company_path, class: 'btn', id: 'add-company' do
+                      = link_to new_company_path, class: 'btn' do
                         %i.glyphicon.glyphicon-plus
                 .col-xs-1
             .col-xs-3
