@@ -102,7 +102,7 @@ RSpec.describe CompaniesController, type: :controller do
   end
 
   context '#update' do
-    let(:company_attrs) { { name: 'facebook', url: 'facebook.com.ua' } }
+    let(:company_attrs) { { name: 'facebook', url: 'http://www.facebook.com.ua' } }
 
     before(:each) do
       @company = create(:company)

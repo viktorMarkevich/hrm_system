@@ -22,7 +22,7 @@ When(/^I fill in candidate form$/) do
     fill_in 'candidate_status', with: 'В процессе'
     check('Готов к переезду')
     fill_in 'candidate_email', with: 'spetrov@mail.com'
-    fill_in 'candidate_phone', with: '+3 8 050 000000001'
+    fill_in 'candidate_phone', with: '+380500000001'
     fill_in 'candidate_skype', with: 'spetrov'
     fill_in 'candidate_home_page', with: 'http://www.spetrov.me'
     fill_in 'candidate_linkedin', with: 'spetrov.linkedin'

@@ -21,7 +21,7 @@
         %td
           = '777'
         %td
-          = company.region.name
+          = company.region.try(:name)
         %td
           = company.created_at
         %td

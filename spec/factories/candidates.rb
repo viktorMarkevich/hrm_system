@@ -10,8 +10,8 @@ FactoryGirl.define do
     obj.desired_position 'Программист, руби'
     obj.experience '3 года'
     obj.status 'В процессе'
-    obj.sequence(:email) { |n| "email#{n}" }
-    obj.sequence(:phone) { |n| "+ 3 8 050 000 00#{n}" }
+    obj.sequence(:email) { |n| "#{n}email@mail.ru" }
+    obj.sequence(:phone) { |n| "+3805000000#{n+10}" }
     obj.linkedin 'linkedin'
     obj.facebook 'facebook'
     obj.vkontakte 'vkontakte'
