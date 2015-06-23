@@ -1,13 +1,12 @@
 class UsersController < ApplicationController
+
   before_filter :authenticate_user!
   before_action :find_user, only: [:edit, :update, :show]
 
   def show
-
   end
 
   def edit
-
   end
 
   def update

@@ -1,22 +1,21 @@
 class CompaniesController < ApplicationController
+
   before_filter :authenticate_user!
   before_action :find_company, only: [:edit, :update, :show]
 
 
   def index
-    @companies = Company.all.order("created_at DESC")
-  end
-
-  def show
-
-  end
-
-  def edit
-
+    @companies = Company.all.order('created_at DESC')
   end
 
   def new
     @company = Company.new
+  end
+
+  def show
+  end
+
+  def edit
   end
 
   def create
@@ -37,7 +36,6 @@ class CompaniesController < ApplicationController
       render 'edit'
     end
   end
-
 
   private
 

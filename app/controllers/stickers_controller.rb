@@ -3,7 +3,7 @@
 class StickersController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :get_sticker, only: [:update, :edit, :destroy]
+  before_filter :find_sticker, only: [:update, :edit, :destroy]
 
   def index
     @stickers = Sticker.all
@@ -11,6 +11,9 @@ class StickersController < ApplicationController
 
   def new
     @sticker = Sticker.new
+  end
+
+  def edit
   end
 
   def create
@@ -21,10 +24,6 @@ class StickersController < ApplicationController
     else
       render 'new'
     end
-  end
-
-  def edit
-
   end
 
   def update
@@ -48,7 +47,7 @@ class StickersController < ApplicationController
      params.require(:sticker).permit(:title, :description)
    end
 
-   def get_sticker
+   def find_sticker
      @sticker = Sticker.find(params[:id])
    end
 end
