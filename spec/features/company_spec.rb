@@ -19,7 +19,7 @@ describe 'Managing companies', type: :feature do
     visit '/companies/new'
     within '#new_company' do
       fill_in 'company_name', with: 'Company 777'
-      fill_in 'company_url', with: 'facebook 777'
+      fill_in 'company_url', with: 'http://www.facebook.com/'
       click_button 'Создать'
     end
     expect(page).to have_content 'Компания была успешно создана.'
@@ -49,7 +49,7 @@ describe 'Managing companies', type: :feature do
     click_link 'Редактировать'
     within "#edit_company_#{@company.id}" do
       fill_in 'company_name', with: 'Company 777'
-      fill_in 'company_url', with: 'facebook 777'
+      fill_in 'company_url', with: 'http://www.facebook.com/'
       click_button 'Обновить'
     end
     expect(page).to have_content 'Компания успешно обновлена.'

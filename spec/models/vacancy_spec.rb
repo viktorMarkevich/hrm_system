@@ -1,12 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe Vacancy, type: :model do
-  it 'has valid factory' do
-    expect(build(:vacancy)).to be_valid
+  context 'when valid' do
+    it 'has valid factory' do
+      expect(build(:vacancy)).to be_valid
+    end
+
+    it 'is valid without "requirements"' do
+      vacancy = build(:vacancy, requirements: nil)
+      expect(vacancy).to be_valid
+    end
   end
 
-  it 'is valid without "name"' do
-    vacancy = build(:vacancy, name: nil)
-    expect(vacancy).to be_valid
+  context 'when invalid' do
+    it 'is invalid without name' do
+      unnamed_vacancy = build(:vacancy, name: nil)
+      expect(unnamed_vacancy).to_not be_valid
+    end
+
+    it "name can't be blank" do
+      expect(build(:vacancy, name: '')).to_not be_valid
+    end
+
+    it "region can't be blank" do
+      expect(build(:vacancy, region: '')).to_not be_valid
+    end
+
+    it "status can't be blank" do
+      expect(build(:vacancy, region: '')).to_not be_valid
+    end
+
   end
+
 end
