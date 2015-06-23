@@ -125,7 +125,7 @@ describe 'changing registration data', type: :feature do
       click_link @user.email
     end
     within '#head_user_profile' do
-      find('.btn-link').click
+      click_link 'хочу изменить свой пароль'
     end
     within '#edit_user' do
       fill_in 'user_password', with: 'updated_password'
