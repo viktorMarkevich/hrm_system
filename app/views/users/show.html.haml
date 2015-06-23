@@ -3,7 +3,7 @@
   #head_user_profile
     %em #{@user.last_name} #{@user.first_name}
 
-    = link_to 'хочу изменить свой пороль', '#', class: 'btn btn-link'
+    = link_to 'хочу изменить свой пороль', edit_user_registration_path, class: 'btn btn-link'
 
   #container_user_profile
     #left_column_user_profile
