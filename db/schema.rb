@@ -77,11 +77,17 @@ ActiveRecord::Schema.define(version: 20150622104852) do
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
-    t.string   "region"
     t.string   "url"
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "region_id"
+  end
+
+  create_table "regions", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "stickers", force: :cascade do |t|
@@ -117,6 +123,7 @@ ActiveRecord::Schema.define(version: 20150622104852) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "region_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -126,12 +133,12 @@ ActiveRecord::Schema.define(version: 20150622104852) do
     t.string   "name"
     t.string   "salary"
     t.string   "salary_format"
-    t.string   "region"
     t.string   "languages"
     t.string   "status"
     t.text     "requirements"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "region_id"
   end
 
 end
