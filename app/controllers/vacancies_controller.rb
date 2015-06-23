@@ -49,7 +49,8 @@ class VacanciesController < ApplicationController
       )
     end
 
-    def get_vacancy
+  
+    def find_vacancy
       @vacancy = Vacancy.find(params[:id])
     end
 end
