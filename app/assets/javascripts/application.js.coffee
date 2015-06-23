@@ -13,5 +13,15 @@
 #= require jquery
 #= require jquery_ujs
 #= require twitter/bootstrap
-#= require turbolinks
 #= require_tree .
+
+$(document).ready ->
+  current_location = window.location.pathname.toString()
+  if current_location.match('/stickers')
+    $('#stickers-link').addClass('current')
+  else if current_location.match('/vacancies')
+    $('#vacancies-link').addClass('current')
+  else if current_location.match('/candidates')
+    $('#candidates-link').addClass('current')
+  else if current_location.match('/companies')
+    $('#companies-link').addClass('current')
