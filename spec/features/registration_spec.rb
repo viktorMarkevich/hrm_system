@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe 'the signup process', type: :feature do
   before :each do
-    @user = build(:user)
+    @user = create(:user)
+    create(:region, name: 'Запорожье')
     visit 'users/sign_up'
   end
 
@@ -18,9 +19,12 @@ describe 'the signup process', type: :feature do
   end
 
   scenario 'registration Email has already been taken' do
-    @user = create(:user)
     within('#new_user') do
       fill_in 'Email', with: @user.email
+      fill_in 'user_first_name', with: @user.first_name
+      fill_in 'user_last_name', with: @user.last_name
+      select 'Запорожье', from: 'user_region_id'
+      fill_in 'user_post', with: @user.post
       fill_in 'Password', with: @user.password
       fill_in 'Password confirmation', with: @user.password
     end
@@ -93,12 +97,13 @@ describe 'the signup process', type: :feature do
 
   def sign_up_user
     within('#new_user') do
-      fill_in 'Email', with: @user.email
-      fill_in 'user_first_name', with: @user.first_name
-      fill_in 'user_last_name', with: @user.last_name
-      fill_in 'user_post', with: @user.post
-      fill_in 'Password', with: @user.password
-      fill_in 'Password confirmation', with: @user.password
+      fill_in 'Email', with: 'test_user@mail.com'
+      fill_in 'user_first_name', with: 'Василий'
+      fill_in 'user_last_name', with: 'Михайлов'
+      select 'Запорожье', from: 'user_region_id'
+      fill_in 'user_post', with: 'Программист'
+      fill_in 'Password', with: 'password'
+      fill_in 'Password confirmation', with: 'password'
     end
     click_button 'Sign up'
   end

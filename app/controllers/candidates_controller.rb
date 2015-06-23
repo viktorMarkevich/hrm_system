@@ -1,10 +1,20 @@
 class CandidatesController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :get_candidate, only: [:show, :edit, :update]
+  before_filter :find_candidate, only: [:show, :edit, :update]
+
+  def index
+    @candidates = Candidate.all
+  end
 
   def new
     @candidate = Candidate.new
+  end
+
+  def show
+  end
+
+  def edit
   end
 
   def create
@@ -17,10 +27,6 @@ class CandidatesController < ApplicationController
     end
   end
 
-  def edit
-
-  end
-
   def update
     if @candidate.update(candidate_params)
       flash[:notice] = 'Запись успешно обновлена.'
@@ -28,14 +34,6 @@ class CandidatesController < ApplicationController
     else
       render 'edit'
     end
-  end
-
-  def index
-    @candidates = Candidate.all
-  end
-
-  def show
-
   end
 
   private
@@ -49,7 +47,7 @@ class CandidatesController < ApplicationController
       )
     end
 
-    def get_candidate
+    def find_candidate
       @candidate = Candidate.find(params[:id])
     end
 end

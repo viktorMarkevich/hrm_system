@@ -1,3 +1,6 @@
 class Vacancy < ActiveRecord::Base
-  validates :name, :region, :status, presence: true
+
+  belongs_to :region
+  validates :name, :region_id, :status, presence: true
+
 end

@@ -23,11 +23,11 @@ RSpec.describe Vacancy, type: :model do
     end
 
     it "region can't be blank" do
-      expect(build(:vacancy, region: '')).to_not be_valid
+      expect(build(:vacancy, region_id: nil)).to_not be_valid
     end
 
     it "status can't be blank" do
-      expect(build(:vacancy, region: '')).to_not be_valid
+      expect(build(:vacancy, status: '')).to_not be_valid
     end
 
   end
