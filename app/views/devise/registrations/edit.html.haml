@@ -1,35 +1,47 @@
 %h2
   Edit #{resource_name.to_s.humanize}
 
-= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form' }) do |f|
   = devise_error_messages!
 
-  .field
+  .form-group
     = f.label :email
     %br
-    = f.email_field :email, autofocus: true
+    = f.email_field :email, autofocus: true, class: 'form-control'
   - if devise_mapping.confirmable? && resource.pending_reconfirmation?
     %div
       Currently waiting confirmation for: #{resource.unconfirmed_email}
-  .field
+  .form-group
+    = f.label :first_name
+    = f.text_field :first_name, class: 'form-control'
+  .form-group
+    = f.label :last_name
+    = f.text_field :last_name, class: 'form-control'
+  .form-group
+    = f.label :post
+    = f.text_field :post, class: 'form-control'
+  .form-group
+    = f.label :region_id, 'Регион'
+    = f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }, resource.region_id), {}, class: 'form-control')
+  .form-group
     = f.label :password
     %i (leave blank if you don't want to change it)
     %br
-    = f.password_field :password, autocomplete: 'off'
+    = f.password_field :password, autocomplete: 'off', class: 'form-control'
 
-  .field
+  .form-group
     = f.label :password_confirmation
     %br
-    = f.password_field :password_confirmation, autocomplete: 'off'
+    = f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control'
 
-  .field
+  .form-group
     = f.label :current_password
     %i (we need your current password to confirm your changes)
     %br
-    = f.password_field :current_password, autocomplete: 'off'
+    = f.password_field :current_password, autocomplete: 'off', class: 'form-control'
 
-  .actions
-    = f.submit 'Update'
+  .form-group
+    = f.submit 'Update', class: 'btn btn-default'
 
 %h3 Cancel my account
 
