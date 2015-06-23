@@ -20,8 +20,8 @@ ActiveAdmin.register User do
   form do |f|
     f.inputs 'User Details' do
       f.input :email
-      f.input :password, as: :hidden, input_html: { value: '12345678' }
-      f.input :password_confirmation, as: :hidden, input_html: { value: '12345678' }
+      f.input :password, input_html: { value: '123456' }, as: :hidden
+      f.input :password_confirmation, input_html: { value: '123456' }, as: :hidden
       f.input :first_name
       f.input :last_name
       f.input :post
