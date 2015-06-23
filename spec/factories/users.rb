@@ -6,6 +6,7 @@ FactoryGirl.define do
     first_name 'Bob'
     last_name 'Marly'
     post 'Author'
+    region_id 1
   end
 
   factory :invalid_user, parent: :user do |f|

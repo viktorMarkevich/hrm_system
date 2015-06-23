@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+
+  belongs_to :region
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -13,4 +16,5 @@ class User < ActiveRecord::Base
   validates :first_name, :last_name, :post, presence: true
   validates :skype, uniqueness: true, if: 'skype.present?'
   validates :phone, uniqueness: true, if: 'phone.present?'
+  validates :region_id, presence: true
 end

@@ -3,11 +3,22 @@
 class VacanciesController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :get_vacancy, only: [:show, :edit, :update]
+  before_filter :find_vacancy, only: [:show, :edit, :update]
+
+  def index
+    @vacancies = Vacancy.all
+  end
 
   def new
     @vacancy = Vacancy.new
   end
+
+  def show
+  end
+
+  def edit
+  end
+
 
   def create
     @vacancy = Vacancy.new(vacancy_params)
@@ -19,10 +30,6 @@ class VacanciesController < ApplicationController
     end
   end
 
-  def edit
-
-  end
-
   def update
     if @vacancy.update(vacancy_params)
       flash[:notice] = 'Вакансия успешно обновлена.'
@@ -32,19 +39,11 @@ class VacanciesController < ApplicationController
     end
   end
 
-  def index
-    @vacancies = Vacancy.all
-  end
-
-  def show
-
-  end
-
   private
     def vacancy_params
       params.require(:vacancy).permit(
         :name, :salary,
-        :salary_format, :region,
+        :salary_format, :region_id,
         :languages, :status,
         :requirements
       )

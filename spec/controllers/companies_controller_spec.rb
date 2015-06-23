@@ -75,15 +75,28 @@ RSpec.describe CompaniesController, type: :controller do
 
   context '#create' do
     context 'when successfull' do
-      let(:company_params) { { company: attributes_for(:company) } }
+      let(:company_attrs) { { company: attributes_for(:company) } }
 
       it 'creates new Company object' do
-        expect { post :create, company_params }.to change(Company, :count).by(1)
+        expect { post :create, company_attrs }.to change(Company, :count).by(1)
       end
 
       it 'redirects to companies list page' do
-        post :create, company_params
+        post :create, company_attrs
         expect(response).to redirect_to companies_path
+      end
+    end
+
+    context 'when  failed' do
+      let(:company_attrs) { { company: attributes_for(:company, region_id: nil) } }
+
+      it %q{ doesn't create record on failing } do
+        expect{ post :create, company_attrs }.to change(Company, :count).by(0)
+      end
+
+      it 'renders "new" template on failing' do
+        post :create, company_attrs
+        expect(response).to render_template('new')
       end
     end
   end

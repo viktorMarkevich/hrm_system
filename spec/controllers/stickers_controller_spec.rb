@@ -66,7 +66,7 @@ RSpec.describe StickersController, type: :controller do
     context 'when failed' do
       let(:sticker_params) { { sticker: { title: nil, description: 'some description' } } }
 
-      it 'doesnt create record on failing' do
+      it %q{ doesn't create record on failing } do
         expect { post :create, sticker_params }.to change(Sticker, :count).by(0)
       end
 

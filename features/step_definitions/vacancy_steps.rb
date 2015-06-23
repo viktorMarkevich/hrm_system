@@ -5,6 +5,7 @@ Given(/^I have logged in user$/) do
       email: 'user@mail.com',
       password: 'password',
       first_name: 'Vasya',
+      region_id: 1,
       last_name: 'Pro',
       post: 'tester'
   )
@@ -26,6 +27,7 @@ Given(/^I am on the vacancies list page$/) do
 end
 
 When(/^I click add vacancy sign$/) do
+  Region.create(name: 'Запорожье')
   find('#add-vacancy').click
 end
 
@@ -34,7 +36,7 @@ When(/^I fill in vacancy form$/) do
     fill_in('vacancy_name', with: 'Тестер')
     fill_in('vacancy_salary', with: '450')
     choose('vacancy_salary_format_usd')
-    fill_in('vacancy_region', with: 'Запорожье')
+    select('Запорожье', from: 'vacancy_region_id')
     select('status1', from: 'Статус')
     fill_in('vacancy_languages', with: 'Английский, Русский')
     fill_in('vacancy_requirements', with: 'Ответственный')
@@ -52,4 +54,30 @@ end
 
 Then(/^new vacancy should be created$/) do
   expect(Vacancy.count).to eq(1)
+end
+
+
+Given(/^I have valid vacancy$/) do
+  @vacancy = Vacancy.create(
+      name: 'Программист руби',
+      salary: '500',
+      salary_format: 'USD',
+      status: 'В процессе',
+      region_id: 1
+  )
+end
+
+Given(/^I am on the vacancy edit page$/) do
+  Region.create(name: 'Киев')
+  visit "/vacancies/#{@vacancy.id}/edit"
+end
+
+When(/^I change region in edit form$/) do
+  within('.edit_vacancy') do
+    select('Киев', from: 'vacancy_region_id')
+  end
+end
+
+Then(/^I should see successfull message$/) do
+  expect(page).to have_content('Вакансия успешно обновлена.')
 end

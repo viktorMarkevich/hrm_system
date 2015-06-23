@@ -3,56 +3,35 @@
 require 'rails_helper'
 
 describe 'Managing companies', type: :feature do
-  before do
+  before(:each) do
     @user = create(:user)
-    @company = create(:company)
-    sign_in @user
-    visit '/companies'
-  end
+    region = create(:region, name: 'Запорожье')
+    @company = create(:company, name: 'TruedCo', region_id: region.id)
 
-  scenario 'goes on new company page' do
-    click_link 'Компании'
-    expect(page).to have_content @company.name
+    sign_in @user
   end
 
   scenario 'creates new company' do
-    visit '/companies/new'
+
+    visit new_company_path
     within '#new_company' do
       fill_in 'company_name', with: 'Company 777'
       fill_in 'company_url', with: 'facebook 777'
+      select 'Запорожье', from: 'company_region_id'
       click_button 'Создать'
     end
     expect(page).to have_content 'Компания была успешно создана.'
   end
 
-  scenario 'goes to stickers#edit page' do
+  scenario 'edit company' do
+    visit companies_path
     click_link @company.name
     click_link 'Редактировать'
-    expect(page).to have_content 'Изменить данные компании'
-  end
-
-  scenario 'goes back from companies#index page to companies#show page' do
-    click_link @company.name
-    click_link 'Назад'
-    expect(page).to have_content 'Компании'
-  end
-
-  scenario 'goes back from companies#edit page to companies#show page' do
-    click_link @company.name
-    click_link 'Редактировать'
-    click_link 'Назад'
-    expect(page).to have_content 'Редактировать'
-  end
-
-  scenario 'update company' do
-    click_link @company.name
-    click_link 'Редактировать'
-    within "#edit_company_#{@company.id}" do
-      fill_in 'company_name', with: 'Company 777'
-      fill_in 'company_url', with: 'facebook 777'
-      click_button 'Обновить'
+    within('.edit_company') do
+      fill_in('company_name', with: 'Updated name')
     end
-    expect(page).to have_content 'Компания успешно обновлена.'
+    click_button 'Обновить'
+    expect(page).to have_content('Компания успешно обновлена.')
   end
 
   def sign_in(user)
