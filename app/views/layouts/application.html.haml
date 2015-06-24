@@ -3,7 +3,7 @@
   %head
     %title Faceit-hrm
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application'
     = csrf_meta_tags
   %body.jumbotron
     .container-fluid
@@ -17,30 +17,30 @@
               .row
                 = flash[:notice]
                 .col-xs-offset-4.col-xs-7
-                  %ul.nav.nav-pills
+                  %ul.nav.nav-pills#main-nav
                     %li
-                      = link_to 'Органайзер', stickers_path, class: 'btn'
+                      = link_to 'Органайзер', stickers_path, class: "btn #{active_class('stickers')}"
                     %li
-                      = link_to 'Вакансии', vacancies_path, class: 'btn'
+                      = link_to 'Вакансии', vacancies_path, class: "btn #{active_class('vacancies')}"
                     %li
-                      = link_to 'Кандидаты', candidates_path, class: 'btn'
+                      = link_to 'Кандидаты', candidates_path, class: "btn #{active_class('candidates')}"
                     %li
-                      = link_to 'Компании', companies_path, class: 'btn'
+                      = link_to 'Компании', companies_path, class: "btn #{active_class('companies')}"
                 .col-xs-1
               .row
                 .col-xs-offset-4.col-xs-7
                   %ul.nav.nav-pills
                     %li
-                      = link_to new_sticker_path, class: 'btn' do
+                      = link_to new_sticker_path, class: "btn #{active_class('stickers', new_sticker_path)}", id: 'add-sticker' do
                         %i.glyphicon.glyphicon-plus
                     %li
-                      = link_to new_vacancy_path, class: 'btn', id:'add-vacancy' do
+                      = link_to new_vacancy_path, class: "btn #{active_class('vacancies', new_vacancy_path)}", id: 'add-vacancy' do
                         %i.glyphicon.glyphicon-plus
                     %li
-                      = link_to new_candidate_path, class: 'btn', id: 'add-candidate' do
+                      = link_to new_candidate_path, class: "btn #{active_class('candidates', new_candidate_path)}", id: 'add-candidate' do
                         %i.glyphicon.glyphicon-plus
                     %li
-                      = link_to new_company_path, class: 'btn' do
+                      = link_to new_company_path, class: "btn #{active_class('companies', new_company_path)}", id: 'add-company' do
                         %i.glyphicon.glyphicon-plus
                 .col-xs-1
             .col-xs-3

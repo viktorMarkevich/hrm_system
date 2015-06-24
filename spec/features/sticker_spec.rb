@@ -27,37 +27,34 @@ describe 'Managing stickers', type: :feature do
     expect(page).to have_content 'Стикер был успешно создан.'
   end
 
-  scenario 'goes to stickers#index page from stickers#new page' do
-    pending
-      visit '/stickers'
-      click_link 'Редактировать'
-      click_link 'Назад'
-      expect(page).to have_content @sticker.title
-
+  scenario 'goes to stickers#index page from stickers#edit page' do
+    visit '/stickers'
+    find('.glyph_edit_link').click
+    click_link 'Назад'
+    expect(page).to have_content @sticker.title
   end
 
   scenario 'goes to stickers#edit page' do
-    pending
-      visit '/stickers'
-      click_link 'Редактировать'
-      expect(page).to have_content 'Редактировать стикер'
-
+    visit '/stickers'
+    find('.glyph_edit_link').click
+    expect(page).to have_content 'Редактировать стикер'
   end
 
-  scenario 'goes back from stickers#edit page to stickers#index page' do
-    pending
-      visit '/stickers'
-      click_link 'Редактировать'
-      click_link 'Назад'
-      expect(page).to have_content @sticker.title
-
+  scenario 'edits sticker' do
+    visit '/stickers'
+    find('.glyph_edit_link').click
+    within('.edit_sticker') do
+      fill_in 'sticker_title', with: 'updated title'
+      fill_in 'sticker_description', with: 'updated description'
+    end
+    click_button 'Обновить'
+    expect(page).to have_content('Стикер был успешно обновлен.')
   end
 
   scenario 'deletes sticker' do
-    pending
-      visit '/stickers'
-      click_link 'Удалить'
-      expect(page).to_not have_content @sticker.title
+    visit '/stickers'
+    find('.glyph_destroy_link').click
+    expect(page).to_not have_content @sticker.title
   end
 
   def sign_in(user)
