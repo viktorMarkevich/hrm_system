@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'the signin process', type: :feature do
   before :each do
     @user = create(:user)
-    visit 'users/sign_in'
+    visit 'users/login'
   end
 
   scenario 'sign_in me' do
@@ -23,16 +23,16 @@ describe 'the signin process', type: :feature do
       fill_in 'Password', with: @user.password
     end
     click_button 'Log in'
-    expect(page).to have_content 'Войти'
+    expect(page).to have_content 'Log in'
   end
 
   scenario 'sign_in with wrong Password' do
     within('#new_user') do
       fill_in 'Email', with: @user.email
-      fill_in 'Password', with: 'aaaaaaaa'
+      fill_in 'Password', with: 'Signed in successfully.'
     end
     click_button 'Log in'
-    expect(page).to have_content 'Войти'
+    expect(page).to have_content 'Log in'
   end
 
   scenario 'sign_in with wrong Password and Email' do
@@ -41,7 +41,7 @@ describe 'the signin process', type: :feature do
       fill_in 'Password', with: 'aaaaaaaa'
     end
     click_button 'Log in'
-    expect(page).to have_content 'Войти'
+    expect(page).to have_content 'Log in'
   end
 
   def sign_in_user

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'the signup process', type: :feature do
+describe 'user process', type: :feature do
 
   before :each do
     @user = create(:user)
@@ -8,7 +8,7 @@ describe 'the signup process', type: :feature do
   end
 
   def login(user)
-    visit 'users/sign_in'
+    visit 'users/login'
     within('#new_user') do
       fill_in 'Email', with: user.email
       fill_in 'Password', with: user.password
