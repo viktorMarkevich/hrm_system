@@ -5,6 +5,7 @@ describe 'AdminUser', type: :feature do
   before :each do
     @admin_user = create(:admin_user)
     @user = create(:user)
+    create(:region)
     login(@admin_user)
   end
 

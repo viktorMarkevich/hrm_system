@@ -54,14 +54,6 @@
                     = link_to destroy_user_session_path do
                       %i.glyphicon.glyphicon-off
                       = 'Выйти'
-                - else
-                  %li
-                    = link_to  'Зарегистрироваться', new_user_registration_path
-                  %li
-                    %a
-                      = 'или'
-                  %li
-                    = link_to  'Войти', new_user_session_path
       .row.well
         - if controller.controller_name == 'stickers'
           .row
