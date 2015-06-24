@@ -21,11 +21,12 @@ ActiveAdmin.register User do
   form do |f|
     f.inputs 'User Details' do
       f.input :email
-      f.input :password, input_html: { value: '12345678' }, as: :hidden
-      f.input :password_confirmation, input_html: { value: '12345678' }, as: :hidden
+      f.input :password, input_html: { value: '123456' }, as: :hidden
+      f.input :password_confirmation, input_html: { value: '123456' }, as: :hidden
       f.input :first_name
       f.input :last_name
       f.input :post
+      f.label :region_id
       f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }), {})
       f.input :skype
       f.input :phone
