@@ -11,6 +11,12 @@ describe 'Managing companies', type: :feature do
     sign_in @user
   end
 
+  scenario 'should have "active current" class on company index page' do
+    visit companies_path
+    expect(page).to have_css('a.active.current', text: 'Компании')
+    expect(page).to_not have_css('a.active.current', text: 'Вакансии')
+  end
+
   scenario 'creates new company' do
 
     visit new_company_path
