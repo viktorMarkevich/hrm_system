@@ -21,7 +21,9 @@ class VacanciesController < ApplicationController
 
 
   def create
-    @vacancy = Vacancy.new(vacancy_params)
+    region = Region.find_or_create(params[:region])
+    @vacancy = region.assign_vacancy(vacancy_params)
+
     if @vacancy.save
       flash[:notice] = 'Вакансия была успешно создана.'
       redirect_to vacancies_path
@@ -31,7 +33,10 @@ class VacanciesController < ApplicationController
   end
 
   def update
-    if @vacancy.update(vacancy_params)
+    if @vacancy.update_attributes(vacancy_params)
+      region = Region.find_or_create(params[:region])
+      region.vacancies << @vacancy
+
       flash[:notice] = 'Вакансия успешно обновлена.'
       redirect_to vacancies_path
     else

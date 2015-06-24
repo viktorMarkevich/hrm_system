@@ -19,7 +19,9 @@ class CompaniesController < ApplicationController
   end
 
   def create
-    @company = Company.new(company_params)
+    region = Region.find_or_create(params[:region])
+    @company = region.assign_company(company_params)
+
     if @company.save
       flash[:notice] = 'Компания была успешно создана.'
       redirect_to companies_path
@@ -30,6 +32,9 @@ class CompaniesController < ApplicationController
 
   def update
     if @company.update_attributes(company_params)
+      region = Region.find_or_create(params[:region])
+      region.companies << @company
+
       flash[:notice] = 'Компания успешно обновлена.'
       redirect_to company_path(@company)
     else

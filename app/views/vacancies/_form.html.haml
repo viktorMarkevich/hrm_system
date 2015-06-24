@@ -21,7 +21,7 @@
         = f.label :salary_format, 'UAH'
       .form-group
         = f.label :region_id, 'Регион:'
-        = f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }, @vacancy.region_id), {}, class: 'form-control')
+        = select_tag(:region,  options_for_select(Region::NAMES, @vacancy.get_assigned_region_name), class: 'form-control')
       .form-group
         = f.label :status, 'Статус:'
         = f.select(:status, ['status1', 'status2', 'status3'], {}, class: 'form-control')

@@ -25,7 +25,7 @@
   .field
     = f.label 'Регион'
     %br
-    = f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }), {})
+    = select_tag(:region, options_for_select(Region::NAMES), {})
   .field
     = f.label :password
     - if @minimum_password_length

@@ -6,4 +6,8 @@ class Company < ActiveRecord::Base
   validates :url,  format: { with: /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix,
                               message: 'address is invalid' }
 
+  def get_assigned_region_name
+    self.region.present? ? self.region.name : ''
+  end
+
 end

@@ -15,7 +15,7 @@
         = f.text_field :url, class: 'form-control'
       .form-group
         = f.label :region_id, 'Регион:'
-        = f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }, @company.region_id), {}, class: 'form-control')
+        = select_tag(:region, options_for_select(Region::NAMES, @company.get_assigned_region_name), class: 'form-control')
       .form-group
         = f.label :description, 'Полная информация:'
         = f.text_area :description, rows: 5, class: 'form-control'

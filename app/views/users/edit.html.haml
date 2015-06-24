@@ -41,7 +41,7 @@
         %p
           = f.text_field :post
         %p
-          = f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }, @user.region_id), {})
+          = f.select(:region_id,  options_for_select(Region::NAMES, @user.get_assigned_region_name), {})
         %p
           = f.text_field :skype
         %p
