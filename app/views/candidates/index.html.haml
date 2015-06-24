@@ -1,44 +1,48 @@
-.well
-  .row
-    .col-xs-6
-      %code Искать в
-      %button.btn.btn-default В Linkedin
-      %button.btn.btn-default В Интернет
-    .col-xs-offset-3.col-xs-3
-      %code Импортировать с
-      %button.btn.btn-default Почты
-      %button.btn.btn-default Файла
+.panel.panel-success
+  .panel-heading.panel-title
+    Кандидаты
+  .panel-body
+    .well
+      .row
+        .col-xs-6
+          %code Искать в
+          %button.btn.btn-default В Linkedin
+          %button.btn.btn-default В Интернет
+        .col-xs-offset-3.col-xs-3
+          %code Импортировать с
+          %button.btn.btn-default Почты
+          %button.btn.btn-default Файла
 
-%table.table.table-bordered.table-hover
-  %thead
-    %tr
-      %th №
-      %th Кандидат
-      %th Должность
-      %th Регион
-      %th Зарплата
-      %th Ответственный
-      %th Статус
-      %th Добавлен
-  %tbody
-    - @candidates.each_with_index do |candidate, index|
-      %tr
-        %th
-          = index + 1
-        %td
-          = link_to candidate.name, candidate_path(candidate), id: 'profile-name'
-        %td
-          = candidate.desired_position
-        %td
-          Запорожье
-        %td
-          = candidate.salary
-        %td
-          Иванов Иван
-        %td
-          = candidate.status
-        %td
-          = candidate.created_at.strftime('%F')
+    %table.table.table-bordered.table-hover
+      %thead
+        %tr
+          %th №
+          %th Кандидат
+          %th Должность
+          %th Регион
+          %th Зарплата
+          %th Ответственный
+          %th Статус
+          %th Добавлен
+      %tbody
+        - @candidates.each_with_index do |candidate, index|
+          %tr
+            %th
+              = index + 1
+            %td
+              = link_to candidate.name, candidate_path(candidate), id: 'profile-name'
+            %td
+              = candidate.desired_position
+            %td
+              Запорожье
+            %td
+              = candidate.salary
+            %td
+              Иванов Иван
+            %td
+              = candidate.status
+            %td
+              = candidate.created_at.strftime('%F')
 
 - content_for :left_sidebar do
   .panel-success

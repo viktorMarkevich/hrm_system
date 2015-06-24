@@ -4,24 +4,21 @@
   .panel-heading.panel-title
     = @company.name
   .panel-body
-    %table.table#info
+    %table.table
       %thead
         %tbody
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Страница компании:
-            %td.fourty-percent-width-column
+            %th{scope: 'row'} Страница компании:
+            %td
               = @company.url
-            %td.fake-column
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Регион:
-            %td.fourty-percent-width-column
+            %th{scope: 'row'} Регион:
+            %td
               = @company.region.try(:name)
-            %td.fake-column
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Полная информация:
-            %td.fourty-percent-width-column
+            %th{scope: 'row'} Полная информация:
+            %td
               = @company.description
-            %td.fake-column
 
 = link_to 'Редактировать', edit_company_path(@company), class: 'btn btn-default'
 = link_to 'Назад', companies_path, class: 'btn btn-default'

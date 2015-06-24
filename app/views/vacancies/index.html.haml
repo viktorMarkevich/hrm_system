@@ -1,26 +1,30 @@
-%table.table.table-bordered.table-hover
-  %thead
-    %tr
-      %th №
-      %th Вакансия
-      %th Регион
-      %th Зарплата
-      %th Ответственный
-      %th Статус
-  %tbody
-    - @vacancies.each_with_index do |vacancy, index|
-      %tr
-        %th{scope: 'row'}
-          = index + 1
-        %td
-          = link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
-        %td
-          = vacancy.region.try(:name)
-        %td
-          = vacancy.salary
-        %td Иванов Иван
-        %td
-          = vacancy.status
+.panel.panel-success
+  .panel-heading.panel-title
+    Вакансии
+  .panel-body
+    %table.table.table-bordered.table-hover
+      %thead
+        %tr
+          %th №
+          %th Вакансия
+          %th Регион
+          %th Зарплата
+          %th Ответственный
+          %th Статус
+      %tbody
+        - @vacancies.each_with_index do |vacancy, index|
+          %tr
+            %th{scope: 'row'}
+              = index + 1
+            %td
+              = link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
+            %td
+              = vacancy.region.try(:name)
+            %td
+              = vacancy.salary
+            %td Иванов Иван
+            %td
+              = vacancy.status
 
 - content_for :left_sidebar do
   .panel-success

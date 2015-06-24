@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_attached_file :avatar, styles: { medium: '290x300>', thumb: '100x100>' }, default_url: 'cat_2.jpg'
+  has_attached_file :avatar, styles: { medium: '246x300>', thumb: '100x100>' }, default_url: 'cat_2.jpg'
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   validates :skype, format: { with: /\A[a-zA-Z][a-zA-Z0-9\.,\-_]{5,31}\z/,
