@@ -8,6 +8,7 @@ FactoryGirl.define do
     last_name 'Marly'
     post 'Author'
     region_id 1
+    sequence(:phone) { |n| "+38-050-000-000#{n}" }
   end
 
   factory :invalid_user, parent: :user do

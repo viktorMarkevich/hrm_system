@@ -11,6 +11,7 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'factory_girl'
 require 'database_cleaner'
+require 'shoulda/matchers'
 
 ActiveRecord::Migration.maintain_test_schema!
 
