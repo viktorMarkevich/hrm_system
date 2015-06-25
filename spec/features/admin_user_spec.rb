@@ -39,80 +39,80 @@ describe 'AdminUser', type: :feature do
   end
 
   scenario 'update AdminUser' do
-    @test_user = create(:admin_user)
-    visit "admin/admin_users/#{@test_user.id}/edit"
+    test_user = create(:admin_user)
+    visit "admin/admin_users/#{test_user.id}/edit"
     fill_in 'admin_user_email', with: 'proba@ppp.ppp'
-    fill_in 'admin_user_password', with: @test_user.password
-    fill_in 'admin_user_password_confirmation', with: @test_user.password
+    fill_in 'admin_user_password', with: test_user.password
+    fill_in 'admin_user_password_confirmation', with: test_user.password
     click_button 'Update Admin user'
     expect(page).to have_content 'Admin user was successfully updated.'
   end
 
   scenario 'update User' do
-    @test_user = create(:user)
-    visit "admin/users/#{@test_user.id}/edit"
+    test_user = create(:user)
+    visit "admin/users/#{test_user.id}/edit"
     fill_in 'user_email', with: 'proba@ppp.ppp'
     click_button 'Update User'
     expect(page).to have_content 'User was successfully updated.'
   end
 
   scenario 'create AdminUser' do
-    @test_user = build(:admin_user)
+    test_user = build(:admin_user)
     visit 'admin/admin_users/new'
-    fill_in 'admin_user_email', with: @test_user.email
-    fill_in 'admin_user_password', with: @test_user.password
-    fill_in 'admin_user_password_confirmation', with: @test_user.password
+    fill_in 'admin_user_email', with: test_user.email
+    fill_in 'admin_user_password', with: test_user.password
+    fill_in 'admin_user_password_confirmation', with: test_user.password
     click_button 'Create Admin user'
     expect(page).to have_content 'Admin user was successfully created.'
   end
 
   scenario 'create AdminUser not valid' do
-    @test_user = build(:admin_user)
+    test_user = build(:admin_user)
     visit 'admin/admin_users/new'
     fill_in 'admin_user_email', with: 'rqwrqwr'
-    fill_in 'admin_user_password', with: @test_user.password
-    fill_in 'admin_user_password_confirmation', with: @test_user.password
+    fill_in 'admin_user_password', with: test_user.password
+    fill_in 'admin_user_password_confirmation', with: test_user.password
     click_button 'Create Admin user'
     expect(page).to have_content 'is invalid'
   end
 
   scenario 'create User' do
-    @test_user = build(:user)
+    test_user = build(:user)
     visit 'admin/users/new'
-    fill_in 'user_email', with: @test_user.email
-    fill_in 'user_first_name', with: @test_user.first_name
-    fill_in 'user_last_name', with: @test_user.last_name
-    fill_in 'user_post', with: @test_user.post
+    fill_in 'user_email', with: test_user.email
+    fill_in 'user_first_name', with: test_user.first_name
+    fill_in 'user_last_name', with: test_user.last_name
+    fill_in 'user_post', with: test_user.post
     click_button 'Create User'
     expect(page).to have_content 'User was successfully created.'
   end
 
   scenario 'create User not valid' do
-    @test_user = build(:user)
+    test_user = build(:user)
     visit 'admin/users/new'
-    fill_in 'user_email', with: @test_user.email
+    fill_in 'user_email', with: test_user.email
     fill_in 'user_first_name', with: ''
-    fill_in 'user_last_name', with: @test_user.last_name
-    fill_in 'user_post', with: @test_user.post
+    fill_in 'user_last_name', with: test_user.last_name
+    fill_in 'user_post', with: test_user.post
     click_button 'Create User'
     expect(page).to have_content %q{can't be blank}
   end
 
   scenario 'create User Invite' do
-    @test_user = build(:user)
+    test_user = build(:user)
     visit 'admin/users/new_invitation'
-    fill_in 'user_email', with: @test_user.email
+    fill_in 'user_email', with: test_user.email
     fill_in 'user_first_name', with: ''
-    fill_in 'user_last_name', with: @test_user.last_name
-    fill_in 'user_post', with: @test_user.post
+    fill_in 'user_last_name', with: test_user.last_name
+    fill_in 'user_post', with: test_user.post
     click_button 'Send an Invitation'
     expect(page).to have_content %q{User has been successfully invited.}
   end
 
   scenario 'delete AdminUser' do
     pending
-    @test_user = create(:admin_user)
-    visit "admin/admin_users/#{@test_user.id}"
+    test_user = create(:admin_user)
+    visit "admin/admin_users/#{test_user.id}"
     click_link 'Delete Admin User'
     click_button('OK')
     expect(page).to have_content 'Admin user was successfully destroyed.'
