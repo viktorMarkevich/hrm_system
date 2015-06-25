@@ -12,17 +12,16 @@ ActiveAdmin.register User do
     @user = User.new
   end
 
-  collection_action :send_invitation, :method => :post do
+  collection_action :send_invitation, method: :post do
     @user = User.invite!(permitted_params[:user])
     if @user.errors.empty?
-      flash[:success] = "User has been successfully invited."
+      flash[:notice] = 'User has been successfully invited.'
       redirect_to admin_users_path
     else
-      flash[:error] = "Invitation sending error occured"
+      flash[:error] = 'Invitation sending error occured'
       redirect_to new_invitation_admin_users_path
     end
   end
-
 
   index do
     selectable_column
