@@ -24,7 +24,7 @@
         = f.text_field :post, class: 'form-control'
       .form-group
         = f.label :region_id, 'Регион'
-        = select_tag(:region,  options_for_select(Region::NAMES, resource.), {}, class: 'form-control')
+        = select_tag(:region,  options_for_select(Region::NAMES, resource.region_name), class: 'form-control')
       .form-group
         = f.label :password
         %i (leave blank if you don't want to change it)

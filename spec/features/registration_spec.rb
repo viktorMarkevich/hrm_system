@@ -18,6 +18,7 @@ describe 'changing registration data', type: :feature do
     within '#head_user_profile' do
       click_link 'хочу изменить свой пароль'
     end
+
     within '#edit_user' do
       fill_in 'user_password', with: 'updated_password'
       fill_in 'user_password_confirmation', with: 'updated_password'

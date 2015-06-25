@@ -26,28 +26,49 @@ RSpec.describe VacanciesController, type: :controller do
   end
 
   context '#create' do
+    before(:each) do
+      @region = create(:region, name: 'Запорожье')
+    end
+
     context 'when successfull' do
-      let(:vacancy_params) { { vacancy: attributes_for(:vacancy) } }
+      let(:vacancy_attrs) { { vacancy: attributes_for(:vacancy), region: @region.name } }
 
       it 'creates new Vacancy object' do
-        expect { post :create, vacancy_params }.to change(Vacancy, :count).by(1)
+        expect { post :create, vacancy_attrs }.to change(Vacancy, :count).by(1)
       end
 
       it 'redirects to vacancies list page' do
-        post :create, vacancy_params
+        post :create, vacancy_attrs
         expect(response).to redirect_to vacancies_path
+      end
+
+      it 'has assigned region' do
+        post :create, vacancy_attrs
+        expect(assigns(:vacancy).region.name).to eq(@region.name)
       end
     end
 
     context 'when failed' do
-      let(:vacancy_params) { { vacancy: attributes_for(:vacancy, region_id: nil) } }
+      let(:vacancy_attrs) { { vacancy: attributes_for(:vacancy, region_id: nil) } }
 
-      it %q{ doesn't create record on failing} do
-        expect { post :create, vacancy_params }.to change(Vacancy, :count).by(0)
+      it 'is invalid without region_id' do
+        expect(build(:vacancy, region_id: nil)).to_not be_valid
+      end
+
+      it 'is invalid without name' do
+        expect(build(:vacancy, name: nil)).to_not be_valid
+      end
+
+      it 'is invalid without status' do
+        expect(build(:vacancy, status: nil)).to_not be_valid
+      end
+
+      it %q{ doesn't create record } do
+        expect { post :create, vacancy_attrs }.to change(Vacancy, :count).by(0)
       end
 
       it 'renders "new" template on failing' do
-        post :create, vacancy_params
+        post :create, vacancy_attrs
         expect(response).to render_template('new')
       end
     end
@@ -80,7 +101,6 @@ RSpec.describe VacanciesController, type: :controller do
     end
 
     context 'when successfull' do
-
       it 'has updated name and salary' do
         expect(@vacancy.name).to eql vacancy_attrs[:name]
         expect(@vacancy.salary).to eql vacancy_attrs[:salary]
@@ -90,6 +110,24 @@ RSpec.describe VacanciesController, type: :controller do
         expect(response).to redirect_to(vacancies_path)
       end
     end
+
+    context 'when failed' do
+      it 'renders "edit" template without name' do
+        put :update, id: @vacancy.id, vacancy: { name: nil }
+        expect(response).to render_template('edit')
+      end
+
+      it 'renders "edit" template without region_id' do
+        put :update, id: @vacancy.id, vacancy: { region_id: nil }
+        expect(response).to render_template('edit')
+      end
+
+      it 'renders "edit" without status' do
+        put :update, id: @vacancy.id, vacancy: { status: nil }
+        expect(response).to render_template('edit')
+      end
+    end
+
   end
 
   context '#show' do

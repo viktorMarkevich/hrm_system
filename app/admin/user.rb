@@ -27,7 +27,7 @@ ActiveAdmin.register User do
       f.input :last_name
       f.input :post
       f.label :region_id
-      f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }), {})
+      f.select(:region_id,  options_for_select(Region::NAMES), {})
       f.input :skype
       f.input :phone
       f.input :avatar
