@@ -14,17 +14,12 @@
       %tbody
         - @vacancies.each_with_index do |vacancy, index|
           %tr
-            %th{scope: 'row'}
-              = index + 1
-            %td
-              = link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
-            %td
-              = vacancy.region.try(:name)
-            %td
-              = vacancy.salary
+            %th= index + 1
+            %td= link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
+            %td= vacancy.region.try(:name)
+            %td= vacancy.salary
             %td Иванов Иван
-            %td
-              = vacancy.status
+            %td= vacancy.status
 
 - content_for :left_sidebar do
   .panel-success

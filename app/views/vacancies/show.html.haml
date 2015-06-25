@@ -8,22 +8,19 @@
       %thead
         %tbody
           %tr
-            %th{scope: 'row'} Зарплата:
-            %td
-              = @vacancy.salary
+            %th Зарплата:
+            %td= @vacancy.salary
           %tr
-            %th{scope: 'row'} Регион:
-            %td
-              = @vacancy.region.try(:name)
+            %th Регион:
+            %td= @vacancy.region.try(:name)
           %tr
-            %th{scope: 'row'} Языки:
-            %td
-              = @vacancy.languages
+            %th Языки:
+            %td= @vacancy.languages
           %tr
-            %th{scope: 'row'} Добавлено:
+            %th Добавлено:
             %td Иванов Иван 20-05-2015
           %tr
-            %th{scope: 'row'} Требования:
+            %th Требования:
             %td
               Lorem Ipsum is simply dummy text of the printing and typesetting industry.
               Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,

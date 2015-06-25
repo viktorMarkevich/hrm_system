@@ -8,72 +8,56 @@
       %thead
         %tbody
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} День рождения:
-            %td
-              = @candidate.birthday
+            %th День рождения:
+            %td= @candidate.birthday
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Зарплата:
-            %td
-              = "#{@candidate.salary} #{@candidate.salary_format}"
+            %th Зарплата:
+            %td= "#{@candidate.salary} #{@candidate.salary_format}"
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Образование:
-            %td
-              = @candidate.education
+            %th Образование:
+            %td= @candidate.education
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Языки:
-            %td
-              = @candidate.languages
+            %th Языки:
+            %td= @candidate.languages
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Место проживания:
-            %td
-              = @candidate.city_of_residence
+            %th Место проживания:
+            %td= @candidate.city_of_residence
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} На должность:
-            %td
-              = @candidate.desired_position
+            %th На должность:
+            %td= @candidate.desired_position
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Опыт:
-            %td
-              = @candidate.experience
+            %th Опыт:
+            %td= @candidate.experience
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Статус:
-            %td
-              = @candidate.status
+            %th Статус:
+            %td= @candidate.status
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Описание:
-            %td
-              = @candidate.description
+            %th Описание:
+            %td= @candidate.description
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Почта:
-            %td
-              = @candidate.email
+            %th Почта:
+            %td= @candidate.email
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Телефон:
-            %td
-              = @candidate.phone
+            %th Телефон:
+            %td= @candidate.phone
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Домашняя страница:
-            %td
-              = @candidate.home_page
+            %th Домашняя страница:
+            %td= @candidate.home_page
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Skype:
-            %td
-              = @candidate.skype
+            %th Skype:
+            %td= @candidate.skype
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Linkedin:
-            %td
-              = @candidate.linkedin
+            %th Linkedin:
+            %td= @candidate.linkedin
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Facebook:
-            %td
-              = @candidate.facebook
+            %th Facebook:
+            %td= @candidate.facebook
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Vkontakte:
-            %td
-              = @candidate.vkontakte
+            %th Vkontakte:
+            %td= @candidate.vkontakte
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Google+:
-            %td
-              = @candidate.google_plus
+            %th Google+:
+            %td= @candidate.google_plus
+
 = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-default'
 = link_to 'Назад', :back, class: 'btn btn-default'

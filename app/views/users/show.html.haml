@@ -2,28 +2,27 @@
 
 .panel.panel-success
   .panel-heading.panel-title
-    = "#{@user.last_name} #{@user.first_name}"
-    = link_to 'хочу изменить свой пароль', edit_user_registration_path, class: 'btn btn-default change-login-data pull-right'
+    .row
+      .col-md-3
+        = user_fullname
+      .col-md-offset-7.col-md-2
+        = link_to 'хочу изменить свой пароль', edit_user_registration_path, class: 'btn btn-default'
   .panel-body
     %table.table
       %thead
         %tbody
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Email:
-            %td
-              = @user.email
+            %th Email:
+            %td= @user.email
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Должность:
-            %td
-              = @user.post
+            %th Должность:
+            %td= @user.post
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Skype:
-            %td
-              = @user.skype.present? ? @user.skype : 'Поле не заполнено'
+            %th Skype:
+            %td= @user.skype.present? ? @user.skype : 'Поле не заполнено'
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Телефон:
-            %td
-              = @user.phone.present? ? @user.phone : 'Поле не заполнено'
+            %th Телефон:
+            %td= @user.phone.present? ? @user.phone : 'Поле не заполнено'
 
 = link_to 'Редактировать', edit_user_path, class: 'btn btn-default'
 = link_to 'Назад', root_path, class: 'btn btn-default'

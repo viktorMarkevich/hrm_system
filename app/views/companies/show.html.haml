@@ -8,17 +8,14 @@
       %thead
         %tbody
           %tr
-            %th{scope: 'row'} Страница компании:
-            %td
-              = @company.url
+            %th Страница компании:
+            %td= @company.url
           %tr
-            %th{scope: 'row'} Регион:
-            %td
-              = @company.region.try(:name)
+            %th Регион:
+            %td= @company.region.try(:name)
           %tr
-            %th{scope: 'row'} Полная информация:
-            %td
-              = @company.description
+            %th Полная информация:
+            %td= @company.description
 
 = link_to 'Редактировать', edit_company_path(@company), class: 'btn btn-default'
 = link_to 'Назад', companies_path, class: 'btn btn-default'
