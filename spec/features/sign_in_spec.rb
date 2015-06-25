@@ -3,52 +3,20 @@ require 'rails_helper'
 describe 'the signin process', type: :feature do
   before :each do
     @user = create(:user)
-    visit 'users/login'
-  end
-
-  scenario 'sign_in me' do
-    sign_in_user
-    expect(page).to have_content 'Выйти'
   end
 
   scenario 'visit stickers#index page when signed in' do
-    sticker = create(:sticker, title: 'Test sticker title')
-    sign_in_user
-    expect(page).to have_content(sticker.title)
+    sign_in_as(@user)
+    expect(page).to have_content('Signed in successfully.')
   end
 
   scenario 'sign_in with wrong Email' do
+    visit 'users/login'
     within('#new_user') do
       fill_in 'Email', with: 'aaa@aaa.aaa'
-      fill_in 'Password', with: @user.password
+      fill_in 'Password', with: ''
     end
     click_button 'Log in'
     expect(page).to have_content 'Log in'
-  end
-
-  scenario 'sign_in with wrong Password' do
-    within('#new_user') do
-      fill_in 'Email', with: @user.email
-      fill_in 'Password', with: 'Signed in successfully.'
-    end
-    click_button 'Log in'
-    expect(page).to have_content 'Log in'
-  end
-
-  scenario 'sign_in with wrong Password and Email' do
-    within('#new_user') do
-      fill_in 'Email', with: 'aaa@aaa.aaa'
-      fill_in 'Password', with: 'aaaaaaaa'
-    end
-    click_button 'Log in'
-    expect(page).to have_content 'Log in'
-  end
-
-  def sign_in_user
-    within('#new_user') do
-      fill_in 'Email', with: @user.email
-      fill_in 'Password', with: @user.password
-    end
-    click_button 'Log in'
   end
 end

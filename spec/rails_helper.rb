@@ -4,6 +4,7 @@ SimpleCov.start
 ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../../config/environment', __FILE__)
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 
@@ -12,6 +13,8 @@ require 'capybara/rails'
 require 'factory_girl'
 require 'database_cleaner'
 require 'shoulda/matchers'
+
+include CapybaraHelpers
 
 ActiveRecord::Migration.maintain_test_schema!
 

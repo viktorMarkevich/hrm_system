@@ -7,8 +7,7 @@ describe 'Managing companies', type: :feature do
     @user = create(:user)
     region = create(:region, name: 'Запорожье')
     @company = create(:company, name: 'TruedCo', region_id: region.id)
-
-    sign_in @user
+    sign_in_as(@user)
   end
 
   scenario 'should have "active current" class on company index page' do
@@ -61,14 +60,5 @@ describe 'Managing companies', type: :feature do
       click_button 'Обновить'
     end
     expect(page).to have_content('Компания успешно обновлена.')
-  end
-
-  def sign_in(user)
-    visit new_user_session_path
-    within('#new_user') do
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: user.password
-      click_button 'Log in'
-    end
   end
 end

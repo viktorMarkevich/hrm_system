@@ -4,16 +4,7 @@ describe 'user process', type: :feature do
 
   before :each do
     @user = create(:user)
-    login(@user)
-  end
-
-  def login(user)
-    visit 'users/login'
-    within('#new_user') do
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: user.password
-    end
-    click_button 'Log in'
+    sign_in_as(@user)
   end
 
   scenario 'update user profile' do
