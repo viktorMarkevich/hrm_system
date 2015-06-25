@@ -4,7 +4,7 @@
   .panel-heading.panel-title
     .row
       .col-md-3
-        = user_fullname
+        = full_name_for(@user)
       .col-md-offset-7.col-md-2
         = link_to 'хочу изменить свой пароль', edit_user_registration_path, class: 'btn btn-default'
   .panel-body

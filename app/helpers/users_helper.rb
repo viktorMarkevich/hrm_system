@@ -1,5 +1,5 @@
 module UsersHelper
-  def user_fullname
-    "#{@user.first_name} #{@user.last_name}"
+  def full_name_for(user)
+    "#{user.first_name} #{user.last_name}"
   end
 end

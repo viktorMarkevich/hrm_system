@@ -16,6 +16,11 @@ describe 'user process', type: :feature do
     click_button 'Log in'
   end
 
+  scenario %q{page has user's full name} do
+    click_link @user.email
+    expect(page).to have_content("#{@user.first_name} #{@user.last_name}")
+  end
+
   scenario 'update user profile' do
     click_link @user.email
     click_link 'Редактировать'
@@ -24,6 +29,18 @@ describe 'user process', type: :feature do
     end
     click_button 'Обновить'
     expect(page).to have_content 'ccc@ccc.ccc'
+  end
+
+  scenario 'edit page has full user name' do
+    click_link @user.email
+    click_link 'Редактировать'
+    expect(page).to have_content("#{@user.first_name} #{@user.last_name}")
+  end
+
+  scenario 'edit password page has full user page' do
+    click_link @user.email
+    click_link 'хочу изменить свой пароль'
+    expect(page).to have_content("#{@user.first_name} #{@user.last_name}")
   end
 
   scenario 'update user profile with wrong params' do
