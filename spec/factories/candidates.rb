@@ -11,7 +11,7 @@ FactoryGirl.define do
     experience '3 года'
     status 'В процессе'
     sequence(:email) { |n| "#{n}email@mail.ru" }
-    sequence(:phone) { |n| "+ 3 8 050 000 00#{n}" }
+    sequence(:phone) { |n| "+38-050-000-000#{n}" }
     linkedin 'linkedin'
     facebook 'facebook'
     vkontakte 'vkontakte'

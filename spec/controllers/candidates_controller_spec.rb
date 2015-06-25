@@ -27,14 +27,13 @@ RSpec.describe CandidatesController, type: :controller do
 
   context '#create' do
     context 'when successfull' do
-      let(:candidate_params) { { candidate: attributes_for(:candidate) } }
-
       it 'creates new Candidate object' do
-        expect { post :create, candidate_params }.to change(Candidate, :count).by(1)
+        post :create, candidate: attributes_for(:candidate)
+        expect(assigns(:candidate)).to eq(Candidate.last)
       end
 
       it 'redirects to candidates list page' do
-        post :create, candidate_params
+        post :create, candidate: attributes_for(:candidate)
         expect(response).to redirect_to candidates_path
       end
     end
@@ -44,7 +43,7 @@ RSpec.describe CandidatesController, type: :controller do
     let(:candidate) { create(:candidate) }
 
     before(:each) do
-      get :edit, id: candidate.id
+      get :edit, id: candidate
     end
 
     it 'responds with HTTP 200 status' do

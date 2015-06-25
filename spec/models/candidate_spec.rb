@@ -5,10 +5,6 @@ RSpec.describe Candidate, type: :model do
     it 'has valid factory' do
       expect(build(:candidate)).to be_valid
     end
-
-    it 'is valid without experiences' do
-      expect(build(:candidate, experience: nil)).to be_valid
-    end
   end
 
   context 'when invalid' do
@@ -52,7 +48,7 @@ RSpec.describe Candidate, type: :model do
     end
 
     it 'fails validation without unique phone' do
-      candidate = create(:candidate, phone: '+380936543123')
+      candidate = create(:candidate, phone: '+38-093-654-3123')
       expect(build(:candidate, phone: candidate.phone)).to_not be_valid
     end
 
