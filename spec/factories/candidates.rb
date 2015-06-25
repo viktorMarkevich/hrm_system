@@ -10,7 +10,7 @@ FactoryGirl.define do
     desired_position 'Программист, руби'
     experience '3 года'
     status 'В процессе'
-    sequence(:email) { |n| "email#{n}" }
+    sequence(:email) { |n| "#{n}email@mail.ru" }
     sequence(:phone) { |n| "+ 3 8 050 000 00#{n}" }
     linkedin 'linkedin'
     facebook 'facebook'

@@ -15,7 +15,7 @@
           %tr
             %th{scope: 'row', class: 'ten-percent-width-column'} Регион:
             %td.fourty-percent-width-column
-              = @company.region
+              = @company.region.try(:name)
             %td.fake-column
           %tr
             %th{scope: 'row', class: 'ten-percent-width-column'} Полная информация:

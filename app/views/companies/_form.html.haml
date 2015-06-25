@@ -1,4 +1,10 @@
 = form_for @company do |f|
+  - if @company.errors.any?
+    %h2 Возникшие ошибки:
+    %ul
+      - @company.errors.full_messages.each do |message|
+        %li
+          = message
   .row
     .col-xs-6
       .form-group
@@ -8,8 +14,8 @@
         = f.label :url, 'Страница компании:'
         = f.text_field :url, class: 'form-control'
       .form-group
-        = f.label :region, 'Регион:'
-        = f.text_field :region, class: 'form-control'
+        = f.label :region_id, 'Регион:'
+        = f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }, @company.region_id), {}, class: 'form-control')
       .form-group
         = f.label :description, 'Полная информация:'
         = f.text_area :description, rows: 5, class: 'form-control'

@@ -3,41 +3,48 @@
 require 'rails_helper'
 
 describe 'Managing companies', type: :feature do
-  before do
+  before(:each) do
     @user = create(:user)
-    @company = create(:company)
+    region = create(:region, name: 'Запорожье')
+    @company = create(:company, name: 'TruedCo', region_id: region.id)
+
     sign_in @user
-    visit '/companies'
   end
 
-  scenario 'goes on new company page' do
-    click_link 'Компании'
-    expect(page).to have_content @company.name
+  scenario 'should have "active current" class on company index page' do
+    visit companies_path
+    expect(page).to have_css('a.active.current', text: 'Компании')
+    expect(page).to_not have_css('a.active.current', text: 'Вакансии')
   end
 
   scenario 'creates new company' do
-    visit '/companies/new'
+
+    visit new_company_path
     within '#new_company' do
       fill_in 'company_name', with: 'Company 777'
-      fill_in 'company_url', with: 'facebook 777'
+      fill_in 'company_url', with: 'http://www.facebook.com/'
+      select 'Запорожье', from: 'company_region_id'
       click_button 'Создать'
     end
     expect(page).to have_content 'Компания была успешно создана.'
   end
 
-  scenario 'goes to stickers#edit page' do
+  scenario 'edit company' do
+    visit companies_path
     click_link @company.name
     click_link 'Редактировать'
     expect(page).to have_content 'Изменить данные компании'
   end
 
   scenario 'goes back from companies#index page to companies#show page' do
+    visit companies_path
     click_link @company.name
     click_link 'Назад'
     expect(page).to have_content 'Компании'
   end
 
   scenario 'goes back from companies#edit page to companies#show page' do
+    visit companies_path
     click_link @company.name
     click_link 'Редактировать'
     click_link 'Назад'
@@ -45,14 +52,15 @@ describe 'Managing companies', type: :feature do
   end
 
   scenario 'update company' do
+    visit companies_path
     click_link @company.name
     click_link 'Редактировать'
     within "#edit_company_#{@company.id}" do
       fill_in 'company_name', with: 'Company 777'
-      fill_in 'company_url', with: 'facebook 777'
+      fill_in 'company_url', with: 'http://www.facebook.com/'
       click_button 'Обновить'
     end
-    expect(page).to have_content 'Компания успешно обновлена.'
+    expect(page).to have_content('Компания успешно обновлена.')
   end
 
   def sign_in(user)
