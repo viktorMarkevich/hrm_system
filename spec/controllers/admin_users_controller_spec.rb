@@ -72,4 +72,10 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
   end
 
+  context 'sends the deliver invitation' do
+    it 'sends an email' do
+      expect{ @user.deliver_invitation }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+  end
+
 end
