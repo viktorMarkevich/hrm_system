@@ -13,6 +13,7 @@ gem 'dotenv-rails'
 gem 'unicorn'
 gem 'unicorn-rails'
 gem 'devise'
+gem 'devise_invitable', '~> 1.3.4'
 gem 'haml-rails'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
@@ -20,6 +21,7 @@ gem "paperclip", "~> 4.2"
 gem 'activeadmin', '~> 1.0.0.pre1'
 
 group :development do
+  gem 'letter_opener'
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'
