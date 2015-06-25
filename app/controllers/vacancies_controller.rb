@@ -22,7 +22,7 @@ class VacanciesController < ApplicationController
 
   def create
     region = Region.find_or_create(params[:region])
-    @vacancy = region.assign_vacancy(vacancy_params)
+    @vacancy = region.build_vacancy(vacancy_params)
 
     if @vacancy.save
       flash[:notice] = 'Вакансия была успешно создана.'

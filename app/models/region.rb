@@ -18,16 +18,16 @@ class Region < ActiveRecord::Base
     where(name: region_name).first_or_create
   end
 
-  def assign_company(company_params)
-    self.companies.first_or_initialize(company_params)
+  def build_company(company_params)
+    self.companies.build(company_params)
   end
 
-  def assign_vacancy(vacancy_params)
-    self.vacancies.first_or_initialize(vacancy_params)
+  def build_vacancy(vacancy_params)
+    self.vacancies.build(vacancy_params)
   end
 
-  def assign_user(user_params)
-    self.users.first_or_initialize(user_params)
+  def build_user(user_params)
+    self.users.build(user_params)
   end
 
 end

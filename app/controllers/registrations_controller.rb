@@ -4,7 +4,7 @@ class RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
 
     region = Region.find_or_create(params[:region])
-    resource = region.assign_user(user_params)
+    resource = region.build_user(user_params)
 
     resource.save
     yield resource if block_given?

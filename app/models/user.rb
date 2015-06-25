@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include RegionSupporter
 
   belongs_to :region
 
@@ -17,7 +18,4 @@ class User < ActiveRecord::Base
   validates :skype, uniqueness: true, if: 'skype.present?'
   validates :phone, uniqueness: true, if: 'phone.present?'
 
-  def get_assigned_region_name
-    self.region.present? ? self.region.name : ''
-  end
 end
