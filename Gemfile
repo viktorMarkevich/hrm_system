@@ -16,7 +16,7 @@ gem 'devise'
 gem 'haml-rails'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
-gem "paperclip", "~> 4.2"
+gem 'paperclip', '~> 4.2'
 gem 'activeadmin', '~> 1.0.0.pre1'
 
 group :development do
@@ -36,4 +36,5 @@ group :test do
   gem 'factory_girl_rails', '~> 4.0'
   gem 'simplecov', require: false
   gem 'database_cleaner'
+  gem 'shoulda-matchers', require: false
 end

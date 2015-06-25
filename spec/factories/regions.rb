@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :region do |obj|
-    obj.sequence(:name) { |n| "region#{n}"}
+  factory :region do
+    sequence(:name) { |n| "region#{n}" }
   end
 end

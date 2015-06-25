@@ -4,10 +4,10 @@ require 'rails_helper'
 
 describe 'Managing stickers', type: :feature do
   before do
-    @user = create(:user, email: 'test_user@mail.com')
+    @user = create(:user)
     @sticker = create(:sticker)
 
-    sign_in @user
+    sign_in_as @user
   end
 
   scenario 'goes on new sticker page' do
@@ -55,14 +55,5 @@ describe 'Managing stickers', type: :feature do
     visit '/stickers'
     find('.glyph_destroy_link').click
     expect(page).to_not have_content @sticker.title
-  end
-
-  def sign_in(user)
-    visit new_user_session_path
-    within('#new_user') do
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: user.password
-      click_button 'Log in'
-    end
   end
 end
