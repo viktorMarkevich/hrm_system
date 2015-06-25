@@ -17,9 +17,6 @@ ActiveAdmin.register User do
     if @user.errors.empty?
       flash[:notice] = 'User has been successfully invited.'
       redirect_to admin_users_path
-    else
-      flash[:error] = 'Invitation sending error occured'
-      redirect_to new_invitation_admin_users_path
     end
   end
 

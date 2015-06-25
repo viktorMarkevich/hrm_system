@@ -98,6 +98,17 @@ describe 'AdminUser', type: :feature do
     expect(page).to have_content %q{can't be blank}
   end
 
+  scenario 'create User Invite' do
+    @test_user = build(:user)
+    visit 'admin/users/new_invitation'
+    fill_in 'user_email', with: @test_user.email
+    fill_in 'user_first_name', with: ''
+    fill_in 'user_last_name', with: @test_user.last_name
+    fill_in 'user_post', with: @test_user.post
+    click_button 'Send an Invitation'
+    expect(page).to have_content %q{User has been successfully invited.}
+  end
+
   scenario 'delete AdminUser' do
     pending
     @test_user = create(:admin_user)
