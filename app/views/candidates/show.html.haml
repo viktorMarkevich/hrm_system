@@ -4,93 +4,60 @@
   .panel-heading.panel-title
     = @candidate.name
   .panel-body
-    %table.table#info
+    %table.table
       %thead
         %tbody
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} День рождения:
-            %td.fourty-percent-width-column
-              = @candidate.birthday
-            %td.fake-column
+            %th День рождения:
+            %td= @candidate.birthday
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Зарплата:
-            %td.fourty-percent-width-column
-              = "#{@candidate.salary} #{@candidate.salary_format}"
-            %td.fake-column
+            %th Зарплата:
+            %td= "#{@candidate.salary} #{@candidate.salary_format}"
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Образование:
-            %td.fourty-percent-width-column
-              = @candidate.education
-            %td.fake-column
+            %th Образование:
+            %td= @candidate.education
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Языки:
-            %td.fourty-percent-width-column
-              = @candidate.languages
-            %td.fake-column
+            %th Языки:
+            %td= @candidate.languages
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Место проживания:
-            %td.fourty-percent-width-column
-              = @candidate.city_of_residence
-            %td.fake-column
+            %th Место проживания:
+            %td= @candidate.city_of_residence
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} На должность:
-            %td.fourty-percent-width-column
-              = @candidate.desired_position
-            %td.fake-column
+            %th На должность:
+            %td= @candidate.desired_position
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Опыт:
-            %td.fourty-percent-width-column
-              = @candidate.experience
-            %td.fake-column
+            %th Опыт:
+            %td= @candidate.experience
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Статус:
-            %td.fourty-percent-width-column
-              = @candidate.status
-            %td.fake-column
+            %th Статус:
+            %td= @candidate.status
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Описание:
-            %td.fourty-percent-width-column
-              = @candidate.description
-            %td.fake-column
+            %th Описание:
+            %td= @candidate.description
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Почта:
-            %td.fourty-percent-width-column
-              = @candidate.email
-            %td.fake-column
+            %th Почта:
+            %td= @candidate.email
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Телефон:
-            %td.fourty-percent-width-column
-              = @candidate.phone
-            %td.fake-column
+            %th Телефон:
+            %td= @candidate.phone
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Домашняя страница:
-            %td.fourty-percent-width-column
-              = @candidate.home_page
-            %td.fake-column
+            %th Домашняя страница:
+            %td= @candidate.home_page
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Skype:
-            %td.fourty-percent-width-column
-              = @candidate.skype
-            %td.fake-column
+            %th Skype:
+            %td= @candidate.skype
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Linkedin:
-            %td.fourty-percent-width-column
-              = @candidate.linkedin
-            %td.fake-column
+            %th Linkedin:
+            %td= @candidate.linkedin
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Facebook:
-            %td.fourty-percent-width-column
-              = @candidate.facebook
-            %td.fake-column
+            %th Facebook:
+            %td= @candidate.facebook
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Vkontakte:
-            %td.fourty-percent-width-column
-              = @candidate.vkontakte
-            %td.fake-column
+            %th Vkontakte:
+            %td= @candidate.vkontakte
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Google+:
-            %td.fourty-percent-width-column
-              = @candidate.google_plus
-            %td.fake-column
+            %th Google+:
+            %td= @candidate.google_plus
+
 = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-default'
 = link_to 'Назад', :back, class: 'btn btn-default'

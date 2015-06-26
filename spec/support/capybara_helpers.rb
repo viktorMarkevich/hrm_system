@@ -1,6 +1,4 @@
 module CapybaraHelpers
-  # include Warden::Test::Helpers
-  # Warden.test_mode!
 
   def sign_in_as(user, password = nil)
     visit 'users/login'

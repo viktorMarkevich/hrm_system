@@ -4,37 +4,29 @@
   .panel-heading.panel-title
     = @vacancy.name
   .panel-body
-    %table.table#info
+    %table.table
       %thead
         %tbody
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Зарплата:
-            %td.fourty-percent-width-column
-              = @vacancy.salary
-            %td.fake-column
+            %th Зарплата:
+            %td= @vacancy.salary
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Регион:
-            %td.fourty-percent-width-column
-              = @vacancy.region.try(:name)
-            %td.fake-column
+            %th Регион:
+            %td= @vacancy.region.try(:name)
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Языки:
-            %td.fourty-percent-width-column
-              = @vacancy.languages
-            %td.fake-column
+            %th Языки:
+            %td= @vacancy.languages
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Добавлено:
-            %td.fourty-percent-width-column Иванов Иван 20-05-2015
-            %td.fake-column
+            %th Добавлено:
+            %td Иванов Иван 20-05-2015
           %tr
-            %th{scope: 'row', class: 'ten-percent-width-column'} Требования:
-            %td.fourty-percent-width-column
+            %th Требования:
+            %td
               Lorem Ipsum is simply dummy text of the printing and typesetting industry.
               Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
               when an unknown printer took a galley of type and scrambled it to make a type specimen book.
               It has survived not only five centuries, but also the leap into electronic typesetting, remaining
               essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
               and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            %td.fake-column
 = link_to 'Редактировать', edit_vacancy_path(@vacancy), class: 'btn btn-default'
 = link_to 'Назад', :back, class: 'btn btn-default'

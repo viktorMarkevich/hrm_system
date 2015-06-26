@@ -1,55 +1,42 @@
-#edit_user_profile
-  #head_user_profile
-    %em #{@user.last_name} #{@user.first_name}
-
-  #container_user_profile
-
-    - if @user.errors.any?
-      %h3 Возникшие ошибки:
-      %ul
-        - @user.errors.full_messages.each do |message|
-          %li
-            = message
-
-    #left_column_user_profile
-      %p
-        %em Имя:
-      %p
-        %em Фамилия:
-      %p
-        %em Email:
-      %p
-        %em Должность:
-      %p
-        %em Регион:
-      %p
-        %em Skype:
-      %p
-        %em Телефон:
-      %p
-        %em Аватар:
-
-    #right_column_user_profile
-      = form_for @user, html: { multipart: true } do |f|
-
-        %p
-          = f.text_field :first_name
-        %p
-          = f.text_field :last_name
-        %p
-          = f.text_field :email
-        %p
-          = f.text_field :post
-        %p
-          = f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }, @user.region_id), {})
-        %p
-          = f.text_field :skype
-        %p
-          = f.text_field :phone
-        %p
-          = f.file_field :avatar
-
-        = f.button 'Обновить', class: 'btn btn-link'
-        = link_to 'Назад', user_path, class: 'btn btn-link'
-
 - content_for :left_sidebar, render(partial: 'left_sidebar')
+
+.panel.panel-success
+  .panel-heading.panel-title
+    = full_name_for(@user)
+  .panel-body
+    .row
+      .col-xs-6
+        - if @user.errors.any?
+          %h3 Возникшие ошибки:
+          %ul
+            - @user.errors.full_messages.each do |message|
+              %li
+                = message
+        =form_for @user, html: { multipart: true } do |f|
+          .form-group
+            = f.label :first_name
+            = f.text_field :first_name, class: 'form-control'
+          .form-group
+            = f.label :last_name
+            = f.text_field :last_name, class: 'form-control'
+          .form-group
+            = f.label :email
+            = f.email_field :email, class: 'form-control'
+          .form-group
+            = f.label :post
+            = f.text_field :post, class: 'form-control'
+          .form-group
+            = f.label :region_id, 'Регион'
+            = f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }, @user.region_id), {}, class: 'form-control')
+          .form-group
+            = f.label :skype
+            = f.text_field :skype, class: 'form-control'
+          .form-group
+            = f.label :phone
+            = f.text_field :phone, class: 'form-control'
+          .form-group
+            = f.label :avatar
+            = f.file_field :avatar
+          .form-group
+            = f.button 'Обновить', class: 'btn btn-default'
+            = link_to 'Назад', user_path, class: 'btn btn-default'

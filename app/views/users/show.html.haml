@@ -1,35 +1,29 @@
-#show_user_profile
-
-  #head_user_profile
-    %em #{@user.last_name} #{@user.first_name}
-
-    = link_to 'хочу изменить свой пароль', edit_user_registration_path, class: 'btn btn-link'
-
-  #container_user_profile
-    #left_column_user_profile
-      %p
-        %em Email:
-      %p
-        %em Должность:
-      %p
-        %em Skype:
-      %p
-        %em Телефон:
-
-    #right_column_user_profile
-      %p
-        %em #{@user.email}
-      %p
-        %em #{@user.post}
-      %p
-        %em
-          = @user.skype.present? ? @user.skype : 'Поле не заполнено'
-      %p
-        %em
-          = @user.phone.present? ? @user.phone : 'Поле не заполнено'
-
-  #footer_user_profile
-    = link_to 'Редактировать', edit_user_path, class: 'btn btn-link'
-    = link_to 'Назад', root_path, class: 'btn btn-link'
-
 - content_for :left_sidebar, render(partial: 'left_sidebar')
+
+.panel.panel-success
+  .panel-heading.panel-title
+    .row
+      .col-md-3
+        = full_name_for(@user)
+      .col-md-offset-7.col-md-2
+        = link_to 'хочу изменить свой пароль', edit_user_registration_path, class: 'btn btn-default'
+  .panel-body
+    %table.table
+      %thead
+        %tbody
+          %tr
+            %th Email:
+            %td= @user.email
+          %tr
+            %th Должность:
+            %td= @user.post
+          %tr
+            %th Skype:
+            %td= @user.skype.present? ? @user.skype : 'Поле не заполнено'
+          %tr
+            %th Телефон:
+            %td= @user.phone.present? ? @user.phone : 'Поле не заполнено'
+
+= link_to 'Редактировать', edit_user_path, class: 'btn btn-default'
+= link_to 'Назад', root_path, class: 'btn btn-default'
+

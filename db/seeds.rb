@@ -8,6 +8,7 @@
 Vacancy.delete_all
 Candidate.delete_all
 Company.delete_all
+Region.delete_all
 
 for i in 1..10 do
   Vacancy.create(
@@ -32,7 +33,7 @@ end
 for i in  1..15 do
   Company.create(
       name: 'veloonline',
-      region: REGIONS[rand(1)],
+      region_id: 1,
       url: 'http://www.veloonline.com/view.shtml?id=8933',
       description: 'Купить Шатуны Shimano FC-M361 ACERA 48/38/28 по хорошей цене в интернет-магазине VeloOnline.com,
                     мы предлагаем широкий ассортимент Shimano и привлекательные цены на Шатуны для велосипеда.'

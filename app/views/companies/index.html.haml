@@ -1,31 +1,28 @@
-%table.table.table-bordered.table-hover
-  %thead
-    %tr
-      %th №
-      %th Имя
-      %th Страница
-      %th Кандидаты
-      %th Регион
-      %th Дата регистрации
-      %th Краткое описание
+.panel.panel-success
+  .panel-heading.panel-title
+    Компании
+  .panel-body
+    %table.table.table-bordered.table-hover
+      %thead
+        %tr
+          %th №
+          %th Имя
+          %th Страница
+          %th Кандидаты
+          %th Регион
+          %th Дата регистрации
+          %th Краткое описание
 
-  %tbody
-    - @companies.each_with_index do |company, index|
-      %tr
-        %th{scope: 'row'}
-          = index + 1
-        %td
-          = link_to company.name, company_path(company), id: 'company-name'
-        %td
-          = company.url
-        %td
-          = '777'
-        %td
-          = company.region.try(:name)
-        %td
-          = company.created_at
-        %td
-          = truncate(company.description, length: 50)
+      %tbody
+        - @companies.each_with_index do |company, index|
+          %tr
+            %th= index + 1
+            %td= link_to company.name, company_path(company), id: 'company-name'
+            %td= company.url
+            %td= '777'
+            %td= company.region.try(:name)
+            %td= company.created_at
+            %td= truncate(company.description, length: 50)
 
 - content_for :left_sidebar do
   .panel-success
