@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-describe 'AdminUser', type: :feature do
+RSpec.describe 'AdminUser', type: :feature do
 
   before :each do
     @admin_user = create(:admin_user)
     @user = create(:user)
     create(:region)
-    login(@admin_user)
+    sign_in_as(@admin_user)
   end
 
   scenario 'signin' do
@@ -127,11 +127,13 @@ describe 'AdminUser', type: :feature do
     expect(page).to have_content 'User was successfully destroyed.'
   end
 
-  def login(admin_user)
-    visit '/admin/login'
-    fill_in 'admin_user_email', with: admin_user.email
-    fill_in 'admin_user_password', with: admin_user.password
-    click_button 'Login'
+  def sign_in_as(user, password = nil)
+    visit 'users/login'
+    within('#new_user') do
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: password || user.password
+    end
+    click_button 'Log in'
   end
 
 end
