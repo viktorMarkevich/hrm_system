@@ -13,11 +13,11 @@ end
 When(/^I fill in candidate form$/) do
   within('#new_candidate') do
     fill_in 'candidate_name', with: 'Сергей Петров'
-    select('1989-12-09', from: 'День рождения')
+    fill_in 'candidate_birthday', with: '1989-12-09'
     fill_in 'candidate_salary', with: '450'
     fill_in 'candidate_education', with: 'Оксфорд, бакалавр'
     fill_in 'candidate_city_of_residence', with: 'Запорожье'
-    select('Программист', from: 'На должность')
+    fill_in 'candidate_desired_position', with: 'Программист'
     fill_in 'candidate_experience', with: '3 года'
     fill_in 'candidate_status', with: 'В процессе'
     check('Готов к переезду')

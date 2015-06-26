@@ -12,7 +12,7 @@
         = f.text_field :name, class: 'form-control'
       .form-group
         = f.label :birthday, 'День рождения:'
-        = f.select(:birthday, ['1989-12-09', '1987-07-04'], {}, class: 'form-control')
+        = f.text_field :birthday, class: 'form-control'
       .form-group
         = f.label :salary, 'Желаемая ЗП:'
         = f.text_field :salary, class: 'form-control'
@@ -25,7 +25,7 @@
         = f.text_field :city_of_residence, class: 'form-control'
       .form-group
         = f.label :desired_position, 'На должность:'
-        = f.select(:desired_position, ['Тестер', 'Программист'], {}, class: 'form-control')
+        = f.text_field :desired_position, class: 'form-control'
       .form-group
         = f.label :experience, 'Опыт:'
         = f.text_field :experience, class: 'form-control'
