@@ -6,7 +6,7 @@ RSpec.describe 'AdminUser', type: :feature do
     @admin_user = create(:admin_user)
     @user = create(:user)
     create(:region)
-    sign_in_as(@admin_user)
+    sign_in_as(@admin_user, nil, 'admin')
   end
 
   scenario 'signin' do
@@ -127,13 +127,5 @@ RSpec.describe 'AdminUser', type: :feature do
     expect(page).to have_content 'User was successfully destroyed.'
   end
 
-  def sign_in_as(user, password = nil)
-    visit 'users/login'
-    within('#new_user') do
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: password || user.password
-    end
-    click_button 'Log in'
-  end
 
 end

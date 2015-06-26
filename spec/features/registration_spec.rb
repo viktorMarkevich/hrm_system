@@ -6,7 +6,7 @@ describe 'changing registration data', type: :feature do
     create(:region, name: 'Запорожье')
     create(:region, name: 'Киев')
 
-    sign_in_as(@user)
+    sign_in_as(@user, nil)
   end
 
   scenario 'edit user password' do

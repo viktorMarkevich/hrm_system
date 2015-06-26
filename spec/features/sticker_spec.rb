@@ -7,7 +7,7 @@ describe 'Managing stickers', type: :feature do
     @user = create(:user)
     @sticker = create(:sticker)
 
-    sign_in_as @user
+    sign_in_as(@user, nil)
   end
 
   scenario 'goes on new sticker page' do

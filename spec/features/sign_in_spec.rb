@@ -6,7 +6,7 @@ describe 'the signin process', type: :feature do
   end
 
   scenario 'visit stickers#index page when signed in' do
-    sign_in_as(@user)
+    sign_in_as(@user, nil)
     expect(page).to have_content('Signed in successfully.')
   end
 

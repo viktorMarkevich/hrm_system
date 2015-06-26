@@ -4,7 +4,7 @@ describe 'user process', type: :feature do
 
   before :each do
     @user = create(:user)
-    sign_in_as(@user)
+    sign_in_as(@user, nil)
   end
 
   scenario %q{page has user's full name} do
