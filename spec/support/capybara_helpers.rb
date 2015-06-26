@@ -1,12 +1,14 @@
 module CapybaraHelpers
 
-  def sign_in_as(user, password = nil)
-    visit 'users/login'
-    within('#new_user') do
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: password || user.password
-    end
-    click_button 'Log in'
+  def sign_in_as(user, password = nil, path_for = 'users')
+    visit "#{path_for}/login"
+
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: password || user.password
+
+    login_btn = path_for == 'users' ? 'Log in' : 'Login'
+
+    click_button login_btn
   end
 
   def sign_out_as_user

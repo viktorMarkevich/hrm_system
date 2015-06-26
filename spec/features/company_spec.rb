@@ -7,7 +7,7 @@ describe 'Managing companies', type: :feature do
     @user = create(:user)
     region = create(:region, name: 'Запорожье')
     @company = create(:company, name: 'TruedCo', region_id: region.id)
-    sign_in_as(@user)
+    sign_in_as(@user, nil)
   end
 
   scenario 'should have "active current" class on company index page' do
