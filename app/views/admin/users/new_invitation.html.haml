@@ -1,0 +1,20 @@
+%h2 Send invitation
+= form_for @user, url: send_invitation_admin_users_path do |f|
+  %table{ style: 'width: 50%' }
+    %tr
+      %td= f.label :email
+      %td= f.text_field :email, required: true
+    %tr
+      %td= f.label :first_name
+      %td= f.text_field :first_name, required: true
+    %tr
+      %td= f.label :last_name
+      %td= f.text_field :last_name, required: true
+    %tr
+      %td= f.label :post
+      %td= f.text_field :post, required: true
+    %tr
+      %td= f.label :region_id
+      %td= f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }, @user.region_id), {})
+
+  = f.submit  'Send an Invitation'
