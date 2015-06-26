@@ -43,12 +43,16 @@ describe UsersController, type: :controller do
 
     before(:each) do
       @region = create(:region, name: 'Запорожье')
-      @user_attrs = attributes_for :user, region: @region.name
-      put :update, id: @user.id, user: @user_attrs
-      @user.reload
+      @user_attrs = attributes_for(:user)
     end
 
     context 'when successfull' do
+      before(:each) do
+        @user_attrs = attributes_for :user
+        put :update, id: @user.id, user: @user_attrs
+        @user.reload
+      end
+
       it 'redirects to user page' do
         expect(response).to redirect_to(user_path(@user))
       end
@@ -64,6 +68,10 @@ describe UsersController, type: :controller do
         expect(response).to have_http_status(200)
       end
 
+      it 'has updated region_id' do
+        put :update, id: @user.id, user: { region_id: 555 }
+        expect(assigns(:user).region_id).to eq(555)
+      end
     end
 
     context 'when failed' do

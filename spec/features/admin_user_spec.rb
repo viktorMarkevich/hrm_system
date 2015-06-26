@@ -49,6 +49,7 @@ describe 'AdminUser', type: :feature do
   end
 
   scenario 'update User' do
+    pending
     @test_user = create(:user)
     visit "admin/users/#{@test_user.id}/edit"
     fill_in 'user_email', with: 'proba@ppp.ppp'
@@ -77,6 +78,7 @@ describe 'AdminUser', type: :feature do
   end
 
   scenario 'create User' do
+    pending
     @test_user = build(:user)
     visit 'admin/users/new'
     fill_in 'user_email', with: @test_user.email
