@@ -36,7 +36,7 @@ When(/^I fill in vacancy form$/) do
     fill_in('vacancy_name', with: 'Тестер')
     fill_in('vacancy_salary', with: '450')
     choose('vacancy_salary_format_usd')
-    select('Запорожье', from: 'vacancy_region_id')
+    select('Запорожье', from: 'region')
     select('status1', from: 'Статус')
     fill_in('vacancy_languages', with: 'Английский, Русский')
     fill_in('vacancy_requirements', with: 'Ответственный')
@@ -74,7 +74,7 @@ end
 
 When(/^I change region in edit form$/) do
   within('.edit_vacancy') do
-    select('Киев', from: 'vacancy_region_id')
+    select('Киев', from: 'region')
   end
 end
 

@@ -74,8 +74,12 @@ RSpec.describe CompaniesController, type: :controller do
   end
 
   context '#create' do
+    before(:each) do
+      @region = create(:region, name: 'Запорожье')
+    end
+
     context 'when successfull' do
-      let(:company_attrs) { { company: attributes_for(:company) } }
+      let(:company_attrs) { { company: attributes_for(:company), region: @region.name } }
 
       it 'creates new Company object' do
         expect { post :create, company_attrs }.to change(Company, :count).by(1)
@@ -85,12 +89,25 @@ RSpec.describe CompaniesController, type: :controller do
         post :create, company_attrs
         expect(response).to redirect_to companies_path
       end
+
+      it 'has assigned region' do
+        post :create, company_attrs
+        expect(assigns(:company).region.name).to eq(@region.name)
+      end
     end
 
-    context 'when  failed' do
+    context 'when failed' do
       let(:company_attrs) { { company: attributes_for(:company, region_id: nil) } }
 
-      it %q{ doesn't create record on failing } do
+      it 'is invalid without region_id' do
+        expect(build(:company, region_id: nil)).to_not be_valid
+      end
+
+      it 'is invalid without name' do
+        expect(build(:company, name: nil)).to_not be_valid
+      end
+
+      it %q{ doesn't create without region_id } do
         expect{ post :create, company_attrs }.to change(Company, :count).by(0)
       end
 
@@ -102,16 +119,17 @@ RSpec.describe CompaniesController, type: :controller do
   end
 
   context '#update' do
-    let(:company_attrs) { { name: 'facebook', url: 'http://www.facebook.com.ua' } }
-
     before(:each) do
       @company = create(:company)
-
-      put :update, id: @company.id, company: company_attrs
-      @company.reload
     end
 
     context 'when successfull' do
+      let(:company_attrs) { { name: 'facebook', url: 'http://www.facebook.com.ua' } }
+
+      before(:each) do
+        put :update, id: @company.id, company: company_attrs
+        @company.reload
+      end
 
       it 'has update name and url' do
         expect(@company.name).to eql company_attrs[:name]
@@ -122,5 +140,18 @@ RSpec.describe CompaniesController, type: :controller do
         expect(response).to redirect_to company_path(@company)
       end
     end
+
+    context 'when failed' do
+      it 'renders "edit" template without name' do
+        put :update, id: @company.id, company: { name: nil }
+        expect(response).to render_template('edit')
+      end
+
+      it 'renders "edit" template without region_id' do
+        put :update, id: @company.id, company: { region_id: nil }
+        expect(response).to render_template('edit')
+      end
+    end
+
   end
 end

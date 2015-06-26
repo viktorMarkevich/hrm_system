@@ -27,7 +27,7 @@
             = f.text_field :post, class: 'form-control'
           .form-group
             = f.label :region_id, 'Регион'
-            = f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }, @user.region_id), {}, class: 'form-control')
+            = select_tag(:region,  options_for_select(Region::NAMES, @user.region_name))
           .form-group
             = f.label :skype
             = f.text_field :skype, class: 'form-control'

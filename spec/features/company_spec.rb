@@ -17,12 +17,13 @@ describe 'Managing companies', type: :feature do
   end
 
   scenario 'creates new company' do
-
     visit new_company_path
+
     within '#new_company' do
       fill_in 'company_name', with: 'Company 777'
       fill_in 'company_url', with: 'http://www.facebook.com/'
-      select 'Запорожье', from: 'company_region_id'
+      select 'Запорожье', from: 'region'
+      fill_in 'company_description', with: 'Descriptive text'
       click_button 'Создать'
     end
     expect(page).to have_content 'Компания была успешно создана.'

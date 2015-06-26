@@ -5,7 +5,6 @@ describe 'AdminUser', type: :feature do
   before :each do
     @admin_user = create(:admin_user)
     @user = create(:user)
-    create(:region)
     login(@admin_user)
   end
 
@@ -53,7 +52,7 @@ describe 'AdminUser', type: :feature do
     visit "admin/users/#{test_user.id}/edit"
     fill_in 'user_email', with: 'proba@ppp.ppp'
     click_button 'Update User'
-    expect(page).to have_content 'User was successfully updated.'
+    expect(page).to have_content 'Пользователь успешно обновлен.'
   end
 
   scenario 'create AdminUser' do
@@ -77,12 +76,15 @@ describe 'AdminUser', type: :feature do
   end
 
   scenario 'create User' do
+    pending 'найти способ выбрать значение из селект меню'
+    create :region, name: 'Запорожье'
     test_user = build(:user)
     visit 'admin/users/new'
     fill_in 'user_email', with: test_user.email
     fill_in 'user_first_name', with: test_user.first_name
     fill_in 'user_last_name', with: test_user.last_name
     fill_in 'user_post', with: test_user.post
+    select('Запорожье', from: 'user_region_id')
     click_button 'Create User'
     expect(page).to have_content 'User was successfully created.'
   end

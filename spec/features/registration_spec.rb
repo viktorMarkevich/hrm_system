@@ -11,7 +11,6 @@ describe 'changing registration data', type: :feature do
 
   scenario 'edit user password' do
     visit root_path
-
     click_link @user.email
     click_link 'хочу изменить свой пароль'
 

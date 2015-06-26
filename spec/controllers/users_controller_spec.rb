@@ -42,8 +42,10 @@ describe UsersController, type: :controller do
     end
   end
 
+
   describe 'check update action' do
     let(:user_attrs) { attributes_for :user }
+    let(:region) { create :region }
 
     before(:each) do
       put :update, id: user, user: user_attrs
@@ -58,6 +60,11 @@ describe UsersController, type: :controller do
       it 'has updated email and skype' do
         expect(user.email).to eql user_attrs[:email]
         expect(user.skype).to eql user_attrs[:skype]
+      end
+
+      it 'has updated region_id' do
+        put :update, id: user, user: { region_id: region.id }
+        expect(assigns(:user).region_id).to eq(region.id)
       end
     end
 
