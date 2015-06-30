@@ -47,9 +47,8 @@ RSpec.describe Admin::UsersController, type: :controller do
 
     context 'when failed' do
       it 'should redirect after failing' do
-        pending
         put :update, id: @user.id, user: (attributes_for :invalid_user)
-        expect(response).to redirect_to(admin_user_path(@user))
+        expect(response).to render_template('edit')
       end
     end
   end
