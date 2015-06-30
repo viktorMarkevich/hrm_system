@@ -46,9 +46,6 @@ ActiveAdmin.register User do
       f.input :last_name
       f.input :post
       f.input :region, as: :select, collection: Region::NAMES, selected: resource.region_name, input_html: { name: 'region' }
-      f.input :skype
-      f.input :phone
-      f.input :avatar
     end
     f.actions
   end

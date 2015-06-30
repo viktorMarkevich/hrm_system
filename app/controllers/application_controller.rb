@@ -5,6 +5,12 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
 
+  layout :select_layout
+
+  def select_layout
+    devise_controller? ? 'authorization' : 'application'
+  end
+
   protected
 
   def configure_devise_permitted_parameters

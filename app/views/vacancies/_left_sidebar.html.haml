@@ -6,6 +6,6 @@
     - if status.present?
       %code= "Статус: #{status}"
     -else
-      %code= "Статус: в процессе"
+      %code= 'Статус: в процессе'
     %br
-    %code= "Ответственный: #{current_user.first_name} #{current_user.last_name}"
+    %code= "Ответственный: #{full_name_for(current_user)}"

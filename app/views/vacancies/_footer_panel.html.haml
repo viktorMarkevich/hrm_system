@@ -1,0 +1,22 @@
+- content_for :footer_panel do
+  .panel.panel-body
+    .row
+      .col-xs-12
+        .panel.panel-info
+          .panel-heading.panel-title
+            = 'Работа с кандидатами'
+            = link_to 'Добавить кандидатов к этой вакансии', '#', class: 'btn btn-default'
+          .panel-body
+            .row
+              .col-xs-2
+                .btn-group
+                  .btn-group-vertical
+                    = link_to 'Выбранные', '#', class: 'btn btn-default'
+                    = link_to 'Длинный список', '#', class: 'btn btn-default'
+                    = link_to 'Короткий список', '#', class: 'btn btn-default'
+                    = link_to 'Собеседование', '#', class: 'btn btn-default'
+                    = link_to 'Отклонено', '#', class: 'btn btn-default'
+                    = link_to 'Принято', '#', class: 'btn btn-default'
+                    = link_to 'Отказался', '#', class: 'btn btn-default'
+              .col-xs-10
+                sd
