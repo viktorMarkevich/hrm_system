@@ -19,7 +19,7 @@ describe 'changing registration data', type: :feature do
       fill_in 'user_password_confirmation', with: 'updated_password'
       fill_in 'user_current_password', with: @user.password
     end
-    click_button 'Update'
+    click_button 'Изменить'
     expect(page).to have_content('Your account has been updated successfully.')
     click_link 'Выйти'
   end
