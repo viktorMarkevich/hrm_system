@@ -22,10 +22,10 @@ RSpec.describe Admin::UsersController, type: :controller do
   end
 
   context '#update' do
-    let(:user_attrs) { attributes_for :user }
+    let(:user_attrs) { attributes_for :user, region_id: 2 }
 
     before(:each) do
-      put :update, id: @user.id, user: user_attrs
+      put :update, id: @user, user: user_attrs
       @user.reload
     end
 
