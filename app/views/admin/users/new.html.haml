@@ -1,94 +1,20 @@
-!!!
-%html
-  %head
-    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-type"}/
-    %title New User | Faceit
-    %link{:href => "/assets/active_admin.self-1d73cb85fda35141592c2e1a02ad40580c06a5489801600574c1140ce2626ba3.css?body=1", :media => "screen", :rel => "stylesheet"}/
-    %link{:href => "/assets/active_admin/print.self-7da9f0dc647678a402205beed6164333673bc62bd58a2e5013e50c77e9234e75.css?body=1", :media => "print", :rel => "stylesheet"}/
-    %script{:src => "/assets/jquery.self-d03a5518f45df77341bdbe6201ba3bfa547ebba8ed64f0ea56bfa5f96ea7c074.js?body=1"}
-    %script{:src => "/assets/jquery-ui/core.self-93be4d22eda916787802a64d8f88b52db8a9027d4ccbbc0942625324a7d12d44.js?body=1"}
-    %script{:src => "/assets/jquery-ui/datepicker.self-6267be6d4d0f0e8665be3b4d6ac07f40ba23a32aff8eaa5d1bfc00f76a9eeae7.js?body=1"}
-    %script{:src => "/assets/jquery-ui/widget.self-c1602241ddc51216b58391768667068867b8e15b9efc722befcd25771eda6819.js?body=1"}
-    %script{:src => "/assets/jquery-ui/button.self-4d4f21ba77bbf8cc08ae65e2b6329a7a1b952b32c3ba7bffca8313e7e8c93d0c.js?body=1"}
-    %script{:src => "/assets/jquery-ui/mouse.self-c513294e8da73f31f84ba3ef11e2a1180a47faea0eb2fea4a53fc26153dd21fd.js?body=1"}
-    %script{:src => "/assets/jquery-ui/draggable.self-debcca3d0d5d9afe2fe91a6fd1aebdb41ca0a55f2f6017352e6c02b6d8a6e64c.js?body=1"}
-    %script{:src => "/assets/jquery-ui/position.self-e693ced4ecfa1a276f0b794f32c1d30d792764b08788bf68ecfa3b388c291333.js?body=1"}
-    %script{:src => "/assets/jquery-ui/resizable.self-60b870565f3cd62982c1907828119bb51f42ec8228d5e23868153edc3abc685c.js?body=1"}
-    %script{:src => "/assets/jquery-ui/dialog.self-5a6c7980dfa3f6b74445b0f4b20eed799ee65363163500ed7f032e603d6b022d.js?body=1"}
-    %script{:src => "/assets/jquery-ui/sortable.self-df2d80a36f9dfbe0facc596ccd92af83ca50d38e4cd6a84810aaf5d40b8cd181.js?body=1"}
-    %script{:src => "/assets/jquery-ui/tabs.self-dc07b44bf1b926c8d28ccd2658e30933881e5329348caf70cf305c3943f6bbd7.js?body=1"}
-    %script{:src => "/assets/jquery_ujs.self-8e98a7a072a6cee1372d19fff9ff3e6aa1e39a37d89d6f06861637d061113ee7.js?body=1"}
-    %script{:src => "/assets/active_admin/base.self-ab2cb3098b53fe7d229937d768d701e8f4013f2a5aea7988d8f2149fa40426db.js?body=1"}
-    %script{:src => "/assets/active_admin/lib/batch_actions.self-10ee4c07784b00259ca97a02c4e7fb53c1b27ebe5653a3b910426b4ea0941250.js?body=1"}
-    %script{:src => "/assets/active_admin/lib/checkbox-toggler.self-ffdc88fc1b3b6bcfac3e314f191fc486175ab5a4b5daab87af6bd208cb483bd8.js?body=1"}
-    %script{:src => "/assets/active_admin/lib/dropdown-menu.self-161387c54d1640bd9f174301b77d73ea88ce6d7daf0d7356bd50b4d0143d1b72.js?body=1"}
-    %script{:src => "/assets/active_admin/lib/flash.self-1f5bc4cd1a754a4a8cc8426c39e010bbd40c94351b30f9f636bd825f91d1659c.js?body=1"}
-    %script{:src => "/assets/active_admin/lib/has_many.self-ece319debdc01ca5096ae8ac6c130ffc0decab382543b4b94e18591375d3d3bb.js?body=1"}
-    %script{:src => "/assets/active_admin/lib/modal_dialog.self-84d8cbe8c39a3a93a115c608dd8d13ee77513b4d6cbf36ccdd83c8517e567a94.js?body=1"}
-    %script{:src => "/assets/active_admin/lib/per_page.self-b17e5cedf398d4a11ce64b7f85759b00b469bd20090c9cc3591698232cd5b5cc.js?body=1"}
-    %script{:src => "/assets/active_admin/lib/popover.self-712c26739bba281c3dfa5a56a0a2ba29e951cdfe6626e66d0c4afe8b05c6f624.js?body=1"}
-    %script{:src => "/assets/active_admin/lib/table-checkbox-toggler.self-f5200d732ec9ffd4ee8fd1fe11524ad7b54a67f6c0ef447a29d119ece2dcecdb.js?body=1"}
-    %script{:src => "/assets/active_admin/ext/jquery-ui.self-f96f2ec2a32c4bc4da4292cc74bddeca0bb223d81a421c98c4d613632860945e.js?body=1"}
-    %script{:src => "/assets/active_admin/ext/jquery.self-da8dafbbe883092bcae73f35a8caf4ae6170fe7d8130ae7039a233f9b509c757.js?body=1"}
-    %script{:src => "/assets/active_admin/application.self-3ee24c8b7a313a28f1352e08dc4dc31bd7d4489b6ad5f6331f1f42bbded33a50.js?body=1"}
-    %script{:src => "/assets/active_admin.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1"}
+%h2 Send invitation
+= form_for @user, url: '/admin/users/send_invitation' do |f|
+  %table{ style: 'width: 50%' }
+    %tr
+      %td= f.label :email
+      %td= f.text_field :email, required: true
+    %tr
+      %td= f.label :first_name
+      %td= f.text_field :first_name, required: true
+    %tr
+      %td= f.label :last_name
+      %td= f.text_field :last_name, required: true
+    %tr
+      %td= f.label :post
+      %td= f.text_field :post, required: true
+    %tr
+      %td= f.label :region_id
+      %td= f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }, @user.region_id), {})
 
-  %body.new.admin_users.active_admin.logged_in.admin_namespace
-    #wrapper
-      #header.header
-        %h1#site_title.site_title Faceit
-        %ul#tabs.header-item.tabs
-          %li#dashboard
-            %a{:href => "/admin/dashboard"} Dashboard
-          %li#admin_users
-            %a{:href => "/admin/admin_users"} Admin Users
-          %li#comments
-            %a{:href => "/admin/comments"} Comments
-          %li#users.current
-            %a{:href => "/admin/users"} Users
-        %ul#utility_nav.header-item.tabs
-          %li#current_user
-            %a{:href => "/admin/admin_users/#{current_admin_user.id}"} #{current_admin_user.email}
-          %li#logout
-            %a{"data-method" => "get", :href => "/admin/logout"} Logout
-      #title_bar.title_bar
-        #titlebar_left
-          %span.breadcrumb
-            %a{:href => "/admin"} Admin
-            %span.breadcrumb_sep /
-            %a{:href => "/admin/users"} Users
-            %span.breadcrumb_sep /
-          %h2#page_title New User
-        #titlebar_right
-          .action_items
-            %span.action_item
-              %a{:href => "/admin/users/new"} New User
-      .flashes
-      #active_admin_content.without_sidebar
-        #main_content_wrapper
-          #main_content
-            %h2 Send invitation
-            = form_for @user, url: '/admin/users/send_invitation' do |f|
-              %table{ style: 'width: 50%' }
-                %tr
-                  %td= f.label :email
-                  %td= f.text_field :email, required: true
-                %tr
-                  %td= f.label :first_name
-                  %td= f.text_field :first_name, required: true
-                %tr
-                  %td= f.label :last_name
-                  %td= f.text_field :last_name, required: true
-                %tr
-                  %td= f.label :post
-                  %td= f.text_field :post, required: true
-                %tr
-                  %td= f.label :region_id
-                  %td= f.select(:region_id,  options_for_select(Region.all.map{ |r| [r.name, r.id] }, @user.region_id), {})
-
-              = f.submit  'Send an Invitation'
-      #footer.footer
-        %p
-          Powered by
-          %a{:href => "http://www.activeadmin.info"} Active Admin
-          1.0.0.pre1
+  = f.submit  'Send an Invitation'

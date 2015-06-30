@@ -6,9 +6,12 @@ ActiveAdmin.register User do
 
   collection_action :send_invitation, method: :post do
     @user = User.invite!(permitted_params[:user])
-    if @user.errors.empty?
+    if @user.valid? && @user.errors.empty?
       flash[:notice] = 'User has been successfully invited.'
       redirect_to admin_users_path
+    else
+      flash[:error] = 'is invalid'
+      redirect_to new_admin_user_path
     end
   end
 
@@ -42,6 +45,13 @@ ActiveAdmin.register User do
       f.input :phone
       f.input :avatar
       f.actions
+    end
+  end
+
+  controller do
+    def new
+      @user = User.new
+      render 'new', layout: 'active_admin'
     end
   end
 
