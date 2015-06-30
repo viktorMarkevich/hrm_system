@@ -51,19 +51,8 @@ ActiveAdmin.register User do
       render 'new', layout: 'active_admin'
     end
   end
+
   controller do
-
-    def create
-      region = Region.find_or_create(params[:region])
-      @user = region.build_user(permitted_params[:user])
-
-      if @user.save
-        flash[:notice] = 'Пользователь успешно создан.'
-        redirect_to admin_users_path
-      else
-        render 'new'
-      end
-    end
 
     def update
       @user = User.find(params[:id])
