@@ -5,19 +5,14 @@ ActiveAdmin.register User do
 
   actions :all
 
-  action_item(:new_invitation) do
-    link_to 'Invite New User', new_invitation_admin_users_path
-  end
-
-  collection_action :new_invitation do
-    @user = User.new
-  end
-
   collection_action :send_invitation, method: :post do
     @user = User.invite!(permitted_params[:user])
-    if @user.errors.empty?
+    if @user.valid? && @user.errors.empty?
       flash[:notice] = 'User has been successfully invited.'
       redirect_to admin_users_path
+    else
+      flash[:error] = 'is invalid'
+      redirect_to new_admin_user_path
     end
   end
 
@@ -40,8 +35,6 @@ ActiveAdmin.register User do
   form do |f|
     f.inputs 'User Details' do
       f.input :email
-      f.input :password, input_html: { value: '123456' }, as: :hidden
-      f.input :password_confirmation, input_html: { value: '123456' }, as: :hidden
       f.input :first_name
       f.input :last_name
       f.input :post
@@ -50,6 +43,12 @@ ActiveAdmin.register User do
     f.actions
   end
 
+  controller do
+    def new
+      @user = User.new
+      render 'new', layout: 'active_admin'
+    end
+  end
   controller do
 
     def create

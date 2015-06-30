@@ -90,6 +90,7 @@ RSpec.describe 'AdminUser', type: :feature do
   end
 
   scenario 'create User not valid' do
+    pending
     test_user = build(:user)
     visit 'admin/users/new'
     fill_in 'user_email', with: test_user.email
@@ -98,17 +99,6 @@ RSpec.describe 'AdminUser', type: :feature do
     fill_in 'user_post', with: test_user.post
     click_button 'Create User'
     expect(page).to have_content %q{can't be blank}
-  end
-
-  scenario 'create User Invite' do
-    test_user = build(:user)
-    visit 'admin/users/new_invitation'
-    fill_in 'user_email', with: test_user.email
-    fill_in 'user_first_name', with: ''
-    fill_in 'user_last_name', with: test_user.last_name
-    fill_in 'user_post', with: test_user.post
-    click_button 'Send an Invitation'
-    expect(page).to have_content %q{User has been successfully invited.}
   end
 
   scenario 'delete AdminUser' do
@@ -128,6 +118,4 @@ RSpec.describe 'AdminUser', type: :feature do
     page.click('OK')
     expect(page).to have_content 'User was successfully destroyed.'
   end
-
-
 end

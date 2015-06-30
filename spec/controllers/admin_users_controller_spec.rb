@@ -21,18 +21,6 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
   end
 
-  context '#new_invitation' do
-    let(:user) { create(:user) }
-
-    before(:each) do
-      get :new_invitation
-    end
-
-    it 'reponds with HTTP status 200' do
-      expect(response).to have_http_status(200)
-    end
-  end
-
   context '#update' do
     let(:user_attrs) { attributes_for :user }
 
