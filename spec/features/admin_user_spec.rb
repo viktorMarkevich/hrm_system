@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'AdminUser', type: :feature do
-
   before :each do
     @admin_user = create(:admin_user)
     @user = create(:user)
@@ -76,46 +75,39 @@ RSpec.describe 'AdminUser', type: :feature do
   end
 
   scenario 'create User' do
-    pending 'найти способ выбрать значение из селект меню'
-    create :region, name: 'Запорожье'
     test_user = build(:user)
     visit 'admin/users/new'
     fill_in 'user_email', with: test_user.email
     fill_in 'user_first_name', with: test_user.first_name
     fill_in 'user_last_name', with: test_user.last_name
     fill_in 'user_post', with: test_user.post
-    select('Запорожье', from: 'user_region_id')
-    click_button 'Create User'
-    expect(page).to have_content 'User was successfully created.'
+    select('Запорожье', from: 'region')
+    click_button 'Send an Invitation'
+    expect(page).to have_content 'User has been successfully invited.'
   end
 
   scenario 'create User not valid' do
-    pending
     test_user = build(:user)
     visit 'admin/users/new'
-    fill_in 'user_email', with: test_user.email
-    fill_in 'user_first_name', with: ''
+    fill_in 'user_email', with: 'invalid_email'
+    fill_in 'user_first_name', with: test_user.first_name
     fill_in 'user_last_name', with: test_user.last_name
     fill_in 'user_post', with: test_user.post
-    click_button 'Create User'
-    expect(page).to have_content %q{can't be blank}
+    select('Запорожье', from: 'region')
+    click_button 'Send an Invitation'
+    expect(page).to have_content 'is invalid'
   end
 
   scenario 'delete AdminUser' do
-    pending
     test_user = create(:admin_user)
     visit "admin/admin_users/#{test_user.id}"
     click_link 'Delete Admin User'
-    click_button('OK')
     expect(page).to have_content 'Admin user was successfully destroyed.'
   end
 
-  scenario 'delete User' do
-    pending
+  scenario 'delete User'do
     visit "admin/users/#{@user.id}"
     click_link 'Delete User'
-    page.evaluate_script('data-confirm')
-    page.click('OK')
     expect(page).to have_content 'User was successfully destroyed.'
   end
 end
