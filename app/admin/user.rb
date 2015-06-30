@@ -14,7 +14,7 @@ ActiveAdmin.register User do
       redirect_to admin_users_path
     else
       flash[:error] = 'is invalid'
-      redirect_to new_admin_user_path
+      render 'new'
     end
   end
 
