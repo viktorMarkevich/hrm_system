@@ -38,6 +38,10 @@ RSpec.describe Admin::UsersController, type: :controller do
         expect(@user.email).to eql user_attrs[:email]
       end
 
+      it 'has updated region' do
+        expect(@user.region_id).to eql user_attrs[:region_id]
+      end
+
       it 'responds successfully with HTTP 200 status code' do
         put :edit, id: @user.id, user: user_attrs
         expect(response).to be_success

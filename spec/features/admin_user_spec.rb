@@ -4,7 +4,8 @@ RSpec.describe 'AdminUser', type: :feature do
 
   before :each do
     @admin_user = create(:admin_user)
-    @user = create(:user)
+    @region = create(:region)
+    @user = create(:user, region_id: @region.id)
     sign_in_as(@admin_user, nil, 'admin')
   end
 
@@ -47,12 +48,20 @@ RSpec.describe 'AdminUser', type: :feature do
     expect(page).to have_content 'Admin user was successfully updated.'
   end
 
-  scenario 'update User' do
+  scenario 'update User email' do
     test_user = create(:user)
     visit "admin/users/#{test_user.id}/edit"
     fill_in 'user_email', with: 'proba@ppp.ppp'
     click_button 'Update User'
     expect(page).to have_content 'Пользователь успешно обновлен.'
+  end
+
+  scenario 'update User region' do
+    visit "admin/users/#{@user.id}/edit"
+    find('#user_region_id').find(:xpath, 'option[3]').select_option
+    click_button 'Update User'
+    expect(page).to have_content 'Пользователь успешно обновлен.'
+    expect(page).to have_content 'Донецк'
   end
 
   scenario 'create AdminUser' do
