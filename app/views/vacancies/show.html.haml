@@ -10,7 +10,7 @@
         %tbody
           %tr
             %th Зарплата:
-            %td= "#{display_field_value_for(@vacancy.salary)} #{@vacancy.salary_format if @vacancy.salary.present?}"
+            %td= (@vacancy.salary != "0" && @vacancy.salary_format != "По договоренности") ? "#{@vacancy.salary}  #{@vacancy.salary_format}" : "По договоренности"
           %tr
             %th Регион:
             %td= @vacancy.region.try(:name)
