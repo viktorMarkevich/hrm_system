@@ -6,16 +6,17 @@ RSpec.describe Sticker, type: :model do
     it 'has valid factory' do
       expect(build(:sticker)).to be_valid
     end
-
-    it 'is valid without description' do
-      expect(build(:sticker, description: nil)).to be_valid
-    end
   end
 
   context 'when invalid' do
     it 'is invalid without title' do
       untitled_sticker = build(:sticker, title: nil)
       expect(untitled_sticker).to_not be_valid
+    end
+
+    it 'is invalid without description' do
+      withoutdescription_stiker = build(:sticker, description: nil)
+      expect(withoutdescription_stiker).to_not be_valid
     end
 
     it 'has error message when title is too short' do
