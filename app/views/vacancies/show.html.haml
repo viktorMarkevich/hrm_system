@@ -19,7 +19,7 @@
             %td= display_field_value_for(@vacancy.languages)
           %tr
             %th Добавлено:
-            %td= full_name_for(current_user)+' '+@vacancy.created_at.to_s
+            %td= "#{full_name_for(current_user)} #{@vacancy.created_at.to_s}"
           %tr
             %th Требования:
             %td= display_field_value_for(@vacancy.requirements)

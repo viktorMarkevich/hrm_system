@@ -10,8 +10,8 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
 
     it 'returned message if nil' do
-      @user = create(:user, skype: nil)
-      expect(helper.display_field_value_for(@user.skype)).to eq('Информация не добавлена')
+      user = create(:user, skype: nil)
+      expect(helper.display_field_value_for(user.skype)).to eq('Информация не добавлена')
     end
   end
 end
