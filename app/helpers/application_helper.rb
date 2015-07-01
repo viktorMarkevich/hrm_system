@@ -8,4 +8,8 @@ module ApplicationHelper
     end
   end
 
+  def display_field_value_for(field)
+    field.nil? || field.empty? ? 'Информация не добавлена' : field
+  end
+
 end
