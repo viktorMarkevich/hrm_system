@@ -1,4 +1,5 @@
 class Candidate < ActiveRecord::Base
+  has_one :image
 
   validates :name, :desired_position, :status, presence: true
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
