@@ -10,24 +10,19 @@
         %tbody
           %tr
             %th Зарплата:
-            %td= @vacancy.salary
+            %td= display_field_value_for(@vacancy.salary)
           %tr
             %th Регион:
             %td= @vacancy.region.try(:name)
           %tr
             %th Языки:
-            %td= @vacancy.languages
+            %td= display_field_value_for(@vacancy.languages)
           %tr
             %th Добавлено:
-            %td Иванов Иван 20-05-2015
+            %td= "#{full_name_for(current_user)} #{@vacancy.created_at.to_s}"
           %tr
             %th Требования:
-            %td
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-              It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-              essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-              and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            %td= display_field_value_for(@vacancy.requirements)
+
 = link_to 'Редактировать', edit_vacancy_path(@vacancy), class: 'btn btn-default'
 = link_to 'Назад', :back, class: 'btn btn-default'

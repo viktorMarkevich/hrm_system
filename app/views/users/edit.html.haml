@@ -23,20 +23,14 @@
             = f.label :email
             = f.email_field :email, class: 'form-control'
           .form-group
-            = f.label :post
-            = f.text_field :post, class: 'form-control'
-          .form-group
-            = f.label :region_id, 'Регион'
-            = select_tag(:region,  options_for_select(Region::NAMES, @user.region_name))
-          .form-group
             = f.label :skype
             = f.text_field :skype, class: 'form-control'
           .form-group
             = f.label :phone
             = f.text_field :phone, class: 'form-control'
           .form-group
-            = f.label :avatar
-            = f.file_field :avatar
+            = f.label :image
+            = f.file_field :image
           .form-group
             = f.button 'Обновить', class: 'btn btn-default'
             = link_to 'Назад', user_path, class: 'btn btn-default'

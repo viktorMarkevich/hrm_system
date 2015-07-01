@@ -12,5 +12,4 @@ class User < ActiveRecord::Base
   validates :first_name, :last_name, :post, :region_id,  presence: true
   validates :skype, uniqueness: true, if: 'skype.present?'
   validates :phone, uniqueness: true, if: 'phone.present?'
-
 end
