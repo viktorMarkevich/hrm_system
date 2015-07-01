@@ -9,55 +9,55 @@
         %tbody
           %tr
             %th День рождения:
-            %td= @candidate.birthday
+            %td= display_field_value_for(@candidate.birthday)
           %tr
             %th Зарплата:
-            %td= "#{@candidate.salary} #{@candidate.salary_format}"
+            %td= "#{display_field_value_for(@candidate.salary)} #{@candidate.salary_format}"
           %tr
             %th Образование:
-            %td= @candidate.education
+            %td= display_field_value_for(@candidate.education)
           %tr
             %th Языки:
-            %td= @candidate.languages
+            %td= display_field_value_for(@candidate.languages)
           %tr
             %th Место проживания:
-            %td= @candidate.city_of_residence
+            %td= display_field_value_for(@candidate.city_of_residence)
           %tr
             %th На должность:
             %td= @candidate.desired_position
           %tr
             %th Опыт:
-            %td= @candidate.experience
+            %td= display_field_value_for(@candidate.experience)
           %tr
             %th Статус:
             %td= @candidate.status
           %tr
             %th Описание:
-            %td= @candidate.description
+            %td= display_field_value_for(@candidate.description)
           %tr
             %th Почта:
-            %td= @candidate.email
+            %td= display_field_value_for(@candidate.email)
           %tr
             %th Телефон:
-            %td= @candidate.phone
+            %td= display_field_value_for(@candidate.phone)
           %tr
             %th Домашняя страница:
-            %td= @candidate.home_page
+            %td= display_field_value_for(@candidate.home_page)
           %tr
             %th Skype:
-            %td= @candidate.skype
+            %td= display_field_value_for(@candidate.skype)
           %tr
             %th Linkedin:
-            %td= @candidate.linkedin
+            %td= display_field_value_for(@candidate.linkedin)
           %tr
             %th Facebook:
-            %td= @candidate.facebook
+            %td= display_field_value_for(@candidate.facebook)
           %tr
             %th Vkontakte:
-            %td= @candidate.vkontakte
+            %td= display_field_value_for(@candidate.vkontakte)
           %tr
             %th Google+:
-            %td= @candidate.google_plus
+            %td= display_field_value_for(@candidate.google_plus)
 
 = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-default'
 = link_to 'Назад', :back, class: 'btn btn-default'

@@ -9,13 +9,13 @@
         %tbody
           %tr
             %th Страница компании:
-            %td= @company.url
+            %td= display_field_value_for(@company.url)
           %tr
             %th Регион:
             %td= @company.region.try(:name)
           %tr
             %th Полная информация:
-            %td= @company.description
+            %td= display_field_value_for(@company.description)
 
 = link_to 'Редактировать', edit_company_path(@company), class: 'btn btn-default'
 = link_to 'Назад', companies_path, class: 'btn btn-default'

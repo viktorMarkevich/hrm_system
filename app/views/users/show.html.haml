@@ -23,10 +23,10 @@
             %td= @user.region.name
           %tr
             %th Skype:
-            %td= @user.skype.present? ? @user.skype : 'Информация не добавлена'
+            %td= display_field_value_for(@user.skype)
           %tr
             %th Телефон:
-            %td= @user.phone.present? ? @user.phone : 'Информация не добавлена'
+            %td= display_field_value_for(@user.phone)
 
 = link_to 'Редактировать', edit_user_path, class: 'btn btn-default'
 = link_to 'Назад', root_path, class: 'btn btn-default'
