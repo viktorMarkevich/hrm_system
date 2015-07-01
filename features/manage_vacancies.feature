@@ -26,3 +26,9 @@ Feature: Manage vacancies
     When I fill form with invalid salary value
     And I press "Создать"
     Then I should see error message
+
+  Scenario: Hide salary input when last pay plan is chosen
+    Given I have logged in user
+    And I am on the new vacancy path
+    When I fill form with salary_format as "По договоренности"
+    Then salary field should disappear

@@ -102,3 +102,13 @@ end
 Then(/^I should see error message$/) do
   expect(page).to have_content('Salary is not a number')
 end
+
+When(/^I fill form with salary_format as "(.*?)"$/) do |arg1|
+  within('#new_vacancy') do
+    choose('vacancy_salary_format__')
+  end
+end
+
+Then(/^salary field should disappear$/) do
+  expect(page).to have_css('#vacancy_salary', visible: false)
+end

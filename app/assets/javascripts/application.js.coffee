@@ -18,7 +18,6 @@
 $(document).ready ->
   # if we on the new vacancy form
   if $('#new_vacancy')
-    $labelSalary = $('label[for="vacancy_salary"]')
     $inputSalary = $('input[name="vacancy[salary]"]')
 
     # by click on a radio button
@@ -28,9 +27,7 @@ $(document).ready ->
         # clear salary value
         $inputSalary.val 0
         # hide label "Зарплата" and salary input field
-        $labelSalary.hide()
         $inputSalary.hide()
       else
         # show label "Зарплата" and salary input field
-        $labelSalary.show()
         $inputSalary.show()
