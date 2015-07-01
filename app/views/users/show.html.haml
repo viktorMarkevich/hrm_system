@@ -19,11 +19,14 @@
             %th Должность:
             %td= @user.post
           %tr
+            %th Регион:
+            %td= @user.region.name
+          %tr
             %th Skype:
-            %td= @user.skype.present? ? @user.skype : 'Поле не заполнено'
+            %td= @user.skype.present? ? @user.skype : 'Информация не добавлена'
           %tr
             %th Телефон:
-            %td= @user.phone.present? ? @user.phone : 'Поле не заполнено'
+            %td= @user.phone.present? ? @user.phone : 'Информация не добавлена'
 
 = link_to 'Редактировать', edit_user_path, class: 'btn btn-default'
 = link_to 'Назад', root_path, class: 'btn btn-default'
