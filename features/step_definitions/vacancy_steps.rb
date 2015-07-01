@@ -81,3 +81,24 @@ end
 Then(/^I should see successfull message$/) do
   expect(page).to have_content('Вакансия успешно обновлена.')
 end
+
+
+Given(/^I am on the new vacancy path$/) do
+  visit new_vacancy_path
+end
+
+When(/^I fill form with invalid salary value$/) do
+  within('#new_vacancy') do
+    fill_in('vacancy_name', with: 'Тестер')
+    fill_in('vacancy_salary', with: 'incorrect value')
+    choose('vacancy_salary_format_usd')
+    select('Запорожье', from: 'region')
+    select('status1', from: 'Статус')
+    fill_in('vacancy_languages', with: 'Английский, Русский')
+    fill_in('vacancy_requirements', with: 'Ответственный')
+  end
+end
+
+Then(/^I should see error message$/) do
+  expect(page).to have_content('Salary is not a number')
+end

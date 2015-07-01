@@ -14,11 +14,14 @@
         = f.label :salary, 'Зарплата:'
         = f.text_field :salary, class: 'form-control'
 
-        = f.radio_button :salary_format, 'usd'
+        = f.radio_button :salary_format, 'USD', checked: true
         = f.label :salary_format, 'USD'
         %br
-        = f.radio_button :salary_format, 'uah'
+        = f.radio_button :salary_format, 'UAH'
         = f.label :salary_format, 'UAH'
+        %br
+        = f.radio_button :salary_format, 'По договоренности'
+        = f.label :salary_format, 'По договоренности'
       .form-group
         = f.label :region_id, 'Регион:'
         = select_tag(:region,  options_for_select(Region::NAMES, @vacancy.region_name), class: 'form-control')

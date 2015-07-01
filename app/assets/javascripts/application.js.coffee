@@ -14,3 +14,23 @@
 #= require jquery_ujs
 #= require twitter/bootstrap
 # require_tree .
+
+$(document).ready ->
+  # if we on the new vacancy form
+  if $('#new_vacancy')
+    $labelSalary = $('label[for="vacancy_salary"]')
+    $inputSalary = $('input[name="vacancy[salary]"]')
+
+    # by click on a radio button
+    $('input[name="vacancy[salary_format]"]').click ->
+      # if we check "По договоренности"
+      if $(this).val() is 'По договоренности'
+        # clear salary value
+        $inputSalary.val 0
+        # hide label "Зарплата" and salary input field
+        $labelSalary.hide()
+        $inputSalary.hide()
+      else
+        # show label "Зарплата" and salary input field
+        $labelSalary.show()
+        $inputSalary.show()
