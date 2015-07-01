@@ -18,16 +18,24 @@ RSpec.describe Vacancy, type: :model do
       expect(unnamed_vacancy).to_not be_valid
     end
 
-    it "name can't be blank" do
+    it %q{ name can't be blank } do
       expect(build(:vacancy, name: '')).to_not be_valid
     end
 
-    it "region can't be blank" do
+    it %q{ region can't be blank } do
       expect(build(:vacancy, region_id: nil)).to_not be_valid
     end
 
-    it "status can't be blank" do
+    it %q{ status can't be blank } do
       expect(build(:vacancy, status: '')).to_not be_valid
+    end
+
+    it %q{ invalid if salary isn't numeric } do
+      expect(build(:vacancy, salary: '1000 usd')).to_not be_valid
+    end
+
+    it 'has only integer value' do
+      expect(build(:vacancy,  salary: '1000.5')).to_not be_valid
     end
 
   end
