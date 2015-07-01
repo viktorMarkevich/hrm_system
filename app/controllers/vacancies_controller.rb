@@ -22,7 +22,7 @@ class VacanciesController < ApplicationController
 
   def create
     region = Region.find_or_create(params[:region])
-    @vacancy = region.build_vacancy(vacancy_params)
+    @vacancy = region.build_vacancy(vacancy_params.merge(user_id: current_user.id))
 
     if @vacancy.save
       flash[:notice] = 'Вакансия была успешно создана.'
@@ -54,7 +54,6 @@ class VacanciesController < ApplicationController
       )
     end
 
-  
     def find_vacancy
       @vacancy = Vacancy.find(params[:id])
     end

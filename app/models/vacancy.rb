@@ -2,6 +2,11 @@ class Vacancy < ActiveRecord::Base
   include RegionSupporter
 
   belongs_to :region
-  validates :name, :region_id, :status, presence: true
+  belongs_to :user
+  validates :name, :region_id, :status, :user_id, presence: true
+
+  def creator
+    UsersController.helpers.full_name_for(User.find(self.user_id))
+  end
 
 end

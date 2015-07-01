@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   include RegionSupporter
 
   belongs_to :region
+  has_many :vacancies
 
   devise :invitable, :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :registerable
 

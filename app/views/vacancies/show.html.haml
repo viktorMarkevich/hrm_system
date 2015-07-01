@@ -10,7 +10,7 @@
         %tbody
           %tr
             %th Зарплата:
-            %td= display_field_value_for(@vacancy.salary)
+            %td= "#{display_field_value_for(@vacancy.salary)} #{@vacancy.salary_format if @vacancy.salary.present?}"
           %tr
             %th Регион:
             %td= @vacancy.region.try(:name)
@@ -19,7 +19,7 @@
             %td= display_field_value_for(@vacancy.languages)
           %tr
             %th Добавлено:
-            %td= "#{full_name_for(current_user)} #{@vacancy.created_at.to_s}"
+            %td= "#{@vacancy.creator} #{@vacancy.created_at.strftime('%F')}"
           %tr
             %th Требования:
             %td= display_field_value_for(@vacancy.requirements)
