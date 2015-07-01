@@ -14,7 +14,7 @@
         = f.text_field :name, class: 'form-control'
       .form-group
         = f.label :salary, 'Зарплата:'
-        = f.text_field :salary, class: 'form-control', placeholder: 1000
+        = f.text_field :salary, class: 'form-control', placeholder: 'Введите только цифры, например: 1000'
       .form-group
         = f.radio_button :salary_format, 'USD', checked: true
         = f.label :salary_format, 'USD'
