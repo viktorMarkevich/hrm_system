@@ -1,3 +1,5 @@
+= javascript_include_tag 'stickers'
+
 = form_for @sticker do |f|
   - if @sticker.errors.any?
     %h2 Возникшие ошибки:
@@ -5,10 +7,10 @@
       - @sticker.errors.full_messages.each do |message|
         %li
           = message
-  .form-group
+  .form-group.sticker_title
     = f.label 'Тема'
     = f.text_field :title, class: 'form-control'
-  .form-group
+  .form-group.sticker_description
     = f.label 'Описание'
     = f.text_area :description, class: 'form-control'
   .form-group
