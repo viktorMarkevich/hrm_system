@@ -8,7 +8,6 @@ $(document).ready ->
       # if we check "По договоренности"
       if $(this).val() is 'По договоренности'
         # clear salary value
-        $inputSalary.val 1000
         # hide label "Зарплата" and salary input field
         $inputSalary.hide()
       else

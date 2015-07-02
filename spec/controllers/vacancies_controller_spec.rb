@@ -7,6 +7,20 @@ RSpec.describe VacanciesController, type: :controller do
     sign_in user
   end
 
+  context '#index' do
+    before(:each) do
+      get :index
+    end
+
+    it 'responds with HTTP 200 status' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders template "index"' do
+      expect(response).to render_template('index')
+    end
+  end
+
   context '#new' do
     before(:each) do
       get :new
@@ -27,6 +41,7 @@ RSpec.describe VacanciesController, type: :controller do
 
   context '#create' do
     before(:each) do
+      @user = create(:user)
       @region = create(:region, name: 'Запорожье')
     end
 
@@ -42,9 +57,10 @@ RSpec.describe VacanciesController, type: :controller do
         expect(response).to redirect_to vacancies_path
       end
 
-      it 'has assigned region' do
+      it 'has assigned region and creator' do
         post :create, vacancy_attrs
         expect(assigns(:vacancy).region.name).to eq(@region.name)
+        expect(assigns(:vacancy).creator.last_name).to eq(@user.last_name)
       end
     end
 
@@ -78,7 +94,7 @@ RSpec.describe VacanciesController, type: :controller do
     let(:vacancy) { create(:vacancy) }
 
     before(:each) do
-      get :edit, id: vacancy.id
+      get :edit, id: vacancy
     end
 
     it 'responds with HTTP 200 status' do
@@ -95,8 +111,7 @@ RSpec.describe VacanciesController, type: :controller do
 
     before(:each) do
       @vacancy = create(:vacancy)
-
-      put :update, id: @vacancy.id, vacancy: vacancy_attrs
+      put :update, id: @vacancy, vacancy: vacancy_attrs
       @vacancy.reload
     end
 
@@ -113,17 +128,12 @@ RSpec.describe VacanciesController, type: :controller do
 
     context 'when failed' do
       it 'renders "edit" template without name' do
-        put :update, id: @vacancy.id, vacancy: { name: nil }
-        expect(response).to render_template('edit')
-      end
-
-      it 'renders "edit" template without region_id' do
-        put :update, id: @vacancy.id, vacancy: { region_id: nil }
+        put :update, id: @vacancy, vacancy: { name: nil }
         expect(response).to render_template('edit')
       end
 
       it 'renders "edit" without status' do
-        put :update, id: @vacancy.id, vacancy: { status: nil }
+        put :update, id: @vacancy, vacancy: { status: nil }
         expect(response).to render_template('edit')
       end
     end
@@ -134,7 +144,7 @@ RSpec.describe VacanciesController, type: :controller do
     let(:vacancy) { create(:vacancy)}
 
     before(:each) do
-      get :show, id: vacancy.id
+      get :show, id: vacancy
     end
 
     it 'responds with HTTP 200 status code' do
@@ -147,5 +157,3 @@ RSpec.describe VacanciesController, type: :controller do
   end
 
 end
-
-

@@ -2,6 +2,7 @@
 
 Given(/^I have logged in user$/) do
   User.create(
+      id: 1,
       email: 'user@mail.com',
       password: 'password',
       first_name: 'Vasya',
@@ -63,7 +64,8 @@ Given(/^I have valid vacancy$/) do
       salary: '500',
       salary_format: 'USD',
       status: 'В процессе',
-      region_id: 1
+      region_id: 1,
+      user_id: 1
   )
 end
 

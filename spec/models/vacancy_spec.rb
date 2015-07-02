@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Vacancy, type: :model do
+
   context 'when valid' do
     it 'has valid factory' do
       expect(build(:vacancy)).to be_valid
