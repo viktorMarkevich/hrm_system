@@ -5,10 +5,10 @@
       - @sticker.errors.full_messages.each do |message|
         %li
           = message
-  .form-group{ class: 'sticker_title', style: 'width:90%;' }
+  .form-group{ class: 'sticker_title' }
     = f.label 'Тема'
     = f.text_field :title, class: 'form-control'
-  .form-group{ class: 'sticker_description', style: 'width:90%;' }
+  .form-group{ class: 'sticker_description' }
     = f.label 'Описание'
     = f.text_area :description, class: 'form-control'
   .form-group
