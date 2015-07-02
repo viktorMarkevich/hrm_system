@@ -35,3 +35,29 @@ end
 Then(/^new candidate should be created$/) do
   expect(Candidate.count).to eq(1)
 end
+
+Given(/^I am on the new candidate page$/) do
+  visit new_candidate_path
+end
+
+When(/^I fill in "(.*?)" with "(.*?)"$/) do |input_id, text|
+  fill_in input_id, with: text
+end
+
+Then(/^I should see errors like "(.*?)" and "(.*?)"$/) do |error1, error2|
+  expect(page).to have_content(error1)
+  expect(page).to have_content(error2)
+end
+
+Then(/^I should see error like "(.*?)"$/) do |error|
+  expect(page).to have_content(error)
+end
+
+
+When(/^I fill in candidate required fields$/) do
+  fill_in 'candidate_name', with: 'Test User'
+  fill_in 'candidate_status', with: 'Some status'
+  fill_in 'candidate_desired_position', with: 'Some position'
+  fill_in 'candidate_phone', with: '123456'
+end
+
