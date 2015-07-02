@@ -10,7 +10,7 @@
         %tbody
           %tr
             %th Зарплата:
-            %td= (@vacancy.salary != "0" && @vacancy.salary_format != "По договоренности") ? "#{@vacancy.salary}  #{@vacancy.salary_format}" : "По договоренности"
+            %td= @vacancy.get_salary
           %tr
             %th Регион:
             %td= @vacancy.region.try(:name)

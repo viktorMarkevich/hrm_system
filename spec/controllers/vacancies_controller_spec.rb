@@ -7,6 +7,20 @@ RSpec.describe VacanciesController, type: :controller do
     sign_in user
   end
 
+  context '#index' do
+    before(:each) do
+      get :index
+    end
+
+    it 'responds with HTTP 200 status' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders template "index"' do
+      expect(response).to render_template('index')
+    end
+  end
+
   context '#new' do
     before(:each) do
       get :new
