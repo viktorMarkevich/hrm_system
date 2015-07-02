@@ -10,7 +10,7 @@
         %tbody
           %tr
             %th Зарплата:
-            %td= @vacancy.get_salary
+            %td= get_salary(@vacancy)
           %tr
             %th Регион:
             %td= @vacancy.region.try(:name)
@@ -19,7 +19,7 @@
             %td= display_field_value_for(@vacancy.languages)
           %tr
             %th Добавлено:
-            %td= "#{@vacancy.creator} #{@vacancy.created_at.strftime('%F')}"
+            %td= get_author_and_date(@vacancy)
           %tr
             %th Требования:
             %td= display_field_value_for(@vacancy.requirements)

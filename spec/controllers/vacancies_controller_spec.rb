@@ -132,6 +132,7 @@ RSpec.describe VacanciesController, type: :controller do
       end
 
       it 'renders "edit" template without region_id' do
+        pending
         put :update, id: @vacancy.id, vacancy: { region_id: nil }
         expect(response).to render_template('edit')
       end

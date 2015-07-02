@@ -2,19 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Vacancy, type: :model do
 
-  context 'methods model' do
-    it 'method creator' do
-      user = create(:user, id: 1)
-      vacancy = create(:vacancy, user_id: user.id)
-      expect(vacancy.creator).to eq("#{user.first_name} #{user.last_name}")
-    end
-
-    it 'method get salary' do
-      vacancy = create(:vacancy)
-      expect(vacancy.get_salary).to eq("#{vacancy.salary}  #{vacancy.salary_format}")
-    end
-  end
-
   context 'when valid' do
     it 'has valid factory' do
       expect(build(:vacancy)).to be_valid

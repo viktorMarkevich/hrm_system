@@ -22,7 +22,7 @@ class VacanciesController < ApplicationController
 
   def create
     region = Region.find_or_create(params[:region])
-    @vacancy = region.build_vacancy(vacancy_params.merge(user_id: current_user.id))
+    @vacancy = current_user.vacancies.build(vacancy_params.merge(region_id: region.id))
 
     if @vacancy.save
       flash[:notice] = 'Вакансия была успешно создана.'
@@ -48,7 +48,7 @@ class VacanciesController < ApplicationController
     def vacancy_params
       params.require(:vacancy).permit(
         :name, :salary,
-        :salary_format, :region_id,
+        :salary_format,
         :languages, :status,
         :requirements
       )
