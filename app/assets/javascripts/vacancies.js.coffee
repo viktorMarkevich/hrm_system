@@ -7,7 +7,6 @@ $(document).ready ->
     $('input[name="vacancy[salary_format]"]').click ->
       # if we check "По договоренности"
       if $(this).val() is 'По договоренности'
-        # clear salary value
         # hide label "Зарплата" and salary input field
         $inputSalary.hide()
       else
