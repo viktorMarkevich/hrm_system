@@ -12,9 +12,9 @@ FactoryGirl.define do
     status 'В процессе'
     sequence(:email) { |n| "#{n}email@mail.ru" }
     sequence(:phone) { |n| "+38-050-000-000#{n}" }
-    linkedin 'linkedin'
-    facebook 'facebook'
-    vkontakte 'vkontakte'
-    google_plus 'Google+'
+    linkedin 'https://ua.linkedin.com/pub/test-user/9a/29/644'
+    facebook 'http://www.facebook.com/test.user'
+    vkontakte 'http://vk.com/test_man'
+    google_plus 'https://plus.google.com/u/0/109854654'
   end
 end

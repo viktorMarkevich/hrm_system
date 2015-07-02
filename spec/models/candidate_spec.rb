@@ -17,16 +17,16 @@ RSpec.describe Candidate, type: :model do
       expect(build(:candidate, name: '')).to_not be_valid
     end
 
-    it "desired_position can't be blank" do
+    it %q{ desired_position can't be blank } do
       expect(build(:candidate, desired_position: '')).to_not be_valid
     end
 
-    it "status can't be blank" do
+    it %q{ status can't be blank} do
       expect(build(:candidate, status: '')).to_not be_valid
     end
 
     it 'format email not valid' do
-      expect(build(:candidate, email: 'hwerhwerh')).to_not be_valid
+      expect(build(:candidate, email: 'wrong_email')).to_not be_valid
     end
 
     it 'format phone not valid' do
@@ -50,6 +50,26 @@ RSpec.describe Candidate, type: :model do
     it 'fails validation without unique phone' do
       candidate = create(:candidate, phone: '+38-093-654-3123')
       expect(build(:candidate, phone: candidate.phone)).to_not be_valid
+    end
+
+    it 'has wrong linkedin url format' do
+      expect(build(:candidate, linkedin: 'wrong_url')).to_not be_valid
+    end
+
+    it 'has wrong facebook url format' do
+      expect(build(:candidate, facebook: 'wrong_url')).to_not be_valid
+    end
+
+    it 'has wrong vkontakte url format' do
+      expect(build(:candidate, vkontakte: 'wrong_url')).to_not be_valid
+    end
+
+    it 'has wrong google+ url format' do
+      expect(build(:candidate, google_plus: 'wrong_url')).to_not be_valid
+    end
+
+    it 'has wrong home_page url format' do
+      expect(build(:candidate, home_page: 'wrong_url')).to_not be_valid
     end
 
   end
