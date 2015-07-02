@@ -8,9 +8,6 @@
       - @sticker.errors.full_messages.each do |message|
         %li
           = message
-  .form-group.sticker_title
-    = f.label 'Тема'
-    = f.text_field :title, class: 'form-control'
   .form-group.sticker_description
     = f.label 'Описание'
     = f.text_area :description, class: 'form-control'

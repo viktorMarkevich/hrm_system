@@ -44,7 +44,7 @@ class StickersController < ApplicationController
 
   private
    def sticker_params
-     params.require(:sticker).permit(:title, :description)
+     params.require(:sticker).permit(:description)
    end
 
    def find_sticker

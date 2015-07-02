@@ -9,26 +9,9 @@ RSpec.describe Sticker, type: :model do
   end
 
   context 'when invalid' do
-    it 'is invalid without title' do
-      invalid_sticker = build(:sticker, title: nil)
-      expect(invalid_sticker).to_not be_valid
-    end
-
     it 'is invalid without description' do
-      invalid_sticker = build(:sticker, description: nil)
+      invalid_sticker = build(:invalid_sticker)
       expect(invalid_sticker).to_not be_valid
-    end
-
-    it 'has error message when title is too short' do
-      sticker = build(:sticker, title: 'test')
-      expect(sticker).to_not be_valid
-      expect(sticker.errors[:title]).to include('is too short')
-    end
-
-    it 'has error message when title is too long' do
-      sticker = build(:sticker, title: 'This is too long title')
-      expect(sticker).to_not be_valid
-      expect(sticker.errors[:title]).to include('is too long')
     end
 
     it 'has error message when description is too long' do
