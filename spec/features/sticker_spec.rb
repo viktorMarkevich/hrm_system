@@ -20,7 +20,6 @@ describe 'Managing stickers', type: :feature do
   scenario 'creates new sticker' do
     visit '/stickers/new'
     within '#new_sticker' do
-      fill_in 'sticker_title', with: 'New sticker'
       fill_in 'sticker_description', with: 'This is description'
       click_button 'Создать'
     end
@@ -31,7 +30,7 @@ describe 'Managing stickers', type: :feature do
     visit '/stickers'
     find('.glyph_edit_link').click
     click_link 'Назад'
-    expect(page).to have_content @sticker.title
+    expect(page).to have_content @sticker.description
   end
 
   scenario 'goes to stickers#edit page' do
@@ -44,7 +43,6 @@ describe 'Managing stickers', type: :feature do
     visit '/stickers'
     find('.glyph_edit_link').click
     within('.edit_sticker') do
-      fill_in 'sticker_title', with: 'updated title'
       fill_in 'sticker_description', with: 'updated description'
     end
     click_button 'Обновить'
@@ -54,6 +52,6 @@ describe 'Managing stickers', type: :feature do
   scenario 'deletes sticker' do
     visit '/stickers'
     find('.glyph_destroy_link').click
-    expect(page).to_not have_content @sticker.title
+    expect(page).to_not have_content @sticker.description
   end
 end

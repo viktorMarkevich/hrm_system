@@ -51,7 +51,7 @@ RSpec.describe StickersController, type: :controller do
 
   context '#create' do
     context 'when successfull' do
-      let(:sticker_params) { { sticker: { title: 'test title', description: 'some description' } } }
+      let(:sticker_params) { { sticker: { description: 'some description' } } }
 
       it 'creates new Sticker object' do
         expect { post :create, sticker_params }.to change(Sticker, :count).by(1)
@@ -64,7 +64,7 @@ RSpec.describe StickersController, type: :controller do
     end
 
     context 'when failed' do
-      let(:sticker_params) { { sticker: { title: nil, description: 'some description' } } }
+      let(:sticker_params) { { sticker: { description: nil } } }
 
       it %q{ doesn't create record on failing } do
         expect { post :create, sticker_params }.to change(Sticker, :count).by(0)
@@ -94,7 +94,7 @@ RSpec.describe StickersController, type: :controller do
   end
 
   context '#update' do
-    let(:sticker_attrs) { { title: 'updated title', description: 'updated description' } }
+    let(:sticker_attrs) { { description: 'updated description' } }
 
     before(:each) do
       @sticker = create(:sticker)
@@ -108,8 +108,7 @@ RSpec.describe StickersController, type: :controller do
         expect(response).to redirect_to(stickers_path)
       end
 
-      it 'has updated title and description' do
-       expect(@sticker.title).to eql sticker_attrs[:title]
+      it 'has updated description' do
        expect(@sticker.description).to eql sticker_attrs[:description]
       end
 
