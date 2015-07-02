@@ -29,8 +29,9 @@
             = f.label :phone
             = f.text_field :phone, class: 'form-control'
           .form-group
-            = f.label :image
-            = f.file_field :image
+            = f.fields_for :image, Image.new do |img|
+              = img.label :image
+              = img.file_field :avatar
           .form-group
             = f.button 'Обновить', class: 'btn btn-default'
             = link_to 'Назад', user_path, class: 'btn btn-default'

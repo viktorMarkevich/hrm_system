@@ -1,5 +1,6 @@
 class Candidate < ActiveRecord::Base
   has_one :image
+  accepts_nested_attributes_for :image
 
   validates :name, :desired_position, :status, presence: true
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
