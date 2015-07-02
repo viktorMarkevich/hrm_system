@@ -13,5 +13,6 @@
 #= require jquery
 #= require jquery_ujs
 #= require twitter/bootstrap
+#= require stickers
 #= require charCount
 # require_tree .

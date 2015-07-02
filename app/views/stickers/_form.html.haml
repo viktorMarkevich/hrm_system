@@ -5,25 +5,12 @@
       - @sticker.errors.full_messages.each do |message|
         %li
           = message
-  .form-group{ class: 'sticker_title' }
+  .form-group.sticker_title
     = f.label 'Тема'
     = f.text_field :title, class: 'form-control'
-  .form-group{ class: 'sticker_description' }
+  .form-group.sticker_description
     = f.label 'Описание'
     = f.text_area :description, class: 'form-control'
   .form-group
     = f.submit @sticker.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
     = link_to 'Назад', :back, class: 'btn btn-default'
-
-:javascript
-  $(document).ready(function(){
-    $('#sticker_title').charCount({
-        field_obj: '.sticker_title',
-        allowed: 20,
-        warning: 20,
-        counterText: 'Осталось символов: '
-    });
-    $('#sticker_description').charCount({
-            counterText: 'Осталось символов: '
-        });
-  });
