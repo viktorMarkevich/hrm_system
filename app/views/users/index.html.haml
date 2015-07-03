@@ -24,3 +24,12 @@
             %td= user.phone
             %td= user.vacancies.size
             %td= user.candidates.size
+- content_for :left_sidebar do
+  .panel-success
+    .panel-heading
+      Поиск
+    .panel-body
+      .form-group
+        %input#inputEmail3.form-control{ placeholder: 'Введите слово' }
+      .form-group
+        %button.btn.btn-success{ type: 'submit' } Найти
