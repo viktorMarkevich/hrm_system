@@ -5,7 +5,7 @@ module VacancyHelper
   end
 
   def get_author_and_date(vacancy)
-    "#{full_name_for(vacancy.creator)} #{vacancy.created_at.strftime('%F')}"
+    "#{full_name_for(vacancy.owner)} #{vacancy.created_at.strftime('%F')}"
   end
 
 end

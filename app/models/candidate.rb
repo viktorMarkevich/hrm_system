@@ -1,5 +1,7 @@
 class Candidate < ActiveRecord::Base
 
+  belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
+
   validates :name, :desired_position, :status, presence: true
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
             message: 'is invalid.' }, if: 'email.present?'

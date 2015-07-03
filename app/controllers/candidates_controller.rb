@@ -18,7 +18,7 @@ class CandidatesController < ApplicationController
   end
 
   def create
-    @candidate = Candidate.new(candidate_params)
+    @candidate = current_user.candidates.build(candidate_params)
     if @candidate.save
       flash[:notice] = 'Кандидат был успешно добавлен.'
       redirect_to candidates_path

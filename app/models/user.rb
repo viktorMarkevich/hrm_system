@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   belongs_to :region
   has_many :vacancies
+  has_many :candidates
 
   devise :invitable, :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :registerable
 
@@ -15,4 +16,5 @@ class User < ActiveRecord::Base
   validates :first_name, :last_name, :post, :region_id,  presence: true
   validates :skype, uniqueness: true, if: 'skype.present?'
   validates :phone, uniqueness: true, if: 'phone.present?'
+
 end
