@@ -1,6 +1,8 @@
 class Candidate < ActiveRecord::Base
 
+  belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_one :image
+
   accepts_nested_attributes_for :image
 
   validates :name, :desired_position, :status, presence: true

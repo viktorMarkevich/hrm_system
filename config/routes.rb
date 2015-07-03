@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :stickers, except: [:show]
 
-  resources :users, only: [:update, :edit, :show]
+  resources :users, only: [:update, :edit, :show, :index]
 
   resources :vacancies, except: [:destroy]
 

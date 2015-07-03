@@ -44,4 +44,9 @@ describe 'user process', type: :feature do
     expect(page).to have_content 'Обновить'
   end
 
+  scenario 'visit managers list page' do
+    click_link 'Менеджеры'
+    expect(page).to have_content('Созданных вакансий')
+  end
+
 end

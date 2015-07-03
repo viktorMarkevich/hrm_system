@@ -18,7 +18,7 @@ RSpec.describe CompaniesController, type: :controller do
       expect(response).to have_http_status(200)
     end
 
-    it 'renders template "show"' do
+    it 'renders template "index"' do
       expect(response).to render_template('index')
     end
   end

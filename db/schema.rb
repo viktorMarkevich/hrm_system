@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20150703132559) do
     t.string   "google_plus"
     t.string   "home_page"
     t.string   "skype"
+    t.integer  "user_id"
   end
 
   create_table "companies", force: :cascade do |t|

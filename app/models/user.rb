@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :vacancies
   has_many :owner_stickers, foreign_key: 'owner_id', class_name: 'Sticker'
   has_many :performer_stickers, foreign_key: 'performer_id', class_name: 'Sticker'
+  has_many :candidates
 
   accepts_nested_attributes_for :image
 

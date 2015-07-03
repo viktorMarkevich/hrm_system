@@ -15,7 +15,7 @@ describe UsersController, type: :controller do
     end
 
     context '#show' do
-      it 'reponds with HTTP status 200' do
+      it 'responds with HTTP status 200' do
         expect(response).to have_http_status(200)
       end
 
@@ -32,7 +32,7 @@ describe UsersController, type: :controller do
     end
 
     context '#edit' do
-      it 'reponds with HTTP status 200' do
+      it 'responds with HTTP status 200' do
         expect(response).to have_http_status(200)
       end
 
@@ -75,4 +75,25 @@ describe UsersController, type: :controller do
       end
     end
   end
+
+  describe 'check index action' do
+
+    before(:each) do
+      get :index
+    end
+
+    it 'responds with HTTP 200 status code' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders template "index"' do
+      expect(response).to render_template('index')
+    end
+
+    it 'matches created users count' do
+      users_list = create_list(:user, 3)
+      expect(assigns(:users).size).to eq(users_list.size + 1)
+    end
+  end
+
 end
