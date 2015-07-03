@@ -20,9 +20,8 @@ class VacanciesController < ApplicationController
   def edit
   end
 
-
   def create
-    @vacancy = Vacancy.new(vacancy_params.merge(user_id: current_user.id))
+    @vacancy = current_user.vacancies.build(vacancy_params)
     @vacancy.associate_with_region(params[:region])
     if @vacancy.save
       flash[:notice] = 'Вакансия была успешно создана.'
