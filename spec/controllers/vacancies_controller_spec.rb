@@ -60,7 +60,7 @@ RSpec.describe VacanciesController, type: :controller do
       it 'has assigned region and creator' do
         post :create, vacancy_attrs
         expect(assigns(:vacancy).region.name).to eq(@region.name)
-        expect(assigns(:vacancy).creator.last_name).to eq(@user.last_name)
+        expect(assigns(:vacancy).owner.last_name).to eq(@user.last_name)
       end
     end
 

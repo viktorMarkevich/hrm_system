@@ -29,8 +29,9 @@
             = f.label :phone
             = f.text_field :phone, class: 'form-control', placeholder: 'Пример ввода: +38-050-000-0000'
           .form-group
-            = f.label :avatar
-            = f.file_field :avatar
+            = f.fields_for :image, Image.new do |img|
+              = img.label :image
+              = img.file_field :avatar
           .form-group
             = f.button 'Обновить', class: 'btn btn-default'
             = link_to 'Назад', user_path, class: 'btn btn-default'
