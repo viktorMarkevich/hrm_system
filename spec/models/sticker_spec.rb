@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Sticker, type: :model do
-  let(:owner)     { create(:user) }
-  let(:peformer)  { create(:user) }
-
   context 'when valid'do
     it 'has valid factory' do
       expect(build(:sticker)).to be_valid
