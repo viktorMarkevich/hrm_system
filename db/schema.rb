@@ -84,6 +84,16 @@ ActiveRecord::Schema.define(version: 20150703092301) do
     t.integer  "region_id"
   end
 
+  create_table "images", force: :cascade do |t|
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "user_id"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+  end
+
   create_table "regions", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -120,10 +130,6 @@ ActiveRecord::Schema.define(version: 20150703092301) do
     t.string   "phone"
     t.string   "skype"
     t.string   "post"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
     t.integer  "region_id"
     t.string   "invitation_token"
     t.datetime "invitation_created_at"

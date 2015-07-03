@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   belongs_to :region
   has_many :vacancies
-  has_many :owned_stickers, foreign_key: 'owner_id', class_name: 'Sticker'
+  has_many :owner_stickers, foreign_key: 'owner_id', class_name: 'Sticker'
   has_many :performer_stickers, foreign_key: 'performer_id', class_name: 'Sticker'
 
   devise :invitable, :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :registerable
