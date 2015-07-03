@@ -28,7 +28,7 @@ ActiveAdmin.register User do
     column :skype
     column :phone
     column :post
-    column :region_id do |user| user.region.name end
+    column :region_id do |user| user.region_name end
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
