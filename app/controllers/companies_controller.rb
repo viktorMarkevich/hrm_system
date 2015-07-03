@@ -1,4 +1,5 @@
 class CompaniesController < ApplicationController
+  include RegionSupporter
 
   before_filter :authenticate_user!
   before_action :find_company, only: [:edit, :update, :show]
@@ -19,9 +20,8 @@ class CompaniesController < ApplicationController
   end
 
   def create
-    region = Region.find_or_create(params[:region])
-    @company = region.build_company(company_params)
-
+    @company = Company.new(company_params)
+    @company.associate_with_region(params[:region])
     if @company.save
       flash[:notice] = 'Компания была успешно создана.'
       redirect_to companies_path
@@ -31,10 +31,8 @@ class CompaniesController < ApplicationController
   end
 
   def update
+    @company.associate_with_region(params[:region])
     if @company.update_attributes(company_params)
-      region = Region.find_or_create(params[:region])
-      region.companies << @company
-
       flash[:notice] = 'Компания успешно обновлена.'
       redirect_to company_path(@company)
     else

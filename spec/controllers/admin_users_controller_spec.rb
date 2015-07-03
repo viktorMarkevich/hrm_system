@@ -22,10 +22,10 @@ RSpec.describe Admin::UsersController, type: :controller do
   end
 
   context '#update' do
-    let(:user_attrs) { attributes_for :user, region_id: 2 }
+    let(:user_attrs) { attributes_for :user}
 
     before(:each) do
-      put :update, id: @user, user: user_attrs
+      put :update, id: @user, user: user_attrs, region: 'Запорожье'
       @user.reload
     end
 
@@ -39,7 +39,7 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
 
       it 'has updated region' do
-        expect(@user.region_id).to eql user_attrs[:region_id]
+        expect(@user.region.name).to eql 'Запорожье'
       end
 
       it 'responds successfully with HTTP 200 status code' do
