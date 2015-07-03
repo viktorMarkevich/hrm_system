@@ -51,6 +51,7 @@ RSpec.describe 'AdminUser', type: :feature do
     test_user = create(:user)
     visit "admin/users/#{test_user.id}/edit"
     fill_in 'user_email', with: 'proba@ppp.ppp'
+    select 'Запорожье', from: 'user_region_id'
     click_button 'Update User'
     expect(page).to have_content 'Пользователь успешно обновлен.'
   end

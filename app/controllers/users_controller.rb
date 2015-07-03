@@ -11,9 +11,6 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      region = Region.find_or_create(params[:region])
-      region.users << @user
-
       flash[:notice] = 'Профайл успешно обновлен!'
       redirect_to action: 'show', id: @user
     else

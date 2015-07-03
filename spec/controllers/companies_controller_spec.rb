@@ -127,7 +127,7 @@ RSpec.describe CompaniesController, type: :controller do
       let(:company_attrs) { { name: 'facebook', url: 'http://www.facebook.com.ua' } }
 
       before(:each) do
-        put :update, id: @company.id, company: company_attrs
+        put :update, id: @company.id, company: company_attrs, region: 'Запорожье'
         @company.reload
       end
 

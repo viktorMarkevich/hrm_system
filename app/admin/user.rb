@@ -6,10 +6,11 @@ ActiveAdmin.register User do
   actions :all
 
   collection_action :send_invitation, method: :post do
-    region = Region.find_or_create(params[:region])
     @user = User.invite!(permitted_params[:user])
-    region.users << @user
+    @user.associate_with_region(params[:region])
+
     if @user.valid? && @user.errors.empty?
+      @user.save
       flash[:notice] = 'User has been successfully invited.'
       redirect_to admin_users_path
     else
@@ -56,10 +57,8 @@ ActiveAdmin.register User do
 
     def update
       @user = User.find(params[:id])
+      @user.associate_with_region(params[:region])
       if @user.update_attributes(permitted_params[:user])
-        region = Region.find_or_create(params[:region])
-        region.users << @user
-
         flash[:notice] = 'Пользователь успешно обновлен.'
         redirect_to admin_user_path(@user)
       else

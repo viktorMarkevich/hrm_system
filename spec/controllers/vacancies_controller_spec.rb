@@ -111,7 +111,7 @@ RSpec.describe VacanciesController, type: :controller do
 
     before(:each) do
       @vacancy = create(:vacancy)
-      put :update, id: @vacancy, vacancy: vacancy_attrs
+      put :update, id: @vacancy, vacancy: vacancy_attrs, region: 'Запорожье'
       @vacancy.reload
     end
 

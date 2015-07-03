@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class VacanciesController < ApplicationController
+  include RegionSupporter
 
   before_filter :authenticate_user!
   before_filter :find_vacancy, only: [:show, :edit, :update]
@@ -21,9 +22,8 @@ class VacanciesController < ApplicationController
 
 
   def create
-    region = Region.find_or_create(params[:region])
-    @vacancy = current_user.vacancies.build(vacancy_params.merge(region_id: region.id))
-
+    @vacancy = Vacancy.new(vacancy_params.merge(user_id: current_user.id))
+    @vacancy.associate_with_region(params[:region])
     if @vacancy.save
       flash[:notice] = 'Вакансия была успешно создана.'
       redirect_to vacancies_path
@@ -33,9 +33,8 @@ class VacanciesController < ApplicationController
   end
 
   def update
+    @vacancy.associate_with_region(params[:region])
     if @vacancy.update_attributes(vacancy_params)
-      region = Region.find_or_create(params[:region])
-      region.vacancies << @vacancy
 
       flash[:notice] = 'Вакансия успешно обновлена.'
       redirect_to vacancies_path
