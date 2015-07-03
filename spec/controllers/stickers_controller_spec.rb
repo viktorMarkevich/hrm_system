@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe StickersController, type: :controller do
 
   before(:each) do
-    user = create(:user)
-    sign_in user
+    @user = create(:user)
+    sign_in @user
   end
 
   context '#index' do
@@ -51,7 +51,18 @@ RSpec.describe StickersController, type: :controller do
 
   context '#create' do
     context 'when successfull' do
-      let(:sticker_params) { { sticker: { description: 'some description' } } }
+      let(:performer)  { create(:user) }
+      let(:sticker_params) { { sticker: { description: 'Default description', performer_id: performer.id } } }
+
+      it 'with owner' do
+        post :create, sticker_params
+        expect(assigns(:sticker).owner).to eq(@user)
+      end
+
+      it 'with performer' do
+        post :create, sticker_params
+        expect(assigns(:sticker).performer).to eq(performer)
+      end
 
       it 'creates new Sticker object' do
         expect { post :create, sticker_params }.to change(Sticker, :count).by(1)
