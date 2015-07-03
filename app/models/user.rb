@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   belongs_to :region
   has_many :vacancies
+  has_many :stickers
 
   devise :invitable, :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :registerable
 

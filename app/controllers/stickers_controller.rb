@@ -17,7 +17,7 @@ class StickersController < ApplicationController
   end
 
   def create
-    @sticker = Sticker.new(sticker_params)
+    @sticker = Sticker.new(sticker_params.merge(owner_id: current_user.id))
     if @sticker.save
       flash[:notice] = 'Стикер был успешно создан.'
       redirect_to stickers_path
@@ -44,7 +44,7 @@ class StickersController < ApplicationController
 
   private
    def sticker_params
-     params.require(:sticker).permit(:description)
+     params.require(:sticker).permit(:description, :performer_id)
    end
 
    def find_sticker
