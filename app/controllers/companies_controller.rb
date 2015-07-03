@@ -20,7 +20,7 @@ class CompaniesController < ApplicationController
   end
 
   def create
-    @company = Company.new(company_params)
+    @company = current_user.companies.build(company_params)
     @company.associate_with_region(params[:region])
     if @company.save
       flash[:notice] = 'Компания была успешно создана.'
