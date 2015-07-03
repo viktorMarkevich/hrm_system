@@ -1,5 +1,5 @@
-desc "Add user_id Vacncy`"
-task :vacancies => :environment do
+desc 'Add user_id Vacancy'
+task vacancies: :environment do
   region = User.first.present? ? Region.first : Region.create(name: 'Херсон')
   user = User.first.present? ? User.first : User.create(email: 'zzz@zzz.zzz', password: 'zzzzzz',
                                                         password_confirmation: 'zzzzzz', first_name: 'zzz',
