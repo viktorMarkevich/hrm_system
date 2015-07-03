@@ -6,7 +6,7 @@ ActiveAdmin.register User do
   actions :all
 
   collection_action :send_invitation, method: :post do
-    @user = User.invite!(permitted_params[:user], password: '123456', password_confirmation: '123456')
+    @user = User.invite!(permitted_params[:user])
     @user.associate_with_region(params[:region])
 
     if @user.valid? && @user.errors.empty?
