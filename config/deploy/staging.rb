@@ -41,3 +41,24 @@ set :ssh_options, {
 # setting per server overrides global ssh_options
 
 set :rails_env, :staging
+
+namespace :rake do
+  desc 'Add user_id Vacancy'
+  task :vacancies  do
+    region = Region.first_or_create!(name: 'Уругвай')
+    user = User.first_or_create!(email: 'test1@test.ts', password: '123456',
+                                 password_confirmation: '123456', first_name: 'test1',
+                                 last_name: 'test1', post: 'test1', region_id: region)
+
+    Vacancy.find_each do |vacancy|
+      vacancy.update(user_id: user.id)
+    end
+  end
+
+  desc 'Add object image for each user'
+  task :add_object_img do
+    User.all.each do |user|
+      Image.create(user_id: user.id)
+    end
+  end
+end
