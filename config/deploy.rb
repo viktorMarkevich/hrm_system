@@ -56,13 +56,18 @@ namespace :deploy do
     end
   end
   task :reset do
-    run "cd #{current_path} && bundle exec rake db:reset RAILS_ENV=#{fetch(:rails_env)}"
-  end
-
-  task :fill_in_vacancies do
     on "deployer@192.168.137.75" do
       within "#{fetch(:deploy_to)}/current" do
-        execute :bundle,:exec, "bundle exec rake vacancies RAILS_ENV=#{fetch(:rails_env)}"
+        execute :bundle, :exec, "rake db:reset RAILS_ENV=#{fetch(:rails_env)}"
+      end
+    end
+  end
+
+  task :any_task do
+    on "deployer@192.168.137.75" do
+      within "#{fetch(:deploy_to)}/current" do
+        execute :bundle, :exec, "rake vacancies RAILS_ENV=#{fetch(:rails_env)}"
+        execute :bundle, :exec, "rake add_object_img RAILS_ENV=#{fetch(:rails_env)}"
       end
     end
   end
