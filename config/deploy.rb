@@ -61,3 +61,31 @@ namespace :deploy do
 end
 after "deploy:restart", "deploy:cleanup"
 #after "deploy:update", "db:insert_statuses"
+
+namespace :rake do
+  # desc "Run a task on a remote server."
+  # run like: cap staging rake:invoke task=a_certain_task
+  # task :invoke do
+  #   run("cd #{deploy_to}/current; /usr/bin/env rake #{ENV['task']} RAILS_ENV=#{rails_env}")
+  # end
+
+  desc 'Add user_id Vacancy'
+  task vacancies: :environment do
+    run("cd #{deploy_to}/current; /usr/bin/env rake #{ENV['task']} RAILS_ENV=#{rails_env}")
+    region = User.first.present? ? Region.first : Region.create(name: 'Херсон')
+    user = User.first.present? ? User.first : User.create(email: 'test1@test.ts', password: '123456',
+                                                          password_confirmation: '123456', first_name: 'test1',
+                                                          last_name: 'test1', post: 'test1', region_id: region)
+
+    Vacancy.find_each do |vacancy|
+      vacancy.update(user_id: user.id)
+    end
+  end
+
+  desc 'Add object image for each user'
+  task add_object_img: :environment do
+    User.all.each do |user|
+      Image.create(user_id: user.id)
+    end
+  end
+end
