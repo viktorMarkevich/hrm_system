@@ -60,4 +60,4 @@ namespace :deploy do
   end
 end
 after "deploy:restart", "deploy:cleanup"
-#after "deploy:update", "db:insert_statuses"
+after 'rake:vacancies'
