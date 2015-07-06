@@ -7,7 +7,7 @@ class VacanciesController < ApplicationController
   before_filter :find_vacancy, only: [:show, :edit, :update]
 
   def index
-    @vacancies = Vacancy.all
+    @vacancies = Vacancy.eager_load(:region, :owner)
   end
 
   def new

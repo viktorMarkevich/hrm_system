@@ -4,7 +4,7 @@ class CandidatesController < ApplicationController
   before_filter :find_candidate, only: [:show, :edit, :update]
 
   def index
-    @candidates = Candidate.all
+    @candidates = Candidate.eager_load(:owner)
   end
 
   def new
