@@ -30,9 +30,9 @@
             %th= index + 1
             %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
             %td= candidate.desired_position
-            %td Запорожье
-            %td= candidate.salary
-            %td Иванов Иван
+            %td= display_field_value_for(candidate.city_of_residence)
+            %td= display_field_value_for(candidate.salary)
+            %td= full_name_for(candidate.owner)
             %td= candidate.status
             %td= candidate.created_at.strftime('%F')
 
