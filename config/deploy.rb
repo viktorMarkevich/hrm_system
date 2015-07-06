@@ -60,9 +60,8 @@ namespace :deploy do
   end
 
   task :fill_in_vacancies do
-    on "deployer@192.168.137.75" do
-      run "cd #{current_path} && bundle exec rake vacancies RAILS_ENV=#{fetch(:rails_env)}"
-    end
+    on roles [:web, :app] do
+      execute "cd #{current_path} && bundle exec rake vacancies RAILS_ENV=#{fetch(:rails_env)}"
   end
 end
 after "deploy:restart", "deploy:cleanup"
