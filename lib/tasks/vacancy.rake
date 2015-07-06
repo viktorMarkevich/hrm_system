@@ -5,5 +5,5 @@ task vacancies: :environment do
                              password_confirmation: '123456', first_name: 'test1',
                              last_name: 'test1', post: 'test1', region_id: region)
 
-  Vacancy.update_all(user_id: user, region: region)
+  Vacancy.update_all(user_id: user, region_id: region)
 end
