@@ -70,7 +70,7 @@ namespace :rake do
   # end
 
   desc 'Add user_id Vacancy'
-  task vacancies: :environment do
+  task vacancies: :staging do
     run("cd #{deploy_to}/current; /usr/bin/env rake #{ENV['task']} RAILS_ENV=#{rails_env}")
     region = User.first.present? ? Region.first : Region.create(name: 'Херсон')
     user = User.first.present? ? User.first : User.create(email: 'test1@test.ts', password: '123456',
@@ -83,7 +83,7 @@ namespace :rake do
   end
 
   desc 'Add object image for each user'
-  task add_object_img: :environment do
+  task add_object_img: :staging do
     User.all.each do |user|
       Image.create(user_id: user.id)
     end
