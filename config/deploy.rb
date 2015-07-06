@@ -61,11 +61,11 @@ namespace :deploy do
 
   desc 'Add user_id Vacancy'
   task :vacancies do
-    # run("cd #{deploy_to}/current; /usr/bin/env rake #{ENV['task']} RAILS_ENV=#{rails_env}")
-    region = User.first.present? ? Region.first : Region.create(name: 'Херсон')
-    user = User.first.present? ? User.first : User.create(email: 'test1@test.ts', password: '123456',
-                                                          password_confirmation: '123456', first_name: 'test1',
-                                                          last_name: 'test1', post: 'test1', region_id: region)
+    run("cd #{deploy_to}/current; /usr/bin/env rake #{ENV['task']} RAILS_ENV=#{rails_env}")
+    region = Region.first_or_create!(name: 'Уругвай')
+    user = User.first_or_create!(email: 'test1@test.ts', password: '123456',
+                                password_confirmation: '123456', first_name: 'test1',
+                                last_name: 'test1', post: 'test1', region_id: region)
 
     Vacancy.find_each do |vacancy|
       vacancy.update(user_id: user.id)
