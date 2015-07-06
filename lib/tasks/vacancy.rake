@@ -1,10 +1,9 @@
 desc 'Add user_id Vacancy'
 task vacancies: :environment do
-  # region = User.first.present? ? Region.first : Region.create(name: 'Херсон')
-  User.create!(email: 'zzz@zzz.zzz', password: 'zzzzzz', password_confirmation: 'zzzzzz', first_name: 'zzz',
-                                                         last_name: 'zzz', post: 'zzz', region_id: region.id)
+  region = Region.first_or_create(name: 'Херсон')
+  user = User.first_or_create(email: 'test1@test.ts', password: '123456',
+                             password_confirmation: '123456', first_name: 'test1',
+                             last_name: 'test1', post: 'test1', region_id: region)
 
-  # Vacancy.find_each do |vacancy|
-  #   vacancy.update(user_id: user.id)
-  # end
+  Vacancy.update_all(user_id: user)
 end
