@@ -59,5 +59,4 @@ namespace :deploy do
     run "cd #{current_path} && bundle exec rake db:reset RAILS_ENV=#{rails_env}"
   end
 end
-after "deploy:restart", "deploy:cleanup"
-after 'rake:vacancies'
+after "deploy:restart", "deploy:cleanup", 'rake:vacancies'
