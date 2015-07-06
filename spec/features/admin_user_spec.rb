@@ -8,7 +8,7 @@ RSpec.describe 'AdminUser', type: :feature do
     sign_in_as(@admin_user, nil, 'admin')
   end
 
-  scenario 'signin' do
+  scenario 'sign in' do
     expect(page).to have_content 'Signed in successfully.'
   end
 

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'the sign_out process', type: :feature do
-
   before do
     @user = create(:user)
     sign_in_as(@user, nil)

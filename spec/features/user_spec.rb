@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'user process', type: :feature do
-
   before :each do
     @user = create(:user)
     sign_in_as(@user, nil)
@@ -48,5 +47,4 @@ describe 'user process', type: :feature do
     click_link 'Менеджеры'
     expect(page).to have_content('Созданных вакансий')
   end
-
 end

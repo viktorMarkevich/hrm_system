@@ -5,20 +5,18 @@ RSpec.describe Admin::UsersController, type: :controller do
 
   before(:each) do
     @admin_user = create(:admin_user)
-    sign_in @admin_user
     @user = create(:user)
+
+    sign_in @admin_user
   end
 
   context '#index' do
-    let(:user) { create(:user) }
+    before(:each) { get :index }
 
-    before(:each) do
-      get :index
-    end
-
-    it 'reponds with HTTP status 200' do
+    it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
     end
+
   end
 
   context '#update' do
@@ -29,30 +27,31 @@ RSpec.describe Admin::UsersController, type: :controller do
       @user.reload
     end
 
-    context 'when successfull' do
-      it 'redirects to user page' do
-        expect(response).to redirect_to(admin_user_path(@user))
+    context 'check validations' do
+      context 'when successful' do
+        it 'redirects to user page' do
+          expect(response).to redirect_to(admin_user_path(@user))
+        end
+
+        it 'has updated email' do
+          expect(@user.email).to eql user_attrs[:email]
+        end
+
+        it 'has updated region' do
+          expect(@user.region.name).to eql 'Запорожье'
+        end
+
+        it 'has HTTP 200 status' do
+          put :edit, id: @user.id, user: user_attrs
+          expect(response).to have_http_status(200)
+        end
       end
 
-      it 'has updated email' do
-        expect(@user.email).to eql user_attrs[:email]
-      end
-
-      it 'has updated region' do
-        expect(@user.region.name).to eql 'Запорожье'
-      end
-
-      it 'responds successfully with HTTP 200 status code' do
-        put :edit, id: @user.id, user: user_attrs
-        expect(response).to be_success
-        expect(response).to have_http_status(200)
-      end
-    end
-
-    context 'when failed' do
-      it 'should redirect after failing' do
-        put :update, id: @user.id, user: (attributes_for :invalid_user)
-        expect(response).to render_template('edit')
+      context 'when failed' do
+        it 'renders "edit" template' do
+          put :update, id: @user.id, user: (attributes_for :invalid_user)
+          expect(response).to render_template('edit')
+        end
       end
     end
   end
@@ -64,10 +63,9 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
   end
 
-  context 'sends the deliver invitation' do
+  context 'send invitation' do
     it 'sends an email' do
       expect{ @user.deliver_invitation }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
-
 end

@@ -6,17 +6,14 @@ RSpec.describe Admin::AdminUsersController, type: :controller do
   before(:each) do
     @admin_user = create(:admin_user)
     sign_in @admin_user
-    @user = create(:user)
   end
 
   context '#index' do
-    let(:admin_user) { create(:admin_user) }
-
     before(:each) do
       get :index
     end
 
-    it 'reponds with HTTP status 200' do
+    it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
     end
   end
@@ -29,35 +26,36 @@ RSpec.describe Admin::AdminUsersController, type: :controller do
       @admin_user.reload
     end
 
-    context 'when successfull' do
-      it 'redirects to user page' do
-        expect(response).to redirect_to(admin_admin_user_path(@admin_user))
+    context 'check validations' do
+      context 'when successful' do
+        it 'redirects to user page' do
+          expect(response).to redirect_to(admin_admin_user_path(@admin_user))
+        end
+
+        it 'has updated email' do
+          expect(@admin_user.email).to eql admin_user_attrs[:email]
+        end
+
+        it 'has HTTP 200 status' do
+          put :edit, id: @admin_user.id, admin_user: admin_user_attrs
+          expect(response).to be_success
+          expect(response).to have_http_status(200)
+        end
       end
 
-      it 'has updated email' do
-        expect(@admin_user.email).to eql admin_user_attrs[:email]
-      end
-
-      it 'responds successfully with HTTP 200 status code' do
-        put :edit, id: @admin_user.id, admin_user: admin_user_attrs
-        expect(response).to be_success
-        expect(response).to have_http_status(200)
-      end
-    end
-
-    context 'when failed' do
-      it 'should redirect after failing' do
-        put :update, id: @admin_user.id, admin_user: (attributes_for :invalid_user)
-        expect(response).to redirect_to(admin_admin_user_path(@admin_user))
+      context 'when failed' do
+        it 'redirects to admin_admin_user_path ' do
+          put :update, id: @admin_user.id, admin_user: (attributes_for :invalid_user)
+          expect(response).to redirect_to(admin_admin_user_path(@admin_user))
+        end
       end
     end
   end
 
   context '#destroy' do
-    it 'renders after #destroy' do
+    it 'redirects to admin_admin_users_path' do
       delete :destroy, id: @admin_user.id
       expect(response).to redirect_to(admin_admin_users_path)
     end
   end
-
 end
