@@ -7,7 +7,6 @@ class StickersController < ApplicationController
 
   def index
     @stickers = Sticker.page(params[:page]).per(8)
-    @page = params[:page].to_i != 0 ? params[:page].to_i*10 - 10 : 0
   end
 
   def new

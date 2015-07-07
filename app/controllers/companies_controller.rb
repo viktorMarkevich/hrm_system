@@ -6,7 +6,7 @@ class CompaniesController < ApplicationController
 
 
   def index
-    @companies = Company.order('created_at').page(params[:page]).per(10)
+    @companies = Company.order('created_at ASC').page(params[:page]).per(10)
   end
 
   def new

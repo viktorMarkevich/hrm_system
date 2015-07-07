@@ -20,7 +20,6 @@ gem 'twitter-bootstrap-rails'
 gem 'paperclip', '~> 4.2'
 gem 'activeadmin', '~> 1.0.0.pre1'
 gem 'kaminari'
-# gem 'kaminari-bootstrap', '~> 3.0.1'
 
 group :development do
   gem 'letter_opener'
