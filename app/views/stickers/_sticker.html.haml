@@ -6,8 +6,7 @@
         .col-xs-offset-2.col-xs-4.panel-title
           = link_to edit_sticker_path(sticker), class: 'glyph_edit_link' do
             %i.glyphicon.glyphicon-pencil
-          = link_to sticker_path(sticker), method: :delete, class: 'glyph_destroy_link',
-                                            data: { confirm: 'Вы действительно хотите удалить стикер?' } do
+          = link_to sticker_path(sticker), method: :delete, class: 'glyph_destroy_link' do
             %i.glyphicon.glyphicon-remove-circle
     .panel-body
       .row
