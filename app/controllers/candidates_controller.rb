@@ -4,7 +4,8 @@ class CandidatesController < ApplicationController
   before_filter :find_candidate, only: [:show, :edit, :update]
 
   def index
-    @candidates = Candidate.all
+    @candidates = Candidate.page(params[:page]).per(10)
+    @page = params[:page].to_i != 0 ? params[:page].to_i*10 - 10 : 0
   end
 
   def new
@@ -50,4 +51,5 @@ class CandidatesController < ApplicationController
     def find_candidate
       @candidate = Candidate.find(params[:id])
     end
+
 end

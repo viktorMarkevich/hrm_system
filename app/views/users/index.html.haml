@@ -16,7 +16,7 @@
       %tbody
         - @users.each_with_index do |user, index|
           %tr
-            %th= index + 1
+            %th= index + 1 + @page
             %td= full_name_for(user)
             %td= user.post
             %td= user.region_name
@@ -24,6 +24,8 @@
             %td= user.phone
             %td= user.vacancies.size
             %td= user.candidates.size
+    = paginate @users
+
 - content_for :left_sidebar do
   .panel-success
     .panel-heading

@@ -27,7 +27,7 @@
       %tbody
         - @candidates.each_with_index do |candidate, index|
           %tr
-            %th= index + 1
+            %th= index + 1 + @page
             %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
             %td= candidate.desired_position
             %td Запорожье
@@ -35,6 +35,7 @@
             %td Иванов Иван
             %td= candidate.status
             %td= candidate.created_at.strftime('%F')
+    = paginate @candidates
 
 - content_for :left_sidebar do
   .panel-success

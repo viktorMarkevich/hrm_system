@@ -1,3 +1,6 @@
 = stylesheet_link_tag 'stickers'
 .row
   = render partial: 'stickers/sticker', collection: @stickers
+.row
+  .col-xs-12
+    = paginate @stickers

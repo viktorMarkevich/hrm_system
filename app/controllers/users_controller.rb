@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:edit, :update, :show]
 
   def index
-    @users = User.all
+    @users = User.page(params[:page]).per(10)
+    @page = params[:page].to_i != 0 ? params[:page].to_i*10 - 10 : 0
   end
 
   def show

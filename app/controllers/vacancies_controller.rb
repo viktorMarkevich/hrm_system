@@ -7,7 +7,8 @@ class VacanciesController < ApplicationController
   before_filter :find_vacancy, only: [:show, :edit, :update]
 
   def index
-    @vacancies = Vacancy.all
+    @vacancies = Vacancy.page(params[:page]).per(10)
+    @page = params[:page].to_i != 0 ? params[:page].to_i*10 - 10 : 0
   end
 
   def new

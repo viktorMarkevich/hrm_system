@@ -16,13 +16,14 @@
       %tbody
         - @companies.each_with_index do |company, index|
           %tr
-            %th= index + 1
+            %th= index + 1 + @page
             %td= link_to company.name, company_path(company), id: 'company-name'
             %td= company.url
             %td= '777'
             %td= company.region.try(:name)
             %td= company.created_at
             %td= truncate(company.description, length: 50)
+    = paginate @companies
 
 - content_for :left_sidebar do
   .panel-success
