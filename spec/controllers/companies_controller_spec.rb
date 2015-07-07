@@ -22,44 +22,42 @@ RSpec.describe CompaniesController, type: :controller do
   end
 
   context '#create' do
-    context 'check validations' do
-      context 'when successful' do
-        let(:company_attrs) { { company: attributes_for(:company), region: 'Запорожье' } }
+    context 'when successful' do
+      let(:company_attrs) { { company: attributes_for(:company), region: 'Запорожье' } }
 
-        before(:each) { post :create, company_attrs }
+      before(:each) { post :create, company_attrs }
 
-        it 'creates new Company object' do
-          expect(Company.count).to eq(1)
-        end
-
-        it 'redirects to companies_path' do
-          expect(response).to redirect_to companies_path
-        end
-
-        it 'has assigned region' do
-          expect(assigns(:company).region.name).to eq('Запорожье')
-        end
+      it 'creates new Company object' do
+        expect(Company.count).to eq(1)
       end
 
-      context 'when failed' do
-        let(:company_attrs) { { company: attributes_for(:company, region_id: nil) } }
+      it 'redirects to companies_path' do
+        expect(response).to redirect_to companies_path
+      end
 
-        it 'invalid without region_id' do
-          expect(build(:company, region_id: nil)).to_not be_valid
-        end
+      it 'has assigned region' do
+        expect(assigns(:company).region.name).to eq('Запорожье')
+      end
+    end
 
-        it 'invalid without name' do
-          expect(build(:company, name: nil)).to_not be_valid
-        end
+    context 'when failed' do
+      let(:company_attrs) { { company: attributes_for(:company, region_id: nil) } }
 
-        it %q{ doesn't create record without region_id } do
-          expect{ post :create, company_attrs }.to change(Company, :count).by(0)
-        end
+      it 'invalid without region_id' do
+        expect(build(:company, region_id: nil)).to_not be_valid
+      end
 
-        it 'renders "new" template' do
-          post :create, company_attrs
-          expect(response).to render_template('new')
-        end
+      it 'invalid without name' do
+        expect(build(:company, name: nil)).to_not be_valid
+      end
+
+      it %q{ doesn't create record without region_id } do
+        expect{ post :create, company_attrs }.to change(Company, :count).by(0)
+      end
+
+      it 'renders "new" template' do
+        post :create, company_attrs
+        expect(response).to render_template('new')
       end
     end
   end
@@ -83,7 +81,7 @@ RSpec.describe CompaniesController, type: :controller do
   context '#edit' do
     let(:company) { create(:company) }
 
-    before(:each) { get :edit, id: company.id }
+    before(:each) { get :edit, id: company }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -95,7 +93,7 @@ RSpec.describe CompaniesController, type: :controller do
   end
 
   context '#show' do
-    before(:each) { get :show, id: company.id }
+    before(:each) { get :show, id: company }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -109,37 +107,34 @@ RSpec.describe CompaniesController, type: :controller do
   context '#update' do
     before(:each) { @company = create(:company) }
 
-    context 'check validations' do
-      context 'when successful' do
-        let(:company_attrs) { { name: 'facebook', url: 'http://www.facebook.com.ua' } }
+    context 'when successful' do
+      let(:company_attrs) { { name: 'facebook', url: 'http://www.facebook.com.ua' } }
 
-        before(:each) do
-          put :update, id: @company.id, company: company_attrs, region: 'Запорожье'
-          @company.reload
-        end
-
-        it 'has updated name and url' do
-          expect(@company.name).to eql company_attrs[:name]
-          expect(@company.url).to eql company_attrs[:url]
-        end
-
-        it 'redirect to company_path' do
-          expect(response).to redirect_to company_path(@company)
-        end
+      before(:each) do
+        put :update, id: @company, company: company_attrs, region: 'Запорожье'
+        @company.reload
       end
 
-      context 'when failed' do
-        it 'renders "edit" template without name' do
-          put :update, id: @company.id, company: { name: nil }
-          expect(response).to render_template('edit')
-        end
+      it 'has updated name and url' do
+        expect(@company.name).to eql company_attrs[:name]
+        expect(@company.url).to eql company_attrs[:url]
+      end
 
-        it 'renders "edit" template without region_id' do
-          put :update, id: @company.id, company: { region_id: nil }
-          expect(response).to render_template('edit')
-        end
+      it 'redirect to company_path' do
+        expect(response).to redirect_to company_path(@company)
+      end
+    end
+
+    context 'when failed' do
+      it 'renders "edit" template without name' do
+        put :update, id: @company, company: { name: nil }
+        expect(response).to render_template('edit')
+      end
+
+      it 'renders "edit" template without region_id' do
+        put :update, id: @company, company: { region_id: nil }
+        expect(response).to render_template('edit')
       end
     end
   end
-
 end

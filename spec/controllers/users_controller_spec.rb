@@ -51,33 +51,31 @@ describe UsersController, type: :controller do
     let(:user_attrs) { attributes_for :user }
     let(:region) { create :region }
 
-    context 'check validations' do
-      context 'when successful' do
-        it 'redirects to user_path' do
-          put :update, id: user, user: user_attrs
-          user.reload
-          expect(response).to redirect_to(user_path(user))
-        end
-
-        it 'has updated email and skype' do
-          put :update, id: user, user: user_attrs
-          user.reload
-          expect(user.email).to eql user_attrs[:email]
-          expect(user.skype).to eql user_attrs[:skype]
-        end
-
-        it 'has updated region_id' do
-          put :update, id: user, user: { region_id: region.id }
-          user.reload
-          expect(assigns(:user).region_id).to eq(region.id)
-        end
+    context 'when successful' do
+      it 'redirects to user_path' do
+        put :update, id: user, user: user_attrs
+        user.reload
+        expect(response).to redirect_to(user_path(user))
       end
 
-      context 'when failed' do
-        it 'renders "edit" template' do
-          put :update, id: user, user: (attributes_for :invalid_user)
-          expect(response).to render_template('edit')
-        end
+      it 'has updated email and skype' do
+        put :update, id: user, user: user_attrs
+        user.reload
+        expect(user.email).to eql user_attrs[:email]
+        expect(user.skype).to eql user_attrs[:skype]
+      end
+
+      it 'has updated region_id' do
+        put :update, id: user, user: { region_id: region.id }
+        user.reload
+        expect(assigns(:user).region_id).to eq(region.id)
+      end
+    end
+
+    context 'when failed' do
+      it 'renders "edit" template' do
+        put :update, id: user, user: (attributes_for :invalid_user)
+        expect(response).to render_template('edit')
       end
     end
   end

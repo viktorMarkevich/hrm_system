@@ -31,43 +31,41 @@ RSpec.describe StickersController, type: :controller do
   end
 
   context '#create' do
-    context 'check validations' do
-      let(:performer)  { create(:user) }
+    let(:performer)  { create(:user) }
 
-      context 'when successful' do
-        let(:sticker_params) { { sticker: { description: 'Default description', performer_id: performer.id } } }
+    context 'when successful' do
+      let(:sticker_params) { { sticker: { description: 'Default description', performer_id: performer } } }
 
-        before(:each) { post :create, sticker_params }
+      before(:each) { post :create, sticker_params }
 
-        it 'has owner' do
-          expect(assigns(:sticker).owner).to eq(@user)
-        end
-
-        it 'has performer' do
-          expect(assigns(:sticker).performer).to eq(performer)
-        end
-
-        it 'creates new Sticker object' do
-          expect(Sticker.count).to eq(1)
-        end
-
-        it 'redirects to stickers_path' do
-          expect(response).to redirect_to(stickers_path)
-        end
+      it 'has owner' do
+        expect(assigns(:sticker).owner).to eq(@user)
       end
 
-      context 'when failed' do
-        let(:sticker_params) { { sticker: { description: nil } } }
+      it 'has performer' do
+        expect(assigns(:sticker).performer).to eq(performer)
+      end
 
-        before(:each) { post :create, sticker_params }
+      it 'creates new Sticker object' do
+        expect(Sticker.count).to eq(1)
+      end
 
-        it %q{ doesn't create new record } do
-          expect(Sticker.count).to eq(0)
-        end
+      it 'redirects to stickers_path' do
+        expect(response).to redirect_to(stickers_path)
+      end
+    end
 
-        it 'renders "new" template' do
-          expect(response).to render_template('new')
-        end
+    context 'when failed' do
+      let(:sticker_params) { { sticker: { description: nil } } }
+
+      before(:each) { post :create, sticker_params }
+
+      it %q{ doesn't create new record } do
+        expect(Sticker.count).to eq(0)
+      end
+
+      it 'renders "new" template' do
+        expect(response).to render_template('new')
       end
     end
   end
@@ -91,7 +89,7 @@ RSpec.describe StickersController, type: :controller do
   context '#edit' do
     let(:sticker) { create(:sticker) }
 
-    before(:each) { get :edit, id: sticker.id }
+    before(:each) { get :edit, id: sticker }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -107,27 +105,25 @@ RSpec.describe StickersController, type: :controller do
 
     before(:each) { @sticker = create(:sticker) }
 
-    context 'check validations' do
-      context 'when successful' do
-        before(:each) do
-          put :update, id: @sticker.id, sticker: sticker_attrs
-          @sticker.reload
-        end
-
-        it 'redirects to stickers_path' do
-          expect(response).to redirect_to(stickers_path)
-        end
-
-        it 'has updated description' do
-          expect(@sticker.description).to eql sticker_attrs[:description]
-        end
+    context 'when successful' do
+      before(:each) do
+        put :update, id: @sticker, sticker: sticker_attrs
+        @sticker.reload
       end
 
-      context 'when failed' do
-        it 'renders "edit" template' do
-          put :update, id: @sticker.id, sticker: (attributes_for :invalid_sticker)
-          expect(response).to render_template('edit')
-        end
+      it 'redirects to stickers_path' do
+        expect(response).to redirect_to(stickers_path)
+      end
+
+      it 'has updated description' do
+        expect(@sticker.description).to eql sticker_attrs[:description]
+      end
+    end
+
+    context 'when failed' do
+      it 'renders "edit" template' do
+        put :update, id: @sticker, sticker: (attributes_for :invalid_sticker)
+        expect(response).to render_template('edit')
       end
     end
   end
@@ -137,12 +133,12 @@ RSpec.describe StickersController, type: :controller do
 
     it 'destroys sticker' do
       expect{
-        delete :destroy, id: @sticker.id
+        delete :destroy, id: @sticker
       }.to change(Sticker, :count).by(-1)
     end
 
     it 'redirects to stickers_path' do
-      delete :destroy, id: @sticker.id
+      delete :destroy, id: @sticker
       expect(response).to redirect_to(stickers_path)
     end
   end
