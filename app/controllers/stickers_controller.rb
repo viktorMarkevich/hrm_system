@@ -36,10 +36,20 @@ class StickersController < ApplicationController
   end
 
   def destroy
-    if @sticker.destroy
-      flash[:notice] = 'Стикер был успешно удален.'
-      redirect_to stickers_path
+    if @sticker.deleted_at.nil?
+      if @sticker.destroy
+        flash[:notice] = 'Стикер был успешно удален.'
+        redirect_to stickers_path
+      end
+    else
+      @sticker.restore
+      flash[:notice] = 'Стикер был успешно восстановлен.'
+      redirect_to restore_stickers_path
     end
+  end
+
+  def restore_sticker
+    @stickers = Sticker.only_deleted
   end
 
   private
@@ -48,6 +58,6 @@ class StickersController < ApplicationController
    end
 
    def find_sticker
-     @sticker = Sticker.find(params[:id])
+     @sticker = Sticker.with_deleted.find(params[:id])
    end
 end

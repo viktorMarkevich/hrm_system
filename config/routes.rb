@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root 'stickers#index'
 
   resources :stickers, except: [:show]
+  get 'restore_stickers' => 'stickers#restore_sticker'
 
   resources :users, only: [:update, :edit, :show, :index]
 
