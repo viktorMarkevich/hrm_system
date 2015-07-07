@@ -25,5 +25,7 @@ class Candidate < ActiveRecord::Base
   validates :email, uniqueness: true, if: 'email.present?'
   validates :phone, uniqueness: true, if: 'phone.present?'
   validates :skype, uniqueness: true, if: 'skype.present?'
+  validates :birthday, format: { with: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/, multiline: true,
+            message: 'wrong format' }, if: 'birthday.present?'
 
 end
