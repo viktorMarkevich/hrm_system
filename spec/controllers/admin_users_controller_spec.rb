@@ -5,6 +5,7 @@ RSpec.describe Admin::UsersController, type: :controller do
 
   let(:admin_user) { create(:admin_user) }
   let(:user) { create(:user) }
+  let(:region) { create(:region, name: 'Запорожье') }
 
   before { sign_in admin_user }
 
@@ -20,12 +21,12 @@ RSpec.describe Admin::UsersController, type: :controller do
     let(:user_attrs) { attributes_for :user}
 
     before do
-      put :update, id: user, user: user_attrs, region: 'Запорожье'
+      put :update, id: user, user: user_attrs, region: region.name
       user.reload
     end
 
     context 'when successful' do
-      it 'redirects to user page' do
+      it 'redirects to admin user page' do
         expect(response).to redirect_to(admin_user_path(user))
       end
 
@@ -34,7 +35,7 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
 
       it 'has updated region' do
-        expect(user.region.name).to eql 'Запорожье'
+        expect(user.region.name).to eql region.name
       end
 
       it 'has HTTP 200 status' do
@@ -52,7 +53,7 @@ RSpec.describe Admin::UsersController, type: :controller do
   end
 
   context '#destroy' do
-    it 'renders after #destroy' do
+    it 'redirects to admin users index page' do
       delete :destroy, id: user
       expect(response).to redirect_to(admin_users_path)
     end

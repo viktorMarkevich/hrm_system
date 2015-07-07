@@ -1,13 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe CandidatesController, type: :controller do
-  before do
-    user = create(:user)
 
-    sign_in user
-  end
-
+  let(:user) { create(:user) }
   let(:candidate) { create(:candidate) }
+
+  before { sign_in user }
 
   context '#index' do
     let(:candidates_list) { create_list(:candidate, 3) }

@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe CompaniesController, type: :controller do
-  before do
-    user = create(:user)
 
-    sign_in user
-  end
-
+  let(:user) { create(:user) }
   let(:company) { create(:company)}
+  let(:region) { create(:region, name: 'Запорожье') }
+
+  before { sign_in user }
 
   context '#index' do
     before { get :index }
@@ -23,7 +22,7 @@ RSpec.describe CompaniesController, type: :controller do
 
   context '#create' do
     context 'when successful' do
-      let(:company_attrs) { { company: attributes_for(:company), region: 'Запорожье' } }
+      let(:company_attrs) { { company: attributes_for(:company), region: region.name } }
 
       before { post :create, company_attrs }
 
@@ -31,12 +30,12 @@ RSpec.describe CompaniesController, type: :controller do
         expect(Company.count).to eq(1)
       end
 
-      it 'redirects to companies_path' do
+      it 'redirects to companies index page' do
         expect(response).to redirect_to companies_path
       end
 
       it 'has assigned region' do
-        expect(assigns(:company).region.name).to eq('Запорожье')
+        expect(assigns(:company).region.name).to eq(region.name)
       end
     end
 
@@ -105,34 +104,32 @@ RSpec.describe CompaniesController, type: :controller do
   end
 
   context '#update' do
-    before { @company = create(:company) }
-
     context 'when successful' do
       let(:company_attrs) { { name: 'facebook', url: 'http://www.facebook.com.ua' } }
 
       before do
-        put :update, id: @company, company: company_attrs, region: 'Запорожье'
-        @company.reload
+        put :update, id: company, company: company_attrs, region: region.name
+        company.reload
       end
 
       it 'has updated name and url' do
-        expect(@company.name).to eql company_attrs[:name]
-        expect(@company.url).to eql company_attrs[:url]
+        expect(company.name).to eql company_attrs[:name]
+        expect(company.url).to eql company_attrs[:url]
       end
 
-      it 'redirect to company_path' do
-        expect(response).to redirect_to company_path(@company)
+      it 'redirects to company show page' do
+        expect(response).to redirect_to company_path(company)
       end
     end
 
     context 'when failed' do
       it 'renders "edit" template without name' do
-        put :update, id: @company, company: { name: nil }
+        put :update, id: company, company: { name: nil }
         expect(response).to render_template('edit')
       end
 
       it 'renders "edit" template without region_id' do
-        put :update, id: @company, company: { region_id: nil }
+        put :update, id: company, company: { region_id: nil }
         expect(response).to render_template('edit')
       end
     end

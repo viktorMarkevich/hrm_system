@@ -37,7 +37,7 @@ RSpec.describe Admin::AdminUsersController, type: :controller do
       end
 
       context 'when failed' do
-        it 'redirects to admin_admin_user_path ' do
+        it 'redirects to admin user show page ' do
           put :update, id: admin_user, admin_user: (attributes_for :invalid_user)
           expect(response).to redirect_to(admin_admin_user_path(admin_user))
         end
@@ -46,7 +46,7 @@ RSpec.describe Admin::AdminUsersController, type: :controller do
   end
 
   context '#destroy' do
-    it 'redirects to admin_admin_users_path' do
+    it 'redirects to admin users index page' do
       delete :destroy, id: admin_user
       expect(response).to redirect_to(admin_admin_users_path)
     end
