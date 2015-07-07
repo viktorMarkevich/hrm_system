@@ -19,7 +19,8 @@ gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 gem 'paperclip', '~> 4.2'
 gem 'activeadmin', '~> 1.0.0.pre1'
-gem "paranoia", "~> 2.0"
+gem 'paranoia', '~> 2.0'
+gem 'kaminari'
 
 group :development do
   gem 'letter_opener'

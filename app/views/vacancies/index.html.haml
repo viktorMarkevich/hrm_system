@@ -12,14 +12,16 @@
           %th Ответственный
           %th Статус
       %tbody
-        - @vacancies.each_with_index do |vacancy, index|
+        - @vacancies.each do |vacancy|
           %tr
-            %th= index + 1
+            %th= vacancy.id
             %td= link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
             %td= vacancy.region.try(:name)
             %td= get_salary(vacancy)
             %td= full_name_for(vacancy.owner)
             %td= vacancy.status
+    = paginate @vacancies
+
 
 - content_for :left_sidebar do
   .panel-success

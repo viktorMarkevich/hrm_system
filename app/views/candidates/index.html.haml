@@ -25,9 +25,9 @@
           %th Статус
           %th Добавлен
       %tbody
-        - @candidates.each_with_index do |candidate, index|
+        - @candidates.each do |candidate|
           %tr
-            %th= index + 1
+            %th= candidate.id
             %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
             %td= candidate.desired_position
             %td= display_field_value_for(candidate.city_of_residence)
@@ -35,6 +35,7 @@
             %td= full_name_for(candidate.owner)
             %td= candidate.status
             %td= candidate.created_at.strftime('%F')
+    = paginate @candidates
 
 - content_for :left_sidebar do
   .panel-success

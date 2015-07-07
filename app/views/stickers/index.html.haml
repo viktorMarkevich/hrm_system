@@ -2,3 +2,6 @@
 = link_to 'Восстановить стикеры', restore_stickers_path
 .row
   = render partial: 'stickers/sticker', collection: @stickers
+.row
+  .col-xs-12
+    = paginate @stickers

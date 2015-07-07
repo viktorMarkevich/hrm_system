@@ -4,7 +4,7 @@ class CandidatesController < ApplicationController
   before_filter :find_candidate, only: [:show, :edit, :update]
 
   def index
-    @candidates = Candidate.eager_load(:owner)
+    @candidates = Candidate.eager_load(:owner).order('id').page(params[:page]).per(10)
   end
 
   def new
@@ -50,4 +50,5 @@ class CandidatesController < ApplicationController
     def find_candidate
       @candidate = Candidate.find(params[:id])
     end
+
 end
