@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CandidatesController, type: :controller do
-  before(:each) do
+  before do
     user = create(:user)
 
     sign_in user
@@ -12,7 +12,7 @@ RSpec.describe CandidatesController, type: :controller do
   context '#index' do
     let(:candidates_list) { create_list(:candidate, 3) }
 
-    before(:each) { get :index }
+    before { get :index }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -29,7 +29,7 @@ RSpec.describe CandidatesController, type: :controller do
 
   context '#create' do
     context 'when successful' do
-      before(:each) { post :create, candidate: attributes_for(:candidate) }
+      before { post :create, candidate: attributes_for(:candidate) }
 
       it 'creates new Candidate object' do
         expect(assigns(:candidate)).to eq(Candidate.last)
@@ -41,16 +41,15 @@ RSpec.describe CandidatesController, type: :controller do
     end
 
     context 'when failed' do
-      before(:each) { post :create, candidate: attributes_for(:candidate, status: nil) }
-
       it 'renders "new" template' do
+        post :create, candidate: attributes_for(:candidate, status: nil)
         expect(response).to render_template('new')
       end
     end
   end
 
   context '#new' do
-    before(:each) { get :new }
+    before { get :new }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -67,7 +66,7 @@ RSpec.describe CandidatesController, type: :controller do
   end
 
   context '#edit' do
-    before(:each) { get :edit, id: candidate }
+    before { get :edit, id: candidate }
 
     it 'responds with HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -79,7 +78,7 @@ RSpec.describe CandidatesController, type: :controller do
   end
 
   context '#show' do
-    before(:each) { get :show, id: candidate }
+    before { get :show, id: candidate }
 
     it 'responds with HTTP 200 status code' do
       expect(response).to have_http_status(200)
@@ -94,7 +93,7 @@ RSpec.describe CandidatesController, type: :controller do
     context 'when successful' do
       let(:candidate_attrs) { { name: 'Rick Grimes', salary: '500' } }
 
-      before(:each) do
+      before do
         put :update, id: candidate, candidate: candidate_attrs
         candidate.reload
       end

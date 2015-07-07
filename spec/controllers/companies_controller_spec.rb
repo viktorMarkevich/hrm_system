@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CompaniesController, type: :controller do
-  before(:each) do
+  before do
     user = create(:user)
 
     sign_in user
@@ -10,7 +10,7 @@ RSpec.describe CompaniesController, type: :controller do
   let(:company) { create(:company)}
 
   context '#index' do
-    before(:each) { get :index }
+    before { get :index }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -25,7 +25,7 @@ RSpec.describe CompaniesController, type: :controller do
     context 'when successful' do
       let(:company_attrs) { { company: attributes_for(:company), region: 'Запорожье' } }
 
-      before(:each) { post :create, company_attrs }
+      before { post :create, company_attrs }
 
       it 'creates new Company object' do
         expect(Company.count).to eq(1)
@@ -63,7 +63,7 @@ RSpec.describe CompaniesController, type: :controller do
   end
 
   context '#new' do
-    before(:each) { get :new }
+    before { get :new }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -81,7 +81,7 @@ RSpec.describe CompaniesController, type: :controller do
   context '#edit' do
     let(:company) { create(:company) }
 
-    before(:each) { get :edit, id: company }
+    before { get :edit, id: company }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -93,7 +93,7 @@ RSpec.describe CompaniesController, type: :controller do
   end
 
   context '#show' do
-    before(:each) { get :show, id: company }
+    before { get :show, id: company }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -105,12 +105,12 @@ RSpec.describe CompaniesController, type: :controller do
   end
 
   context '#update' do
-    before(:each) { @company = create(:company) }
+    before { @company = create(:company) }
 
     context 'when successful' do
       let(:company_attrs) { { name: 'facebook', url: 'http://www.facebook.com.ua' } }
 
-      before(:each) do
+      before do
         put :update, id: @company, company: company_attrs, region: 'Запорожье'
         @company.reload
       end

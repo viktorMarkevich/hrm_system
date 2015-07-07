@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe StickersController, type: :controller do
 
-  before(:each) do
+  before do
     @user = create(:user)
 
     sign_in @user
   end
 
   context '#index' do
-    before(:each) { get :index  }
+    before { get :index  }
 
     let(:stickers_list) { create_list(:sticker, 3) }
 
@@ -36,7 +36,7 @@ RSpec.describe StickersController, type: :controller do
     context 'when successful' do
       let(:sticker_params) { { sticker: { description: 'Default description', performer_id: performer } } }
 
-      before(:each) { post :create, sticker_params }
+      before { post :create, sticker_params }
 
       it 'has owner' do
         expect(assigns(:sticker).owner).to eq(@user)
@@ -58,7 +58,7 @@ RSpec.describe StickersController, type: :controller do
     context 'when failed' do
       let(:sticker_params) { { sticker: { description: nil } } }
 
-      before(:each) { post :create, sticker_params }
+      before { post :create, sticker_params }
 
       it %q{ doesn't create new record } do
         expect(Sticker.count).to eq(0)
@@ -71,7 +71,7 @@ RSpec.describe StickersController, type: :controller do
   end
 
   context '#new' do
-    before(:each) { get :new }
+    before { get :new }
 
     it 'has HTTP 200 status code' do
       expect(response).to have_http_status(200)
@@ -89,7 +89,7 @@ RSpec.describe StickersController, type: :controller do
   context '#edit' do
     let(:sticker) { create(:sticker) }
 
-    before(:each) { get :edit, id: sticker }
+    before { get :edit, id: sticker }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -103,10 +103,10 @@ RSpec.describe StickersController, type: :controller do
   context '#update' do
     let(:sticker_attrs) { { description: 'updated description' } }
 
-    before(:each) { @sticker = create(:sticker) }
+    before { @sticker = create(:sticker) }
 
     context 'when successful' do
-      before(:each) do
+      before do
         put :update, id: @sticker, sticker: sticker_attrs
         @sticker.reload
       end
@@ -129,7 +129,7 @@ RSpec.describe StickersController, type: :controller do
   end
 
   context '#destroy' do
-    before(:each) { @sticker = create(:sticker) }
+    before { @sticker = create(:sticker) }
 
     it 'destroys sticker' do
       expect{

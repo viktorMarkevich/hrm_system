@@ -4,10 +4,10 @@ describe UsersController, type: :controller do
 
   let!(:user) { create :user }
 
-  before(:each) { sign_in user }
+  before { sign_in user }
 
   context '#index' do
-    before(:each) { get :index }
+    before { get :index }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -24,7 +24,7 @@ describe UsersController, type: :controller do
   end
 
   context '#edit' do
-    before(:each) { get :edit, id: user }
+    before { get :edit, id: user }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -36,7 +36,7 @@ describe UsersController, type: :controller do
   end
 
   context '#show' do
-    before(:each) { get :show, id: user }
+    before { get :show, id: user }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -52,17 +52,20 @@ describe UsersController, type: :controller do
     let(:region) { create :region }
 
     context 'when successful' do
-      it 'redirects to user_path' do
-        put :update, id: user, user: user_attrs
-        user.reload
-        expect(response).to redirect_to(user_path(user))
-      end
+      context 'updates the same attributes' do
+        before do
+          put :update, id: user, user: user_attrs
+          user.reload
+        end
 
-      it 'has updated email and skype' do
-        put :update, id: user, user: user_attrs
-        user.reload
-        expect(user.email).to eql user_attrs[:email]
-        expect(user.skype).to eql user_attrs[:skype]
+        it 'redirects to user_path' do
+          expect(response).to redirect_to(user_path(user))
+        end
+
+        it 'has updated email and skype' do
+          expect(user.email).to eql user_attrs[:email]
+          expect(user.skype).to eql user_attrs[:skype]
+        end
       end
 
       it 'has updated region_id' do

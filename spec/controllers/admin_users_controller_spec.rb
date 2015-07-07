@@ -6,12 +6,11 @@ RSpec.describe Admin::UsersController, type: :controller do
   let(:admin_user) { create(:admin_user) }
   let(:user) { create(:user) }
 
-  before(:each) { sign_in admin_user }
+  before { sign_in admin_user }
 
   context '#index' do
-    before(:each) { get :index }
-
     it 'has HTTP 200 status' do
+      get :index
       expect(response).to have_http_status(200)
     end
 
@@ -20,7 +19,7 @@ RSpec.describe Admin::UsersController, type: :controller do
   context '#update' do
     let(:user_attrs) { attributes_for :user}
 
-    before(:each) do
+    before do
       put :update, id: user, user: user_attrs, region: 'Запорожье'
       user.reload
     end

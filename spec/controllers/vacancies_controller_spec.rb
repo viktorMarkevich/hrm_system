@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe VacanciesController, type: :controller do
 
-  before(:each) do
+  before do
     user = create(:user)
 
     sign_in user
   end
 
   context '#index' do
-    before(:each) { get :index }
+    before { get :index }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -21,13 +21,13 @@ RSpec.describe VacanciesController, type: :controller do
   end
 
   context '#create' do
-    before(:each) do
+    before do
       @user = create(:user)
       @region = create(:region, name: 'Запорожье')
     end
 
     context 'when successful' do
-      before(:each) { post :create, vacancy_attrs }
+      before { post :create, vacancy_attrs }
 
       let(:vacancy_attrs) { { vacancy: attributes_for(:vacancy), region: @region.name } }
 
@@ -72,7 +72,7 @@ RSpec.describe VacanciesController, type: :controller do
   end
 
   context '#new' do
-    before(:each) { get :new }
+    before { get :new }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -90,7 +90,7 @@ RSpec.describe VacanciesController, type: :controller do
   context '#edit' do
     let(:vacancy) { create(:vacancy) }
 
-    before(:each) do
+    before do
       get :edit, id: vacancy
     end
 
@@ -106,7 +106,7 @@ RSpec.describe VacanciesController, type: :controller do
   context '#show' do
     let(:vacancy) { create(:vacancy)}
 
-    before(:each) { get :show, id: vacancy }
+    before { get :show, id: vacancy }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -120,7 +120,7 @@ RSpec.describe VacanciesController, type: :controller do
   context '#update' do
     let(:vacancy_attrs) { { name: 'Менеджер', salary: '400' } }
 
-    before(:each) do
+    before do
       @vacancy = create(:vacancy)
       put :update, id: @vacancy, vacancy: vacancy_attrs, region: 'Запорожье'
       @vacancy.reload
