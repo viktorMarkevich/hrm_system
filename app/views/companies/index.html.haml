@@ -14,9 +14,9 @@
           %th Краткое описание
 
       %tbody
-        - @companies.each_with_index do |company, index|
+        - @companies.each do |company|
           %tr
-            %th= index + 1 + @page
+            %th= company.id
             %td= link_to company.name, company_path(company), id: 'company-name'
             %td= company.url
             %td= '777'

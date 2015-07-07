@@ -7,7 +7,6 @@ class CompaniesController < ApplicationController
 
   def index
     @companies = Company.order('created_at DESC').page(params[:page]).per(10)
-    @page = params[:page].to_i != 0 ? params[:page].to_i*10 - 10 : 0
   end
 
   def new

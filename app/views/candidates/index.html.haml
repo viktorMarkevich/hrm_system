@@ -25,9 +25,9 @@
           %th Статус
           %th Добавлен
       %tbody
-        - @candidates.each_with_index do |candidate, index|
+        - @candidates.each do |candidate|
           %tr
-            %th= index + 1 + @page
+            %th= candidate.id
             %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
             %td= candidate.desired_position
             %td Запорожье

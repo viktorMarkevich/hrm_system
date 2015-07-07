@@ -7,8 +7,7 @@ class VacanciesController < ApplicationController
   before_filter :find_vacancy, only: [:show, :edit, :update]
 
   def index
-    @vacancies = Vacancy.page(params[:page]).per(10)
-    @page = params[:page].to_i != 0 ? params[:page].to_i*10 - 10 : 0
+    @vacancies = Vacancy.order('created_at ASC').page(params[:page]).per(10)
   end
 
   def new

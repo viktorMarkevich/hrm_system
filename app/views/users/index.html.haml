@@ -14,9 +14,9 @@
           %th Созданных вакансий
           %th Созданных кандидатов
       %tbody
-        - @users.each_with_index do |user, index|
+        - @users.each do |user|
           %tr
-            %th= index + 1 + @page
+            %th= user.id
             %td= full_name_for(user)
             %td= user.post
             %td= user.region_name

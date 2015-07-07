@@ -4,8 +4,7 @@ class CandidatesController < ApplicationController
   before_filter :find_candidate, only: [:show, :edit, :update]
 
   def index
-    @candidates = Candidate.page(params[:page]).per(10)
-    @page = params[:page].to_i != 0 ? params[:page].to_i*10 - 10 : 0
+    @candidates = Candidate.order('created_at ASC').page(params[:page]).per(10)
   end
 
   def new
