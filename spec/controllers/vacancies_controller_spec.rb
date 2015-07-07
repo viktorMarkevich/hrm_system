@@ -18,6 +18,10 @@ RSpec.describe VacanciesController, type: :controller do
     it 'renders "index" template' do
       expect(response).to render_template('index')
     end
+
+    it 'has vacancies list with only created vacancy' do
+      expect(assigns(:vacancies)).to eq([vacancy])
+    end
   end
 
   context '#create' do

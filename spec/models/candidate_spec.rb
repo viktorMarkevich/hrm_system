@@ -2,18 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Candidate, type: :model do
   context 'check validations' do
-    context 'when valid'do
+    context 'when valid' do
       it 'has valid factory' do
         expect(build(:candidate)).to be_valid
       end
     end
 
     context 'when invalid' do
-      it 'is invalid without name' do
-        unnamed_candidate = build(:candidate, name: nil)
-        expect(unnamed_candidate).to_not be_valid
-      end
-
       it %q{name can't be blank} do
         expect(build(:candidate, name: '')).to_not be_valid
       end
@@ -39,18 +34,17 @@ RSpec.describe Candidate, type: :model do
       end
 
       context 'got not unique field' do
+        let(:candidate) { create(:candidate) }
+
         it 'email is taken' do
-          candidate = create(:candidate)
           expect(build(:candidate, email: candidate.email)).to_not be_valid
         end
 
         it 'skype is taken' do
-          candidate = create(:candidate, skype: 'bobfgfr')
           expect(build(:candidate, skype: candidate.skype)).to_not be_valid
         end
 
         it 'phone is taken' do
-          candidate = create(:candidate, phone: '+38-093-654-3123')
           expect(build(:candidate, phone: candidate.phone)).to_not be_valid
         end
       end

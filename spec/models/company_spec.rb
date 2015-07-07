@@ -14,8 +14,7 @@ RSpec.describe Company, type: :model do
 
     context 'when invalid' do
       it 'has no name' do
-        unnamed_company = build(:company, name: nil)
-        expect(unnamed_company).to_not be_valid
+        expect(build(:company, name: nil)).to_not be_valid
       end
 
       it 'has invalid url' do

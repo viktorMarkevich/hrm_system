@@ -20,8 +20,8 @@ RSpec.describe CandidatesController, type: :controller do
       expect(response).to render_template('index')
     end
 
-    it 'matches candidates_list' do
-      expect(assigns(:candidates)).to match_array(candidates_list)
+    it 'has candidates list with only created candidate' do
+      expect(assigns(:candidates)).to eq([candidate])
     end
   end
 

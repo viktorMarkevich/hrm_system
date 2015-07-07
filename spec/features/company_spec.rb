@@ -3,15 +3,18 @@
 require 'rails_helper'
 
 describe 'Managing companies', type: :feature do
-  before(:each) do
-    @user = create(:user)
-    region = create(:region, name: 'Запорожье')
-    @company = create(:company, name: 'TruedCo', region_id: region.id)
-    sign_in_as(@user, nil)
+  let(:user) { create(:user) }
+  let(:region) { create(:region, name: 'Запорожье') }
+  let(:company) { create(:company, name: 'TruedCo', region_id: region.id) }
+
+  before do
+    company
+    sign_in_as(user, nil)
   end
 
   scenario 'should have "active current" class on company index page' do
     visit companies_path
+
     expect(page).to have_css('a.active.current', text: 'Компании')
     expect(page).to_not have_css('a.active.current', text: 'Вакансии')
   end
@@ -31,21 +34,24 @@ describe 'Managing companies', type: :feature do
 
   scenario 'edit company' do
     visit companies_path
-    click_link @company.name
+
+    click_link company.name
     click_link 'Редактировать'
     expect(page).to have_content 'Изменить данные компании'
   end
 
   scenario 'goes back from companies#index page to companies#show page' do
     visit companies_path
-    click_link @company.name
+
+    click_link company.name
     click_link 'Назад'
     expect(page).to have_content 'Компании'
   end
 
   scenario 'goes back from companies#edit page to companies#show page' do
     visit companies_path
-    click_link @company.name
+
+    click_link company.name
     click_link 'Редактировать'
     click_link 'Назад'
     expect(page).to have_content 'Редактировать'
@@ -53,9 +59,10 @@ describe 'Managing companies', type: :feature do
 
   scenario 'update company' do
     visit companies_path
-    click_link @company.name
+
+    click_link company.name
     click_link 'Редактировать'
-    within "#edit_company_#{@company.id}" do
+    within "#edit_company_#{company.id}" do
       fill_in 'company_name', with: 'Company 777'
       fill_in 'company_url', with: 'http://www.facebook.com/'
       click_button 'Обновить'

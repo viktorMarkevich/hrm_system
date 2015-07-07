@@ -10,8 +10,6 @@ RSpec.describe StickersController, type: :controller do
   context '#index' do
     before { get :index  }
 
-    let(:stickers_list) { create_list(:sticker, 3) }
-
     it 'has successful response' do
       expect(response).to be_success
     end
@@ -24,8 +22,8 @@ RSpec.describe StickersController, type: :controller do
       expect(response).to render_template('index')
     end
 
-    it 'matches stickers_list' do
-      expect(assigns(:stickers)).to match_array(stickers_list)
+    it 'has stickers list with only created sticker' do
+      expect(assigns(:stickers)).to eq([sticker])
     end
   end
 

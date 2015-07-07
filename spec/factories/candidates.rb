@@ -10,6 +10,7 @@ FactoryGirl.define do
     desired_position 'Программист, руби'
     experience '3 года'
     status 'В процессе'
+    sequence(:skype) { |n| "skype_login#{n}" }
     sequence(:email) { |n| "#{n}email@mail.ru" }
     sequence(:phone) { |n| "+38-050-000-000#{n}" }
     linkedin 'https://ua.linkedin.com/pub/test-user/9a/29/644'

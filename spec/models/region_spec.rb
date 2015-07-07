@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Region, type: :model do
   context 'check validations' do
+    let(:region) { create(:region, name: 'Киев') }
+
     context 'when valid' do
       it 'has valid factory' do
-        expect(build(:region)).to be_valid
+        expect(region).to be_valid
       end
     end
 
@@ -14,10 +16,9 @@ RSpec.describe Region, type: :model do
       end
 
       it 'has existed name' do
-        create(:region, name: 'Киев')
-        region = build(:region, name: 'Киев')
-        expect(region).to_not be_valid
-        expect(region.errors[:name]).to include('has already been taken')
+        new_region = build(:region, name: region.name)
+        expect(new_region).to_not be_valid
+        expect(new_region.errors[:name]).to include('has already been taken')
       end
     end
   end

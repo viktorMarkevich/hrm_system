@@ -18,6 +18,10 @@ RSpec.describe CompaniesController, type: :controller do
     it 'renders "index" template' do
       expect(response).to render_template('index')
     end
+
+    it 'has companies list with only created company' do
+      expect(assigns(:companies)).to eq([company])
+    end
   end
 
   context '#create' do

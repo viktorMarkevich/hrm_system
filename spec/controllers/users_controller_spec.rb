@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe UsersController, type: :controller do
 
-  let!(:user) { create :user }
+  let(:user) { create :user }
 
   before { sign_in user }
 
@@ -17,9 +17,8 @@ describe UsersController, type: :controller do
       expect(response).to render_template('index')
     end
 
-    it 'matches created users count' do
-      users_list = create_list(:user, 3)
-      expect(assigns(:users).size).to eq(users_list.size + 1)
+    it 'has users list with only current user' do
+      expect(assigns(:users)).to eq([user])
     end
   end
 
