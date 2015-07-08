@@ -1,4 +1,6 @@
 class NoticeMailer < ActionMailer::Base
+  add_template_helper(ApplicationHelper)
+  add_template_helper(UsersHelper)
 
   def notice_of_appointment(sticker)
     @sticker = sticker

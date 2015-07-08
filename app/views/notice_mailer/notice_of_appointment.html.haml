@@ -4,4 +4,4 @@
 = @sticker.description
 %br
 %br
-= "Назначил: #{@sticker.owner.first_name} #{@sticker.owner.last_name} в #{@sticker.updated_at}"
+= "Назначил: #{get_author_and_date(@sticker)}"
