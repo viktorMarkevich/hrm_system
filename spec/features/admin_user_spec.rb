@@ -90,7 +90,7 @@ RSpec.describe 'AdminUser', type: :feature do
     fill_in 'user_email', with: test_user.email
     fill_in 'user_first_name', with: test_user.first_name
     fill_in 'user_last_name', with: test_user.last_name
-    fill_in 'user_post', with: test_user.post
+    select('Директор', from: 'user_post')
     select('Запорожье', from: 'region')
     click_button 'Send an Invitation'
     expect(page).to have_content 'User has been successfully invited.'
@@ -102,7 +102,7 @@ RSpec.describe 'AdminUser', type: :feature do
     fill_in 'user_email', with: 'invalid_email'
     fill_in 'user_first_name', with: test_user.first_name
     fill_in 'user_last_name', with: test_user.last_name
-    fill_in 'user_post', with: test_user.post
+    select('HR менеджер', from: 'user_post')
     select('Запорожье', from: 'region')
     click_button 'Send an Invitation'
     expect(page).to have_content 'is invalid'

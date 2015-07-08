@@ -12,7 +12,7 @@
       %td= f.text_field :last_name, required: true
     %tr
       %td= f.label :post
-      %td= f.text_field :post, required: true
+      %td= f.select(:post, ['Директор', 'HR менеджер'], required: true)
     %tr
       %td= f.label :region_id
       %td= select_tag(:region,  options_for_select(Region::NAMES, @user.region_name))
