@@ -8,8 +8,6 @@ RSpec.describe CandidatesController, type: :controller do
   before { sign_in user }
 
   context '#index' do
-    let(:candidates_list) { create_list(:candidate, 3) }
-
     before { get :index }
 
     it 'has HTTP 200 status' do
