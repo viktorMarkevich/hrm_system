@@ -57,7 +57,7 @@ describe UsersController, type: :controller do
           user.reload
         end
 
-        it 'redirects to user_path' do
+        it 'redirects to user show page' do
           expect(response).to redirect_to(user_path(user))
         end
 

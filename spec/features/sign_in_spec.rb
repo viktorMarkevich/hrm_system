@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'the signin process', type: :feature do
+describe 'the sign_in process', type: :feature do
   let(:user) { create(:user) }
 
   scenario 'visit stickers#index page when signed in' do

@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'AdminUser', type: :feature do
   let(:admin_user) { create(:admin_user) }
-  let(:region) { create(:region) }
   let(:user) { create(:user) }
 
   before { sign_in_as(admin_user, nil, 'admin') }

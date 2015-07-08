@@ -58,7 +58,6 @@ RSpec.describe CandidatesController, type: :controller do
     it 'creates Candidate class instance' do
       expect(assigns(:candidate)).to be_a_new(Candidate)
     end
-
   end
 
   context '#edit' do
@@ -80,7 +79,7 @@ RSpec.describe CandidatesController, type: :controller do
       expect(response).to have_http_status(200)
     end
 
-    it 'renders template "show"' do
+    it 'renders "show" template' do
       expect(response).to render_template('show')
     end
   end
@@ -112,6 +111,5 @@ RSpec.describe CandidatesController, type: :controller do
         expect(response).to render_template('edit')
       end
     end
-
   end
 end

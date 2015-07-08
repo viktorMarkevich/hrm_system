@@ -9,7 +9,7 @@ RSpec.describe Candidate, type: :model do
     end
 
     context 'when invalid' do
-      it %q{name can't be blank} do
+      it %q{ name can't be blank } do
         expect(build(:candidate, name: '')).to_not be_valid
       end
 

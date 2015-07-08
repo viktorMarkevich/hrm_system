@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe CompaniesController, type: :controller do
 
   let(:user) { create(:user) }
-  let(:company) { create(:company)}
-  let(:region) { create(:region, name: 'Запорожье') }
+  let(:company) { create(:company) }
+  let(:region) { create(:region) }
 
   before { sign_in user }
 
@@ -82,8 +82,6 @@ RSpec.describe CompaniesController, type: :controller do
   end
 
   context '#edit' do
-    let(:company) { create(:company) }
-
     before { get :edit, id: company }
 
     it 'has HTTP 200 status' do

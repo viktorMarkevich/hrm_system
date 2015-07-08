@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ApplicationHelper, type: :helper do
   let(:user) { create :user }
 
-  context 'should return message or field value for an user' do
+  context 'returns message or field value for an user' do
     it 'returns users skype' do
       expect(helper.display_field_value_for(user.skype)).to eq(user.skype)
     end

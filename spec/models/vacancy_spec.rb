@@ -38,7 +38,6 @@ RSpec.describe Vacancy, type: :model do
       it 'salary is not integer' do
         expect(build(:vacancy,  salary: '1000.5')).to_not be_valid
       end
-
     end
   end
 end

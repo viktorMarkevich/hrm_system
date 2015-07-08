@@ -4,8 +4,7 @@ require 'rails_helper'
 
 describe 'Managing companies', type: :feature do
   let(:user) { create(:user) }
-  let(:region) { create(:region, name: 'Запорожье') }
-  let(:company) { create(:company, name: 'TruedCo', region_id: region.id) }
+  let(:company) { create(:company) }
 
   before do
     company

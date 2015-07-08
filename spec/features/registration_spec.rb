@@ -3,12 +3,7 @@ require 'rails_helper'
 describe 'changing registration data', type: :feature do
   let(:user) { create(:user) }
 
-  before do
-    create(:region, name: 'Запорожье')
-    create(:region, name: 'Киев')
-
-    sign_in_as(user, nil)
-  end
+  before { sign_in_as(user, nil) }
 
   scenario 'edit user password' do
     visit root_path

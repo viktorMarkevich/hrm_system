@@ -4,7 +4,7 @@ RSpec.describe VacanciesController, type: :controller do
 
   let(:user) { create(:user) }
   let(:vacancy) { create(:vacancy) }
-  let(:region) { create(:region, name: 'Запорожье') }
+  let(:region) { create(:region) }
 
   before { sign_in user }
 
