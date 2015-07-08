@@ -46,7 +46,7 @@
                       = 'Выйти'
       = flash[:notice]
       .row.well
-        - if controller.controller_name == 'stickers'
+        - if controller.controller_name == 'stickers' || controller.controller_name == 'archives'
           .row
             .col-xs-8
               .panel.panel-default

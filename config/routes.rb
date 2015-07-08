@@ -7,8 +7,10 @@ Rails.application.routes.draw do
 
   root 'stickers#index'
 
-  resources :stickers, except: [:show]
-  get 'restore_stickers' => 'stickers#restore_sticker'
+  resources :stickers, except: [:show] do
+    get 'archives', to: 'archives#index', on: :collection
+    delete 'archives', to: 'archives#destroy', on: :member
+  end
 
   resources :users, only: [:update, :edit, :show, :index]
 

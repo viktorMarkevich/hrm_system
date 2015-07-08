@@ -1,0 +1,12 @@
+.col-xs-6
+  .panel.panel-primary
+    .panel-heading
+      .row
+        .col-xs-6.panel-title
+        .col-xs-offset-2.col-xs-4.panel-title
+          = link_to archives_sticker_path(sticker), method: :delete, class: 'glyph_destroy_link' do
+            %i.glyphicon.glyphicon-open
+    .panel-body
+      .row
+        .col-xs-12.sticker-desc
+          = sticker.description
