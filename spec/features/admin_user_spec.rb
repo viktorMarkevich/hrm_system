@@ -104,7 +104,7 @@ RSpec.describe 'AdminUser', type: :feature do
     fill_in 'user_email', with: 'invalid_email'
     fill_in 'user_first_name', with: test_user.first_name
     fill_in 'user_last_name', with: test_user.last_name
-    select('HR менеджер', from: 'user_post')
+    select('HR Менеджер', from: 'user_post')
     select('Запорожье', from: 'region')
     click_button 'Send an Invitation'
     expect(page).to have_content 'is invalid'
