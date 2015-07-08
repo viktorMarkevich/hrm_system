@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AdminUser, type: :model do
-  let(:admin_user) { build(:admin_user) }
+  let(:admin_user) { create(:admin_user) }
 
   describe 'instantiation' do
     it 'instantiates a list' do
@@ -17,8 +17,6 @@ RSpec.describe AdminUser, type: :model do
     end
 
     context 'when invalid' do
-      let(:admin_user) { create(:admin_user) }
-
       it %q{ email can't be blank? } do
         expect(build(:admin_user, email: '')).to_not be_valid
       end
