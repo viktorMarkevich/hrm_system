@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :candidate do
     sequence(:name) { |n| "test_user#{n}" }
-    birthday '2015-06-12'
+    birthday '06-12-2015'
     salary '450'
     salary_format 'usd'
     education 'Oxford'
