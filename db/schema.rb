@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150707090143) do
+ActiveRecord::Schema.define(version: 20150708091305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20150707090143) do
     t.string   "google_plus"
     t.string   "home_page"
     t.string   "skype"
+    t.integer  "owner_id"
     t.integer  "user_id"
   end
 
@@ -109,6 +110,7 @@ ActiveRecord::Schema.define(version: 20150707090143) do
     t.integer  "owner_id"
     t.integer  "performer_id"
     t.datetime "deleted_at"
+    t.string   "status"
   end
 
   add_index "stickers", ["deleted_at"], name: "index_stickers_on_deleted_at", using: :btree
