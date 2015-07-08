@@ -49,6 +49,7 @@ RSpec.describe 'AdminUser', type: :feature do
   scenario 'update User email' do
     visit "admin/users/#{user.id}/edit"
     fill_in 'user_email', with: 'proba@ppp.ppp'
+    select 'Директор', from: 'user_post'
     select 'Запорожье', from: 'user_region_id'
     click_button 'Update User'
     expect(page).to have_content 'Пользователь успешно обновлен.'
@@ -57,6 +58,7 @@ RSpec.describe 'AdminUser', type: :feature do
   scenario 'update User region' do
     visit "admin/users/#{user.id}/edit"
     find('#user_region_id').find(:xpath, 'option[3]').select_option
+    select 'Директор', from: 'user_post'
     click_button 'Update User'
     expect(page).to have_content 'Пользователь успешно обновлен.'
     expect(page).to have_content 'Донецк'
@@ -86,7 +88,11 @@ RSpec.describe 'AdminUser', type: :feature do
     fill_in 'user_email', with: user.email
     fill_in 'user_first_name', with: user.first_name
     fill_in 'user_last_name', with: user.last_name
-    fill_in 'user_post', with: user.post
+    select('Директор', from: 'user_post')
+    fill_in 'user_email', with: user.email
+    fill_in 'user_first_name', with: user.first_name
+    fill_in 'user_last_name', with: user.last_name
+    select('Директор', from: 'user_post')
     select('Запорожье', from: 'region')
     click_button 'Send an Invitation'
     expect(page).to have_content 'User has been successfully invited.'
@@ -98,7 +104,7 @@ RSpec.describe 'AdminUser', type: :feature do
     fill_in 'user_email', with: 'invalid_email'
     fill_in 'user_first_name', with: test_user.first_name
     fill_in 'user_last_name', with: test_user.last_name
-    fill_in 'user_post', with: test_user.post
+    select('HR Менеджер', from: 'user_post')
     select('Запорожье', from: 'region')
     click_button 'Send an Invitation'
     expect(page).to have_content 'is invalid'
