@@ -5,10 +5,10 @@ FactoryGirl.define do
     sequence(:name) { |n| "Вакансия#{n}" }
     salary '550'
     salary_format 'usd'
-    user_id 1
     status 'В процессе'
     languages 'Английский, Русский'
     requirements 'Ответственный'
     region
+    association :owner, factory: :user
   end
 end

@@ -5,6 +5,9 @@ class Candidate < ActiveRecord::Base
 
   accepts_nested_attributes_for :image
 
+  POST = ['должность1', 'должность2', 'должность3']
+  STATUS = ['status1', 'status2', 'status3']
+
   validates :name, :desired_position, :status, presence: true
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
             message: 'is invalid.' }, if: 'email.present?'
@@ -25,5 +28,7 @@ class Candidate < ActiveRecord::Base
   validates :email, uniqueness: true, if: 'email.present?'
   validates :phone, uniqueness: true, if: 'phone.present?'
   validates :skype, uniqueness: true, if: 'skype.present?'
+  validates :birthday, format: { with: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/, multiline: true,
+            message: 'wrong format' }, if: 'birthday.present?'
 
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe VacancyHelper, type: :helper do
   let(:user) { create :user, id: 1 }
-  let(:vacancy) { create :vacancy, user_id: user.id }
+  let(:vacancy) { create :vacancy }
 
   context 'methods helper' do
     it 'method get_author_and_date' do
@@ -13,5 +13,4 @@ RSpec.describe VacancyHelper, type: :helper do
       expect(helper.get_salary(vacancy)).to eq(helper.get_salary(vacancy))
     end
   end
-
 end

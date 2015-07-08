@@ -13,13 +13,13 @@ end
 When(/^I fill in candidate form$/) do
   within('#new_candidate') do
     fill_in 'candidate_name', with: 'Сергей Петров'
-    fill_in 'candidate_birthday', with: '1989-12-09'
+    fill_in 'candidate_birthday', with: '12-09-1989'
     fill_in 'candidate_salary', with: '450'
     fill_in 'candidate_education', with: 'Оксфорд, бакалавр'
     fill_in 'candidate_city_of_residence', with: 'Запорожье'
-    fill_in 'candidate_desired_position', with: 'Программист'
+    select('должность1', from: 'candidate_desired_position')
     fill_in 'candidate_experience', with: '3 года'
-    fill_in 'candidate_status', with: 'В процессе'
+    select('status1', from: 'candidate_status')
     check('Готов к переезду')
     fill_in 'candidate_email', with: 'spetrov@mail.com'
     fill_in 'candidate_phone', with: '+38-050-000-0001'
@@ -44,6 +44,14 @@ When(/^I fill in "(.*?)" with "(.*?)"$/) do |input_id, text|
   fill_in input_id, with: text
 end
 
+When(/^I change candidate_status in edit form$/) do
+  select('status1', from: 'candidate_status')
+end
+
+When(/^I change candidate_desired_position in edit form$/) do
+  select('должность1', from: 'candidate_desired_position')
+end
+
 Then(/^I should see errors like "(.*?)" and "(.*?)"$/) do |error1, error2|
   expect(page).to have_content(error1)
   expect(page).to have_content(error2)
@@ -53,11 +61,10 @@ Then(/^I should see error like "(.*?)"$/) do |error|
   expect(page).to have_content(error)
 end
 
-
 When(/^I fill in candidate required fields$/) do
   fill_in 'candidate_name', with: 'Test User'
-  fill_in 'candidate_status', with: 'Some status'
-  fill_in 'candidate_desired_position', with: 'Some position'
+  select('status1', from: 'candidate_status')
+  select('должность1', from: 'candidate_desired_position')
   fill_in 'candidate_phone', with: '123456'
 end
 

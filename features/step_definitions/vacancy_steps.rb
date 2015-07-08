@@ -57,7 +57,6 @@ Then(/^new vacancy should be created$/) do
   expect(Vacancy.count).to eq(1)
 end
 
-
 Given(/^I have valid vacancy$/) do
   @vacancy = Vacancy.create(
       name: 'Программист руби',

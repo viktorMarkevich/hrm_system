@@ -6,7 +6,7 @@ class StickersController < ApplicationController
   before_filter :find_sticker, only: [:update, :edit, :destroy]
 
   def index
-    @stickers = Sticker.page(params[:page]).per(8)
+    @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(8)
   end
 
   def new

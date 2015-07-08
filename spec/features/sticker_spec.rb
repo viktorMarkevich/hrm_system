@@ -3,11 +3,12 @@
 require 'rails_helper'
 
 describe 'Managing stickers', type: :feature do
-  before do
-    @user = create(:user)
-    @sticker = create(:sticker)
+  let(:user) { create(:user) }
+  let(:sticker) { create(:sticker) }
 
-    sign_in_as(@user, nil)
+  before do
+    sticker
+    sign_in_as(user, nil)
   end
 
   scenario 'goes on new sticker page' do
@@ -30,7 +31,7 @@ describe 'Managing stickers', type: :feature do
     visit '/stickers'
     find('.glyph_edit_link').click
     click_link 'Назад'
-    expect(page).to have_content @sticker.description
+    expect(page).to have_content sticker.description
   end
 
   scenario 'goes to stickers#edit page' do
@@ -52,6 +53,6 @@ describe 'Managing stickers', type: :feature do
   scenario 'deletes sticker' do
     visit '/stickers'
     find('.glyph_destroy_link').click
-    expect(page).to_not have_content @sticker.description
+    expect(page).to_not have_content sticker.description
   end
 end
