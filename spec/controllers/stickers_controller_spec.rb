@@ -2,19 +2,15 @@ require 'rails_helper'
 
 RSpec.describe StickersController, type: :controller do
 
-  before(:each) do
-    @user = create(:user)
-    sign_in @user
-  end
+  let(:user) { create(:user) }
+  let(:sticker) { create(:sticker) }
+
+  before { sign_in user }
 
   context '#index' do
-    before(:each) do
-      get :index
-    end
+    before { get :index  }
 
-    let(:stickers_list) { create_list(:sticker, 3) }
-
-    it 'has successfull response' do
+    it 'has successful response' do
       expect(response).to be_success
     end
 
@@ -26,15 +22,53 @@ RSpec.describe StickersController, type: :controller do
       expect(response).to render_template('index')
     end
 
-    it 'assigns all stickers with @stickers variable' do
-      expect(assigns(:stickers)).to match_array(stickers_list)
+    it 'has stickers list with only created sticker' do
+      expect(assigns(:stickers)).to eq([sticker])
+    end
+  end
+
+  context '#create' do
+    let(:performer)  { create(:user) }
+
+    context 'when successful' do
+      let(:sticker_params) { { sticker: { description: 'Default description', performer_id: performer } } }
+
+      before { post :create, sticker_params }
+
+      it 'has owner' do
+        expect(assigns(:sticker).owner).to eq(user)
+      end
+
+      it 'has performer' do
+        expect(assigns(:sticker).performer).to eq(performer)
+      end
+
+      it 'creates new Sticker object' do
+        expect(Sticker.count).to eq(1)
+      end
+
+      it 'redirects to stickers index page' do
+        expect(response).to redirect_to(stickers_path)
+      end
+    end
+
+    context 'when failed' do
+      let(:sticker_params) { { sticker: { description: nil } } }
+
+      before { post :create, sticker_params }
+
+      it %q{ doesn't create new record } do
+        expect(Sticker.count).to eq(0)
+      end
+
+      it 'renders "new" template' do
+        expect(response).to render_template('new')
+      end
     end
   end
 
   context '#new' do
-    before(:each) do
-      get :new
-    end
+    before { get :new }
 
     it 'has HTTP 200 status code' do
       expect(response).to have_http_status(200)
@@ -49,57 +83,14 @@ RSpec.describe StickersController, type: :controller do
     end
   end
 
-  context '#create' do
-    context 'when successfull' do
-      let(:performer)  { create(:user) }
-      let(:sticker_params) { { sticker: { description: 'Default description', performer_id: performer.id } } }
-
-      it 'with owner' do
-        post :create, sticker_params
-        expect(assigns(:sticker).owner).to eq(@user)
-      end
-
-      it 'with performer' do
-        post :create, sticker_params
-        expect(assigns(:sticker).performer).to eq(performer)
-      end
-
-      it 'creates new Sticker object' do
-        expect { post :create, sticker_params }.to change(Sticker, :count).by(1)
-      end
-
-      it 'redirects to stickers list page' do
-        post :create, sticker: attributes_for(:sticker)
-        expect(response).to redirect_to(stickers_path)
-      end
-    end
-
-    context 'when failed' do
-      let(:sticker_params) { { sticker: { description: nil } } }
-
-      it %q{ doesn't create record on failing } do
-        expect { post :create, sticker_params }.to change(Sticker, :count).by(0)
-      end
-
-      it 'render "new" template on failing' do
-        post :create, sticker_params
-        expect(response).to render_template('new')
-      end
-    end
-  end
-
   context '#edit' do
-    let(:sticker) { create(:sticker) }
+    before { get :edit, id: sticker }
 
-    before(:each) do
-      get :edit, id: sticker.id
-    end
-
-    it 'responds with HTTP status 200' do
+    it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
     end
 
-    it 'render "edit" template' do
+    it 'renders "edit" template' do
       expect(response).to render_template('edit')
     end
   end
@@ -107,46 +98,41 @@ RSpec.describe StickersController, type: :controller do
   context '#update' do
     let(:sticker_attrs) { { description: 'updated description' } }
 
-    before(:each) do
-      @sticker = create(:sticker)
+    context 'when successful' do
+      before do
+        put :update, id: sticker, sticker: sticker_attrs
+        sticker.reload
+      end
 
-      put :update, id: @sticker.id, sticker: sticker_attrs
-      @sticker.reload
-    end
-
-    context 'when successfull' do
-      it 'redirects to stickers list page' do
+      it 'redirects to stickers index page' do
         expect(response).to redirect_to(stickers_path)
       end
 
       it 'has updated description' do
-       expect(@sticker.description).to eql sticker_attrs[:description]
+        expect(sticker.description).to eql sticker_attrs[:description]
       end
-
     end
 
     context 'when failed' do
-      it 'should render "edit" template on failing' do
-        put :update, id: @sticker.id, sticker: (attributes_for :invalid_sticker)
+      it 'renders "edit" template' do
+        put :update, id: sticker, sticker: (attributes_for :invalid_sticker)
         expect(response).to render_template('edit')
       end
     end
   end
 
   context '#destroy' do
-    before do
-      @sticker = create(:sticker)
-    end
     it 'destroys sticker' do
+      sticker = create(:sticker)
+
       expect{
-        delete :destroy, id: @sticker.id
+        delete :destroy, id: sticker
       }.to change(Sticker, :count).by(-1)
     end
 
-    it 'redirects to stickers list page' do
-      delete :destroy, id: @sticker.id
+    it 'redirects to stickers index page' do
+      delete :destroy, id: sticker
       expect(response).to redirect_to(stickers_path)
     end
   end
-
 end

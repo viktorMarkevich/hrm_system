@@ -3,20 +3,15 @@ require 'rails_helper'
 RSpec.describe Admin::UsersController, type: :controller do
   render_views
 
-  before(:each) do
-    @admin_user = create(:admin_user)
-    sign_in @admin_user
-    @user = create(:user)
-  end
+  let(:admin_user) { create(:admin_user) }
+  let(:user) { create(:user) }
+  let(:region) { create(:region, name: 'Запорожье') }
+
+  before { sign_in admin_user }
 
   context '#index' do
-    let(:user) { create(:user) }
-
-    before(:each) do
+    it 'has HTTP 200 status' do
       get :index
-    end
-
-    it 'reponds with HTTP status 200' do
       expect(response).to have_http_status(200)
     end
   end
@@ -24,50 +19,48 @@ RSpec.describe Admin::UsersController, type: :controller do
   context '#update' do
     let(:user_attrs) { attributes_for :user}
 
-    before(:each) do
-      put :update, id: @user, user: user_attrs, region: 'Запорожье'
-      @user.reload
+    before do
+      put :update, id: user, user: user_attrs, region: region.name
+      user.reload
     end
 
-    context 'when successfull' do
-      it 'redirects to user page' do
-        expect(response).to redirect_to(admin_user_path(@user))
+    context 'when successful' do
+      it 'redirects to admin user page' do
+        expect(response).to redirect_to(admin_user_path(user))
       end
 
       it 'has updated email' do
-        expect(@user.email).to eql user_attrs[:email]
+        expect(user.email).to eql user_attrs[:email]
       end
 
       it 'has updated region' do
-        expect(@user.region.name).to eql 'Запорожье'
+        expect(user.region.name).to eql region.name
       end
 
-      it 'responds successfully with HTTP 200 status code' do
-        put :edit, id: @user.id, user: user_attrs
-        expect(response).to be_success
+      it 'has HTTP 200 status' do
+        put :edit, id: user, user: user_attrs
         expect(response).to have_http_status(200)
       end
     end
 
     context 'when failed' do
-      it 'should redirect after failing' do
-        put :update, id: @user.id, user: (attributes_for :invalid_user)
+      it 'renders "edit" template' do
+        put :update, id: user, user: (attributes_for :invalid_user)
         expect(response).to render_template('edit')
       end
     end
   end
 
   context '#destroy' do
-    it 'renders after #destroy' do
-      delete :destroy, id: @user.id
+    it 'redirects to admin users index page' do
+      delete :destroy, id: user
       expect(response).to redirect_to(admin_users_path)
     end
   end
 
-  context 'sends the deliver invitation' do
+  context 'send invitation' do
     it 'sends an email' do
-      expect{ @user.deliver_invitation }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect{ user.deliver_invitation }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
-
 end

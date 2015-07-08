@@ -1,11 +1,9 @@
 require 'rails_helper'
 
 describe 'the sign_out process', type: :feature do
+  let(:user) { create(:user) }
 
-  before do
-    @user = create(:user)
-    sign_in_as(@user, nil)
-  end
+  before { sign_in_as(user, nil) }
 
   scenario 'sign_out me' do
     click_link 'Выйти'
