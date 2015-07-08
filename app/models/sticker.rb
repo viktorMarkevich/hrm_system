@@ -3,7 +3,7 @@ class Sticker < ActiveRecord::Base
 
   after_save :notice_of_appointment
 
-  STATUS = ['Назначен', 'Прочитан', 'В процессе', 'Выполнен', 'Отложен', 'Закрыт']
+  STATUS = %w(Назначен Прочитан В\ процессе Выполнен Отложен Закрыт)
 
   belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
   belongs_to :performer, class_name: 'User', foreign_key: 'performer_id'
