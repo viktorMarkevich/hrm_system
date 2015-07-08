@@ -9,13 +9,13 @@ ActiveAdmin.register User do
     @user = User.invite!(permitted_params[:user])
     @user.associate_with_region(params[:region])
 
-    if @user.valid? && @user.errors.empty?
+    if @user.valid? && @user.errors.empty? && !User.find_by(email: @user.email)
       @user.save
       flash[:notice] = 'User has been successfully invited.'
       redirect_to admin_users_path
     else
-      flash[:error] = 'is invalid'
-      render 'new'
+      flash[:error] = 'Пользователь с таким email уже существует!'
+      redirect_to new_admin_user_path
     end
   end
 
