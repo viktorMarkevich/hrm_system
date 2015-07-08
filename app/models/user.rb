@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
 
   after_create :assign_image
 
-  POST = ['Директор', 'HR менеджер']
+  POST = %w(Директор HR\ Менеджер)
 
   private
     def assign_image
