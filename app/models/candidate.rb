@@ -5,6 +5,9 @@ class Candidate < ActiveRecord::Base
 
   accepts_nested_attributes_for :image
 
+  POST = ['должность1', 'должность2', 'должность3']
+  STATUS = ['status1', 'status2', 'status3']
+
   validates :name, :desired_position, :status, presence: true
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
             message: 'is invalid.' }, if: 'email.present?'
