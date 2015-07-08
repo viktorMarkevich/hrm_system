@@ -51,6 +51,7 @@ RSpec.describe 'AdminUser', type: :feature do
     test_user = create(:user)
     visit "admin/users/#{test_user.id}/edit"
     fill_in 'user_email', with: 'proba@ppp.ppp'
+    select 'Директор', from: 'user_post'
     select 'Запорожье', from: 'user_region_id'
     click_button 'Update User'
     expect(page).to have_content 'Пользователь успешно обновлен.'
@@ -59,6 +60,7 @@ RSpec.describe 'AdminUser', type: :feature do
   scenario 'update User region' do
     visit "admin/users/#{@user.id}/edit"
     find('#user_region_id').find(:xpath, 'option[3]').select_option
+    select 'Директор', from: 'user_post'
     click_button 'Update User'
     expect(page).to have_content 'Пользователь успешно обновлен.'
     expect(page).to have_content 'Донецк'
