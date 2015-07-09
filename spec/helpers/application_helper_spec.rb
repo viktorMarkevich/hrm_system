@@ -1,5 +1,4 @@
 require 'rails_helper'
-add_template_helper(test_helpers)
 
 RSpec.describe ApplicationHelper, type: :helper do
   let(:user) { create :user}
