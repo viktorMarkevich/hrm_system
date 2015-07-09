@@ -18,7 +18,7 @@ class VacanciesController < ApplicationController
 
   def show
     @candidates = Candidate.all
-    @candidates_with_default_status = Candidate.with_status(StaffRelation::STATUSES[0])
+    @candidates_with_default_status = Candidate.with_status('Нейтральный')
   end
 
   def edit
@@ -70,7 +70,7 @@ class VacanciesController < ApplicationController
   end
 
   def add_candidates_to_founded
-    found_status = StaffRelation::STATUSES[1]
+    found_status = StaffRelation::STATUSES[0]
     vacancy = Vacancy.find(params[:vacancy_id])
     params[:candidates_ids].each do |id|
       StaffRelation.where(candidate_id: id).first.update(vacancy_id: vacancy.id, status: found_status)

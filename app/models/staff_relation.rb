@@ -2,5 +2,5 @@ class StaffRelation < ActiveRecord::Base
   belongs_to :vacancy
   belongs_to :candidate
 
-  STATUSES = ['Нейтральный', 'Найденные', 'Отобранные', 'Собеседование', 'Утвержден', 'Не подходит', 'Отказался']
+  STATUSES = [ 'Найденные', 'Отобранные', 'Собеседование', 'Утвержден', 'Не подходит', 'Отказался']
 end
