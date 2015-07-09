@@ -2,6 +2,8 @@ class Candidate < ActiveRecord::Base
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_one :image
+  has_many :staff_relations
+  has_many :vacancies, through: :staff_relations, source: :vacancy
 
   accepts_nested_attributes_for :image
 
@@ -31,4 +33,11 @@ class Candidate < ActiveRecord::Base
   validates :birthday, format: { with: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/, multiline: true,
             message: 'wrong format' }, if: 'birthday.present?'
 
+  def desired_salary
+    "#{salary} #{salary_format}"
+  end
+
+  def status_for_vacancy(vacancy_id)
+    StaffRelation.where(vacancy_id: vacancy_id, candidate_id: self.id).first.status
+  end
 end

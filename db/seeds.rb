@@ -9,6 +9,7 @@ Vacancy.delete_all
 Candidate.delete_all
 Company.delete_all
 Region.delete_all
+StaffRelation.delete_all
 
 for i in 1..10 do
   Vacancy.create(
@@ -16,7 +17,8 @@ for i in 1..10 do
     salary: '500',
     salary_format: 'USD',
     status: 'В процессе',
-    region_id: 1
+    region_id: 1,
+    user_id: 1
   )
 end
 
@@ -38,4 +40,18 @@ for i in  1..15 do
       description: 'Купить Шатуны Shimano FC-M361 ACERA 48/38/28 по хорошей цене в интернет-магазине VeloOnline.com,
                     мы предлагаем широкий ассортимент Shimano и привлекательные цены на Шатуны для велосипеда.'
   )
+end
+
+vacancies_ids = Vacancy.pluck(:id)
+candidates_ids = Candidate.pluck(:id)
+
+candidates_count = candidates_ids.count
+vacancies_count = vacancies_ids.count
+
+found_status = StaffRelation::STATUSES[0]
+
+for i in 0..vacancies_ids.count do
+  rand_vacancy_id = vacancies_ids[rand(0..vacancies_count - 1)]
+  rand_candidate_id = candidates_ids[rand(0..candidates_count - 1)]
+  StaffRelation.create(status: found_status, vacancy_id: rand_vacancy_id, candidate_id: rand_candidate_id)
 end

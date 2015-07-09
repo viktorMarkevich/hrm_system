@@ -7,7 +7,7 @@ class VacanciesController < ApplicationController
   before_filter :find_vacancy, only: [:show, :edit, :update]
 
   def index
-    @vacancies = Vacancy.includes(:region, :owner).order('id').page(params[:page]).per(10) #expect(assigns(:vacancies)).to match_array()
+    @vacancies = Vacancy.includes(:region, :owner).order('id').page(params[:page]).per(10)
   end
 
   def new
@@ -15,6 +15,7 @@ class VacanciesController < ApplicationController
   end
 
   def show
+    @candidates_for_vacancy = @vacancy.candidates_with_status('Найденные')
   end
 
   def edit
@@ -39,6 +40,32 @@ class VacanciesController < ApplicationController
       redirect_to vacancies_path
     else
       render 'edit'
+    end
+  end
+
+  def search_candidates_by_status
+    vacancy = Vacancy.find(params[:vacancy_id])
+    status = StaffRelation::STATUSES[params[:status_index].to_i]
+    found_candidates = vacancy.candidates_with_status(status)
+
+    render json: {
+            candidates: found_candidates,
+            statuses: StaffRelation::STATUSES,
+            vacancy_id: vacancy.id,
+            current_status: status
+          }.to_json
+
+  end
+
+  def change_candidate_status
+    puts '----' * 10
+    puts params.inspect
+    puts '----' * 10
+    staff_relation = StaffRelation.where(vacancy_id: params[:vacancy_id], candidate_id: params[:candidate_id]).first
+    if staff_relation.update(status: params[:status])
+      render json: { status: :ok }
+    else
+      render json: { status: :unprocessable_entity }
     end
   end
 
