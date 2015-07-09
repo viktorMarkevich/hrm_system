@@ -84,10 +84,11 @@ RSpec.describe 'AdminUser', type: :feature do
   end
 
   scenario 'create User' do
+    test_user = build(:user)
     visit 'admin/users/new'
-    fill_in 'user_email', with: 'aaaa@aaa.aaa'
-    fill_in 'user_first_name', with: user.first_name
-    fill_in 'user_last_name', with: user.last_name
+    fill_in 'user_email', with: test_user.email
+    fill_in 'user_first_name', with: test_user.first_name
+    fill_in 'user_last_name', with: test_user.last_name
     select('Директор', from: 'user_post')
     select('Запорожье', from: 'region')
     click_button 'Send an Invitation'
