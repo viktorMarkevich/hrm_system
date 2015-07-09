@@ -2,6 +2,8 @@
 
 class StickersController < ApplicationController
 
+  load_and_authorize_resource param_method: :sticker_params
+
   before_filter :authenticate_user!
   before_filter :find_sticker, only: [:update, :edit, :destroy]
 

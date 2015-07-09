@@ -11,12 +11,14 @@
   .form-group.sticker_description
     = f.label 'Описание'
     = f.text_area :description, class: 'form-control'
-  .form-group.sticker_status
-    = f.label 'Статус:'
-    = f.select(:status, Sticker::STATUS, {}, class: 'form-control')
-  .form-group.sticker_performer
-    = f.label 'Назначить на:'
-    = f.select(:performer_id, User.all.map { |p| [full_name_for(p), p.id] }, {}, class: 'form-control')
+
+  -if is_director?
+    .form-group.sticker_status
+      = f.label 'Статус:'
+      = f.select(:status, Sticker::STATUS, {}, class: 'form-control')
+    .form-group.sticker_performer
+      = f.label 'Назначить на:'
+      = f.select(:performer_id, performer_array, {}, class: 'form-control')
   .form-group
     = f.submit @sticker.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
     = link_to 'Назад', :back, class: 'btn btn-default'
