@@ -31,8 +31,9 @@
                   = link_to 'Компании', companies_path, class: "btn #{active_class('companies')}"
                   = link_to new_company_path, class: "btn #{active_class('companies', new_company_path)}", id: 'add-company' do
                     %i.glyphicon.glyphicon-plus
-                %li
-                  = link_to 'Менеджеры', users_path, class: "btn #{active_class('users')}"
+                - if current_user.try(:post) == 'Директор'
+                  %li
+                    = link_to 'Менеджеры', users_path, class: "btn #{active_class('users')}"
             .col-xs-3
               %ul.nav.navbar-nav.navbar-right
                 - if user_signed_in?
@@ -46,7 +47,7 @@
                       = 'Выйти'
       = flash[:notice]
       .row.well
-        - if controller.controller_name == 'stickers'
+        - if controller.controller_name == 'stickers' || controller.controller_name == 'archives'
           .row
             .col-xs-8
               .panel.panel-default
