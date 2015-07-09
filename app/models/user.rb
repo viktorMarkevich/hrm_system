@@ -24,6 +24,10 @@ class User < ActiveRecord::Base
 
   POST = %w(Директор HR\ Менеджер)
 
+  def is_director?
+    self.post == 'Директор'
+  end
+
   private
     def assign_image
       self.create_image

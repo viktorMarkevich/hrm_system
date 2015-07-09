@@ -137,17 +137,17 @@ RSpec.describe StickersController, type: :controller do
 
     it 'restore sticker' do
       sticker = create(:sticker)
-      delete :destroy, id: sticker
+      delete :destroy, id: sticker  #делает пост удаленным
 
       expect{
-        delete :destroy, id: sticker
+        delete :destroy, id: sticker      #восстанавливает пост из удаленных
       }.to change(Sticker, :count).by(1)
     end
 
     it 'redirects to restore stickers page' do
       sticker = create(:sticker)
-      delete :destroy, id: sticker
-      delete :destroy, id: sticker
+      delete :destroy, id: sticker    #делает пост удаленным
+      delete :destroy, id: sticker    #восстанавливает пост из удаленных
       expect(response).to redirect_to(restore_stickers_path)
     end
   end

@@ -1,11 +1,13 @@
 # coding: utf-8
 
 class StickersController < ApplicationController
+  include UsersHelper
 
   load_and_authorize_resource param_method: :sticker_params
 
   before_filter :authenticate_user!
   before_filter :find_sticker, only: [:update, :edit, :destroy]
+  before_filter :performer_array, only: [:new, :edit]
 
   def index
     @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(8)
@@ -61,5 +63,9 @@ class StickersController < ApplicationController
 
    def find_sticker
      @sticker = Sticker.with_deleted.find(params[:id])
+   end
+
+   def performer_array
+     @performer_arr = [[]] + User.where('post = ?', 'HR Менеджер').map { |p| [full_name_for(p), p.id] }
    end
 end
