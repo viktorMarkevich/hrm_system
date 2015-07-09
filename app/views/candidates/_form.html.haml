@@ -42,7 +42,7 @@
     .col-xs-6
       .form-group
         = f.label :email, 'Почта:'
-        = f.email_field :email, class: 'form-control'
+        = f.email_field :email, class: 'form-control', placeholder: 'example@gmail.com'
       .form-group
         = f.label :phone, 'Телефон:'
         = f.text_field :phone, class: 'form-control', placeholder: 'Пример ввода: +38-050-000-0000'
@@ -51,20 +51,20 @@
         = f.text_field :skype, class: 'form-control'
       .form-group
         = f.label :home_page, 'Страничка:'
-        = f.text_field :home_page, class: 'form-control'
+        = f.text_field :home_page, class: 'form-control', placeholder: 'http://www.mysite.com'
     .col-xs-6
       .form-group
         = f.label :linkedin, 'Linkedin:'
-        = f.text_field :linkedin, class: 'form-control'
+        = f.text_field :linkedin, class: 'form-control', placeholder: 'https://www.linkedin.com/pub/abbasi-com/84/472/58b'
       .form-group
         = f.label :facebook,  'Facebook:'
-        = f.text_field :facebook, class: 'form-control'
+        = f.text_field :facebook, class: 'form-control', placeholder: 'https://www.facebook.com/example_user'
       .form-group
         = f.label :vkontakte, 'Vkontakte:'
-        = f.text_field :vkontakte, class: 'form-control'
+        = f.text_field :vkontakte, class: 'form-control', placeholder: 'https://www.vk.com/example_user'
       .form-group
         = f.label :google_plus, 'Google+:'
-        = f.text_field :google_plus, class: 'form-control'
+        = f.text_field :google_plus, class: 'form-control', placeholder: 'https://plus.google.com/123456789132456789123/'
   .row
     .col-xs-12
       .form-group
