@@ -1,0 +1,9 @@
+%strong Стикер был выполнен или закрыт
+%br
+%br
+= @sticker.description
+%br
+%br
+= "Закончил: #{get_author_and_date(@sticker)}"
+%br
+= "Затрачено времени: #{DateTime.now.strftime('%k').to_i - @sticker.updated_at.strftime('%k').to_i} час(а/ов)"

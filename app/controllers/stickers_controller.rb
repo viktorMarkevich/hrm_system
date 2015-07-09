@@ -4,7 +4,7 @@ class StickersController < ApplicationController
   load_and_authorize_resource param_method: :sticker_params
 
   before_filter :authenticate_user!
-  before_filter :find_sticker, only: [:update, :edit, :destroy]
+  before_filter :find_sticker, only: [:update, :edit, :destroy, :show]
   before_filter :prepare_performers, only: [:new, :edit]
 
   def index
@@ -13,6 +13,9 @@ class StickersController < ApplicationController
 
   def new
     @sticker = Sticker.new
+  end
+
+  def show
   end
 
   def edit
@@ -42,6 +45,13 @@ class StickersController < ApplicationController
       flash[:notice] = 'Стикер был успешно закрыт.'
       redirect_to stickers_path
     end
+  end
+
+  def status_sticker
+    sticker = Sticker.find(params[:id])
+    NoticeMailer.sticker_closed(sticker).deliver_now
+    sticker.update(performer_id: nil, deleted_at: nil, status: "Выполнен")
+    redirect_to stickers_path
   end
 
   private

@@ -12,7 +12,7 @@ class Sticker < ActiveRecord::Base
   validates :description, length: { maximum: 50, message: 'is too long' }
 
   def notice_of_appointment
-    if performer_id.present? && status == 'Назначен'
+    if performer_id.present? && (status == 'Назначен' || status.nil?)
       NoticeMailer.notice_of_appointment(self).deliver_now
     end
   end
