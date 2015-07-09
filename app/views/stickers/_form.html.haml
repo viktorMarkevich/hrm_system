@@ -18,7 +18,7 @@
       = f.select(:status, Sticker::STATUS, {}, class: 'form-control')
     .form-group.sticker_performer
       = f.label 'Назначить на:'
-      = f.select(:performer_id, @performer_arr, {}, class: 'form-control')
+      = f.select(:performer_id, [[]] + @performers, {}, class: 'form-control')
   .form-group
     = f.submit @sticker.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
     = link_to 'Назад', :back, class: 'btn btn-default'

@@ -7,7 +7,7 @@ class StickersController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :find_sticker, only: [:update, :edit, :destroy]
-  before_filter :performer_array, only: [:new, :edit]
+  before_filter :prepare_performers, only: [:new, :edit]
 
   def index
     @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(8)
@@ -65,7 +65,7 @@ class StickersController < ApplicationController
      @sticker = Sticker.with_deleted.find(params[:id])
    end
 
-   def performer_array
-     @performer_arr = [[]] + User.where('post = ?', 'HR Менеджер').map { |p| [full_name_for(p), p.id] }
+   def prepare_performers
+     @performers = User.get_performers
    end
 end
