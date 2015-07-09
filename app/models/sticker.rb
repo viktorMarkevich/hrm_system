@@ -17,4 +17,8 @@ class Sticker < ActiveRecord::Base
     end
   end
 
+  def self.get_relations
+    [:owner, :performer]
+  end
+
 end

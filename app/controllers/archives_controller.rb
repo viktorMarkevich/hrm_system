@@ -2,8 +2,8 @@ class ArchivesController < ApplicationController
 
   before_filter :authenticate_user!
 
-  def index  #:owner, :performer  - 'проблема'
-    @objects = klass.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(8)
+  def index
+    @objects = klass.includes(klass.get_relations).order('created_at desc').page(params[:page]).per(10)
   end
 
   def destroy
