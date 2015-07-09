@@ -1,3 +1,6 @@
+disableDefaultOption = ->
+  $('select option:first-child').attr("disabled", "disabled");
+
 $(document).ready ->
   # if we on the new vacancy form
   if $('#new_vacancy')
@@ -16,6 +19,26 @@ $(document).ready ->
   # if we on the vacancy show page
   $getIntoStatusButton = $(".candidates-for-vacancy")
   if($getIntoStatusButton)
+    disableDefaultOption()
+
+    addedToVacancyCandidatesIds = []
+    $('#add-to-vacancy').click ->
+      $('#myModal').modal()
+
+    $('#btn-apply').click ->
+      addedToVacancyCandidatesIds = $('input[name=\"applied-candidate\"]:checked').map( ->
+        parseInt(@value, 10)
+      ).get()
+
+      $.ajax
+        url: '/vacancies/add_candidates'
+        type: 'POST'
+        data:
+          vacancy_id: $('#candidates-multiselect').attr('data-vacancyid')
+          candidates_ids: addedToVacancyCandidatesIds
+        success: (response) ->
+          $('#myModal').modal('hide')
+
     $getIntoStatusButton.click ->
       $.ajax
         url: "/vacancies/search_candidates_by_status"
@@ -24,11 +47,11 @@ $(document).ready ->
           status_index: $(this).data('status-index')
           vacancy_id: $(this).data('vacancy-id')
         success: (response) ->
-          alert $(this).data('vacancy-id')
           # clean candidates list for vacancy
           $candidatesTable = $('#vacancy-candidates tbody')
           $candidatesTable.html('')
           options = []
+          options.push "<option value='Перевести в статус'>Перевести в статус</option>"
           for status in response.statuses
             options.push "<option value='" + status + "'>" + status + "</option>"
 
@@ -46,6 +69,7 @@ $(document).ready ->
             $select.attr('data-candidateid', candidate.id);
             $select.attr('data-vacancyid', response.vacancy_id);
             $select.append(options)
+            disableDefaultOption()
             $select.val(response.current_status)
           return
 

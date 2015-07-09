@@ -15,7 +15,12 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    @candidates_for_vacancy = @vacancy.candidates_with_status('Найденные')
+    @candidates = @vacancy.candidates_with_status(StaffRelation::STATUSES[0])
+    if @candidates.count > 0
+      @candidates
+    else
+      @candidates = Candidate.all
+    end
   end
 
   def edit
@@ -58,15 +63,30 @@ class VacanciesController < ApplicationController
   end
 
   def change_candidate_status
-    puts '----' * 10
-    puts params.inspect
-    puts '----' * 10
-    staff_relation = StaffRelation.where(vacancy_id: params[:vacancy_id], candidate_id: params[:candidate_id]).first
+    staff_relation = StaffRelation.where(vacancy_id: params[:vacancy_id], candidate_id: params[:candidate_id]).first_or_create
     if staff_relation.update(status: params[:status])
       render json: { status: :ok }
     else
       render json: { status: :unprocessable_entity }
     end
+  end
+
+  def add_candidates
+    status = StaffRelation::STATUSES[0]
+    params_candidates_ids = params[:candidates_ids].map { |x| x.to_i }
+    vacancy_candidates_ids = Vacancy.find(params[:vacancy_id]).candidates.pluck(:id)
+    candidates_ids_to_update = params_candidates_ids & vacancy_candidates_ids
+    new_candidates_ids = params_candidates_ids - vacancy_candidates_ids
+    new_candidates_ids.each do |id|
+      puts "new cand id = #{id}"
+      StaffRelation.create(vacancy_id: params[:vacancy_id], candidate_id: id, status: status)
+    end
+    candidates_ids_to_update.each do |id|
+      puts "update cand id = #{id}"
+      staff_relation = StaffRelation.where(vacancy_id: params[:vacancy_id], candidate_id: id).first
+      staff_relation.update(vacancy_id: params[:vacancy_id], candidate_id: id, status: status)
+    end
+    render json: { status: 'ok' }
   end
 
   private

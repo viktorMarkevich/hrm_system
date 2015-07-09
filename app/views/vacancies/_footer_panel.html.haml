@@ -5,7 +5,7 @@
         .panel.panel-info
           .panel-heading.panel-title
             = 'Работа с кандидатами'
-            = link_to 'Добавить кандидатов к этой вакансии', '#', class: 'btn btn-default'
+            = link_to 'Добавить кандидатов к этой вакансии', '#', class: 'btn btn-default', id: 'add-to-vacancy'
           .panel-body
             .row
               .col-xs-2
@@ -28,10 +28,31 @@
                         %th Добавлен
                         %th Перевести в статус
                     %tbody
-                      - @candidates_for_vacancy.each do |candidate|
+                      - @candidates.each do |candidate|
                         %tr
                           %th= candidate.id
                           %td= candidate.name
                           %td= candidate.desired_salary
                           %td= candidate.created_at
-                          %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(@vacancy.id)), class: 'status-picker', data: { vacancyid: @vacancy.id, candidateid: candidate.id } )
+                          %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES), class: 'status-picker', data: { vacancyid: @vacancy.id, candidateid: candidate.id }, :include_blank => 'Перевести в статус' )
+
+.modal.fade#myModal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{ "aria-label" => "close", "data-dismiss" => "modal", type:'button' }
+          %span{ "aria-hidden" => true }
+            &times;
+        %h4.modal-title Кандидаты
+      .modal-body
+        .row
+          .col-xs-6
+            #candidates-multiselect{data: { vacancyid: @vacancy.id } }
+              - @candidates.each do |candidate|
+                .item
+                  %label
+                    = check_box_tag "applied-candidate", candidate.id
+                    = candidate.name
+      .modal-footer
+        %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
+        %button.btn.btn-primary#btn-apply{ type: 'button' } Выбрать

@@ -36,8 +36,4 @@ class Candidate < ActiveRecord::Base
   def desired_salary
     "#{salary} #{salary_format}"
   end
-
-  def status_for_vacancy(vacancy_id)
-    StaffRelation.where(vacancy_id: vacancy_id, candidate_id: self.id).first.status
-  end
 end

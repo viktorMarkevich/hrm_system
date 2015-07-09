@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :vacancies, except: [:destroy]
   post '/vacancies/search_candidates_by_status', to: 'vacancies#search_candidates_by_status', as: 'vacancy_candidates'
   post 'vacancies/change_candidate_status', to: 'vacancies#change_candidate_status'
+  post '/vacancies/add_candidates', to: 'vacancies#add_candidates'
   resources :companies
 
   resources :candidates, except: [:destroy]
