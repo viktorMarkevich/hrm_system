@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def is_director?
-    current_user.post == 'Директор'
+    User.first.post == 'Директор'
   end
 
 end
