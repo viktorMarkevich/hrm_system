@@ -24,6 +24,14 @@ class User < ActiveRecord::Base
 
   POST = %w(Директор HR\ Менеджер)
 
+  def is_director?
+    self.post == 'Директор'
+  end
+
+  def self.get_performers
+    where('post = ?', 'HR Менеджер').map { |p| ["#{p.first_name} #{p.last_name}", p.id] }
+  end
+
   private
     def assign_image
       self.create_image

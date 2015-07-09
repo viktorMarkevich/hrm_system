@@ -134,5 +134,38 @@ RSpec.describe StickersController, type: :controller do
       delete :destroy, id: sticker
       expect(response).to redirect_to(stickers_path)
     end
+
+    it 'restore sticker' do
+      sticker = create(:sticker)
+      delete :destroy, id: sticker  #делает пост удаленным
+
+      expect{
+        delete :destroy, id: sticker      #восстанавливает пост из удаленных
+      }.to change(Sticker, :count).by(1)
+    end
+
+    it 'redirects to restore stickers page' do
+      sticker = create(:sticker)
+      delete :destroy, id: sticker    #делает пост удаленным
+      delete :destroy, id: sticker    #восстанавливает пост из удаленных
+      expect(response).to redirect_to(restore_stickers_path)
+    end
   end
+
+  context '#restore_sticker' do
+    before { get :restore_sticker }
+
+    it 'has successful response' do
+      expect(response).to be_success
+    end
+
+    it 'has HTTP 200 status' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders "restore_sticker" template' do
+      expect(response).to render_template('restore_sticker')
+    end
+  end
+
 end
