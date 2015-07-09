@@ -1,4 +1,5 @@
 require 'rails_helper'
+add_template_helper(test_helpers)
 
 RSpec.describe ApplicationHelper, type: :helper do
   let(:user) { create :user}
@@ -7,11 +8,6 @@ RSpec.describe ApplicationHelper, type: :helper do
   context 'methods helper' do
     it 'method get_author_and_date' do
       expect(helper.get_author_and_date(vacancy)).to eq(get_author_and_date(vacancy))
-    end
-
-    it 'visible if director' do
-      create(:user, post: 'Директор')
-      expect(helper.is_director?).to eq(true)
     end
   end
 
