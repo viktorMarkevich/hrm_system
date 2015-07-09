@@ -7,6 +7,10 @@ class Candidate < ActiveRecord::Base
 
   accepts_nested_attributes_for :image
 
+  scope :with_default_status, -> { Candidate.select(%{ "candidates".* })
+                                            .joins(:staff_relations)
+                                            .where(%{ "staff_relations"."status" = '#{StaffRelation::STATUSES[0]}' }) }
+
   POST = ['должность1', 'должность2', 'должность3']
   STATUS = ['status1', 'status2', 'status3']
 

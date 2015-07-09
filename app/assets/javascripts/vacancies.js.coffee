@@ -26,12 +26,13 @@ $(document).ready ->
       $('#myModal').modal()
 
     $('#btn-apply').click ->
-      addedToVacancyCandidatesIds = $('input[name=\"applied-candidate\"]:checked').map( ->
-        parseInt(@value, 10)
-      ).get()
+      $checked_boxes = $('input[name=\"applied-candidate\"]:checked')
+      for chbox in $checked_boxes
+        addedToVacancyCandidatesIds.push $(chbox).val()
+        $(chbox).parent().remove()
 
       $.ajax
-        url: '/vacancies/add_candidates'
+        url: '/vacancies/add_candidates_to_founded'
         type: 'POST'
         data:
           vacancy_id: $('#candidates-multiselect').attr('data-vacancyid')

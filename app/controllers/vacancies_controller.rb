@@ -15,12 +15,8 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    @candidates = @vacancy.candidates_with_status(StaffRelation::STATUSES[0])
-    if @candidates.count > 0
-      @candidates
-    else
-      @candidates = Candidate.all
-    end
+    @candidates = Candidate.all
+    @candidates_with_default_status = Candidate.with_default_status
   end
 
   def edit
@@ -50,6 +46,9 @@ class VacanciesController < ApplicationController
 
   def search_candidates_by_status
     vacancy = Vacancy.find(params[:vacancy_id])
+    puts '-----------------------'
+    puts params[:status_index]
+    puts '-----------------------'
     status = StaffRelation::STATUSES[params[:status_index].to_i]
     found_candidates = vacancy.candidates_with_status(status)
 
@@ -71,22 +70,13 @@ class VacanciesController < ApplicationController
     end
   end
 
-  def add_candidates
-    status = StaffRelation::STATUSES[0]
-    params_candidates_ids = params[:candidates_ids].map { |x| x.to_i }
-    vacancy_candidates_ids = Vacancy.find(params[:vacancy_id]).candidates.pluck(:id)
-    candidates_ids_to_update = params_candidates_ids & vacancy_candidates_ids
-    new_candidates_ids = params_candidates_ids - vacancy_candidates_ids
-    new_candidates_ids.each do |id|
-      puts "new cand id = #{id}"
-      StaffRelation.create(vacancy_id: params[:vacancy_id], candidate_id: id, status: status)
+  def add_candidates_to_founded
+    found_status = StaffRelation::STATUSES[1]
+    vacancy = Vacancy.find(params[:vacancy_id])
+    params[:candidates_ids].each do |id|
+      StaffRelation.where(candidate_id: id).first.update(vacancy_id: vacancy.id, status: found_status)
     end
-    candidates_ids_to_update.each do |id|
-      puts "update cand id = #{id}"
-      staff_relation = StaffRelation.where(vacancy_id: params[:vacancy_id], candidate_id: id).first
-      staff_relation.update(vacancy_id: params[:vacancy_id], candidate_id: id, status: status)
-    end
-    render json: { status: 'ok' }
+    render json: { status: 'ok'  }
   end
 
   private
