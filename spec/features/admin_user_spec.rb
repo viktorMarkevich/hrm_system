@@ -85,7 +85,7 @@ RSpec.describe 'AdminUser', type: :feature do
 
   scenario 'create User' do
     visit 'admin/users/new'
-    fill_in 'user_email', with: user.email
+    fill_in 'user_email', with: 'aaaa@aaa.aaa'
     fill_in 'user_first_name', with: user.first_name
     fill_in 'user_last_name', with: user.last_name
     select('Директор', from: 'user_post')
@@ -97,7 +97,7 @@ RSpec.describe 'AdminUser', type: :feature do
   scenario 'create User not valid' do
     test_user = build(:user)
     visit 'admin/users/new'
-    fill_in 'user_email', with: 'invalid_email'
+    fill_in 'user_email', with: user.email
     fill_in 'user_first_name', with: test_user.first_name
     fill_in 'user_last_name', with: test_user.last_name
     select('HR Менеджер', from: 'user_post')
