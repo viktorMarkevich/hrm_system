@@ -29,7 +29,11 @@ class User < ActiveRecord::Base
   end
 
   def self.get_performers
-    where('post = ?', 'HR Менеджер').map { |p| ["#{p.first_name} #{p.last_name}", p.id] }
+    where(post: 'HR Менеджер').map { |p| [p.full_name, p.id] }
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
   end
 
   private

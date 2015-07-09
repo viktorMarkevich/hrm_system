@@ -1,8 +1,6 @@
 # coding: utf-8
 
 class StickersController < ApplicationController
-  include UsersHelper
-
   load_and_authorize_resource param_method: :sticker_params
 
   before_filter :authenticate_user!
