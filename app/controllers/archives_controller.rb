@@ -7,10 +7,10 @@ class ArchivesController < ApplicationController
   end
 
   def destroy
-    @sticker = klass.find(params[:id])
-    if @sticker.restore
+    @object = klass.with_deleted.find(params[:id])
+    if @object.restore
       flash[:notice] = 'Стикер был успешно восстановлен.'
-      redirect_to archives_stickers_path
+      redirect_to archives_path(object_name: @object.class.to_s.downcase.pluralize)
     end
   end
 
