@@ -1,6 +1,8 @@
 # coding: utf-8
 
 class VacanciesController < ApplicationController
+  #TODO make this controller thin
+
   include RegionSupporter
 
   before_filter :authenticate_user!
@@ -16,7 +18,7 @@ class VacanciesController < ApplicationController
 
   def show
     @candidates = Candidate.all
-    @candidates_with_default_status = Candidate.with_default_status
+    @candidates_with_default_status = Candidate.with_status(StaffRelation::STATUSES[0])
   end
 
   def edit
@@ -46,9 +48,6 @@ class VacanciesController < ApplicationController
 
   def search_candidates_by_status
     vacancy = Vacancy.find(params[:vacancy_id])
-    puts '-----------------------'
-    puts params[:status_index]
-    puts '-----------------------'
     status = StaffRelation::STATUSES[params[:status_index].to_i]
     found_candidates = vacancy.candidates_with_status(status)
 
@@ -76,7 +75,14 @@ class VacanciesController < ApplicationController
     params[:candidates_ids].each do |id|
       StaffRelation.where(candidate_id: id).first.update(vacancy_id: vacancy.id, status: found_status)
     end
-    render json: { status: 'ok'  }
+    candidates_with_found_status = vacancy.candidates_with_status(found_status)
+    # TODO create method to build such params
+    render json: {
+            candidates: candidates_with_found_status,
+            statuses: StaffRelation::STATUSES,
+            vacancy_id: vacancy.id,
+            current_status: found_status
+          }.to_json
   end
 
   private

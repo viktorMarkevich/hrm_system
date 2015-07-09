@@ -1,6 +1,31 @@
 disableDefaultOption = ->
   $('select option:first-child').attr("disabled", "disabled");
 
+buildCandidatesTable = (data) ->
+  $candidatesTable = $('#vacancy-candidates tbody')
+  $candidatesTable.html('')
+  options = []
+  options.push "<option value='Перевести в статус'>Перевести в статус</option>"
+  for status in data.statuses
+    options.push "<option value='" + status + "'>" + status + "</option>"
+
+  for candidate in data.candidates
+    $candidatesTable.append(
+      "<tr>" +
+      "<th>" + candidate.id + "</th>" +
+      "<td>" + candidate.name + "</td>"+
+      "<td>" + candidate.salary + "</td>"+
+      "<td>" + candidate.created_at + "</td>"+
+      "<td><select name=\"status-picker\" class=\"status-picker\"></td>" +
+      "</tr>")
+    $select = $('select').last()
+
+    $select.attr('data-candidateid', candidate.id);
+    $select.attr('data-vacancyid', data.vacancy_id);
+    $select.append(options)
+    disableDefaultOption()
+    $select.val(data.current_status)
+
 $(document).ready ->
   # if we on the new vacancy form
   if $('#new_vacancy')
@@ -38,9 +63,11 @@ $(document).ready ->
           vacancy_id: $('#candidates-multiselect').attr('data-vacancyid')
           candidates_ids: addedToVacancyCandidatesIds
         success: (response) ->
+          buildCandidatesTable(response)
           $('#myModal').modal('hide')
 
     $getIntoStatusButton.click ->
+
       $.ajax
         url: "/vacancies/search_candidates_by_status"
         type: "POST"
@@ -48,30 +75,7 @@ $(document).ready ->
           status_index: $(this).data('status-index')
           vacancy_id: $(this).data('vacancy-id')
         success: (response) ->
-          # clean candidates list for vacancy
-          $candidatesTable = $('#vacancy-candidates tbody')
-          $candidatesTable.html('')
-          options = []
-          options.push "<option value='Перевести в статус'>Перевести в статус</option>"
-          for status in response.statuses
-            options.push "<option value='" + status + "'>" + status + "</option>"
-
-          for candidate in response.candidates
-            $candidatesTable.append(
-              "<tr>" +
-                "<th>" + candidate.id + "</th>" +
-                "<td>" + candidate.name + "</td>"+
-                "<td>" + candidate.salary + "</td>"+
-                "<td>" + candidate.created_at + "</td>"+
-                "<td><select name=\"status-picker\" class=\"status-picker\"></td>" +
-              "</tr>")
-            $select = $('select').last()
-
-            $select.attr('data-candidateid', candidate.id);
-            $select.attr('data-vacancyid', response.vacancy_id);
-            $select.append(options)
-            disableDefaultOption()
-            $select.val(response.current_status)
+          buildCandidatesTable(response)
           return
 
     $('#vacancy-candidates').on 'change', '.status-picker', ->
