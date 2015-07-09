@@ -1,7 +1,7 @@
 = stylesheet_link_tag 'stickers'
 .row
   .col-xs-12
-    %p= link_to 'Посмотреть закрытые стикеры', archives_path(object_name: 'sticker'), class: 'btn btn-default'
+    %p= link_to 'Посмотреть закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-default'
 .row
   = render partial: 'stickers/sticker', collection: @stickers
 .row

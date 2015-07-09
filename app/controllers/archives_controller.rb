@@ -17,6 +17,7 @@ class ArchivesController < ApplicationController
   private
 
     def klass
-      params[:object_name].classify.constantize.only_deleted
+      @partial_name = params[:object_name]
+      @partial_name.singularize.classify.constantize.only_deleted
     end
 end
