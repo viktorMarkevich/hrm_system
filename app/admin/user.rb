@@ -6,7 +6,7 @@ ActiveAdmin.register User do
   actions :all
 
   collection_action :send_invitation, method: :post do
-    if User.find_by(email: permitted_params[:user][:email])
+    if User.where(email: permitted_params[:user][:email]).present?
       flash[:error] = 'Пользователь с таким email уже существует!'
       redirect_to new_admin_user_path
     else
