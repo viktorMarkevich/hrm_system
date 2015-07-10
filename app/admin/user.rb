@@ -6,16 +6,15 @@ ActiveAdmin.register User do
   actions :all
 
   collection_action :send_invitation, method: :post do
-    @user = User.invite!(permitted_params[:user])
-    @user.associate_with_region(params[:region])
-
-    if @user.valid? && @user.errors.empty?
-      @user.save
-      flash[:notice] = 'User has been successfully invited.'
-      redirect_to admin_users_path
+    if User.find_by(email: permitted_params[:user][:email])
+      flash[:error] = 'Пользователь с таким email уже существует!'
+      redirect_to new_admin_user_path
     else
-      flash[:error] = 'is invalid'
-      render 'new'
+      @user = User.invite!(permitted_params[:user])
+      @user.associate_with_region(params[:region])
+
+      flash[:notice] = 'Пользователь успешно приглашен.'
+      redirect_to admin_users_path
     end
   end
 

@@ -84,30 +84,27 @@ RSpec.describe 'AdminUser', type: :feature do
   end
 
   scenario 'create User' do
+    test_user = build(:user)
     visit 'admin/users/new'
-    fill_in 'user_email', with: user.email
-    fill_in 'user_first_name', with: user.first_name
-    fill_in 'user_last_name', with: user.last_name
-    select('Директор', from: 'user_post')
-    fill_in 'user_email', with: user.email
-    fill_in 'user_first_name', with: user.first_name
-    fill_in 'user_last_name', with: user.last_name
+    fill_in 'user_email', with: test_user.email
+    fill_in 'user_first_name', with: test_user.first_name
+    fill_in 'user_last_name', with: test_user.last_name
     select('Директор', from: 'user_post')
     select('Запорожье', from: 'region')
     click_button 'Send an Invitation'
-    expect(page).to have_content 'User has been successfully invited.'
+    expect(page).to have_content 'Пользователь успешно приглашен.'
   end
 
   scenario 'create User not valid' do
     test_user = build(:user)
     visit 'admin/users/new'
-    fill_in 'user_email', with: 'invalid_email'
+    fill_in 'user_email', with: user.email
     fill_in 'user_first_name', with: test_user.first_name
     fill_in 'user_last_name', with: test_user.last_name
     select('HR Менеджер', from: 'user_post')
     select('Запорожье', from: 'region')
     click_button 'Send an Invitation'
-    expect(page).to have_content 'is invalid'
+    expect(page).to have_content 'Пользователь с таким email уже существует!'
   end
 
   scenario 'delete AdminUser' do
