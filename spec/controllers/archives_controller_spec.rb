@@ -1,34 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe ArchivesController, type: :controller do
+  let(:user) { create(:user) }
+  let(:deleted_sticker) { create :deleted_sticker }
 
-  # describe "GET #index" do
-  #   it "returns http success" do
-  #     get :index
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
-  #
-  # describe "GET #destroy" do
-  #   it "returns http success" do
-  #     get :destroy
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
+  before { sign_in user }
 
-  # context '#restore_sticker' do
-  #   before { get :restore_sticker }
-  #
-  #   it 'has successful response' do
-  #     expect(response).to be_success
-  #   end
-  #
-  #   it 'has HTTP 200 status' do
-  #     expect(response).to have_http_status(200)
-  #   end
-  #
-  #   it 'renders "restore_sticker" template' do
-  #     expect(response).to render_template('restore_sticker')
-  #   end
-  # end
+  describe 'should have the list os deleted objects' do
+    context 'should have the list os deleted stickers' do
+      it 'should have the list os deleted stickers' do
+        get :index, object_name: 'stickers'
+        expect(Sticker.only_deleted).to eq([deleted_sticker])
+      end
+
+      it 'should restore deleted sticker' do
+        delete :destroy, object_name: 'stickers', id: deleted_sticker
+        expect(Sticker.only_deleted.count).to eq 0
+        expect(Sticker.only_deleted).to eq([])
+      end
+    end
+  end
 end
