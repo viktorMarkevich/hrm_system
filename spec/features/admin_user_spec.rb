@@ -92,7 +92,7 @@ RSpec.describe 'AdminUser', type: :feature do
     select('Директор', from: 'user_post')
     select('Запорожье', from: 'region')
     click_button 'Send an Invitation'
-    expect(page).to have_content 'User has been successfully invited.'
+    expect(page).to have_content 'Пользователь успешно приглашен.'
   end
 
   scenario 'create User not valid' do

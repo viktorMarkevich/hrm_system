@@ -16,6 +16,25 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
   end
 
+  context '#new' do
+    let(:user_attrs) { { user: {email: 'aaa@aaa.aaa', first_name: 'Roman', last_name: 'Liskov', post: 'Директор', region_id: '27'} } }
+
+    context 'when successful' do
+      it 'redirects to admin user page' do
+        post :send_invitation, user_attrs
+        expect(response).to redirect_to(admin_users_path)
+      end
+    end
+
+    context 'when failed' do
+      it 'redirects to new admin user page' do
+        create(:user, email: 'aaa@aaa.aaa')
+        post :send_invitation, user_attrs
+        expect(response).to redirect_to(new_admin_user_path)
+      end
+    end
+  end
+
   context '#update' do
     let(:user_attrs) { attributes_for :user}
 

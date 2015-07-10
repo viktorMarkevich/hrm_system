@@ -13,7 +13,7 @@ ActiveAdmin.register User do
       @user = User.invite!(permitted_params[:user])
       @user.associate_with_region(params[:region])
 
-      flash[:notice] = 'User has been successfully invited.'
+      flash[:notice] = 'Пользователь успешно приглашен.'
       redirect_to admin_users_path
     end
   end
