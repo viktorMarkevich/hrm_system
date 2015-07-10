@@ -13,9 +13,10 @@ describe 'Managing stickers', type: :feature do
 
   scenario 'goes on new sticker page' do
     visit '/stickers/new'
-    click_button 'Создать'
-    click_link 'Назад'
     expect(page).to have_content 'Добавить новый стикер'
+    expect(page).to have_content 'Описание'
+    expect(page).to have_content 'Статус'
+    expect(page).to have_content 'Назначить на'
   end
 
   scenario 'creates new sticker' do

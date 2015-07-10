@@ -12,13 +12,6 @@ Feature: Manage candidates
     And I press "Создать"
     Then new candidate should be created
 
-  Scenario: Check errors when only name is filled
-    Given I have logged in user
-    And I am on the new candidate page
-    When I fill in "candidate_name" with "Test User"
-    And I press "Создать"
-    Then new candidate should be created
-
   Scenario: Check errors when only status is filled
     Given I have logged in user
     And I am on the new candidate page
