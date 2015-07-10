@@ -1,6 +1,9 @@
 disableDefaultOption = ->
   $('select option:first-child').attr("disabled", "disabled");
 
+setCandidatesTableCaptionByStatus = (status) ->
+  $('#vacancy-candidates caption').text('Кандидаты со статусом "' + status + '"')
+
 buildCandidatesTable = (data) ->
   $candidatesTable = $('#vacancy-candidates tbody')
   $candidatesTable.html('')
@@ -76,6 +79,7 @@ $(document).ready ->
           vacancy_id: $(this).data('vacancy-id')
         success: (response) ->
           buildCandidatesTable(response)
+          setCandidatesTableCaptionByStatus(response.current_status)
           return
 
     $('#vacancy-candidates').on 'change', '.status-picker', ->

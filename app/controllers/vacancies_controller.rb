@@ -17,7 +17,7 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    @candidates = Candidate.all
+    @candidates_with_found_status = @vacancy.candidates_with_status(StaffRelation::STATUSES[0])
     @candidates_with_default_status = Candidate.with_status('Нейтральный')
   end
 
