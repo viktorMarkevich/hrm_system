@@ -17,7 +17,7 @@ When(/^I fill in candidate form$/) do
     fill_in 'candidate_salary', with: '450'
     fill_in 'candidate_education', with: 'Оксфорд, бакалавр'
     fill_in 'candidate_city_of_residence', with: 'Запорожье'
-    select('должность1', from: 'candidate_desired_position')
+    fill_in 'candidate_desired_position', with: 'должность1'
     fill_in 'candidate_experience', with: '3 года'
     select('status1', from: 'candidate_status')
     check('Готов к переезду')
@@ -49,7 +49,7 @@ When(/^I change candidate_status in edit form$/) do
 end
 
 When(/^I change candidate_desired_position in edit form$/) do
-  select('должность1', from: 'candidate_desired_position')
+  fill_in 'candidate_desired_position', with: 'должность1'
 end
 
 Then(/^I should see errors like "(.*?)" and "(.*?)"$/) do |error1, error2|
@@ -64,7 +64,7 @@ end
 When(/^I fill in candidate required fields$/) do
   fill_in 'candidate_name', with: 'Test User'
   select('status1', from: 'candidate_status')
-  select('должность1', from: 'candidate_desired_position')
+  fill_in 'candidate_desired_position', with: 'должность1'
   fill_in 'candidate_phone', with: '123456'
 end
 

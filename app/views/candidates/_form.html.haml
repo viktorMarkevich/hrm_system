@@ -11,7 +11,7 @@
         = f.label :name, 'Имя:'
         = f.text_field :name, class: 'form-control'
       .form-group
-        = f.label :birthday, 'День рождения:'
+        = f.label :birthday, 'Дата рождения:'
         = f.text_field :birthday, class: 'form-control', placeholder: 'dd/mm/yyyy or dd-mm-yyyy'
       .form-group
         = f.label :salary, 'Желаемая ЗП:'
@@ -25,7 +25,7 @@
         = f.text_field :city_of_residence, class: 'form-control'
       .form-group
         = f.label :desired_position, 'На должность:'
-        = f.select(:desired_position, Candidate::POST, {}, class: 'form-control')
+        = f.text_field :desired_position, class: 'form-control'
       .form-group
         = f.label :experience, 'Опыт:'
         = f.text_field :experience, class: 'form-control'
