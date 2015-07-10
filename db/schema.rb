@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20150709113336) do
     t.string   "google_plus"
     t.string   "home_page"
     t.string   "skype"
+    t.integer  "owner_id"
     t.integer  "user_id"
   end
 
