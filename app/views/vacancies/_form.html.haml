@@ -29,7 +29,7 @@
         = select_tag(:region,  options_for_select(Region::NAMES, @vacancy.region_name), class: 'form-control')
       .form-group
         = f.label :status, 'Статус:'
-        = f.select(:status, ['status1', 'status2', 'status3'], {}, class: 'form-control')
+        = f.select(:status, options_for_select(Vacancy::STATUSES, @vacancy.status), {}, class: 'form-control')
       .form-group
         = f.label :laguages, 'Языки:'
         = f.text_field :languages, class: 'form-control'
