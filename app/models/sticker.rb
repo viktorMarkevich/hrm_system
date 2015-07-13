@@ -6,6 +6,7 @@ class Sticker < ActiveRecord::Base
   STATUS_M = %w(В\ процессе Отложен Выполнен)
   STATUS_D = %w(Отложен Закрыт)
   STATUS = %w(Назначен Прочитан В\ процессе Выполнен Отложен Закрыт)
+  PROGRESS = %w(0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%)
 
   belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
   belongs_to :performer, class_name: 'User', foreign_key: 'performer_id'
