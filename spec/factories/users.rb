@@ -6,7 +6,7 @@ FactoryGirl.define do
     password_confirmation'password'
     first_name 'Bob'
     last_name 'Marly'
-    post 'Author'
+    post 'Директор'
     sequence(:phone) { |n| "+38-050-000-000#{n}" }
     region
   end

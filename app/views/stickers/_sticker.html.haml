@@ -2,12 +2,17 @@
   .panel.panel-primary
     .panel-heading
       .row
-        .col-xs-6.panel-title
-        .col-xs-offset-2.col-xs-4.panel-title
-          = link_to edit_sticker_path(sticker), class: 'glyph_edit_link' do
-            %i.glyphicon.glyphicon-pencil
-          = link_to sticker_path(sticker), method: :delete, class: 'glyph_destroy_link' do
-            %i.glyphicon.glyphicon-remove-circle
+        .col-xs-7.panel-title
+          -if sticker.performer_id
+            = link_to sticker_path(sticker), class: 'glyph_edit_link' do
+              %i.glyphicon.glyphicon-star-empty
+            = sticker.status
+        .col-xs-offset-1.col-xs-4.panel-title
+          -if current_user.is_director?
+            = link_to edit_sticker_path(sticker), class: 'glyph_edit_link' do
+              %i.glyphicon.glyphicon-pencil
+            = link_to sticker_path(sticker), method: :delete, class: 'glyph_destroy_link' do
+              %i.glyphicon.glyphicon-remove-circle
     .panel-body
       .row
         .col-xs-12.sticker-desc

@@ -12,7 +12,7 @@
       %td= f.text_field :last_name, required: true
     %tr
       %td= f.label :post
-      %td= f.text_field :post, required: true
+      %td= f.select(:post, options_for_select(User::POST))
     %tr
       %td= f.label :region_id
       %td= select_tag(:region,  options_for_select(Region::NAMES, @user.region_name))

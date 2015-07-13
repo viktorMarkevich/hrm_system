@@ -122,12 +122,11 @@ RSpec.describe StickersController, type: :controller do
   end
 
   context '#destroy' do
-    it 'destroys sticker' do
-      sticker = create(:sticker)
+    let(:sticker) { create(:sticker) }
 
-      expect{
-        delete :destroy, id: sticker
-      }.to change(Sticker, :count).by(-1)
+    it 'destroys sticker' do
+      delete :destroy, id: sticker
+      expect(Sticker.count).to eq 0
     end
 
     it 'redirects to stickers index page' do

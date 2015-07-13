@@ -10,6 +10,8 @@ class Vacancy < ActiveRecord::Base
   validates :name, :region_id, :status, :user_id, presence: true
   validates :salary, numericality: { only_integer: true, greater_than: 0 }, unless: 'salary_format == "По договоренности"'
 
+  STATUSES = ['Активная', 'Пассивная', 'Закрытая']
+
   def candidates_with_status(status)
     Candidate.select(%{ "candidates".* }).joins(:staff_relations).where(%{ "staff_relations"."vacancy_id" = #{self.id} AND "staff_relations"."status" = '#{status}' })
   end

@@ -12,7 +12,7 @@
         = f.text_field :name, class: 'form-control'
       .form-group
         = f.label :url, 'Страница компании:'
-        = f.text_field :url, class: 'form-control'
+        = f.text_field :url, class: 'form-control', placeholder: 'http://www.company-name.com'
       .form-group
         = f.label :region_id, 'Регион:'
         = select_tag(:region, options_for_select(Region::NAMES, @company.region_name), class: 'form-control')
