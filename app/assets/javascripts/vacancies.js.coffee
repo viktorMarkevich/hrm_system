@@ -1,8 +1,23 @@
+highlightDefaultTab = ->
+  $defaultTab = $(".candidates-for-vacancy").first()
+  $defaultTab.siblings().removeClass("active")
+  $defaultTab.addClass('active')
+
 disableDefaultOption = ->
   $('select option:first-child').attr("disabled", "disabled");
 
 setCandidatesTableCaptionByStatus = (status) ->
   $('#vacancy-candidates caption').text('Кандидаты со статусом "' + status + '"')
+
+addPassiveCandidateToList = (candidate) ->
+  $('#candidates-multiselect').append(
+    "<div class = \"item\">" +
+      "<label>" +
+        "<input type=\"checkbox\"  name=\"applied-candidate\" id=\"applied-candidate\" value=\"" + candidate.id + "\">" +
+        " " + candidate.name +
+      "</label>" +
+    "</div>"
+  )
 
 buildCandidatesTable = (data) ->
   $candidatesTable = $('#vacancy-candidates tbody')
@@ -47,6 +62,7 @@ $(document).ready ->
   # if we on the vacancy show page
   $getIntoStatusButton = $(".candidates-for-vacancy")
   if($getIntoStatusButton)
+    highlightDefaultTab()
     disableDefaultOption()
 
     addedToVacancyCandidatesIds = []
@@ -69,9 +85,11 @@ $(document).ready ->
           buildCandidatesTable(response)
           setCandidatesTableCaptionByStatus('Найденные')
           $('#myModal').modal('hide')
+          highlightDefaultTab()
 
     $getIntoStatusButton.click ->
-
+      # set active tab
+      $(this).siblings().removeClass("active");
       $.ajax
         url: "/vacancies/search_candidates_by_status"
         type: "POST"
@@ -85,6 +103,7 @@ $(document).ready ->
 
     $('#vacancy-candidates').on 'change', '.status-picker', ->
       $row_to_remove = $(this).parents('tr')
+
       $.ajax
         url: '/vacancies/change_candidate_status'
         type: 'POST'
@@ -94,3 +113,5 @@ $(document).ready ->
           status: $(this).val()
         success: (response) ->
           $row_to_remove.remove() if response.status is "ok"
+          if response.available_candidate
+            addPassiveCandidateToList(response.available_candidate)

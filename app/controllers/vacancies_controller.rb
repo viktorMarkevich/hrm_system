@@ -17,8 +17,8 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    @candidates_with_found_status = @vacancy.candidates_with_status(StaffRelation::STATUSES[0])
-    @candidates_with_default_status = Candidate.with_status('Нейтральный')
+    @candidates_with_found_status = @vacancy.candidates_with_status(StaffRelation::STATUSES[1])
+    @passive_candidates = Candidate.where(status: Candidate::STATUS[0])
   end
 
   def edit
@@ -61,20 +61,34 @@ class VacanciesController < ApplicationController
   end
 
   def change_candidate_status
-    staff_relation = StaffRelation.where(vacancy_id: params[:vacancy_id], candidate_id: params[:candidate_id]).first_or_create
-    if staff_relation.update(status: params[:status])
-      render json: { status: :ok }
+    staff_relation = StaffRelation.where(vacancy_id: params[:vacancy_id], candidate_id: params[:candidate_id]).first
+
+    unless params[:status] == StaffRelation::STATUSES[0]
+      if staff_relation.update(status: params[:status])
+        render json: { status: :ok }
+      else
+        render json: { status: :unprocessable_entity }
+      end
     else
-      render json: { status: :unprocessable_entity }
+      staff_relation.delete
+      passive_candidate = Candidate.find(params[:candidate_id])
+      passive_candidate.update(status: Candidate::STATUS[0])
+      render json: {
+               status: :ok,
+               available_candidate: passive_candidate
+              }
     end
   end
 
   def add_candidates_to_founded
-    found_status = StaffRelation::STATUSES[0]
+    found_status = StaffRelation::STATUSES[1]
+    candidates_to_add = Candidate.where('id IN (?)', params[:candidates_ids])
     vacancy = Vacancy.find(params[:vacancy_id])
-    params[:candidates_ids].each do |id|
-      StaffRelation.where(candidate_id: id).first.update(vacancy_id: vacancy.id, status: found_status)
+    candidates_to_add.each do |candidate|
+      candidate.update(status: Candidate::STATUS[1])
+      StaffRelation.create(candidate_id: candidate.id, vacancy_id: vacancy.id, status: found_status)
     end
+
     candidates_with_found_status = vacancy.candidates_with_status(found_status)
     # TODO create method to build such params
     render json: {

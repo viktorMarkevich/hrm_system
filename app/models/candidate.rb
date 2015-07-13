@@ -6,13 +6,13 @@ class Candidate < ActiveRecord::Base
   has_many :vacancies, through: :staff_relations, source: :vacancy
 
   accepts_nested_attributes_for :image
-
+  #TODO might be unneccessary
   scope :with_status, -> (status) { Candidate.select(%{ "candidates".* })
                                             .joins(:staff_relations)
                                             .where(%{ "staff_relations"."status" = '#{status}' }) }
 
   POST = ['должность1', 'должность2', 'должность3']
-  STATUS = ['status1', 'status2', 'status3']
+  STATUS = ['Пассивен', 'В работе']
 
   validates :name, :desired_position, :status, presence: true
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,

@@ -1,4 +1,5 @@
 namespace :candidates do
+  #TODO check this after all task are completed
   desc 'Sets default status "Нейтральный" to all candidates'
   task set_default_status: :environment do
     StaffRelation.delete_all
@@ -9,4 +10,12 @@ namespace :candidates do
     end
     puts
   end
+
+  desc 'Set status "Пассивен" as default to all candidates'
+  task set_passive_status: :environment do
+    Candidate.all.each do |candidate|
+      candidate.update(status: 'Пассивен')
+    end
+  end
+
 end
