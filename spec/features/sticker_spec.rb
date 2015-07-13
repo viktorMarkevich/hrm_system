@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'Managing stickers', type: :feature do
-  let(:user) { create(:user, post: 'Директор') }
+  let(:user) { create(:user) }
   let(:sticker) { create(:sticker) }
 
   before do
