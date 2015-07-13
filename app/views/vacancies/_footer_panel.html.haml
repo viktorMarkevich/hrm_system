@@ -11,12 +11,12 @@
               .col-xs-2
                 .btn-group
                   .btn-group-vertical{ data: { toggle: 'buttons-radio' } }
-                    = link_to 'Найденные', '#', class: 'btn btn-default candidates-for-vacancy', data: { status_index: 1, vacancy_id:  @vacancy.id}
-                    = link_to 'Отобранные', '#', class: 'btn btn-default candidates-for-vacancy', data: { status_index: 2, vacancy_id:  @vacancy.id }
-                    = link_to 'Собеседование', '#', class: 'btn btn-default candidates-for-vacancy', data: { status_index: 3, vacancy_id:  @vacancy.id }
-                    = link_to 'Утвержден', '#', class: 'btn btn-default candidates-for-vacancy', data: { status_index: 4, vacancy_id:  @vacancy.id }
-                    = link_to 'Не подходит', '#', class: 'btn btn-default candidates-for-vacancy', data: { status_index: 5, vacancy_id:  @vacancy.id }
-                    = link_to 'Отказался', '#', class: 'btn btn-default candidates-for-vacancy', data: { status_index: 6, vacancy_id:  @vacancy.id }
+                    = link_to 'Найденные', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: StaffRelation::FOUND, vacancy_id: @vacancy.id}
+                    = link_to 'Отобранные', '#',    class: 'btn btn-default candidates-for-vacancy', data: { status_name: StaffRelation::SELECTED, vacancy_id: @vacancy.id }
+                    = link_to 'Собеседование', '#', class: 'btn btn-default candidates-for-vacancy', data: { status_name: StaffRelation::INTERVIEW, vacancy_id: @vacancy.id }
+                    = link_to 'Утвержден', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: StaffRelation::APPROVED, vacancy_id: @vacancy.id }
+                    = link_to 'Не подходит', '#',   class: 'btn btn-default candidates-for-vacancy', data: { status_name: StaffRelation::NOT_SUITABLE, vacancy_id: @vacancy.id }
+                    = link_to 'Отказался', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: StaffRelation::REFUSED, vacancy_id: @vacancy.id }
               .col-xs-10
                 .panel-body
                   %table.table.table-bordered.table-hover#vacancy-candidates
@@ -33,9 +33,9 @@
                         %tr
                           %th= candidate.id
                           %td= candidate.name
-                          %td= candidate.desired_salary
+                          %td= desired_salary_for(candidate)
                           %td= candidate.created_at
-                          %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES, candidate.get_status_for_vacancy(@vacancy)), class: 'status-picker', data: { vacancyid: @vacancy.id, candidateid: candidate.id }, :include_blank => 'Перевести в статус' )
+                          %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(@vacancy)), class: 'status-picker', data: { vacancyid: @vacancy.id, candidateid: candidate.id }, :include_blank => 'Перевести в статус' )
 
 .modal.fade#myModal
   .modal-dialog
@@ -52,7 +52,7 @@
               - @passive_candidates.each do |candidate|
                 .item
                   %label
-                    = check_box_tag "applied-candidate", candidate.id
+                    = check_box_tag "mark-as-found-candidate", candidate.id
                     = candidate.name
       .modal-footer
         %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить

@@ -1,8 +1,6 @@
 # coding: utf-8
 
 class VacanciesController < ApplicationController
-  #TODO make this controller thin
-
   include RegionSupporter
 
   before_filter :authenticate_user!
@@ -17,8 +15,8 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    @candidates_with_found_status = @vacancy.candidates_with_status(StaffRelation::STATUSES[1])
-    @passive_candidates = Candidate.where(status: Candidate::STATUS[0])
+    @candidates_with_found_status = @vacancy.candidates_with_status(StaffRelation::FOUND)
+    @passive_candidates = Candidate.with_status(Candidate::PASSIVE)
   end
 
   def edit
@@ -38,7 +36,6 @@ class VacanciesController < ApplicationController
   def update
     @vacancy.associate_with_region(params[:region])
     if @vacancy.update_attributes(vacancy_params)
-
       flash[:notice] = 'Вакансия успешно обновлена.'
       redirect_to vacancies_path
     else
@@ -48,55 +45,50 @@ class VacanciesController < ApplicationController
 
   def search_candidates_by_status
     vacancy = Vacancy.find(params[:vacancy_id])
-    status = StaffRelation::STATUSES[params[:status_index].to_i]
-    found_candidates = vacancy.candidates_with_status(status)
+    matched_candidates = vacancy.candidates_with_status(params[:status])
 
-    render json: {
-            candidates: found_candidates,
-            statuses: StaffRelation::STATUSES,
-            vacancy_id: vacancy.id,
-            current_status: status
-          }.to_json
-
+    render json: build_response_hash(matched_candidates,
+                                     StaffRelation::STATUSES,
+                                     vacancy.id,
+                                     params[:status])
   end
 
   def change_candidate_status
-    staff_relation = StaffRelation.where(vacancy_id: params[:vacancy_id], candidate_id: params[:candidate_id]).first
+    staff_relation = StaffRelation.find_by_vacancy_id_and_candidate_id(params[:vacancy_id],
+                                                                       params[:candidate_id])
 
-    unless params[:status] == StaffRelation::STATUSES[0]
+    unless params[:status] == StaffRelation::NEUTRAL
       if staff_relation.update(status: params[:status])
         render json: { status: :ok }
       else
         render json: { status: :unprocessable_entity }
       end
     else
-      staff_relation.delete
       passive_candidate = Candidate.find(params[:candidate_id])
-      passive_candidate.update(status: Candidate::STATUS[0])
+      staff_relation.delete
+      passive_candidate.update(status: Candidate::PASSIVE)
       render json: {
-               status: :ok,
-               available_candidate: passive_candidate
-              }
+        status: :ok,
+        candidate: passive_candidate
+      }
     end
   end
 
-  def add_candidates_to_founded
-    found_status = StaffRelation::STATUSES[1]
-    candidates_to_add = Candidate.where('id IN (?)', params[:candidates_ids])
+  def mark_candidates_as_founded
+    found_status = StaffRelation::FOUND
+    marked_as_found_candidates = Candidate.where('id IN (?)', params[:candidates_ids])
     vacancy = Vacancy.find(params[:vacancy_id])
-    candidates_to_add.each do |candidate|
-      candidate.update(status: Candidate::STATUS[1])
+    marked_as_found_candidates.each do |candidate|
+      candidate.update(status: Candidate::IS_WORKING)
       StaffRelation.create(candidate_id: candidate.id, vacancy_id: vacancy.id, status: found_status)
     end
 
-    candidates_with_found_status = vacancy.candidates_with_status(found_status)
-    # TODO create method to build such params
-    render json: {
-            candidates: candidates_with_found_status,
-            statuses: StaffRelation::STATUSES,
-            vacancy_id: vacancy.id,
-            current_status: found_status
-          }.to_json
+    found_candidates = vacancy.candidates_with_status(found_status)
+
+    render json: build_response_hash(found_candidates,
+                                     StaffRelation::STATUSES,
+                                     vacancy.id,
+                                     found_status)
   end
 
   private
@@ -111,5 +103,14 @@ class VacanciesController < ApplicationController
 
     def find_vacancy
       @vacancy = Vacancy.find(params[:id])
+    end
+
+    def build_response_hash(candidates, statuses, vacancy_id, current_status)
+      {
+        candidates: candidates,
+        statuses: statuses,
+        vacancy_id: vacancy_id,
+        current_status: current_status
+      }.to_json
     end
 end

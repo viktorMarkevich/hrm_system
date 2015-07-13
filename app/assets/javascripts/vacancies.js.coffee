@@ -13,7 +13,7 @@ addPassiveCandidateToList = (candidate) ->
   $('#candidates-multiselect').append(
     "<div class = \"item\">" +
       "<label>" +
-        "<input type=\"checkbox\"  name=\"applied-candidate\" id=\"applied-candidate\" value=\"" + candidate.id + "\">" +
+        "<input type=\"checkbox\"  name=\"mark-as-found-candidate\" id=\"mark-as-found-candidate\" value=\"" + candidate.id + "\">" +
         " " + candidate.name +
       "</label>" +
     "</div>"
@@ -70,13 +70,13 @@ $(document).ready ->
       $('#myModal').modal()
 
     $('#btn-apply').click ->
-      $checked_boxes = $('input[name=\"applied-candidate\"]:checked')
+      $checked_boxes = $('input[name=\"mark-as-found-candidate\"]:checked')
       for chbox in $checked_boxes
         addedToVacancyCandidatesIds.push $(chbox).val()
         $(chbox).parent().remove()
 
       $.ajax
-        url: '/vacancies/add_candidates_to_founded'
+        url: '/vacancies/mark_candidates_as_founded'
         type: 'POST'
         data:
           vacancy_id: $('#candidates-multiselect').attr('data-vacancyid')
@@ -94,7 +94,7 @@ $(document).ready ->
         url: "/vacancies/search_candidates_by_status"
         type: "POST"
         data:
-          status_index: $(this).data('status-index')
+          status: $(this).data('status-name')
           vacancy_id: $(this).data('vacancy-id')
         success: (response) ->
           buildCandidatesTable(response)
@@ -113,5 +113,5 @@ $(document).ready ->
           status: $(this).val()
         success: (response) ->
           $row_to_remove.remove() if response.status is "ok"
-          if response.available_candidate
-            addPassiveCandidateToList(response.available_candidate)
+          if response.candidate
+            addPassiveCandidateToList(response.candidate)
