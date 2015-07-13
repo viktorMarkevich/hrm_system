@@ -67,6 +67,7 @@ $(document).ready ->
           candidates_ids: addedToVacancyCandidatesIds
         success: (response) ->
           buildCandidatesTable(response)
+          setCandidatesTableCaptionByStatus('Найденные')
           $('#myModal').modal('hide')
 
     $getIntoStatusButton.click ->
