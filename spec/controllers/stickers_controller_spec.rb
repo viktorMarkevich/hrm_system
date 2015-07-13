@@ -134,4 +134,38 @@ RSpec.describe StickersController, type: :controller do
       expect(response).to redirect_to(stickers_path)
     end
   end
+
+
+  context '#status_sticker' do
+    let(:sticker_attrs) { { description: 'updated description', status: 'Выполнен' } }
+    let(:sticker1_attrs) { { description: 'updated description', status: 'Закрыт' } }
+
+    context 'when successful' do
+      before do
+        put :status_sticker, id: sticker, sticker: sticker_attrs
+        sticker.reload
+      end
+
+      it 'redirects to stickers index page' do
+        expect(response).to redirect_to(stickers_path)
+      end
+
+      it 'has updated description' do
+        expect(sticker.status).to eql sticker_attrs[:status]
+      end
+
+      it 'if status Закрыт, destroy sticker' do
+        put :status_sticker, id: sticker, sticker: sticker1_attrs
+        expect(Sticker.count).to eq 0
+      end
+    end
+
+    # context 'when failed' do
+    #   it 'renders "edit" template' do
+    #     put :update, id: sticker, sticker: (attributes_for :invalid_sticker)
+    #     expect(response).to render_template('edit')
+    #   end
+    # end
+  end
+
 end

@@ -21,10 +21,6 @@ class Sticker < ActiveRecord::Base
     end
   end
 
-  def is_director?
-    self.post == 'Директор'
-  end
-
   def self.get_relations
     [:owner, :performer]
   end

@@ -53,7 +53,7 @@ class StickersController < ApplicationController
   def status_sticker
     status = params[:sticker][:status]
     NoticeMailer.sticker_closed(@sticker).deliver_now if status == 'Выполнен'
-    @sticker.update(status: status, progress: status = params[:sticker][:progress])
+    @sticker.update(status: status, progress: params[:sticker][:progress])
     @sticker.destroy if status == 'Закрыт'
     redirect_to stickers_path
   end

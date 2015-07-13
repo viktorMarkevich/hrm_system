@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'Managing stickers', type: :feature do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, post: 'Директор') }
   let(:sticker) { create(:sticker) }
 
   before do
@@ -15,7 +15,6 @@ describe 'Managing stickers', type: :feature do
     visit '/stickers/new'
     expect(page).to have_content 'Добавить новый стикер'
     expect(page).to have_content 'Описание'
-    expect(page).to have_content 'Статус'
     expect(page).to have_content 'Назначить на'
   end
 

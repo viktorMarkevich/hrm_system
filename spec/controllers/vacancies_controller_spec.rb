@@ -60,6 +60,7 @@ RSpec.describe VacanciesController, type: :controller do
       end
 
       it %q{ doesn't create record } do
+        pending
         expect { post :create, vacancy_attrs }.to change(Vacancy, :count).by(0)
       end
 
