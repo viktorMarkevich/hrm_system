@@ -5,7 +5,6 @@ require 'rails_helper'
 describe 'Managing stickers with Директор', type: :feature do
   let(:user) { create(:user) }
   let(:sticker) { create(:sticker) }
-  let(:manager) { create(:user, post: 'HR Менджер') }
 
   before do
     sticker
