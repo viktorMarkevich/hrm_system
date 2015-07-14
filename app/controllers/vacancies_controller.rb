@@ -44,7 +44,7 @@ class VacanciesController < ApplicationController
   end
 
   def search_candidates_by_status
-    vacancy = Vacancy.find(params[:vacancy_id])
+    vacancy = Vacancy.find(params[:id])
     matched_candidates = vacancy.candidates_with_status(params[:status])
 
     render json: build_response_hash(matched_candidates,
@@ -54,7 +54,7 @@ class VacanciesController < ApplicationController
   end
 
   def change_candidate_status
-    staff_relation = StaffRelation.find_by_vacancy_id_and_candidate_id(params[:vacancy_id],
+    staff_relation = StaffRelation.find_by_vacancy_id_and_candidate_id(params[:id],
                                                                        params[:candidate_id])
 
     unless params[:status] == StaffRelation::NEUTRAL
@@ -77,7 +77,7 @@ class VacanciesController < ApplicationController
   def mark_candidates_as_founded
     found_status = StaffRelation::FOUND
     marked_as_found_candidates = Candidate.where('id IN (?)', params[:candidates_ids])
-    vacancy = Vacancy.find(params[:vacancy_id])
+    vacancy = Vacancy.find(params[:id])
     marked_as_found_candidates.each do |candidate|
       candidate.update(status: Candidate::IS_WORKING)
       StaffRelation.create(candidate_id: candidate.id, vacancy_id: vacancy.id, status: found_status)

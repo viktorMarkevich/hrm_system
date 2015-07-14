@@ -74,12 +74,11 @@ $(document).ready ->
       for chbox in $checked_boxes
         addedToVacancyCandidatesIds.push $(chbox).val()
         $(chbox).parent().remove()
-
+      vacancy_id = $('#candidates-multiselect').attr('data-vacancyid')
       $.ajax
-        url: '/vacancies/mark_candidates_as_founded'
+        url: "/vacancies/#{vacancy_id}/mark_candidates_as_founded"
         type: 'POST'
         data:
-          vacancy_id: $('#candidates-multiselect').attr('data-vacancyid')
           candidates_ids: addedToVacancyCandidatesIds
         success: (response) ->
           buildCandidatesTable(response)
@@ -90,12 +89,13 @@ $(document).ready ->
     $getIntoStatusButton.click ->
       # set active tab
       $(this).siblings().removeClass("active");
+      vacancy_id = $(this).data('vacancy-id')
       $.ajax
-        url: "/vacancies/search_candidates_by_status"
-        type: "POST"
+        url: "/vacancies/#{vacancy_id}/search_candidates_by_status"
+        type: "GET"
         data:
           status: $(this).data('status-name')
-          vacancy_id: $(this).data('vacancy-id')
+#          vacancy_id: $(this).data('vacancy-id')
         success: (response) ->
           buildCandidatesTable(response)
           setCandidatesTableCaptionByStatus(response.current_status)
@@ -103,12 +103,11 @@ $(document).ready ->
 
     $('#vacancy-candidates').on 'change', '.status-picker', ->
       $row_to_remove = $(this).parents('tr')
-
+      vacancy_id = $(this).attr('data-vacancyid')
       $.ajax
-        url: '/vacancies/change_candidate_status'
+        url: "/vacancies/#{vacancy_id}/change_candidate_status"
         type: 'POST'
         data:
-          vacancy_id: $(this).attr('data-vacancyid')
           candidate_id: $(this).attr('data-candidateid')
           status: $(this).val()
         success: (response) ->
