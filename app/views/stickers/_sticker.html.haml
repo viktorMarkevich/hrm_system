@@ -4,7 +4,7 @@
       .row
         .col-xs-7.panel-title
           -if sticker.performer_id
-            = link_to sticker_path(sticker), class: 'glyph_edit_link' do
+            = link_to sticker_path(sticker), class: 'glyph_show_link' do
               %i.glyphicon.glyphicon-star-empty
             = sticker.status
         .col-xs-offset-1.col-xs-4.panel-title

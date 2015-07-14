@@ -7,6 +7,11 @@ class ApplicationController < ActionController::Base
 
   layout :select_layout
 
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = 'У Вас недостаточно прав!'
+    redirect_to :root
+  end
+
   def select_layout
     devise_controller? ? 'authorization' : 'application'
   end
