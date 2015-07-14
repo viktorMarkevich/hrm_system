@@ -1,0 +1,8 @@
+.panel.panel-success
+  .panel-heading.panel-title
+    Редактировать новое событие
+  .panel-body
+    = render partial: 'events/form'
+
+= link_to 'Просмотреть', @event, class: 'btn btn-default'
+= link_to 'Назад', events_path, class: 'btn btn-default'

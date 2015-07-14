@@ -22,6 +22,7 @@ gem 'activeadmin', '~> 1.0.0.pre1'
 gem 'paranoia', '~> 2.0'
 gem 'kaminari'
 gem 'cancancan', '~> 1.10'
+gem 'simple_calendar', '~> 1.1.0'
 
 group :development do
   gem 'letter_opener'
