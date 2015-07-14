@@ -76,7 +76,7 @@ $(document).ready ->
         $(chbox).parent().remove()
       vacancy_id = $('#candidates-multiselect').attr('data-vacancyid')
       $.ajax
-        url: "/vacancies/#{vacancy_id}/mark_candidates_as_founded"
+        url: "/vacancies/#{vacancy_id}/mark_candidates_as_found"
         type: 'POST'
         data:
           candidates_ids: addedToVacancyCandidatesIds
@@ -95,7 +95,6 @@ $(document).ready ->
         type: "GET"
         data:
           status: $(this).data('status-name')
-#          vacancy_id: $(this).data('vacancy-id')
         success: (response) ->
           buildCandidatesTable(response)
           setCandidatesTableCaptionByStatus(response.current_status)

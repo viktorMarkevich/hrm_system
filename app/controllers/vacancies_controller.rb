@@ -45,9 +45,9 @@ class VacanciesController < ApplicationController
 
   def search_candidates_by_status
     vacancy = Vacancy.find(params[:id])
-    matched_candidates = vacancy.candidates_with_status(params[:status])
+    @matched_candidates = vacancy.candidates_with_status(params[:status])
 
-    render json: build_response_hash(matched_candidates,
+    render json: build_response_hash(@matched_candidates,
                                      StaffRelation::STATUSES,
                                      vacancy.id,
                                      params[:status])
@@ -56,7 +56,6 @@ class VacanciesController < ApplicationController
   def change_candidate_status
     staff_relation = StaffRelation.find_by_vacancy_id_and_candidate_id(params[:id],
                                                                        params[:candidate_id])
-
     unless params[:status] == StaffRelation::NEUTRAL
       if staff_relation.update(status: params[:status])
         render json: { status: :ok }
@@ -67,18 +66,15 @@ class VacanciesController < ApplicationController
       passive_candidate = Candidate.find(params[:candidate_id])
       staff_relation.delete
       passive_candidate.update(status: Candidate::PASSIVE)
-      render json: {
-        status: :ok,
-        candidate: passive_candidate
-      }
+      render json: { status: :ok, candidate: passive_candidate }
     end
   end
 
-  def mark_candidates_as_founded
+  def mark_candidates_as_found
     found_status = StaffRelation::FOUND
-    marked_as_found_candidates = Candidate.where('id IN (?)', params[:candidates_ids])
+    @marked_as_found_candidates = Candidate.where('id IN (?)', params[:candidates_ids])
     vacancy = Vacancy.find(params[:id])
-    marked_as_found_candidates.each do |candidate|
+    @marked_as_found_candidates.each do |candidate|
       candidate.update(status: Candidate::IS_WORKING)
       StaffRelation.create(candidate_id: candidate.id, vacancy_id: vacancy.id, status: found_status)
     end
@@ -97,7 +93,7 @@ class VacanciesController < ApplicationController
         :name, :salary,
         :salary_format,
         :languages, :status,
-        :requirements
+        :requirements, :region_id
       )
     end
 
