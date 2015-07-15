@@ -62,9 +62,12 @@
                         .panel-body
                           .row
                             .col-xs-12
-                              %ul
-                                %li ;kbdfpvdonvsdfv
-                                %li= @event.name
+                              -@events.each do |event, date|
+                                %table.table.table-bordered
+                                  %tbody
+                                    %tr
+                                      %td= event.name
+                                      %td= event.starts_at.ctime
                   .row
                     .col-xs-12
                       .panel.panel-primary

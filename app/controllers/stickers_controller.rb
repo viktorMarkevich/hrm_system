@@ -10,6 +10,7 @@ class StickersController < ApplicationController
   def index
     @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(8)
     @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
+    @events = Event.where('created_at > ?', 1.days.ago || 2.days.ago)
   end
 
   def new

@@ -21,7 +21,7 @@
                   - @events.each do |event|
                     %tr
                       %td= event.name
-                      %td= event.starts_at
+                      %td= event.starts_at.strftime('%H:%M')
                       %td= link_to 'Просмотреть', event
                       %td= link_to 'Редактировать', edit_event_path(event)
                       %td= link_to 'Удалить', event, method: :delete, data: { confirm: 'Вы уверены?' }
