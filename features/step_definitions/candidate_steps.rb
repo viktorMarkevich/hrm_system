@@ -19,7 +19,7 @@ When(/^I fill in candidate form$/) do
     fill_in 'candidate_city_of_residence', with: 'Запорожье'
     fill_in 'candidate_desired_position', with: 'должность1'
     fill_in 'candidate_experience', with: '3 года'
-    select('status1', from: 'candidate_status')
+    select('Пассивен', from: 'candidate_status')
     check('Готов к переезду')
     fill_in 'candidate_email', with: 'spetrov@mail.com'
     fill_in 'candidate_phone', with: '+38-050-000-0001'
@@ -45,7 +45,7 @@ When(/^I fill in "(.*?)" with "(.*?)"$/) do |input_id, text|
 end
 
 When(/^I change candidate_status in edit form$/) do
-  select('status1', from: 'candidate_status')
+  select('В работе', from: 'candidate_status')
 end
 
 When(/^I change candidate_desired_position in edit form$/) do
@@ -63,7 +63,7 @@ end
 
 When(/^I fill in candidate required fields$/) do
   fill_in 'candidate_name', with: 'Test User'
-  select('status1', from: 'candidate_status')
+  select('В работе', from: 'candidate_status')
   fill_in 'candidate_desired_position', with: 'должность1'
   fill_in 'candidate_phone', with: '123456'
 end

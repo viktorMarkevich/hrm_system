@@ -12,7 +12,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20150708091305) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,11 +59,11 @@ ActiveRecord::Schema.define(version: 20150708091305) do
     t.string   "ready_to_relocate"
     t.string   "desired_position"
     t.string   "experience"
-    t.string   "status"
+    t.string   "status",            default: "Пассивен"
     t.string   "source"
     t.string   "description"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "email"
     t.string   "phone"
     t.string   "linkedin"
@@ -100,6 +99,15 @@ ActiveRecord::Schema.define(version: 20150708091305) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "staff_relations", force: :cascade do |t|
+    t.string   "status"
+    t.text     "notice"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "vacancy_id"
+    t.integer  "candidate_id"
   end
 
   create_table "stickers", force: :cascade do |t|

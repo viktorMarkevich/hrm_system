@@ -5,7 +5,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "Вакансия#{n}" }
     salary '550'
     salary_format 'usd'
-    status 'В процессе'
+    status 'Активная'
     languages 'Английский, Русский'
     requirements 'Ответственный'
     region

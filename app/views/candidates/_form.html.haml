@@ -33,7 +33,7 @@
         = f.text_field :experience, class: 'form-control'
       .form-group
         = f.label :status, 'Статус'
-        = f.select(:status, Candidate::STATUS, {}, class: 'form-control')
+        = f.select(:status, Candidate::STATUSES, {}, class: 'form-control')
       .form-group
         = f.label :ready_to_relocate, 'Готов к переезду:'
         = f.check_box :ready_to_relocate

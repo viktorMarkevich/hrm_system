@@ -20,6 +20,7 @@ class CandidatesController < ApplicationController
   def create
     @candidate = current_user.candidates.build(candidate_params)
     if @candidate.save
+      StaffRelation.create(candidate_id: @candidate.id)
       flash[:notice] = 'Кандидат был успешно добавлен.'
       redirect_to candidates_path
     else

@@ -38,7 +38,7 @@ When(/^I fill in vacancy form$/) do
     fill_in('vacancy_salary', with: '450')
     choose('vacancy_salary_format_usd')
     select('Запорожье', from: 'region')
-    select('status1', from: 'Статус')
+    select('Активная', from: 'Статус')
     fill_in('vacancy_languages', with: 'Английский, Русский')
     fill_in('vacancy_requirements', with: 'Ответственный')
   end
@@ -62,7 +62,7 @@ Given(/^I have valid vacancy$/) do
       name: 'Программист руби',
       salary: '500',
       salary_format: 'USD',
-      status: 'В процессе',
+      status: 'Активная',
       region_id: 1,
       user_id: 1
   )
@@ -94,7 +94,7 @@ When(/^I fill form with invalid salary value$/) do
     fill_in('vacancy_salary', with: 'incorrect value')
     choose('vacancy_salary_format_usd')
     select('Запорожье', from: 'region')
-    select('status1', from: 'Статус')
+    select('Активная', from: 'Статус')
     fill_in('vacancy_languages', with: 'Английский, Русский')
     fill_in('vacancy_requirements', with: 'Ответственный')
   end
@@ -112,4 +112,34 @@ end
 
 Then(/^salary field should disappear$/) do
   expect(page).to have_css('#vacancy_salary', visible: false)
+end
+
+When(/^I am on the vacancy page$/) do
+  visit "/vacancies/#{@vacancy.id}"
+end
+
+Then(/^I should see candidates with default status$/) do
+  expect(page).to have_content('Кандидаты со статусом "Найденные"')
+end
+
+Given(/^I have candidates for vacancy$/) do
+ @candidate = Candidate.create(name: 'Rick Grimes', desired_position: 'Manager', status: 'Пассивен')
+end
+
+Then(/^I should see available candidates for vacancy$/) do
+  expect(page).to have_content(@candidate.name)
+end
+
+Then(/^item should be added to founded candidates$/) do
+  expect(page).to have_content(@candidate.name)
+end
+
+When(/^I select candidate for vacancy$/) do
+  click_link 'Добавить кандидатов к этой вакансии'
+
+  within('#candidates-multiselect') do
+    first('input[type="checkbox"]').click
+  end
+
+  click_button 'Выбрать'
 end
