@@ -4,9 +4,8 @@
       .panel-heading.panel-title
         Календарь
       .panel-body
-        .col-xs-7.calendar
-          #events_calendar
-            = render partial: 'calendar', locals: {events: @events}
+        .col-xs-7
+          = render partial: 'calendar', locals: {events: @events}
         .col-xs-5
           .panel.panel-primary
             .panel-heading.panel-title

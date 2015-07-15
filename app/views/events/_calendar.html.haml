@@ -1,2 +1,4 @@
-= month_calendar events: events, title: title_calendar, previous_link: previous_month_link, next_link: next_month_link, day_names: 'date.day_names', table: {class: 'table table-bordered'}, tr: {class: 'calendar-row'}, td: {class: 'day'} do |date, events|
-  = date
+.calendar
+  = month_calendar events: events, table: {class: 'table table-bordered'}, tr: {class: 'calendar-row'}, td: default_td_classes, day_names: 'date.day_names' do |date, events|
+    = date.day
+    = events

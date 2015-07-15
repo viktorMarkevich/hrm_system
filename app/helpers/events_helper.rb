@@ -1,15 +1,18 @@
 module EventsHelper
+  def default_td_classes
+    ->(start_date, current_calendar_date) {
+      today = Time.zone.now.to_date
+      td_class = ['day']
+      td_class << 'today'  if today == current_calendar_date
+      td_class << 'past'   if today > current_calendar_date
+      td_class << 'future' if today < current_calendar_date
+      td_class << 'start-date'    if current_calendar_date.to_date == start_date.to_date
+      td_class << 'prev-month'    if start_date.month != current_calendar_date.month && current_calendar_date < start_date
+      td_class << 'next-month'    if start_date.month != current_calendar_date.month && current_calendar_date > start_date
+      td_class << 'current-month' if start_date.month == current_calendar_date.month
+      td_class << "wday-#{current_calendar_date.wday.to_s}"
 
-  def title_calendar
-    ->(start_date) { content_tag :span, "#{I18n.t('date.month_names')[start_date.month]} #{start_date.year}", class: 'calendar-title' }
+      { class: td_class.join(' ') }
+    }
   end
-
-  def previous_month_link
-    ->(param, date_range) { link_to raw('&laquo;'), {param => date_range.first - 1.day} }
-  end
-
-  def next_month_link
-    ->(param, date_range) { link_to raw('&raquo;'), {param => date_range.last + 1.day} }
-  end
-
 end
