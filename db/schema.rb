@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709113336) do
+ActiveRecord::Schema.define(version: 20150708091305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(version: 20150709113336) do
     t.string   "google_plus"
     t.string   "home_page"
     t.string   "skype"
-    t.integer  "owner_id"
     t.integer  "user_id"
   end
 
@@ -101,15 +100,6 @@ ActiveRecord::Schema.define(version: 20150709113336) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "staff_relations", force: :cascade do |t|
-    t.string   "status",       default: "Нейтральный"
-    t.text     "notice"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.integer  "vacancy_id"
-    t.integer  "candidate_id"
   end
 
   create_table "stickers", force: :cascade do |t|

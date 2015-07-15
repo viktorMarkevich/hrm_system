@@ -26,8 +26,10 @@
             = f.label :skype
             = f.text_field :skype, class: 'form-control'
           .form-group
-            = f.label :phone
-            = f.text_field :phone, class: 'form-control', placeholder: 'Пример ввода: +38-050-000-0000'
+            = f.label :phone do
+              Phone
+              %span.tip Пример ввода: +38-050-000-0000
+            = f.text_field :phone, class: 'form-control'
           .form-group
             = f.fields_for :image, Image.new do |img|
               = img.label :image
