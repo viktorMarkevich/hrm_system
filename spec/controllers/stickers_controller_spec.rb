@@ -96,11 +96,11 @@ RSpec.describe StickersController, type: :controller do
   end
 
   context '#update' do
-    let(:sticker_attrs) { { description: 'updated description' } }
+    let(:performed_sticker_attrs) { { description: 'updated description' } }
 
     context 'when successful' do
       before do
-        put :update, id: sticker, sticker: sticker_attrs
+        put :update, id: sticker, sticker: performed_sticker_attrs
         sticker.reload
       end
 
@@ -109,7 +109,7 @@ RSpec.describe StickersController, type: :controller do
       end
 
       it 'has updated description' do
-        expect(sticker.description).to eql sticker_attrs[:description]
+        expect(sticker.description).to eql performed_sticker_attrs[:description]
       end
     end
 
@@ -136,12 +136,12 @@ RSpec.describe StickersController, type: :controller do
   end
 
   context '#status_sticker' do
-    let(:sticker_attrs) { { description: 'updated description', status: 'Выполнен' } }
-    let(:sticker1_attrs) { { description: 'updated description', status: 'Закрыт' } }
+    let(:performed_sticker_attrs) { { description: 'updated description', status: 'Выполнен' } }
+    let(:closed_sticker_attrs) { { description: 'updated description', status: 'Закрыт' } }
 
     context 'when successful' do
       before do
-        put :status_sticker, id: sticker, sticker: sticker_attrs
+        put :status_sticker, id: sticker, sticker: performed_sticker_attrs
         sticker.reload
       end
 
@@ -150,11 +150,11 @@ RSpec.describe StickersController, type: :controller do
       end
 
       it 'has updated status' do
-        expect(sticker.status).to eql sticker_attrs[:status]
+        expect(sticker.status).to eql performed_sticker_attrs[:status]
       end
 
-      it 'if status = Закрыт, destroy sticker' do
-        put :status_sticker, id: sticker, sticker: sticker1_attrs
+      it 'destroys sticker if status "Закрыт"' do
+        put :status_sticker, id: sticker, sticker: closed_sticker_attrs
         expect(Sticker.count).to eq 0
       end
     end
