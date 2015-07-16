@@ -62,12 +62,12 @@
                         .panel-body
                           .row
                             .col-xs-12
-                              -@events.each do |event, date|
-                                %table.table.table-bordered
+                              -@events.each do |event|
+                                %table.table.table-border-bottom
                                   %tbody
                                     %tr
+                                      %td= event.starts_at.strftime('%b %e %H:%M')
                                       %td= event.name
-                                      %td= event.starts_at.ctime
                   .row
                     .col-xs-12
                       .panel.panel-primary

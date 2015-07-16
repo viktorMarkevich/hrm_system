@@ -6,11 +6,11 @@ class StickersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_sticker, only: [:update, :edit, :destroy, :show, :status_sticker]
   before_filter :prepare_performers, only: [:new, :edit]
+  before_filter :set_events, only: [:index, :new, :edit]
 
   def index
     @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(8)
     @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
-    @events = Event.where('created_at > ?', 1.days.ago || 2.days.ago)
   end
 
   def new
@@ -69,5 +69,9 @@ class StickersController < ApplicationController
 
    def prepare_performers
      @performers = User.get_performers
+   end
+
+   def set_events
+     @events = Event.where('created_at > ?', 2.days.ago).order(starts_at: :asc)
    end
 end

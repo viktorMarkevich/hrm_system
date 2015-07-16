@@ -1,7 +1,7 @@
 = stylesheet_link_tag 'stickers'
 .row
   .col-xs-3
-    %p= link_to 'Добавить стикер', new_sticker_path, class: 'btn btn-default'
+    %p= link_to 'Добавить стикер', new_sticker_path, class: 'btn btn-default', id: 'add-sticker'
   .col-xs-9
     %p.pull-right= link_to 'Посмотреть закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-default'
 .row

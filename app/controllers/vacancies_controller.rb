@@ -7,7 +7,7 @@ class VacanciesController < ApplicationController
   before_filter :find_vacancy, only: [:show, :edit, :update]
 
   def index
-    @vacancies = Vacancy.includes(:region, :owner).order('id').page(params[:page]).per(10) #expect(assigns(:vacancies)).to match_array()
+    @vacancies = Vacancy.includes(:region, :owner).order('id').page(params[:page]).per(10)
   end
 
   def new
