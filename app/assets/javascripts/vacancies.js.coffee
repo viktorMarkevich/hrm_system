@@ -4,7 +4,7 @@ highlightDefaultTab = ->
   $defaultTab.addClass('active')
 
 disableDefaultOption = ->
-  $('select option:first-child').attr("disabled", "disabled");
+  $('select.status-picker option:first-child').attr("disabled", "disabled");
 
 setCandidatesTableCaptionByStatus = (status) ->
   $('#vacancy-candidates caption').text('Кандидаты со статусом "' + status + '"')
