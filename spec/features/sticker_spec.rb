@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Managing stickers', type: :feature do
+describe 'Managing stickers with Директор', type: :feature do
   let(:user) { create(:user) }
   let(:sticker) { create(:sticker) }
 
@@ -15,7 +15,6 @@ describe 'Managing stickers', type: :feature do
     visit '/stickers/new'
     expect(page).to have_content 'Добавить новый стикер'
     expect(page).to have_content 'Описание'
-    expect(page).to have_content 'Статус'
     expect(page).to have_content 'Назначить на'
   end
 
@@ -56,4 +55,20 @@ describe 'Managing stickers', type: :feature do
     find('.glyph_destroy_link').click
     expect(page).to_not have_content sticker.description
   end
+end
+
+describe 'Managing stickers with HR Менджер', type: :feature do
+  let(:user) { create(:user, post: 'HR Менджер') }
+  let(:sticker) { create(:sticker) }
+
+  before do
+    sticker
+    sign_in_as(user, nil)
+  end
+
+  scenario 'Error goes on new' do
+    visit '/stickers/new'
+    expect(page).to have_content 'У Вас недостаточно прав!'
+  end
+
 end

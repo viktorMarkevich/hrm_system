@@ -11,8 +11,10 @@
         = f.label :name, 'Имя:'
         = f.text_field :name, class: 'form-control'
       .form-group
-        = f.label :birthday, 'Дата рождения:'
-        = f.text_field :birthday, class: 'form-control', placeholder: 'dd/mm/yyyy or dd-mm-yyyy'
+        = f.label :birthday do
+          Дата рождения:
+          %span.tip dd/mm/yyyy or dd-mm-yyyy
+        = f.text_field :birthday, class: 'form-control'
       .form-group
         = f.label :salary, 'Желаемая ЗП:'
         = f.text_field :salary, class: 'form-control'
@@ -31,7 +33,7 @@
         = f.text_field :experience, class: 'form-control'
       .form-group
         = f.label :status, 'Статус'
-        = f.select(:status, Candidate::STATUS, {}, class: 'form-control')
+        = f.select(:status, Candidate::STATUSES, {}, class: 'form-control')
       .form-group
         = f.label :ready_to_relocate, 'Готов к переезду:'
         = f.check_box :ready_to_relocate
@@ -41,30 +43,44 @@
   .row
     .col-xs-6
       .form-group
-        = f.label :email, 'Почта:'
-        = f.email_field :email, class: 'form-control', placeholder: 'example@gmail.com'
+        = f.label :email do
+          Почта:
+          %span.tip example@gmail.com
+        = f.email_field :email, class: 'form-control'
       .form-group
-        = f.label :phone, 'Телефон:'
-        = f.text_field :phone, class: 'form-control', placeholder: 'Пример ввода: +38-050-000-0000'
+        = f.label :phone do
+          Телефон:
+          %span.tip Пример ввода: +38-050-000-0000
+        = f.text_field :phone, class: 'form-control'
       .form-group
         = f.label :skype, 'Skype:'
         = f.text_field :skype, class: 'form-control'
       .form-group
-        = f.label :home_page, 'Мои странички:'
-        = f.text_field :home_page, class: 'form-control', placeholder: 'https://www.example1.com, https://www.example2.com, https://www.example3.com ... '
+        = f.label :home_page do
+          Мои странички:
+          %span.tip https://www.example1.com, https://www.example2.com, https://www.example3.com ...
+        = f.text_field :home_page, class: 'form-control'
     .col-xs-6
       .form-group
-        = f.label :linkedin, 'Linkedin:'
-        = f.text_field :linkedin, class: 'form-control', placeholder: 'https://www.linkedin.com/pub/abbasi-com/84/472/58b'
+        = f.label :linkedin do
+          Linkedin:
+          %span.tip https://www.linkedin.com/pub/abbasi-com/84/472/58b
+        = f.text_field :linkedin, class: 'form-control'
       .form-group
-        = f.label :facebook,  'Facebook:'
-        = f.text_field :facebook, class: 'form-control', placeholder: 'https://www.facebook.com/example_user'
+        = f.label :facebook do
+          Facebook:
+          %span.tip https://www.facebook.com/example_user
+        = f.text_field :facebook, class: 'form-control'
       .form-group
-        = f.label :vkontakte, 'Vkontakte:'
-        = f.text_field :vkontakte, class: 'form-control', placeholder: 'https://www.vk.com/example_user'
+        = f.label :vkontakte do
+          Vkontakte:
+          %span.tip https://www.vk.com/example_user
+        = f.text_field :vkontakte, class: 'form-control'
       .form-group
-        = f.label :google_plus, 'Google+:'
-        = f.text_field :google_plus, class: 'form-control', placeholder: 'https://plus.google.com/123456789132456789123/'
+        = f.label :google_plus do
+          Google+:
+          %span.tip https://plus.google.com/123456789132456789123/
+        = f.text_field :google_plus, class: 'form-control'
   .row
     .col-xs-12
       .form-group
