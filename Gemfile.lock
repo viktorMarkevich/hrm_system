@@ -277,6 +277,8 @@ GEM
     sexp_processor (4.6.0)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
+    simple_calendar (1.1.10)
+      rails (>= 3.0)
     simplecov (0.10.0)
       docile (~> 1.1.0)
       json (~> 1.8)
@@ -353,6 +355,7 @@ DEPENDENCIES
   rspec-rails (~> 3.0)
   sdoc (~> 0.4.0)
   shoulda-matchers
+  simple_calendar (~> 1.1.0)
   simplecov
   therubyracer
   turbolinks

@@ -17,8 +17,8 @@
               %ul.nav.nav-pills
                 %li
                   = link_to 'Органайзер', stickers_path, class: "btn #{active_class('stickers')}"
-                  = link_to new_sticker_path, class: "btn #{active_class('stickers', new_sticker_path)}", id: 'add-sticker' do
-                    %i.glyphicon.glyphicon-plus
+                  = link_to events_path, class: "btn #{active_class('events')}" do
+                    %i.glyphicon.glyphicon-calendar
                 %li
                   = link_to 'Вакансии', vacancies_path, class: "btn #{active_class('vacancies')}"
                   = link_to new_vacancy_path, class: "btn #{active_class('vacancies', new_vacancy_path)}", id: 'add-vacancy' do
@@ -49,7 +49,7 @@
       .row.well
         - if controller.controller_name == 'stickers' || controller.controller_name == 'archives'
           .row
-            .col-xs-8
+            .col-xs-5
               .panel.panel-default
                 .panel-body
                   .row
@@ -62,11 +62,12 @@
                         .panel-body
                           .row
                             .col-xs-12
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                              It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                              and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                              -@events.each do |event|
+                                %table.table.table-border-bottom
+                                  %tbody
+                                    %tr
+                                      %td= event.starts_at.strftime('%b %e %H:%M')
+                                      %td= event.name
                   .row
                     .col-xs-12
                       .panel.panel-primary
@@ -82,7 +83,7 @@
                               when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                               It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
                               and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            .col-xs-4
+            .col-xs-7
               .panel.panel-default
                 .panel-body
                   = yield

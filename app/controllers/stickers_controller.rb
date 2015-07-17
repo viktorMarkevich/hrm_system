@@ -3,6 +3,8 @@
 class StickersController < ApplicationController
   load_and_authorize_resource param_method: :sticker_params
 
+  include Events
+
   before_filter :authenticate_user!
   before_filter :find_sticker, only: [:update, :edit, :destroy, :show, :status_sticker]
   before_filter :prepare_performers, only: [:new, :edit]
@@ -69,4 +71,5 @@ class StickersController < ApplicationController
    def prepare_performers
      @performers = User.get_performers
    end
+
 end

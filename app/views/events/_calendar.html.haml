@@ -1,0 +1,7 @@
+.calendar
+  = month_calendar events: events, table: {class: 'table table-bordered'}, tr: {class: 'calendar-row'}, td: default_td_classes, day_names: 'date.day_names' do |date, events|
+    = date.day
+    %br
+    -events.each do |event|
+      = event.name
+
