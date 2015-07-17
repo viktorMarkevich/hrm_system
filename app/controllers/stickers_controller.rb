@@ -3,10 +3,11 @@
 class StickersController < ApplicationController
   load_and_authorize_resource param_method: :sticker_params
 
+  include Events
+
   before_filter :authenticate_user!
   before_filter :find_sticker, only: [:update, :edit, :destroy, :show, :status_sticker]
   before_filter :prepare_performers, only: [:new, :edit]
-  before_filter :set_events, only: [:index, :new, :edit]
 
   def index
     @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(8)
@@ -71,7 +72,4 @@ class StickersController < ApplicationController
      @performers = User.get_performers
    end
 
-   def set_events
-     @events = Event.where('created_at > ?', 2.days.ago).order(starts_at: :asc)
-   end
 end

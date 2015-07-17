@@ -44,7 +44,7 @@ RSpec.describe EventsController, type: :controller do
     end
 
     context 'when failed' do
-      let(:event_params) { { event: { name: nil } } }
+      let(:event_params) { { event: { name: nil, starts_at: '2011-12-11 12:11:12'} } }
 
       before { post :create, event_params }
 

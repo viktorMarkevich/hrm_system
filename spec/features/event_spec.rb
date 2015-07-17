@@ -20,6 +20,7 @@ describe 'Managing events', type: :feature do
     visit '/events/new'
     within '#new_event' do
       fill_in 'event_name', with: 'This is name'
+      select 'August', from: 'event_starts_at_2i'
       click_button 'Сохранить'
     end
     expect(page).to have_content 'Событие успешно создано.'
