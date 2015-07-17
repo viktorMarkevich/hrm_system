@@ -6,7 +6,7 @@ module Events
   end
 
   def set_events
-    @events = Event.where('created_at > ?', 2.days.ago).order(starts_at: :asc)
+    @events = Event.where('starts_at BETWEEN ? AND ? ', 2.days.ago, DateTime.now).order(created_at: :asc)
   end
 
 end
