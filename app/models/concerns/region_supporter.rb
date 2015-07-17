@@ -7,6 +7,6 @@ module RegionSupporter
 
   def associate_with_region(region_name)
     region = Region.find_or_create_by(name: region_name)
-    self.update_attribute(:region_id, region.id)
+    self.new_record? ? self.region_id = region.id : self.update_attributes(region_id: region.id)
   end
 end

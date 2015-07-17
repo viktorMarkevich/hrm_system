@@ -2,11 +2,18 @@ class Candidate < ActiveRecord::Base
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_one :image
+  has_many :staff_relations
+  has_many :vacancies, through: :staff_relations, source: :vacancy
 
   accepts_nested_attributes_for :image
 
+  scope :with_status, -> (status) { Candidate.where(status: "#{status}") }
+
   POST = ['должность1', 'должность2', 'должность3']
-  STATUS = ['status1', 'status2', 'status3']
+
+  PASSIVE = 'Пассивен'
+  IS_WORKING = 'В работе'
+  STATUSES = [ PASSIVE, IS_WORKING ]
 
   validates :name, :desired_position, :status, presence: true
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
@@ -31,4 +38,7 @@ class Candidate < ActiveRecord::Base
   validates :birthday, format: { with: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/, multiline: true,
             message: 'wrong format' }, if: 'birthday.present?'
 
+  def status_for_vacancy(vacancy)
+    StaffRelation.find_by_candidate_id_and_vacancy_id(self.id, vacancy.id).status
+  end
 end

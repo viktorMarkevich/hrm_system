@@ -2,12 +2,12 @@
   .panel.panel-primary
     .panel-heading
       .row
-        .col-xs-7.panel-title
+        .col-xs-8.panel-title
           -if sticker.performer_id
-            = link_to sticker_path(sticker), class: 'glyph_edit_link' do
+            = link_to sticker_path(sticker), class: 'glyph_show_link' do
               %i.glyphicon.glyphicon-star-empty
             = sticker.status
-        .col-xs-offset-1.col-xs-4.panel-title
+        .col-xs-4.panel-title
           -if current_user.is_director?
             = link_to edit_sticker_path(sticker), class: 'glyph_edit_link' do
               %i.glyphicon.glyphicon-pencil
