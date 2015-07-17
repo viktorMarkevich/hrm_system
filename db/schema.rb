@@ -60,11 +60,11 @@ ActiveRecord::Schema.define(version: 20150713122515) do
     t.string   "ready_to_relocate"
     t.string   "desired_position"
     t.string   "experience"
-    t.string   "status"
+    t.string   "status",            default: "Пассивен"
     t.string   "source"
     t.string   "description"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "email"
     t.string   "phone"
     t.string   "linkedin"
@@ -109,6 +109,15 @@ ActiveRecord::Schema.define(version: 20150713122515) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "staff_relations", force: :cascade do |t|
+    t.string   "status"
+    t.text     "notice"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "vacancy_id"
+    t.integer  "candidate_id"
+  end
+
   create_table "stickers", force: :cascade do |t|
     t.string   "description"
     t.datetime "created_at",   null: false
@@ -117,6 +126,7 @@ ActiveRecord::Schema.define(version: 20150713122515) do
     t.integer  "performer_id"
     t.datetime "deleted_at"
     t.string   "status"
+    t.string   "progress"
   end
 
   add_index "stickers", ["deleted_at"], name: "index_stickers_on_deleted_at", using: :btree
