@@ -1,6 +1,7 @@
 class ArchivesController < ApplicationController
 
   include Events
+  include VacancyAction
 
   before_filter :authenticate_user!
 

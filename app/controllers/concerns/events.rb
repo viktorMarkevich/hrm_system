@@ -6,7 +6,7 @@ module Events
   end
 
   def set_events
-    @events = Event.where(starts_at: 2.days.ago..DateTime.now).order(created_at: :asc)
+    @events = Event.where(starts_at: 1.days.ago..DateTime.now + 1.days).order(created_at: :asc)
   end
 
 end
