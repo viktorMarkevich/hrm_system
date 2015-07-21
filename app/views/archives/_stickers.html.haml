@@ -9,6 +9,7 @@
         .panel-heading
           .row
             .col-xs-6.panel-title
+              = sticker.deleted_at.strftime('%F')
             .col-xs-offset-2.col-xs-4.panel-title
               = link_to restore_object_path(object_name: sticker.class.to_s, id: sticker),
                         method: :delete, class: 'glyph_destroy_link' do
