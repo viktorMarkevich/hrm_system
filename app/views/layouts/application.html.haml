@@ -63,11 +63,11 @@
                           .row
                             .col-xs-12
                               -@events.each do |event|
-                                %table.table.table-border-bottom
+                                %table.table.table-bordered.table_action
                                   %tbody
                                     %tr
                                       %td= event.starts_at.strftime('%b %e %H:%M')
-                                      %td= event.name
+                                      %td= event.description
                   .row
                     .col-xs-12
                       .panel.panel-primary
@@ -78,14 +78,13 @@
                         .panel-body
                           .row
                             .col-xs-12
-                              -@staffs.each do |staff|
-                                %table.table.table-border-bottom
+                              -@vacancies.each do |vacancy|
+                                %table.table.table-bordered.table_action
                                   %tbody
                                     %tr
-                                      %td= staff.vacancy.name
-                                      /%td= staff.candidate.name
-                                      %th= staff.status
-                                      %td= staff.updated_at.strftime('%b %e %H:%M')
+                                      %td= link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
+                                      %td= vacancy.status
+                                      %td= vacancy.updated_at.strftime('%b %e %H:%M')
             .col-xs-7
               .panel.panel-default
                 .panel-body

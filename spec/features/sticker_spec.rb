@@ -5,10 +5,17 @@ require 'rails_helper'
 describe 'Managing stickers with Директор', type: :feature do
   let(:user) { create(:user) }
   let(:sticker) { create(:sticker) }
+  let(:event) { create(:event) }
 
   before do
     sticker
     sign_in_as(user, nil)
+  end
+
+  scenario 'show event for sticker index page' do
+    event
+    visit '/stickers'
+    expect(page).to have_content event.description
   end
 
   scenario 'goes on new sticker page' do

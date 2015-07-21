@@ -30,7 +30,7 @@ RSpec.describe EventsController, type: :controller do
 
   context '#create' do
     context 'when successful' do
-      let(:event_params) { { event: { name: 'Name', starts_at: '2015-10-15 09:12:00' } } }
+      let(:event_params) { { event: { name: 'Name', starts_at: '2015-10-15 09:12:00', description: 'Описание' } } }
 
       before { post :create, event_params }
 
@@ -44,7 +44,7 @@ RSpec.describe EventsController, type: :controller do
     end
 
     context 'when failed' do
-      let(:event_params) { { event: { name: nil, starts_at: '2011-12-11 12:11:12'} } }
+      let(:event_params) { { event: { name: nil, starts_at: '2011-12-11 12:11:12', description: nil } } }
 
       before { post :create, event_params }
 
@@ -87,7 +87,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   context '#update' do
-    let(:event_attrs) { { name: 'Name' } }
+    let(:event_attrs) { { name: 'Name', description: 'Редактирование описания' } }
 
     context 'when successful' do
       before do

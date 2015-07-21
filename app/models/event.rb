@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
   extend SimpleCalendar
   has_calendar
 
-  validates :name,  presence: true
+  validates :name,  :description, presence: true
   validate :future_event?
 
   def future_event?
