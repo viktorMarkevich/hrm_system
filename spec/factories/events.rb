@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :event do
     name 'Name'
-    starts_at '2015-10-15 12:12'
+    starts_at DateTime.now+1.hours
     description 'описание события'
   end
 
