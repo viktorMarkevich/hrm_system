@@ -16,6 +16,12 @@
       .form-group.sticker_status
         = f.label 'Статус:'
         = f.select(:status, selection_status, {}, class: 'form-control')
+      .form-group.sticker_progress
+        = f.label 'Готовность:'
+        -if current_user.is_director?
+          = @sticker.progress
+        -else
+          = f.select(:progress, Sticker::PROGRESS, {}, class: 'form-control')
       .form-group
         = f.submit 'Готово', class: 'btn btn-default'
         = link_to 'Назад', :back, class: 'btn btn-default'

@@ -6,4 +6,4 @@
 %br
 = "Закончил: #{get_author_and_date(@sticker)}"
 %br
-= "Затрачено времени: #{DateTime.now.strftime('%k').to_i - @sticker.updated_at.strftime('%k').to_i} час(а/ов)"
+= "Затрачено времени:" + distance_of_time_in_words(@sticker.created_at, DateTime.now)

@@ -8,7 +8,7 @@ class StickersController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :find_sticker, only: [:update, :edit, :destroy, :show, :status_sticker]
-  before_filter :prepare_performers, only: [:new, :edit]
+  before_filter :prepare_performers, only: [:new, :edit, :create]
 
   def index
     @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(8)
@@ -38,6 +38,7 @@ class StickersController < ApplicationController
   def update
     if @sticker.update(sticker_params)
       NoticeMailer.notice_of_appointment(@sticker).deliver_now if @sticker.previous_changes[:performer_id] && @sticker.performer_id && @sticker.status == 'Назначен'
+      @sticker.destroy if @sticker.status == 'Закрыт'
       flash[:notice] = 'Стикер был успешно обновлен.'
       redirect_to stickers_path
     else
@@ -55,14 +56,14 @@ class StickersController < ApplicationController
   def status_sticker
     status = params[:sticker][:status]
     NoticeMailer.sticker_closed(@sticker).deliver_now if status == 'Выполнен'
-    @sticker.update(status: status)
+    @sticker.update(status: status, progress: params[:sticker][:progress])
     @sticker.destroy if status == 'Закрыт'
     redirect_to stickers_path
   end
 
   private
    def sticker_params
-     params.require(:sticker).permit(:description, :performer_id, :status)
+     params.require(:sticker).permit(:description, :performer_id, :status, :progress)
    end
 
    def find_sticker

@@ -12,6 +12,7 @@ class ArchivesController < ApplicationController
   def destroy
     @object = klass.with_deleted.find(params[:id])
     if @object.restore
+      @object.update(status: nil, performer_id: nil)
       flash[:notice] = 'Объект был успешно восстановлен.'
       redirect_to archives_path(object_name: @object.class.to_s.downcase.pluralize)
     end
