@@ -55,7 +55,6 @@ RSpec.describe CompaniesController, type: :controller do
       end
 
       it %q{ doesn't create record without region_id } do
-        pending
         expect{ post :create, company_attrs }.to change(Company, :count).by(0)
       end
 
