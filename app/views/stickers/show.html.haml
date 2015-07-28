@@ -2,7 +2,7 @@
   .panel-heading.panel-title
     ="Стикер назначен на #{full_name_for(@sticker.performer)}"
   .panel-body
-    = form_for @sticker, url: status_sticker_path(id: @sticker), method: :put do |f|
+    = form_for @sticker, url: sticker_path(id: @sticker), method: :put do |f|
       - if @sticker.errors.any?
         %h2 Возникшие ошибки:
         %ul

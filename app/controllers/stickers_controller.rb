@@ -7,7 +7,7 @@ class StickersController < ApplicationController
   include VacancyAction
 
   before_filter :authenticate_user!
-  before_filter :find_sticker, only: [:update, :edit, :destroy, :show, :status_sticker]
+  before_filter :find_sticker, only: [:update, :edit, :destroy, :show]
   before_filter :prepare_performers, only: [:new, :edit, :create]
 
   def index
@@ -37,6 +37,7 @@ class StickersController < ApplicationController
 
   def update
     if @sticker.update(sticker_params)
+      NoticeMailer.sticker_closed(@sticker).deliver_now if @sticker.status == 'Выполнен'
       NoticeMailer.notice_of_appointment(@sticker).deliver_now if @sticker.previous_changes[:performer_id] && @sticker.performer_id && @sticker.status == 'Назначен'
       @sticker.destroy if @sticker.status == 'Закрыт'
       flash[:notice] = 'Стикер был успешно обновлен.'
@@ -51,14 +52,6 @@ class StickersController < ApplicationController
       flash[:notice] = 'Стикер был успешно закрыт.'
       redirect_to stickers_path
     end
-  end
-
-  def status_sticker
-    status = params[:sticker][:status]
-    NoticeMailer.sticker_closed(@sticker).deliver_now if status == 'Выполнен'
-    @sticker.update(status: status, progress: params[:sticker][:progress])
-    @sticker.destroy if status == 'Закрыт'
-    redirect_to stickers_path
   end
 
   private
