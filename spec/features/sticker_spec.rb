@@ -5,10 +5,28 @@ require 'rails_helper'
 describe 'Managing stickers with Директор', type: :feature do
   let(:user) { create(:user) }
   let(:sticker) { create(:sticker) }
+  let(:event) { create(:event) }
+  let(:vacancy) { create(:vacancy) }
 
   before do
     sticker
+    event
     sign_in_as(user, nil)
+  end
+
+  scenario 'show event for sticker index page' do
+    event
+    visit '/stickers'
+    expect(page).to have_content event.description
+    expect(page).to have_content event.starts_at.strftime('%b %e %H:%M')
+  end
+
+  scenario 'show vacancy action for sticker index page' do
+    vacancy
+    visit '/stickers'
+    expect(page).to have_content vacancy.name
+    expect(page).to have_content vacancy.status
+    expect(page).to have_content vacancy.updated_at.strftime('%b %e %H:%M')
   end
 
   scenario 'goes on new sticker page' do

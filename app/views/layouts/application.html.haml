@@ -3,7 +3,7 @@
   %head
     %title Faceit-hrm
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application'
+    = javascript_include_tag 'application', 'vacancies'
     = csrf_meta_tags
   %body.jumbotron
     .container-fluid
@@ -63,11 +63,11 @@
                           .row
                             .col-xs-12
                               -@events.each do |event|
-                                %table.table.table-border-bottom
+                                %table.table.table-bordered.table_action
                                   %tbody
                                     %tr
                                       %td= event.starts_at.strftime('%b %e %H:%M')
-                                      %td= event.name
+                                      %td= event.description
                   .row
                     .col-xs-12
                       .panel.panel-primary
@@ -78,11 +78,13 @@
                         .panel-body
                           .row
                             .col-xs-12
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                              It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                              and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                              -@vacancies.each do |vacancy|
+                                %table.table.table-bordered.table_action
+                                  %tbody
+                                    %tr
+                                      %td= link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
+                                      %td= vacancy.status
+                                      %td= vacancy.updated_at.strftime('%b %e %H:%M')
             .col-xs-7
               .panel.panel-default
                 .panel-body

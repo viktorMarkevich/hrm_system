@@ -14,6 +14,11 @@ RSpec.describe Event, type: :model do
         expect(invalid_event).to_not be_valid
       end
 
+      it 'has no description' do
+        invalid_event = build(:invalid_event)
+        expect(invalid_event).to_not be_valid
+      end
+
       it 'created in the past' do
         event = build(:event, starts_at: Date.yesterday)
         expect(event).to_not be_valid

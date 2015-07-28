@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713122515) do
+ActiveRecord::Schema.define(version: 20150721090334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,8 +89,9 @@ ActiveRecord::Schema.define(version: 20150713122515) do
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.datetime "starts_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "description"
   end
 
   create_table "images", force: :cascade do |t|
@@ -126,7 +127,6 @@ ActiveRecord::Schema.define(version: 20150713122515) do
     t.integer  "performer_id"
     t.datetime "deleted_at"
     t.string   "status"
-    t.string   "progress"
   end
 
   add_index "stickers", ["deleted_at"], name: "index_stickers_on_deleted_at", using: :btree

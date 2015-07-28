@@ -12,8 +12,9 @@ describe 'Managing events', type: :feature do
   scenario 'goes on new event page' do
     visit '/events/new'
     expect(page).to have_content 'Добавить новое событие'
-    expect(page).to have_content 'Имя'
-    expect(page).to have_content 'Начало события'
+    expect(page).to have_content 'Имя:'
+    expect(page).to have_content 'Дата события:'
+    expect(page).to have_content 'Описание:'
   end
 
   scenario 'create new event' do
@@ -21,6 +22,7 @@ describe 'Managing events', type: :feature do
     within '#new_event' do
       fill_in 'event_name', with: 'This is name'
       select 'August', from: 'event_starts_at_2i'
+      fill_in 'event_description', with: 'This is description'
       click_button 'Сохранить'
     end
     expect(page).to have_content 'Событие успешно создано.'
