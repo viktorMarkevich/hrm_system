@@ -96,7 +96,9 @@ RSpec.describe StickersController, type: :controller do
   end
 
   context '#update' do
-    let(:performed_sticker_attrs) { { description: 'updated description' } }
+    let(:performed_sticker_attrs) { { description: 'updated description', status: 'Выполнен' } }
+    let(:closed_sticker_attrs) { { description: 'updated description', status: 'Закрыт' } }
+    # let(:performed_sticker_attrs) { { description: 'updated description' } }
 
     context 'when successful' do
       before do
@@ -110,6 +112,15 @@ RSpec.describe StickersController, type: :controller do
 
       it 'has updated description' do
         expect(sticker.description).to eql performed_sticker_attrs[:description]
+      end
+
+      it 'has updated status' do
+        expect(sticker.status).to eql performed_sticker_attrs[:status]
+      end
+
+      it 'destroys sticker if status "Закрыт"' do
+        put :update, id: sticker, sticker: closed_sticker_attrs
+        expect(Sticker.count).to eq 0
       end
     end
 
@@ -134,30 +145,5 @@ RSpec.describe StickersController, type: :controller do
       expect(response).to redirect_to(stickers_path)
     end
   end
-
-  context '#status_sticker' do
-    let(:performed_sticker_attrs) { { description: 'updated description', status: 'Выполнен' } }
-    let(:closed_sticker_attrs) { { description: 'updated description', status: 'Закрыт' } }
-
-    context 'when successful' do
-      before do
-        put :status_sticker, id: sticker, sticker: performed_sticker_attrs
-        sticker.reload
-      end
-
-      it 'redirects to stickers index page' do
-        expect(response).to redirect_to(stickers_path)
-      end
-
-      it 'has updated status' do
-        expect(sticker.status).to eql performed_sticker_attrs[:status]
-      end
-
-      it 'destroys sticker if status "Закрыт"' do
-        put :status_sticker, id: sticker, sticker: closed_sticker_attrs
-        expect(Sticker.count).to eq 0
-      end
-    end
-  end
-
+  
 end
