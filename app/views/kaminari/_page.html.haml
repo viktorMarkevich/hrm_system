@@ -1,6 +1,6 @@
 - if page.current?
-  %li.active
-    = content_tag :a, page, remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil))
+  %li
+    = content_tag :a, page, remote: remote, class: 'btn active', rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), style:'border-bottom: 2px solid limegreen'
 - else
   %li
     = link_to page, url, remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil))
