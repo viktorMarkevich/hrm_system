@@ -14,3 +14,11 @@
 #= require jquery_ujs
 #= require twitter/bootstrap
 # require_tree .
+$(document).ready ->
+  $('.nav.nav-pills li a').each ->
+    location = window.location.pathname
+    link = @pathname
+    if location == link
+      $(this).addClass 'active current'
+    return
+  return
