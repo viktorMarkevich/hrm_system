@@ -21,7 +21,11 @@ describe 'Managing events', type: :feature do
     visit '/events/new'
     within '#new_event' do
       fill_in 'event_name', with: 'This is name'
+      select '2015', from: 'event_starts_at_1i'
       select 'August', from: 'event_starts_at_2i'
+      select (Date.today.day + 1), from: 'event_starts_at_3i'
+      select '11', from: 'event_starts_at_4i'
+      select '30', from: 'event_starts_at_5i'
       fill_in 'event_description', with: 'This is description'
       click_button 'Сохранить'
     end
