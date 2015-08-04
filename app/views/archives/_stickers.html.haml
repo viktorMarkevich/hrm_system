@@ -1,7 +1,7 @@
 = stylesheet_link_tag 'stickers'
 .row
   .col-xs-12
-    %p= link_to 'Вернуться назад', root_path, class: 'btn btn-default'
+    %p= link_to 'Вернуться назад', stickers_path, class: 'btn btn-default'
 .row
   - stickers.each do |sticker|
     .col-xs-3
