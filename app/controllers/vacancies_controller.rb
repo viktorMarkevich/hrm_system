@@ -15,7 +15,7 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    @candidates_with_found_status = @vacancy.candidates_with_status(StaffRelation::FOUND)
+    @candidates_with_found_status = @vacancy.candidates_with_status('Найденные')
     @passive_candidates = Candidate.with_status(Candidate::PASSIVE)
   end
 
