@@ -28,6 +28,7 @@ class StickersController < ApplicationController
   def create
     @sticker = current_user.owner_stickers.build(sticker_params)
     if @sticker.save
+      NoticeMailer.notice_of_appointment(@sticker).deliver_now if @sticker.performer_id
       flash[:notice] = 'Стикер был успешно создан.'
       redirect_to stickers_path
     else
@@ -37,8 +38,7 @@ class StickersController < ApplicationController
 
   def update
     if @sticker.update(sticker_params)
-      NoticeMailer.sticker_closed(@sticker).deliver_now if @sticker.status == 'Выполнен'
-      NoticeMailer.notice_of_appointment(@sticker).deliver_now if @sticker.previous_changes[:performer_id] && @sticker.performer_id && @sticker.status == 'Назначен'
+      NoticeMailer.notice_of_appointment(@sticker).deliver_now if can_send_notifier?
       @sticker.destroy if @sticker.status == 'Закрыт'
       flash[:notice] = 'Стикер был успешно обновлен.'
       redirect_to stickers_path
@@ -48,23 +48,29 @@ class StickersController < ApplicationController
   end
 
   def destroy
-    if @sticker.destroy
+    if @sticker.is_destroyed?
       flash[:notice] = 'Стикер был успешно закрыт.'
       redirect_to stickers_path
     end
   end
 
   private
-   def sticker_params
-     params.require(:sticker).permit(:description, :performer_id, :status, :progress)
-   end
 
-   def find_sticker
-     @sticker = Sticker.find(params[:id])
-   end
+    def can_send_notifier?
+      @sticker.previous_changes[:performer_id] &&
+          @sticker.performer_id &&
+          @sticker.status == 'Назначен'
+    end
 
-   def prepare_performers
-     @performers = User.get_performers
-   end
+    def sticker_params
+      params.require(:sticker).permit(:description, :performer_id, :status, :progress)
+    end
 
+    def find_sticker
+      @sticker = Sticker.find(params[:id])
+    end
+
+    def prepare_performers
+      @performers = User.get_performers
+    end
 end
