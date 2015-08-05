@@ -11,12 +11,12 @@
               .col-xs-2
                 .btn-group
                   .btn-group-vertical{ data: { toggle: 'buttons-radio' } }
-                    = link_to 'Найденные', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: StaffRelation::FOUND, vacancy_id: @vacancy.id}
-                    = link_to 'Отобранные', '#',    class: 'btn btn-default candidates-for-vacancy', data: { status_name: StaffRelation::SELECTED, vacancy_id: @vacancy.id }
-                    = link_to 'Собеседование', '#', class: 'btn btn-default candidates-for-vacancy', data: { status_name: StaffRelation::INTERVIEW, vacancy_id: @vacancy.id }
-                    = link_to 'Утвержден', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: StaffRelation::APPROVED, vacancy_id: @vacancy.id }
-                    = link_to 'Не подходит', '#',   class: 'btn btn-default candidates-for-vacancy', data: { status_name: StaffRelation::NOT_SUITABLE, vacancy_id: @vacancy.id }
-                    = link_to 'Отказался', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: StaffRelation::REFUSED, vacancy_id: @vacancy.id }
+                    = link_to 'Найденные', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Найденные', vacancy_id: @vacancy.id}
+                    = link_to 'Отобранные', '#',    class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Отобранные', vacancy_id: @vacancy.id }
+                    = link_to 'Собеседование', '#', class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Собеседование', vacancy_id: @vacancy.id }
+                    = link_to 'Утвержден', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Утвержден', vacancy_id: @vacancy.id }
+                    = link_to 'Не подходит', '#',   class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Не подходит', vacancy_id: @vacancy.id }
+                    = link_to 'Отказался', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Отказался', vacancy_id: @vacancy.id }
               .col-xs-10
                 .panel-body
                   %table.table.table-bordered.table-hover#vacancy-candidates

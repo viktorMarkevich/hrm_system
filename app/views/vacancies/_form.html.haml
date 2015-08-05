@@ -28,7 +28,7 @@
         = f.label :salary_format, 'По договоренности'
       .form-group
         = f.label :region_id, 'Регион:'
-        = select_tag(:region,  options_for_select(Region::NAMES, @vacancy.region_name), class: 'form-control')
+        = select_tag(:region,  options_for_select(Region::REGIONS, @vacancy.region_name), class: 'form-control')
       .form-group
         = f.label :status, 'Статус:'
         = f.select(:status, options_for_select(Vacancy::STATUSES, @vacancy.status), {}, class: 'form-control')
