@@ -25,4 +25,11 @@ class Sticker < ActiveRecord::Base
     [:owner, :performer]
   end
 
+  def is_destroyed?
+    if self.performer_id && self.destroy
+      NoticeMailer.notice_of_appointment(self).deliver_now
+    else
+      self.destroy
+    end || false
+  end
 end
