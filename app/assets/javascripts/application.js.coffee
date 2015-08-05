@@ -14,3 +14,22 @@
 #= require jquery_ujs
 #= require twitter/bootstrap
 # require_tree .
+$(document).ready ->
+  if window.location.pathname.indexOf('events') > 0
+    $('.nav-pills').find('a[href*="'+window.location.pathname.split('/')[1]+'"]:not([id])').addClass 'active current'
+  else if window.location.pathname.indexOf('stickers') > 0
+    $('.nav-pills').find('a[href*="'+window.location.pathname.split('/')[1]+'"]').addClass 'active current'
+  else if window.location.pathname.indexOf('new') > 0
+    $('.nav-pills').find('a[href*="'+window.location.pathname.split('/')[1]+'/new"]').addClass 'active current'
+  else if window.location.pathname.indexOf('archives') < 0
+    $('.nav-pills').find('a[href*="'+window.location.pathname.split('/')[1]+'"]:not([id])').addClass 'active current'
+  else
+    $('.nav-pills').find('a[href*="'+window.location.pathname.split('/')[2]+'"]:not([id])').addClass 'active current'
+
+
+
+
+
+
+
+
