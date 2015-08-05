@@ -13,4 +13,20 @@ module ApplicationHelper
      на должность #{link_to Vacancy.last.name, vacancy_path(Vacancy.last)}".html_safe
   end
 
+  def return_status_label(sr)
+    case sr.status
+      when 'Найденные'
+        'default'
+      when 'Отобранные'
+        'primary'
+      when 'Собеседование'
+        'success'
+      when 'Утвержден'
+        'info'
+      when 'Не подходит'
+        'warning'
+      when 'Отказался'
+        'danger'
+    end
+  end
 end
