@@ -52,11 +52,12 @@
             .col-xs-5
               .row
                 .col-xs-12
-                  .panel
+                  .panel{ style: '-webkit-box-shadow: 8px 8px 6px -6px #999; -moz-box-shadow: 8px 8px 6px -6px #999; box-shadow: 8px 8px 6px -6px #999;'}
                     .panel-heading
                       .row.panel-title
                         .col-xs-12
-                          = 'Предстоящие события'
+                          %strong
+                            = 'Предстоящие события'
                     .panel-body
                       .row
                         .col-xs-12
@@ -70,11 +71,12 @@
                                     = return_upcoming_events(event)
               .row
                 .col-xs-12
-                  .panel
+                  .panel{ style: '-webkit-box-shadow: 8px 8px 6px -6px #999; -moz-box-shadow: 8px 8px 6px -6px #999; box-shadow: 8px 8px 6px -6px #999;'}
                     .panel-heading
                       .row.panel-title
                         .col-xs-12
-                          = 'Последние действия над вакансиями'
+                          %strong
+                            = 'Последние действия над вакансиями'
                     .panel-body
                       .row
                         .col-xs-12
@@ -83,12 +85,15 @@
                               -@staff_relations.each do |sr|
                                 %tr
                                   %td= link_to sr.vacancy.name, vacancy_path(sr.vacancy), id: 'vacancy-name'
+                                  %td= "кандидат #{link_to sr.candidate.name, candidate_path(sr.candidate.name)}".html_safe
                                   %td
                                     %span{ class: "label label-#{return_status_label(sr)}" }
                                       = sr.status
-                                  %td= sr.updated_at.strftime('%b %e %H:%M')
+                                  %td
+                                    .label.label-primary
+                                      = sr.updated_at.strftime('%b %e %H:%M')
             .col-xs-7
-              .panel.panel-default
+              .panel.panel-default{ style: '-webkit-box-shadow: 8px 8px 6px -6px #999; -moz-box-shadow: 8px 8px 6px -6px #999; box-shadow: 8px 8px 6px -6px #999;'}
                 .panel-body
                   = yield
         - else
