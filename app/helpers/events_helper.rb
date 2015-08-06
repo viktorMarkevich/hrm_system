@@ -1,5 +1,5 @@
 module EventsHelper
-  def default_td_classes
+  def default_td_classes(events)
     ->(start_date, current_calendar_date) {
       today = Time.zone.now.to_date
       td_class = ['day']
@@ -11,7 +11,9 @@ module EventsHelper
       td_class << 'next-month'    if start_date.month != current_calendar_date.month && current_calendar_date > start_date
       td_class << 'current-month' if start_date.month == current_calendar_date.month
       td_class << "wday-#{current_calendar_date.wday.to_s}"
-
+      events.each do |event|
+        td_class = ['day'],["wday-#{current_calendar_date.wday.to_s}"],['td-primary'] if event.starts_at.to_date == current_calendar_date
+      end
       { class: td_class.join(' ') }
     }
   end

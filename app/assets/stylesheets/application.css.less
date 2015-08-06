@@ -43,9 +43,10 @@ ul.nav.nav-pills > li > a.btn {
 }
 
 .calendar {
+  width: 700px;
   header {font-size: 30px};
   thead {background-color: lightblue;};
-  td { height: 100px; width: 14.28%; }
+  td { height: 100px; width: 100px; }
   .prev-month { background-color: #DDDDDD; }
   .next-month { background-color: #dff0d8; }
   .current-month { background-color: #f4f4f4; }
@@ -69,4 +70,50 @@ ul.nav.nav-pills > li > a.btn {
 .table_action {
   table-layout: fixed; /* Фиксированная ширина ячеек */
   background-color: #f4f4f4;
+}
+
+.event-badge{
+  background-color: #ffffff;
+  border-radius: 50px;
+  color: #428bca;
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  height: 35px;
+  line-height: 30px;
+  margin: 3px auto;
+  min-width: 10px;
+  padding: 3px 7px;
+  text-align: center;
+  white-space: nowrap;
+  width: 35px;
+}
+.td-primary{
+  background-color: #428bca ;
+  color: #ffffff;
+  .modal{
+    color: #212121;
+    table{
+      thead{
+        color: #fff;
+        background-color: #428bca;
+        font-size: 12px;
+      }
+      td{
+        height: auto;
+        width: auto;
+        line-height: 30px;
+        .label{
+          vertical-align: middle;
+        }
+        a{
+          text-decoration: none;
+        }
+      }
+
+    }
+  }
+}
+.event-badge:empty {
+  display: none;
 }
