@@ -1,4 +1,6 @@
 = stylesheet_link_tag 'stickers'
+= javascript_include_tag 'stickers'
+= javascript_include_tag 'charCount'
 .row
   .col-xs-3
     .btn-group.btn-block
@@ -9,6 +11,14 @@
       %ul.dropdown-menu.btn-block
         %li= link_to 'Добавить стикер', new_sticker_path
         %li= link_to 'Закрытые стикеры', archives_path(object_name: 'stickers')
+    -#= link_to '#', class: 'pull-right', id: 'sticker_dashboard_new_form' do
+    -#  %i.glyphicon.glyphicon-remove-circle
+    -#= form_for @sticker do |f|
+    -#  .sticker_description
+    -#    = f.label 'Добавь текст:', style: 'color: #777777; font-size: 12px;', id: 'my_counter'
+    -#    = f.text_field :description, class: 'form-control'
+    -#  = f.label 'Назначить на:', style: 'color: #777777; font-size: 12px;'
+    -#  = f.select(:performer_id, [[]] + @performers, {}, class: 'form-control')
   = render partial: 'stickers/sticker', collection: @stickers
 .row
   .col-xs-12
