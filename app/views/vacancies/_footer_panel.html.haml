@@ -49,11 +49,28 @@
         .row
           .col-xs-6
             #candidates-multiselect{data: { vacancyid: @vacancy.id } }
-              - @passive_candidates.each do |candidate|
-                .item
-                  %label
-                    = check_box_tag "mark-as-found-candidate", candidate.id
-                    = candidate.name
+              %table.table.table-bordered
+                %thead
+                  %tr
+                    %th
+                    %th Имя
+                    %th Зарплата
+                    %th Должность
+                    %th Примечание
+                %tbody
+                  - @passive_candidates.each do |candidate|
+                    %tr
+                      %td= check_box_tag 'mark-as-found-candidate', candidate.id
+                      %td= candidate.name
+                      %td= display_field_value_for(candidate.salary)
+                      %td= candidate.desired_position
+                      %td
+            -##candidates-multiselect{data: { vacancyid: @vacancy.id } }
+            -#  - @passive_candidates.each do |candidate|
+            -#    .item
+            -#      %label
+            -#        = check_box_tag "mark-as-found-candidate", candidate.id
+            -#        = candidate.name
       .modal-footer
         %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
         %button.btn.btn-primary#btn-apply{ type: 'button' } Выбрать
