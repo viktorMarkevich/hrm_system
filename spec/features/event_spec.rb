@@ -28,36 +28,10 @@ describe 'Managing events', type: :feature do
     expect(page).to have_content 'Событие успешно создано.'
   end
 
-  scenario 'edits event' do
+  scenario 'event modal check' do
     visit '/events'
-    click_link 'Редактировать'
-    expect(page).to have_content 'Редактировать событие'
-  end
-
-  scenario 'deletes event' do
-    visit '/events'
-    delete_link = find_link 'Удалить'
-    expect(delete_link['data-confirm']).to eq 'Вы уверены?'
-  end
-
-  scenario 'goes to events#index page from events#edit page' do
-    visit '/events'
-    click_link 'Редактировать'
-    click_link 'Назад'
-    expect(page).to have_content 'Календарь'
-  end
-
-  scenario 'goes to stickers#show page' do
-    visit '/events'
-    click_link 'Просмотреть'
-    expect(page).to have_content 'Начало события'
-  end
-
-  scenario 'goes to events#index page from events#show page' do
-    visit '/events'
-    click_link 'Просмотреть'
-    click_link 'Назад'
-    expect(page).to have_content 'Календарь'
+    page.should_not have_css("#myModal")
+    page.should_not have_content("#{event.starts_at}")
   end
 
 end

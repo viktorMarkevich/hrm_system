@@ -10,10 +10,7 @@ class Vacancy < ActiveRecord::Base
   validates :name, :region_id, :status, :user_id, presence: true
   validates :salary, numericality: { only_integer: true, greater_than: 0 }, unless: 'salary_format == "По договоренности"'
 
-  ACTIVE = 'Активная'
-  PASSIVE = 'Пассивная'
-  CLOSED = 'Закрытая'
-  STATUSES = [ ACTIVE, PASSIVE, CLOSED ]
+  STATUSES = %w(Открыта В\ работе Закрыта)
 
   def candidates_with_status(status)
     Candidate.select(%{ "candidates".* })

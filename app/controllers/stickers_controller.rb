@@ -65,7 +65,7 @@ class StickersController < ApplicationController
     end
 
     def sticker_params
-      params.require(:sticker).permit(:description, :performer_id, :status, :progress)
+      params.require(:sticker).permit(:description, :performer_id, :status)
     end
 
     def find_sticker

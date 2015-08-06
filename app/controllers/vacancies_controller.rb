@@ -16,7 +16,7 @@ class VacanciesController < ApplicationController
 
   def show
     @candidates_with_found_status = @vacancy.candidates_with_status('Найденные')
-    @passive_candidates = Candidate.with_status(Candidate::PASSIVE)
+    @passive_candidates = Candidate.with_status('Пассивен')
   end
 
   def edit
@@ -56,7 +56,7 @@ class VacanciesController < ApplicationController
   def change_candidate_status
     staff_relation = StaffRelation.find_by_vacancy_id_and_candidate_id(params[:id],
                                                                        params[:candidate_id])
-    unless params[:status] == StaffRelation::NEUTRAL
+    unless params[:status] == 'Нейтральный'
       if staff_relation.update(status: params[:status])
         render json: { status: :ok }
       else
@@ -65,17 +65,17 @@ class VacanciesController < ApplicationController
     else
       passive_candidate = Candidate.find(params[:candidate_id])
       staff_relation.delete
-      passive_candidate.update(status: Candidate::PASSIVE)
+      passive_candidate.update(status: 'Пассивен')
       render json: { status: :ok, candidate: passive_candidate }
     end
   end
 
   def mark_candidates_as_found
-    found_status = StaffRelation::FOUND
+    found_status = 'Найденные'
     @marked_as_found_candidates = Candidate.where('id IN (?)', params[:candidates_ids])
     vacancy = Vacancy.find(params[:id])
     @marked_as_found_candidates.each do |candidate|
-      candidate.update(status: Candidate::IS_WORKING)
+      candidate.update(status: 'В работе')
       StaffRelation.create(candidate_id: candidate.id, vacancy_id: vacancy.id, status: found_status)
     end
 
