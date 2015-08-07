@@ -30,8 +30,8 @@ describe 'Managing events', type: :feature do
 
   scenario 'event modal check' do
     visit '/events'
-    page.should_not have_css("#myModal")
-    page.should_not have_content("#{event.starts_at}")
+    expect(page).to have_css('#myModalLabel')
+    expect(page).not_to have_content("#{event.starts_at}")
   end
 
 end

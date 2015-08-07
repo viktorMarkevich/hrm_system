@@ -50,43 +50,48 @@
         - if controller.controller_name == 'stickers' || controller.controller_name == 'archives'
           .row
             .col-xs-5
-              .panel.panel-default
-                .panel-body
-                  .row
-                    .col-xs-12
-                      .panel.panel-primary
-                        .panel-heading
-                          .row.panel-title
-                            .col-xs-12
-                              = 'Предстоящие события'
-                        .panel-body
-                          .row
-                            .col-xs-12
+              .row
+                .col-xs-12
+                  .panel.add-shadows
+                    .panel-heading
+                      .row.panel-title
+                        .col-xs-12
+                          = 'Предстоящие события'
+                    .panel-body
+                      .row
+                        .col-xs-12
+                          %table.table.table-striped
+                            %tbody
                               -@events.each do |event|
-                                %table.table.table-bordered.table_action
-                                  %tbody
-                                    %tr
-                                      %td= event.starts_at.strftime('%b %e %H:%M')
-                                      %td= event.description
-                  .row
-                    .col-xs-12
-                      .panel.panel-primary
-                        .panel-heading
-                          .row.panel-title
-                            .col-xs-12
-                              = 'Последние действия над вакансиями'
-                        .panel-body
-                          .row
-                            .col-xs-12
-                              -@vacancies.each do |vacancy|
-                                %table.table.table-bordered.table_action
-                                  %tbody
-                                    %tr
-                                      %td= link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
-                                      %td= vacancy.status
-                                      %td= vacancy.updated_at.strftime('%b %e %H:%M')
+                                %tr
+                                  %td
+                                    %span.label.label-default
+                                      Интервью
+                                    = return_upcoming_events(event)
+              .row
+                .col-xs-12
+                  .panel.add-shadows
+                    .panel-heading
+                      .row.panel-title
+                        .col-xs-12
+                          = 'Последние действия над вакансиями'
+                    .panel-body
+                      .row
+                        .col-xs-12
+                          %table.table.table-striped
+                            %tbody
+                              -@staff_relations.each do |sr|
+                                %tr
+                                  %td= link_to sr.vacancy.name, vacancy_path(sr.vacancy), id: 'vacancy-name'
+                                  %td= "кандидат #{link_to sr.candidate.name, candidate_path(sr.candidate.name)}".html_safe
+                                  %td
+                                    %span{ class: "label label-#{return_status_label(sr)}" }
+                                      = sr.status
+                                  %td
+                                    .label.label-primary
+                                      = sr.updated_at.strftime('%e %b %H:%M')
             .col-xs-7
-              .panel.panel-default
+              .panel.panel-default.add-shadows
                 .panel-body
                   = yield
         - else

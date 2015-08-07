@@ -7,26 +7,29 @@ describe 'Managing stickers with Директор', type: :feature do
   let(:sticker) { create(:sticker) }
   let(:event) { create(:event) }
   let(:vacancy) { create(:vacancy) }
+  let(:candidate) { create(:candidate) }
+  let(:staff_relation) { create(:staff_relation, vacancy_id: vacancy.id, candidate_id: candidate.id) }
 
   before do
+    candidate
+    vacancy
+    staff_relation
     sticker
     event
     sign_in_as(user, nil)
   end
 
   scenario 'show event for sticker index page' do
-    event
     visit '/stickers'
-    expect(page).to have_content event.description
-    expect(page).to have_content event.starts_at.strftime('%b %e %H:%M')
+    expect(page).to have_content event.starts_at.strftime('%e %b %H:%M')
   end
 
   scenario 'show vacancy action for sticker index page' do
-    vacancy
     visit '/stickers'
-    expect(page).to have_content vacancy.name
-    expect(page).to have_content vacancy.status
-    expect(page).to have_content vacancy.updated_at.strftime('%b %e %H:%M')
+    expect(page).to have_content staff_relation.vacancy.name
+    expect(page).to have_content staff_relation.candidate.name
+    expect(page).to have_content staff_relation.status
+    expect(page).to have_content staff_relation.updated_at.strftime('%e %b %H:%M')
   end
 
   scenario 'goes on new sticker page' do
