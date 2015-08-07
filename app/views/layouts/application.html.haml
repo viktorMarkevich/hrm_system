@@ -52,7 +52,7 @@
             .col-xs-5
               .row
                 .col-xs-12
-                  .panel{ style: '-webkit-box-shadow: 8px 8px 6px -6px #999; -moz-box-shadow: 8px 8px 6px -6px #999; box-shadow: 8px 8px 6px -6px #999;'}
+                  .panel.add-shadows
                     .panel-heading
                       .row.panel-title
                         .col-xs-12
@@ -70,7 +70,7 @@
                                     = return_upcoming_events(event)
               .row
                 .col-xs-12
-                  .panel{ style: '-webkit-box-shadow: 8px 8px 6px -6px #999; -moz-box-shadow: 8px 8px 6px -6px #999; box-shadow: 8px 8px 6px -6px #999;'}
+                  .panel.add-shadows
                     .panel-heading
                       .row.panel-title
                         .col-xs-12
@@ -91,7 +91,7 @@
                                     .label.label-primary
                                       = sr.updated_at.strftime('%e %b %H:%M')
             .col-xs-7
-              .panel.panel-default{ style: '-webkit-box-shadow: 8px 8px 6px -6px #999; -moz-box-shadow: 8px 8px 6px -6px #999; box-shadow: 8px 8px 6px -6px #999;'}
+              .panel.panel-default.add-shadows
                 .panel-body
                   = yield
         - else
