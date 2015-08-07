@@ -10,14 +10,17 @@ setCandidatesTableCaptionByStatus = (status) ->
   $('#vacancy-candidates caption').text('Кандидаты со статусом "' + status + '"')
 
 addPassiveCandidateToList = (candidate) ->
-  $('#candidates-multiselect').append(
-    "<div class = \"item\">" +
-      "<label>" +
-        "<input type=\"checkbox\"  name=\"mark-as-found-candidate\" id=\"mark-as-found-candidate\" value=\"" + candidate.id + "\">" +
-        " " + candidate.name +
-      "</label>" +
-    "</div>"
-  )
+#  $('table.table.table-bordered.candidate').append(
+#    #"<div class = \"item\">" +
+#      "<td>" +
+#        "<input type=\"checkbox\"  name=\"mark-as-found-candidate\" id=\"mark-as-found-candidate\" value=\"" + candidate.id + "\">" +
+#        " " + candidate.name +
+#      "</td>"
+#      "<td>" +
+#        " " + candidate.salary +
+#      "</td>"
+#    #"</div>"
+#  )
 
 buildCandidatesTable = (data) ->
   $candidatesTable = $('#vacancy-candidates tbody')

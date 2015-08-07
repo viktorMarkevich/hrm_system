@@ -46,25 +46,28 @@
             &times;
         %h4.modal-title Кандидаты
       .modal-body
-        .row
-          .col-xs-6
-            #candidates-multiselect{data: { vacancyid: @vacancy.id } }
-              %table.table.table-bordered
-                %thead
+        #candidates-multiselect{data: { vacancyid: @vacancy.id } }
+          .panel.panel-primary
+            %table.table.table-bordered
+              %thead.td-primary
+                %tr
+                  %th Имя
+                  %th Зарплата
+                  %th Должность
+                  %th Примечание
+              %tbody
+                - @passive_candidates.each do |candidate|
                   %tr
-                    %th
-                    %th Имя
-                    %th Зарплата
-                    %th Должность
-                    %th Примечание
-                %tbody
-                  - @passive_candidates.each do |candidate|
-                    %tr
-                      %td= check_box_tag 'mark-as-found-candidate', candidate.id
-                      %td= candidate.name
-                      %td= display_field_value_for(candidate.salary)
-                      %td= candidate.desired_position
-                      %td
+                    %td
+                      = check_box_tag 'mark-as-found-candidate', candidate.id
+                      = candidate.name
+                    %td= candidate.salary
+                    %td= candidate.desired_position
+                    %td
+                      - if @passive_candidates == StaffRelation::STATUSES
+                        Имеет статус "#{StaffRelation::STATUSES candidate.status_for_vacancy(@vacancy)}" для вакансии "#{@vacancy.name}"
+                      - else
+                        Нейтрален
             -##candidates-multiselect{data: { vacancyid: @vacancy.id } }
             -#  - @passive_candidates.each do |candidate|
             -#    .item
