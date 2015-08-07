@@ -9,9 +9,9 @@ module ApplicationHelper
   end
 
   def return_upcoming_events(event)
-    "&nbsp; c #{link_to Candidate.first.name, candidate_path(Candidate.first)} на
+    "&nbsp; c #{link_to 'Ланистер', candidate_path('#')} на
      <div class= 'label label-primary'>#{event.starts_at.strftime('%e %b %H:%M')}</div>
-     на должность #{link_to Vacancy.last.name, vacancy_path(Vacancy.last)}".html_safe
+     на должность #{link_to 'Рубист', vacancy_path('#')}".html_safe
   end
 
   def return_status_label(sr)

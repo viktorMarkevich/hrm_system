@@ -11,8 +11,6 @@ class StickersController < ApplicationController
   before_filter :prepare_performers, only: [:new, :edit, :create]
 
   def index
-    @sticker = Sticker.new
-    @performers = User.get_performers
     @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(8)
     @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
   end
