@@ -4,8 +4,8 @@
     = link_to 'Вернуться назад', stickers_path, class: 'btn btn-default btn-block'
   - stickers.each do |sticker|
     .col-xs-3
-      .panel.panel-primary
-        .panel-heading
+      .panel.panel-default
+        .panel-heading{ style: "background-color: #{sticker.bg_color}" }
           .row
             .col-xs-6.panel-title
               = sticker.deleted_at.strftime('%F')
@@ -13,7 +13,7 @@
               = link_to restore_object_path(object_name: sticker.class.to_s, id: sticker),
                         method: :delete, class: 'glyph_destroy_link' do
                 %i.glyphicon.glyphicon-open
-        .panel-body
+        .panel-body{ style: "background-color: #{sticker.bg_color}" }
           .row
             .col-xs-12.sticker-desc
               = sticker.description
