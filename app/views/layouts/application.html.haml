@@ -50,24 +50,25 @@
         - if controller.controller_name == 'stickers' || controller.controller_name == 'archives'
           .row
             .col-xs-5
-              .row
-                .col-xs-12
-                  .panel.add-shadows
-                    .panel-heading
-                      .row.panel-title
-                        .col-xs-12
-                          = 'Предстоящие события'
-                    .panel-body
-                      .row
-                        .col-xs-12
-                          %table.table.table-striped
-                            %tbody
-                              -@events.each do |event|
-                                %tr
-                                  %td
-                                    %span.label.label-default
-                                      Интервью
-                                    = return_upcoming_events(event)
+              - if @events.present?
+                .row
+                  .col-xs-12
+                    .panel.add-shadows
+                      .panel-heading
+                        .row.panel-title
+                          .col-xs-12
+                            = 'Предстоящие события'
+                      .panel-body
+                        .row
+                          .col-xs-12
+                            %table.table.table-striped
+                              %tbody
+                                - @events.each do |event|
+                                  %tr
+                                    %td
+                                      %span.label.label-default
+                                        Интервью
+                                      = return_upcoming_events(event)
               .row
                 .col-xs-12
                   .panel.add-shadows
@@ -80,7 +81,7 @@
                         .col-xs-12
                           %table.table.table-striped
                             %tbody
-                              -@staff_relations.each do |sr|
+                              - @staff_relations.each do |sr|
                                 %tr
                                   %td= link_to sr.vacancy.name, vacancy_path(sr.vacancy), id: 'vacancy-name'
                                   %td= "кандидат #{link_to sr.candidate.name, candidate_path(sr.candidate.name)}".html_safe

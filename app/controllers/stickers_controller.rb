@@ -11,7 +11,7 @@ class StickersController < ApplicationController
   before_filter :prepare_performers, only: [:new, :edit, :create]
 
   def index
-    @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(8)
+    @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(11)
     @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
   end
 
@@ -26,7 +26,7 @@ class StickersController < ApplicationController
   end
 
   def create
-    @sticker = current_user.owner_stickers.build(sticker_params)
+    @sticker = current_user.owner_stickers.build(sticker_params.merge(bg_color: Sticker::BG_COLOR.sample))
     if @sticker.save
       NoticeMailer.notice_of_appointment(@sticker).deliver_now if @sticker.performer_id
       flash[:notice] = 'Стикер был успешно создан.'
