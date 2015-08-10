@@ -10,17 +10,17 @@ setCandidatesTableCaptionByStatus = (status) ->
   $('#vacancy-candidates caption').text('Кандидаты со статусом "' + status + '"')
 
 addPassiveCandidateToList = (candidate) ->
-#  $('table.table.table-bordered.candidate').append(
-#    #"<div class = \"item\">" +
-#      "<td>" +
-#        "<input type=\"checkbox\"  name=\"mark-as-found-candidate\" id=\"mark-as-found-candidate\" value=\"" + candidate.id + "\">" +
-#        " " + candidate.name +
-#      "</td>"
-#      "<td>" +
-#        " " + candidate.salary +
-#      "</td>"
-#    #"</div>"
-#  )
+  $('#candidates-multiselect tbody').append(
+    "<tr>" +
+      "<td>" +
+        "<input type=\"checkbox\"  name=\"mark-as-found-candidate\" id=\"mark-as-found-candidate\" value=\"" + candidate.id + "\">" +
+        " " + candidate.name +
+      "</td>" +
+      "<td>" + candidate.salary + "</td>" +
+      "<td>" + candidate.desired_position + "</td>" +
+      "<td>" + candidate.salary + "</td>" +
+    "</tr>"
+  )
 
 buildCandidatesTable = (data) ->
   $candidatesTable = $('#vacancy-candidates tbody')
@@ -76,7 +76,7 @@ $(document).ready ->
       $checked_boxes = $('input[name=\"mark-as-found-candidate\"]:checked')
       for chbox in $checked_boxes
         addedToVacancyCandidatesIds.push $(chbox).val()
-        $(chbox).parent().remove()
+        $(chbox).closest('tr').remove()
       vacancy_id = $('#candidates-multiselect').attr('data-vacancyid')
       $.ajax
         url: "/vacancies/#{vacancy_id}/mark_candidates_as_found"

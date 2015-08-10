@@ -64,16 +64,10 @@
                     %td= candidate.salary
                     %td= candidate.desired_position
                     %td
-                      - if @passive_candidates == StaffRelation::STATUSES
-                        Имеет статус "#{StaffRelation::STATUSES candidate.status_for_vacancy(@vacancy)}" для вакансии "#{@vacancy.name}"
+                      - if @passive_candidates != Candidate.with_status('Пассивен')
+                        Имеет статус #{} для вакансии '#{@vacancy.name}'
                       - else
                         Нейтрален
-            -##candidates-multiselect{data: { vacancyid: @vacancy.id } }
-            -#  - @passive_candidates.each do |candidate|
-            -#    .item
-            -#      %label
-            -#        = check_box_tag "mark-as-found-candidate", candidate.id
-            -#        = candidate.name
       .modal-footer
         %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
         %button.btn.btn-primary#btn-apply{ type: 'button' } Выбрать
