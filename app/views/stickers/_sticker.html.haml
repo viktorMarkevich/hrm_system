@@ -13,7 +13,7 @@
               %i.glyphicon.glyphicon-pencil
             = link_to sticker_path(sticker), method: :delete, class: 'glyph_destroy_link' do
               %i.glyphicon.glyphicon-remove-circle
-    .panel-body
+    .panel-body{ style: "background-color: #{sticker.bg_color}" }
       .row
         .col-xs-12.sticker-desc
           = sticker.description

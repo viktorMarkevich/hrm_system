@@ -6,6 +6,10 @@ class Sticker < ActiveRecord::Base
   MANAGER_STATUS = %w(В\ процессе Отложен Выполнен)
   DIRECTOR_STATUS = %w(Отложен Закрыт)
   STATUS = %w(Назначен Отложен Закрыт)
+  BG_COLOR = %w(#FF3300 #FF66FF #6666FF #00CCFF #00CC66 #009900
+                #99CC00 #FFFF66 #FF9933 #FF9999 #CC6699 #CCCC00
+                #FF3333 #0033CC #339966 #9900CC #D63385 #CC66FF)
+
 
   belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
   belongs_to :performer, class_name: 'User', foreign_key: 'performer_id'
