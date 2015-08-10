@@ -17,6 +17,10 @@ class VacanciesController < ApplicationController
   def show
     @candidates_with_found_status = @vacancy.candidates_with_status('Найденные')
     @passive_candidates = Candidate.with_status('Пассивен')
+    # @staff_relation = Candidate.includes(:staff_relations)
+    @candidates_with_status_for_vacancy = Candidate.select('candidates.*, staff_relations.status as st_status, vacancies.name as v_name')
+                                              .joins(:staff_relations, :vacancies)
+
   end
 
   def edit
@@ -54,8 +58,9 @@ class VacanciesController < ApplicationController
   end
 
   def change_candidate_status
-    staff_relation = StaffRelation.find_by_vacancy_id_and_candidate_id(params[:id],
-                                                                       params[:candidate_id])
+    #FIXME: Не работает выборка в контроллере! В консоли работает!
+    staff_relation = StaffRelation.find_by_vacancy_id_and_candidate_id(params[:id],params[:candidate_id])
+
     unless params[:status] == 'Нейтральный'
       if staff_relation.update(status: params[:status])
         render json: { status: :ok }
@@ -64,7 +69,8 @@ class VacanciesController < ApplicationController
       end
     else
       passive_candidate = Candidate.find(params[:candidate_id])
-      staff_relation.delete
+      p staff_relation
+      staff_relation.destroy!
       passive_candidate.update(status: 'Пассивен')
       render json: { status: :ok, candidate: passive_candidate }
     end

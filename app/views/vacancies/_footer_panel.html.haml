@@ -38,7 +38,7 @@
                           %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(@vacancy)), class: 'status-picker', data: { vacancyid: @vacancy.id, candidateid: candidate.id }, :include_blank => 'Перевести в статус' )
 
 .modal.fade#myModal
-  .modal-dialog
+  .modal-dialog.modal-lg
     .modal-content
       .modal-header
         %button.close{ "aria-label" => "close", "data-dismiss" => "modal", type:'button' }
@@ -53,7 +53,6 @@
                 %tr
                   %th Имя
                   %th Зарплата
-                  %th Должность
                   %th Примечание
               %tbody
                 - @passive_candidates.each do |candidate|
@@ -62,10 +61,10 @@
                       = check_box_tag 'mark-as-found-candidate', candidate.id
                       = candidate.name
                     %td= candidate.salary
-                    %td= candidate.desired_position
                     %td
-                      - if @passive_candidates != Candidate.with_status('Пассивен')
-                        Имеет статус #{} для вакансии '#{@vacancy.name}'
+                      - if @candidates_with_status_for_vacancy.include? candidate
+                        - c = @candidates_with_status_for_vacancy.find candidate
+                        = "Имеет статус \"#{c.st_status}\" для вакансии \"#{c.v_name}\""
                       - else
                         Нейтрален
       .modal-footer
