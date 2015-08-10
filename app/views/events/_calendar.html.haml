@@ -1,5 +1,11 @@
 .calendar
-  = link_to 'Создать новое событие', new_event_path, class: 'btn btn-success pull-right'
+  -#= link_to 'Создать новое событие', new_event_path, class: 'btn btn-success pull-right'
+  = link_to 'Создать новое событие', '#', class: 'btn btn-success pull-right',
+             'data-toggle' => 'modal', 'data-target' => '#modal-new-event'
+
+  .modal.fade{ 'aria-labelledby' => 'modalNewEventLabel', :role => 'dialog', :tabindex => '-2', :id => 'modal-new-event' }
+    = render partial: 'form', locals: { event: Event.new, id: '#modalNewEventLabel', title: 'Добавить сообщение' }
+
   = month_calendar events: events, table: {class: 'table table-bordered'}, tr: {class: 'calendar-row'}, td: default_td_classes(events), day_names: 'date.day_names' do |date, events|
     = date.day
     %a.event-badge{href: '#', "data-target" => "#myModal#{date}", "data-toggle" => "modal"}= events.count if !events.empty?
@@ -33,5 +39,18 @@
                         %span.label.label-primary= event.starts_at.strftime('%H:%M')
                         = event.starts_at.strftime('%d/%m/%Y')
                       %td
-                        = link_to '', edit_event_path(event), class: "glyphicon glyphicon-edit"
-                        = link_to '', event, method: :delete, data: { confirm: 'Вы уверены?' }, class: "glyphicon glyphicon-remove"
+                        = link_to '', '#', class: 'glyphicon glyphicon-edit',
+                                  'data-toggle' => 'modal', 'data-target' => "#modal-edit-#{event.id}"
+                        = link_to '', event, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
+
+                    .modal.fade{ 'aria-labelledby' => "modalEditEventLabel-#{event.id}", :role => 'dialog', :tabindex => '-3', :id => "modal-edit-#{event.id}" }
+                      = render partial: 'form', locals: { event: Event.find(event.id), id: "modalEditEventLabel-#{event.id}" }
+
+-#:javascript
+-#  $(document).ready(function(){
+-#    $('.glyphicon-edit').on('click', function() {
+-#    var modal = $(this).data('close-event-list');
+-#    $(modal).addClass('hide');
+-#    $('.modal-backdrop').addClass('hide');
+-#    });
+-#  });
