@@ -16,9 +16,9 @@ class VacanciesController < ApplicationController
 
   def show
     @candidates_with_found_status = @vacancy.candidates_with_status('Найденные')
-    @passive_candidates = Candidate.with_status('Пассивен')
-    # @staff_relation = Candidate.includes(:staff_relations)
-    @candidates_with_status_for_vacancy = Candidate.select('candidates.*, staff_relations.status as st_status, vacancies.name as v_name')
+    # @passive_candidates = Candidate.with_status('Пассивен')
+    @all_candidates = Candidate.all
+    @candidates_status_for_vacancy = Candidate.select('candidates.*, staff_relations.status as st_status, vacancies.name as v_name')
                                               .joins(:staff_relations, :vacancies)
 
   end
@@ -69,8 +69,7 @@ class VacanciesController < ApplicationController
       end
     else
       passive_candidate = Candidate.find(params[:candidate_id])
-      p staff_relation
-      staff_relation.destroy!
+      staff_relation.delete
       passive_candidate.update(status: 'Пассивен')
       render json: { status: :ok, candidate: passive_candidate }
     end

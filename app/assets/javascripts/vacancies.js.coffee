@@ -17,7 +17,7 @@ addPassiveCandidateToList = (candidate) ->
         " " + candidate.name +
       "</td>" +
       "<td>" + candidate.salary + "</td>" +
-      "<td>" +  + "</td>" +
+      "<td>" + 'Нейтрален' + "</td>" +
     "</tr>"
   )
 

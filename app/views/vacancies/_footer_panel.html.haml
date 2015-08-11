@@ -51,19 +51,21 @@
             %table.table.table-bordered
               %thead.td-primary
                 %tr
+                  %th id
                   %th Имя
                   %th Зарплата
                   %th Примечание
               %tbody
-                - @passive_candidates.each do |candidate|
+                - @all_candidates.each do |candidate|
                   %tr
+                    %td= candidate.id
                     %td
                       = check_box_tag 'mark-as-found-candidate', candidate.id
                       = candidate.name
                     %td= candidate.salary
                     %td
-                      - if @candidates_with_status_for_vacancy.include? candidate
-                        - c = @candidates_with_status_for_vacancy.find candidate
+                      - if @candidates_status_for_vacancy.include? candidate
+                        - c = @candidates_status_for_vacancy.find candidate
                         = "Имеет статус \"#{c.st_status}\" для вакансии \"#{c.v_name}\""
                       - else
                         Нейтрален
