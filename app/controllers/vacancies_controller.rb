@@ -16,11 +16,7 @@ class VacanciesController < ApplicationController
 
   def show
     @candidates_with_found_status = @vacancy.candidates_with_status('Найденные')
-    # @passive_candidates = Candidate.with_status('Пассивен')
-    @all_candidates = Candidate.all
-    @candidates_status_for_vacancy = Candidate.select('candidates.*, staff_relations.status as st_status, vacancies.name as v_name')
-                                              .joins(:staff_relations, :vacancies)
-
+    @candidates = Candidate.includes(:staff_relations)
   end
 
   def edit
@@ -68,10 +64,13 @@ class VacanciesController < ApplicationController
         render json: { status: :unprocessable_entity }
       end
     else
-      passive_candidate = Candidate.find(params[:candidate_id])
-      staff_relation.delete
-      passive_candidate.update(status: 'Пассивен')
-      render json: { status: :ok, candidate: passive_candidate }
+      candidate = Candidate.find(params[:candidate_id])
+      if staff_relation.delete
+        if candidate.staff_relations == 0
+          candidate.update(status: 'Пассивен')
+        end
+      end
+      render json: { status: :ok, candidate: candidate }
     end
   end
 

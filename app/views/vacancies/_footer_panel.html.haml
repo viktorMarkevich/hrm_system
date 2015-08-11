@@ -56,7 +56,7 @@
                   %th Зарплата
                   %th Примечание
               %tbody
-                - @all_candidates.each do |candidate|
+                - @candidates.each do |candidate|
                   %tr
                     %td= candidate.id
                     %td
@@ -64,11 +64,12 @@
                       = candidate.name
                     %td= candidate.salary
                     %td
-                      - if @candidates_status_for_vacancy.include? candidate
-                        - c = @candidates_status_for_vacancy.find candidate
-                        = "Имеет статус \"#{c.st_status}\" для вакансии \"#{c.v_name}\""
+                      - if candidate.is_passive?
+                        = "Имеет статус \"#{candidate.status}\""
                       - else
-                        Нейтрален
+                        - candidate.staff_relations.each do |sr|
+                          = "Имеет статус \"#{sr.status}\" для вакансии \"#{sr.vacancy.name}\""
+                          %br
       .modal-footer
         %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
         %button.btn.btn-primary#btn-apply{ type: 'button' } Выбрать
