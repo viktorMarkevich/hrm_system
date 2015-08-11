@@ -1,7 +1,8 @@
-.container-fluid
+.container-fluid#index-mf
   .row
     .panel.panel-success
       .panel-heading.panel-title
         Календарь
       .panel-body
-        = render partial: 'calendar', locals: { events: @events }
+        .calendar
+          = render partial: 'calendar', locals: { events: @events }

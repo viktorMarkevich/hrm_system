@@ -1,7 +1,5 @@
 class EventsController < ApplicationController
 
-  # respond_to :html, :js
-
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -22,24 +20,13 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     respond_to do |format|
       if @event.save
-        # format.html { redirect_to events_path, notice: 'Событие успешно создано.' }
-        format.json { head :no_content }
+        @events = Event.order(starts_at: :asc)
         format.js
       else
         format.json { render json: @event.errors.full_messages,
                              status: :unprocessable_entity }
       end
     end
-      # if @event.save
-      #   # format.html { redirect_to @events, notice: 'Событие успешно создано.' }
-      #   # format.json { render :show, status: :created, location: @event }
-      #   redirect_to events_path, notice: 'Событие успешно создано.'
-      # else
-      #   render :new
-      #   # format.html { render :new }
-      #   # format.json { render json: @event.errors, status: :unprocessable_entity }
-      # end
-    # end
   end
 
   def update
