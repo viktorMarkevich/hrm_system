@@ -26,6 +26,18 @@ $(document).ready ->
   else
     $('.nav-pills').find('a[href*="'+window.location.pathname.split('/')[2]+'"]:not([id])').addClass 'active current'
 
+$(document).ajaxError (event, xhr, options, exc) ->
+  errors = JSON.parse(xhr.responseText)
+  er = '<ul>'
+  i = 0
+  while i < errors.length
+    list = errors[i]
+    er += '<li>' + list + '</li>'
+    i++
+  er += '</ul>'
+  $('#error_explanation').html er
+  return
+
 
 
 

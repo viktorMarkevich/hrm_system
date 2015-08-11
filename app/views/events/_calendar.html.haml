@@ -1,12 +1,13 @@
 .calendar
-  -#= link_to 'Создать новое событие', new_event_path, class: 'btn btn-success pull-right'
-  = link_to 'Создать новое событие', '#', class: 'btn btn-success pull-right',
-             'data-toggle' => 'modal', 'data-target' => '#modal-new-event'
+  = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
+  .new-event
 
-  .modal.fade{ 'aria-labelledby' => 'modalNewEventLabel', :role => 'dialog', :tabindex => '-2', :id => 'modal-new-event' }
-    = render partial: 'new', locals: { event: Event.new, id: '#modalNewEventLabel', title: 'Добавить сообщение' }
+  = render 'dialog'
 
-  = month_calendar events: events, table: {class: 'table table-bordered'}, tr: {class: 'calendar-row'}, td: default_td_classes(events), day_names: 'date.day_names' do |date, events|
+  = month_calendar events: events, table: { class: 'table table-bordered' },
+                                   tr: { class: 'calendar-row' },
+                                   td: default_td_classes(events),
+                                   day_names: 'date.day_names' do |date, events|
     = date.day
     %a.event-badge{href: '#', "data-target" => "#myModal#{date}", "data-toggle" => "modal"}= events.count if !events.empty?
 
