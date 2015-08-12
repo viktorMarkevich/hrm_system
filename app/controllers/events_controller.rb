@@ -21,6 +21,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.save
         @events = Event.order(starts_at: :asc)
+        format.json { head :no_content }
         format.js
       else
         format.json { render json: @event.errors.full_messages,

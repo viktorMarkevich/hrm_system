@@ -1,5 +1,5 @@
 = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
-.new-event
+.new_event
 
 = render 'dialog'
 
@@ -8,16 +8,16 @@
                                  td: default_td_classes(events),
                                  day_names: 'date.day_names' do |date, events|
   = date.day
-  %a.event-badge{href: '#', "data-target" => "#myModal#{date}", "data-toggle" => "modal"}= events.count if !events.empty?
+  %a.event-badge{ href: '#', 'data-target' => "#myModal#{date}", 'data-toggle' => 'modal' }= events.count if !events.empty?
 
   / Modal
-  .modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1", :id => "myModal#{date}"}
-    .modal-dialog{:role => "document"}
+  .modal.fade{ 'aria-labelledby' => 'myModalLabel', role: 'dialog', tabindex: '-1', id: "myModal#{date}" }
+    .modal-dialog{ role: 'document' }
       .modal-content
         .modal-header
-          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-            %span{"aria-hidden" => "true"} ×
-          %h4#myModalLabel.modal-title= date.strftime("События на %m/%d/%Y")
+          %button.close{ 'aria-label' => 'Close', 'data-dismiss' => 'modal', type: 'button' }
+            %span{ 'aria-hidden' => 'true' } ×
+          %h4#myModalLabel.modal-title= date.strftime('События на %m/%d/%Y')
         .modal-body
           .panel.panel-primary
             %table.table.table-bordered
