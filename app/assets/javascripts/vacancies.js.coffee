@@ -17,13 +17,14 @@ addPassiveCandidateToList = (candidate) ->
         " " + candidate.name +
       "</td>" +
       "<td>" + candidate.salary + "</td>" +
-      "<td>" + 'Нейтрален' + "</td>" +
+      "<td><span class='label label-primary'>" + 'Нейтрален' + "</span></td>" +
     "</tr>"
   )
 
 buildCandidatesTable = (data) ->
   $candidatesTable = $('#vacancy-candidates tbody')
   $candidatesTable.html('')
+  $candidatesTable
   options = []
   options.push "<option value='Перевести в статус'>Перевести в статус</option>"
   for status in data.statuses
@@ -33,9 +34,9 @@ buildCandidatesTable = (data) ->
     $candidatesTable.append(
       "<tr>" +
       "<th>" + candidate.id + "</th>" +
-      "<td>" + candidate.name + "</td>"+
+      "<td><a href='/candidates/'+id>" + candidate.name + "</a></td>"+
       "<td>" + candidate.salary + "</td>"+
-      "<td>" + candidate.created_at + "</td>"+
+      "<td><span class='label label-primary'>" + candidate.created_at + "</span></td>"+
       "<td><select name=\"status-picker\" class=\"status-picker\"></td>" +
       "</tr>")
     $select = $('select').last()

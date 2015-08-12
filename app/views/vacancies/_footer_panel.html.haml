@@ -19,7 +19,7 @@
                     = link_to 'Отказался', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Отказался', vacancy_id: @vacancy.id }
               .col-xs-10
                 .panel-body
-                  %table.table.table-bordered.table-hover#vacancy-candidates
+                  %table.table.table-striped#vacancy-candidates
                     %caption Кандидаты со статусом "Найденные"
                     %thead
                       %tr
@@ -32,9 +32,11 @@
                       - @candidates_with_found_status.each do |candidate|
                         %tr
                           %th= candidate.id
-                          %td= candidate.name
+                          %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
                           %td= desired_salary_for(candidate)
-                          %td= candidate.created_at
+                          %td
+                            %span.label.label-primary
+                              = candidate.created_at
                           %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(@vacancy)), class: 'status-picker', data: { vacancyid: @vacancy.id, candidateid: candidate.id }, :include_blank => 'Перевести в статус' )
 
 .modal.fade#myModal
@@ -51,24 +53,27 @@
             %table.table.table-bordered
               %thead.td-primary
                 %tr
-                  %th id
                   %th Имя
                   %th Зарплата
                   %th Примечание
               %tbody
                 - @candidates.each do |candidate|
                   %tr
-                    %td= candidate.id
                     %td
                       = check_box_tag 'mark-as-found-candidate', candidate.id
                       = candidate.name
                     %td= candidate.salary
                     %td
-                      - if candidate.is_passive?
-                        = "Имеет статус \"#{candidate.status}\""
-                      - else
-                        - candidate.staff_relations.each do |sr|
-                          = "Имеет статус \"#{sr.status}\" для вакансии \"#{sr.vacancy.name}\""
+                      - candidate.staff_relations.each do |sr|
+                        - if candidate.is_passive?
+                          = "Имеет статус \"#{candidate.status}\""
+                        - else
+                          Имеет статус
+                          %span{ class: "label label-#{return_status_label(sr)}" }
+                            = sr.status
+                          для вакансии
+                          %span.label.label-info
+                            = sr.vacancy.name
                           %br
       .modal-footer
         %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
