@@ -1,0 +1,4 @@
+$('#dialog').modal('toggle');
+$('.calendar').html('<%= escape_javascript(render partial: 'calendar',
+                                                  locals: { events: @events }) %>')
+$('.modal-backdrop').remove();

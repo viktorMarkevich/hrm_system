@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :events
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -24,7 +23,7 @@ Rails.application.routes.draw do
   end
 
   resources :companies
-
   resources :candidates, except: [:destroy]
+  resources :events, except: [:show]
 
 end

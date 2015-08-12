@@ -1,12 +1,5 @@
-= form_for @event do |f|
-  - if @event.errors.any?
-    #error_explanation
-      %h2 Возникшие ошибки:
-      %h2= "#{pluralize(@event.errors.count, 'error')} prohibited this event from being saved:"
-      %ul
-        - @event.errors.full_messages.each do |msg|
-          %li= msg
-
+= form_for @event, remote: true, html: { role: 'form' } do |f|
+  #error_explanation.bg-danger.text-danger
   .form-group
     = f.label 'Имя:'
     = f.text_field :name, class: 'form-control'
