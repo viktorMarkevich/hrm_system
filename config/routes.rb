@@ -24,6 +24,6 @@ Rails.application.routes.draw do
 
   resources :companies
   resources :candidates, except: [:destroy]
-  resources :events
+  resources :events, except: [:show]
 
 end

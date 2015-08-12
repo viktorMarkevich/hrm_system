@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
 
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:edit, :update, :destroy]
 
   # respond_to :js, :html
 
@@ -10,9 +10,6 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-  end
-
-  def show
   end
 
   def edit
