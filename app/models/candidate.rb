@@ -39,4 +39,8 @@ class Candidate < ActiveRecord::Base
   def status_for_vacancy(vacancy)
     StaffRelation.find_by_candidate_id_and_vacancy_id(self.id, vacancy.id).status
   end
+
+  def is_passive?
+    status == STATUSES[0]
+  end
 end
