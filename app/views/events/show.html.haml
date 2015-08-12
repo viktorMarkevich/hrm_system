@@ -3,8 +3,17 @@
     .panel-heading.panel-title
       = @event.name
     .panel-body
+      На вакансию:
+      = @event.staff_relation.vacancy.name
+      %br
+      С кандидатом:
+      = @event.staff_relation.candidate.name
+      |
+      = @event.staff_relation.status
+      %br
       Начало события:
-      = @event.starts_at.strftime('%H:%M   %d-%m-%y')
+      %span.label.label-primary= @event.starts_at.strftime('%H:%M')
+      = @event.starts_at.strftime('%d/%m/%Y')
       %br
       Описание:
       = @event.description

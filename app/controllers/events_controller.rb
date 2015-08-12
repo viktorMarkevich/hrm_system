@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :staff_relations, except: [:index, :show]
 
   # GET /events
   # GET /events.json
@@ -24,8 +25,8 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(event_params)
-
+    @event = current_user.events.build(event_params)
+    @event.staff_relation = StaffRelation.find(params[:staff_relation])
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Событие успешно создано.' }
@@ -40,6 +41,7 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
+    @event.staff_relation = StaffRelation.find(params[:staff_relation])
     respond_to do |format|
       if @event.update(event_params)
         format.html { redirect_to @event, notice: 'Событие успешно обновлено.' }
@@ -65,6 +67,16 @@ class EventsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_event
     @event = Event.find(params[:id])
+  end
+
+  # def prepare_staff
+  #   sr = StaffRelation.find(params[:staff_relation])
+  #   sr.event.destroy if sr.event_id != @event.id
+  #   @event.staff_relation = sr
+  # end
+
+  def staff_relations
+    @staff_relations = StaffRelation.all
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -35,6 +35,7 @@ buildCandidatesTable = (data) ->
       "<td>" + candidate.salary + "</td>"+
       "<td>" + candidate.created_at + "</td>"+
       "<td><select name=\"status-picker\" class=\"status-picker\"></td>" +
+      "<td><a href=\"/events/new\" class=\"btn btn-success\">Добавить событие</a></td>" +
       "</tr>")
     $select = $('select').last()
 

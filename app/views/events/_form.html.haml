@@ -11,6 +11,9 @@
     = f.label 'Имя:'
     = f.text_field :name, class: 'form-control'
   .form-group
+    = f.label 'На вакансию:'
+    = select_tag(:staff_relation,  options_for_select(@staff_relations.collect{ |sr| ["#{sr.vacancy.try(:name) + ' | Кандидат: ' + sr.candidate.name + ' | ' + sr.status}", sr.id] }, (@event.staff_relation.id if @event.staff_relation)), class: 'form-control')
+  .form-group
     = f.label 'Дата события:'
     = f.datetime_select :starts_at, class: 'form-control'
   .form-group
