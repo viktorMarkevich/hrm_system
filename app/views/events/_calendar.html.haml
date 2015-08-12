@@ -11,7 +11,7 @@
   %a.event-badge{ href: '#', 'data-target' => "#myModal#{date}", 'data-toggle' => 'modal' }= events.count if !events.empty?
 
   / Modal
-  .modal.fade{ 'aria-labelledby' => 'myModalLabel', role: 'dialog', tabindex: '-1', id: "myModal#{date}" }
+  .events-list.modal.fade{ 'aria-labelledby' => 'myModalLabel', role: 'dialog', tabindex: '-1', id: "myModal#{date}" }
     .modal-dialog{ role: 'document' }
       .modal-content
         .modal-header
@@ -39,5 +39,5 @@
                       %span.label.label-primary= event.starts_at.strftime('%H:%M')
                       = event.starts_at.strftime('%d/%m/%Y')
                     %td
-                      = link_to '', edit_event_path(event), class: 'glyphicon glyphicon-edit'
+                      = link_to '', edit_event_path(event), class: 'glyphicon glyphicon-edit', remote: true
                       = link_to '', event, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
