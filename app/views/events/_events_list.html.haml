@@ -1,0 +1,21 @@
+.panel.panel-primary
+  %table.table.table-bordered
+    %thead
+      %tr
+        %th Событие
+        %th На вакансию
+        %th С кем
+        %th Назначено на
+        %th Действия
+    %tbody
+      - events.each do |event|
+        %tr
+          %td
+            %span.label.label-default Интервью
+          %td Рубист
+          %td Петров Пётр
+          %td
+            %span.label.label-primary= event.starts_at.strftime('%H:%M')
+          %td
+            = link_to '', edit_event_path(event), class: 'glyphicon glyphicon-edit', remote: true
+            = link_to '', event, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'

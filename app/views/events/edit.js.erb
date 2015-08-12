@@ -1,7 +1,8 @@
 $('.events-list').remove();
+$('.modal-backdrop').remove();
 // Add the dialog title
 
-$('#dialog h3').html("<i class='glyphicon glyphicon-plus'></i> Редактировать событие");
+$('#dialog h3').html("Редактировать событие");
 
 // Render the new form
 $('.modal-body.form').html('<%= j render('form') %>');

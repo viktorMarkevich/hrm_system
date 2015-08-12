@@ -2,6 +2,8 @@ class EventsController < ApplicationController
 
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
+  # respond_to :js, :html
+
   def index
     @events = Event.order(starts_at: :asc)
   end
@@ -33,11 +35,12 @@ class EventsController < ApplicationController
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Событие успешно обновлено.' }
-        format.json { render :show, status: :ok, location: @event }
+        @events = Event.order(starts_at: :asc)
+        format.json { head :no_content }
+        format.js
       else
-        format.html { render :edit }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+        format.json { render json: @event.errors.full_messages,
+                             status: :unprocessable_entity }
       end
     end
   end
