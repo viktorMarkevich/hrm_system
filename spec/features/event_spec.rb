@@ -10,6 +10,7 @@ describe 'Managing events', type: :feature do
   end
 
   scenario 'goes on new event page' do
+    pending
     visit '/events/new'
     expect(page).to have_content 'Добавить новое событие'
     expect(page).to have_content 'Имя:'
@@ -18,6 +19,7 @@ describe 'Managing events', type: :feature do
   end
 
   scenario 'create new event' do
+    pending
     visit '/events/new'
     within '#new_event' do
       fill_in 'event_name', with: 'This is name'
@@ -29,6 +31,7 @@ describe 'Managing events', type: :feature do
   end
 
   scenario 'event modal check' do
+    pending
     visit '/events'
     expect(page).to have_css('#myModalLabel')
     expect(page).not_to have_content("#{event.starts_at}")
