@@ -64,17 +64,22 @@
                       = candidate.name
                     %td= candidate.salary
                     %td
-                      - candidate.staff_relations.each do |sr|
-                        - if candidate.is_passive?
-                          = "Имеет статус \"#{candidate.status}\""
-                        - else
-                          Имеет статус
-                          %span{ class: "label label-#{return_status_label(sr)}" }
-                            = sr.status
-                          для вакансии
-                          %span.label.label-info
-                            = sr.vacancy.name
-                          %br
+                      - if candidate.is_passive?
+                        Имеет статус
+                        &nbsp;
+                        %span.label.label-primary
+                          = candidate.status
+                      - else
+                        - candidate.staff_relations.each do |sr|
+                          %p{style: 'font-size: 14px'}
+                            Имеет статус
+                            &nbsp;
+                            %span{ class: "label label-#{return_status_label(sr)}" }
+                              = sr.status
+                            &nbsp;
+                            для вакансии
+                            %span.label.label-info
+                              = sr.vacancy.name
       .modal-footer
         %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
         %button.btn.btn-primary#btn-apply{ type: 'button' } Выбрать

@@ -17,14 +17,13 @@ addPassiveCandidateToList = (candidate) ->
         " " + candidate.name +
       "</td>" +
       "<td>" + candidate.salary + "</td>" +
-      "<td><span class='label label-primary'>" + 'Нейтрален' + "</span></td>" +
+      "<td>Имеет статус <span class='label label-primary'>" + 'Нейтрален' + "</span></td>" +
     "</tr>"
   )
 
 buildCandidatesTable = (data) ->
   $candidatesTable = $('#vacancy-candidates tbody')
   $candidatesTable.html('')
-  $candidatesTable
   options = []
   options.push "<option value='Перевести в статус'>Перевести в статус</option>"
   for status in data.statuses

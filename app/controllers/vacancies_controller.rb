@@ -65,11 +65,9 @@ class VacanciesController < ApplicationController
       end
     else
       candidate = Candidate.find(params[:candidate_id])
-      if staff_relation.delete
-        if candidate.staff_relations == 0
+        if staff_relation.delete
           candidate.update(status: 'Пассивен')
         end
-      end
       render json: { status: :ok, candidate: candidate }
     end
   end
@@ -79,7 +77,7 @@ class VacanciesController < ApplicationController
     @marked_as_found_candidates = Candidate.where('id IN (?)', params[:candidates_ids])
     vacancy = Vacancy.find(params[:id])
     @marked_as_found_candidates.each do |candidate|
-      candidate.update(status: 'В работе')
+      candidate.update(status: 'Задействован')
       StaffRelation.create(candidate_id: candidate.id, vacancy_id: vacancy.id, status: found_status)
     end
 
