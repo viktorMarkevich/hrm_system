@@ -2,8 +2,6 @@ class EventsController < ApplicationController
 
   before_action :set_event, only: [:edit, :update, :destroy]
 
-  # respond_to :js, :html
-
   def index
     @events = Event.order(starts_at: :asc)
   end
