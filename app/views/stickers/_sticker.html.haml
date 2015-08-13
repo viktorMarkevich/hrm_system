@@ -1,4 +1,4 @@
-.col-xs-3
+.col-xs-3{ id: "sticker_#{sticker.id}" }
   .panel.panel-default.add-shadows
     .panel-heading{ style: "background-color: #{sticker.bg_color}" }
       .row
@@ -9,7 +9,7 @@
             = sticker.status
         .col-xs-4.panel-title
           -if current_user.is_director?
-            = link_to edit_sticker_path(sticker), class: 'glyph_edit_link' do
+            = link_to edit_sticker_path(sticker), class: 'glyph_edit_link', remote: true do
               %i.glyphicon.glyphicon-pencil
             = link_to sticker_path(sticker), method: :delete, class: 'glyph_destroy_link' do
               %i.glyphicon.glyphicon-remove-circle

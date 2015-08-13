@@ -31,7 +31,7 @@ class StickersController < ApplicationController
       if @sticker.save
         @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(11)
         @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
-        # NoticeMailer.notice_of_appointment(@sticker).deliver_now if @sticker.performer_id
+        NoticeMailer.notice_of_appointment(@sticker).deliver_now if @sticker.performer_id
         flash[:notice] = 'Стикер был успешно создан.'
         format.json { head :no_content }
         format.js
@@ -43,13 +43,17 @@ class StickersController < ApplicationController
   end
 
   def update
-    if @sticker.update(sticker_params)
-      NoticeMailer.notice_of_appointment(@sticker).deliver_now if can_send_notifier?
-      @sticker.destroy if @sticker.status == 'Закрыт'
-      flash[:notice] = 'Стикер был успешно обновлен.'
-      redirect_to stickers_path
-    else
-      render 'edit'
+    respond_to do |format|
+      if @sticker.update(sticker_params)
+        NoticeMailer.notice_of_appointment(@sticker).deliver_now if can_send_notifier?
+        @sticker.destroy if @sticker.status == 'Закрыт'
+        flash[:notice] = 'Стикер был успешно обновлен.'
+        format.json { head :no_content }
+        format.js
+      else
+        format.json { render json: @event.errors.full_messages,
+                             status: :unprocessable_entity }
+      end
     end
   end
 
