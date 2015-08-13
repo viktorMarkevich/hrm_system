@@ -1,4 +1,2 @@
-$('#dialog').modal('toggle');
-
-$('#stickers').html('<%= escape_javascript(render @stickers) %>')
+$('#sticker_<%= @sticker.id %>').fadeOut();
 $('#stickers-pagination').html('<%= j render partial: 'stickers_pagination', locals: { stickers: @stickers } %>')

@@ -12,5 +12,5 @@
   = render 'dialog'
   .new_sticker
 .row
-  .col-xs-12
-    = paginate @stickers
+  #stickers-pagination
+    = render partial: 'stickers_pagination', locals: { stickers: @stickers }

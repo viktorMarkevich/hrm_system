@@ -45,6 +45,8 @@ class StickersController < ApplicationController
   def update
     respond_to do |format|
       if @sticker.update(sticker_params)
+        @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(11)
+        @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
         NoticeMailer.notice_of_appointment(@sticker).deliver_now if can_send_notifier?
         @sticker.destroy if @sticker.status == 'Закрыт'
         flash[:notice] = 'Стикер был успешно обновлен.'
@@ -58,9 +60,15 @@ class StickersController < ApplicationController
   end
 
   def destroy
+    @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(11)
+    @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
     if @sticker.is_destroyed?
       flash[:notice] = 'Стикер был успешно закрыт.'
-      redirect_to stickers_path
+      respond_to do |format|
+        format.js
+        format.html { redirect_to stickers_url }
+        format.json { head :no_content }
+      end
     end
   end
 
