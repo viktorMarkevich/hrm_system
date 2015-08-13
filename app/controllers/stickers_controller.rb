@@ -11,8 +11,7 @@ class StickersController < ApplicationController
   before_filter :prepare_performers, only: [:new, :edit, :create]
 
   def index
-    @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(11)
-    @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
+    set_stickers
   end
 
   def new
@@ -29,8 +28,7 @@ class StickersController < ApplicationController
     @sticker = current_user.owner_stickers.build(sticker_params.merge(bg_color: Sticker::BG_COLOR.sample))
     respond_to do |format|
       if @sticker.save
-        @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(11)
-        @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
+        set_stickers
         NoticeMailer.notice_of_appointment(@sticker).deliver_now if @sticker.performer_id
         flash[:notice] = 'Стикер был успешно создан.'
         format.json { head :no_content }
@@ -45,8 +43,7 @@ class StickersController < ApplicationController
   def update
     respond_to do |format|
       if @sticker.update(sticker_params)
-        @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(11)
-        @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
+        set_stickers
         NoticeMailer.notice_of_appointment(@sticker).deliver_now if can_send_notifier?
         @sticker.destroy if @sticker.status == 'Закрыт'
         flash[:notice] = 'Стикер был успешно обновлен.'
@@ -60,9 +57,8 @@ class StickersController < ApplicationController
   end
 
   def destroy
-    @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(11)
-    @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
     if @sticker.is_destroyed?
+      set_stickers
       flash[:notice] = 'Стикер был успешно закрыт.'
       respond_to do |format|
         format.js
@@ -73,6 +69,11 @@ class StickersController < ApplicationController
   end
 
   private
+
+    def set_stickers
+      @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(11)
+      @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
+    end
 
     def can_send_notifier?
       @sticker.previous_changes[:performer_id] &&
