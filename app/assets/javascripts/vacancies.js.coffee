@@ -1,3 +1,4 @@
+# coding 'utf-8'
 highlightDefaultTab = ->
   $defaultTab = $(".candidates-for-vacancy").first()
   $defaultTab.siblings().removeClass("active")
@@ -115,3 +116,17 @@ $(document).ready ->
           $row_to_remove.remove() if response.status is "ok"
           if response.candidate
             addPassiveCandidateToList(response.candidate)
+
+    $('#current-status-picker').change ->
+      vacancy_id = $(this).attr('data-vacancyid')
+      $.ajax
+        url: "/vacancies/#{vacancy_id}/change_vacancy_status"
+        type: 'POST'
+        data:
+          status: $(this).data('status-name')
+        error: (jqXHR, textStatus, errorThrown) ->
+          console.log("AJAX Error: #{textStatus}")
+        success: (data, textStatus, jqXHR) ->
+          console.log("Dynamic country select OK!")
+
+

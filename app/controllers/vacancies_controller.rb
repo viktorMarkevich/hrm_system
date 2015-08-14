@@ -43,6 +43,18 @@ class VacanciesController < ApplicationController
     end
   end
 
+  def change_vacancy_status
+    p '-------------' *10
+    vacancy = Vacancy.find(params[:id])
+    if vacancy.update(status: params[:status])
+      p '***************' *10
+      render json: { status: :ok }
+    else
+      render json: { status: :unprocessable_entity }
+    end
+  end
+
+
   def search_candidates_by_status
     vacancy = Vacancy.find(params[:id])
     @matched_candidates = vacancy.candidates_with_status(params[:status])

@@ -1,11 +1,15 @@
+-# coding 'utf-8'
 - content_for :left_sidebar do
   .panel-success
     .panel-heading
       Управление
   .panel-body
     - if status.present?
-      %code= "Статус: #{status}"
+      %code Статус:
+      #current-status-picker{data: { vacancyid: @vacancy.id } }
+        = select_tag(:applied_status, options_for_select(Vacancy::STATUSES))
     -else
       %code= 'Статус: в процессе'
     %br
-    %code= "Ответственный: #{full_name_for(current_user)}"
+    %code
+      = "Ответственный: #{get_author_and_date(@vacancy)}"
