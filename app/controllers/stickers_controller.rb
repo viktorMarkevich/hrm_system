@@ -7,7 +7,7 @@ class StickersController < ApplicationController
   include VacancyAction
 
   before_filter :authenticate_user!
-  before_filter :find_sticker, only: [:update, :edit, :destroy, :show]
+  before_filter :find_sticker, only: [:update, :edit, :destroy]
   before_filter :prepare_performers, only: [:new, :edit, :create]
 
   def index
@@ -16,9 +16,6 @@ class StickersController < ApplicationController
 
   def new
     @sticker = Sticker.new
-  end
-
-  def show
   end
 
   def edit
