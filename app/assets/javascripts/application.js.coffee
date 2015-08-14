@@ -14,8 +14,8 @@
 #= require jquery_ujs
 #= require spacelab
 #= require twitter/bootstrap
-
 # require_tree .
+
 $(document).ready ->
   if window.location.pathname.indexOf('events') > 0
     $('ul.nav.navbar-nav:first').find('a[href*="'+window.location.pathname.split('/')[1]+'"]:not([id])').addClass 'active current'

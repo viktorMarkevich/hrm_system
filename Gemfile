@@ -6,7 +6,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
-gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'dotenv-rails'
@@ -17,10 +16,7 @@ gem 'devise_invitable', '~> 1.3.4'
 gem 'haml-rails'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
-# twitter bootstrap css & javascript toolkit
 gem 'twitter-bootswatch-rails', '~> 3.3.4'
-
-# twitter bootstrap helpers gem, e.g., alerts etc...
 gem 'twitter-bootswatch-rails-helpers'
 gem 'paperclip', '~> 4.2'
 gem 'activeadmin', '~> 1.0.0.pre1'
