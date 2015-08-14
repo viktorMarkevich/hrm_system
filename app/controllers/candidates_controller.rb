@@ -37,11 +37,8 @@ class CandidatesController < ApplicationController
     end
   end
 
-  def find_candidate
-    @candidate = Candidate.find(params[:id])
-  end
-
   private
+
     def candidate_params
       params.require(:candidate).permit(
           :name, :birthday, :salary, :salary_format,
@@ -51,4 +48,9 @@ class CandidatesController < ApplicationController
           :facebook, :vkontakte, :google_plus, :full_info, :skype, :home_page
       )
     end
+
+  def find_candidate
+    @candidate = Candidate.find(params[:id])
+  end
+
 end
