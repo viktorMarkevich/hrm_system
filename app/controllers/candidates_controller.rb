@@ -49,8 +49,8 @@ class CandidatesController < ApplicationController
       )
     end
 
-  def find_candidate
-    @candidate = Candidate.find(params[:id])
-  end
+    def find_candidate
+      @candidate = Candidate.find(params[:id])
+    end
 
 end

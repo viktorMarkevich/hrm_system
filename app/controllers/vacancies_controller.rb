@@ -77,7 +77,7 @@ class VacanciesController < ApplicationController
     @marked_as_found_candidates = Candidate.where('id IN (?)', params[:candidates_ids])
     vacancy = Vacancy.find(params[:id])
     @marked_as_found_candidates.each do |candidate|
-      candidate.update(status: 'Задействован')
+      candidate.update(status: 'В работе')
       StaffRelation.create(candidate_id: candidate.id, vacancy_id: vacancy.id, status: found_status)
     end
 

@@ -11,7 +11,7 @@ class Candidate < ActiveRecord::Base
 
   POST = %w(должность1 должность2 должность3)
 
-  STATUSES = %w(Пассивен Задействован)
+  STATUSES = %w(Пассивен В\ работе)
 
   validates :name, :desired_position, :status, presence: true
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
