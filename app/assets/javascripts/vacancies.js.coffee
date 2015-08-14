@@ -17,7 +17,7 @@ addPassiveCandidateToList = (candidate) ->
         " " + candidate.name +
       "</td>" +
       "<td>" + candidate.salary + "</td>" +
-      "<td>" + 'Нейтрален' + "</td>" +
+      "<td>Имеет статус <span class='label label-primary'>" + 'Нейтрален' + "</span></td>" +
     "</tr>"
   )
 
@@ -33,9 +33,9 @@ buildCandidatesTable = (data) ->
     $candidatesTable.append(
       "<tr>" +
       "<th>" + candidate.id + "</th>" +
-      "<td>" + candidate.name + "</td>"+
+      "<td><a href='/candidates/'+id>" + candidate.name + "</a></td>"+
       "<td>" + candidate.salary + "</td>"+
-      "<td>" + candidate.created_at + "</td>"+
+      "<td><span class='label label-primary'>" + candidate.created_at + "</span></td>"+
       "<td><select name=\"status-picker\" class=\"status-picker\"></td>" +
       "</tr>")
     $select = $('select').last()

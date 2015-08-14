@@ -65,11 +65,9 @@ class VacanciesController < ApplicationController
       end
     else
       candidate = Candidate.find(params[:candidate_id])
-      if staff_relation.delete
-        if candidate.staff_relations == 0
+        if staff_relation.delete
           candidate.update(status: 'Пассивен')
         end
-      end
       render json: { status: :ok, candidate: candidate }
     end
   end

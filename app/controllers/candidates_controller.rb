@@ -38,6 +38,7 @@ class CandidatesController < ApplicationController
   end
 
   private
+
     def candidate_params
       params.require(:candidate).permit(
           :name, :birthday, :salary, :salary_format,
