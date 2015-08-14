@@ -34,24 +34,20 @@ class VacanciesController < ApplicationController
   end
 
   def update
+    puts "params = #{params.inspect}"
     @vacancy.associate_with_region(params[:region])
-    if @vacancy.update_attributes(vacancy_params)
-      flash[:notice] = 'Вакансия успешно обновлена.'
-      redirect_to vacancies_path
-    else
-      render 'edit'
+    @vacancy = Vacancy.find(params[:id])
+
+    respond_to do |format|
+      if @vacancy.update_attributes(vacancy_params)
+        format.html { redirect_to vacancies_path, notice: 'Вакансия успешно обновлена.' }
+        format.json { render json: { status: :ok } }
+      else
+        format.html { render 'edit' }
+        format.json { render json: { status: :unprocessable_entity } }
+      end
     end
   end
-
-  def change_vacancy_status
-    vacancy = Vacancy.find(params[:id])
-    if vacancy.update(status: params[:status])
-      render json: { status: :ok }
-    else
-      render json: { status: :unprocessable_entity }
-    end
-  end
-
 
   def search_candidates_by_status
     vacancy = Vacancy.find(params[:id])

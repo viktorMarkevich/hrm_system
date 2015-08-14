@@ -118,16 +118,10 @@ $(document).ready ->
             addPassiveCandidateToList(response.candidate)
 
     $('#applied_status').change ->
-      console.log $(this).val()
       vacancy_id = $(this).parent().attr('data-vacancyid')
       $.ajax
-        url: "/vacancies/#{vacancy_id}/change_vacancy_status"
+        url: "/vacancies/#{vacancy_id}"
         type: 'POST'
         data:
-          status: $(this).val()
-        error: (jqXHR, textStatus, errorThrown) ->
-          console.log("AJAX Error: #{textStatus}")
-        success: (response) ->
-          console.log("Dynamic country select OK!")
-
-
+          _method: 'PUT',
+          vacancy: {status: $(this).val()}

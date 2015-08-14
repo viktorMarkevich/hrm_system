@@ -19,7 +19,6 @@ Rails.application.routes.draw do
       get 'search_candidates_by_status', to: 'vacancies#search_candidates_by_status'
       post 'change_candidate_status', to: 'vacancies#change_candidate_status'
       post 'mark_candidates_as_found', to: 'vacancies#mark_candidates_as_found'
-      post 'change_vacancy_status', to: 'vacancies#change_vacancy_status'
     end
   end
 
