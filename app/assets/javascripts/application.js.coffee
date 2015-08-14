@@ -12,8 +12,9 @@
 #
 #= require jquery
 #= require jquery_ujs
-#= require twitter/bootstrap
+#= require bootstrap-sprockets
 # require_tree .
+
 $(document).ready ->
   if window.location.pathname.indexOf('events') > 0
     $('.nav-pills').find('a[href*="'+window.location.pathname.split('/')[1]+'"]:not([id])').addClass 'active current'
