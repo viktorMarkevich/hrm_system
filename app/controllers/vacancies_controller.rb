@@ -44,10 +44,8 @@ class VacanciesController < ApplicationController
   end
 
   def change_vacancy_status
-    p '-------------' *10
     vacancy = Vacancy.find(params[:id])
     if vacancy.update(status: params[:status])
-      p '***************' *10
       render json: { status: :ok }
     else
       render json: { status: :unprocessable_entity }

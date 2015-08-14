@@ -5,11 +5,11 @@
       Управление
   .panel-body
     - if status.present?
-      %code Статус:
-      #current-status-picker{data: { vacancyid: @vacancy.id } }
+      #current-status-vacancy{data: { vacancyid: @vacancy.id } }
+        %code Статус:
         = select_tag(:applied_status, options_for_select(Vacancy::STATUSES))
     -else
       %code= 'Статус: в процессе'
     %br
     %code
-      = "Ответственный: #{get_author_and_date(@vacancy)}"
+      = "Ответственный: #{get_author_vacancy(@vacancy)}"

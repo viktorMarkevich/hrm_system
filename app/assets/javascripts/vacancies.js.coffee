@@ -117,16 +117,17 @@ $(document).ready ->
           if response.candidate
             addPassiveCandidateToList(response.candidate)
 
-    $('#current-status-picker').change ->
-      vacancy_id = $(this).attr('data-vacancyid')
+    $('#applied_status').change ->
+      console.log $(this).val()
+      vacancy_id = $(this).parent().attr('data-vacancyid')
       $.ajax
         url: "/vacancies/#{vacancy_id}/change_vacancy_status"
         type: 'POST'
         data:
-          status: $(this).data('status-name')
+          status: $(this).val()
         error: (jqXHR, textStatus, errorThrown) ->
           console.log("AJAX Error: #{textStatus}")
-        success: (data, textStatus, jqXHR) ->
+        success: (response) ->
           console.log("Dynamic country select OK!")
 
 
