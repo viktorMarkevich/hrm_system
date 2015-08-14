@@ -83,8 +83,8 @@
                             %tbody
                               - @staff_relations.each do |sr|
                                 %tr
-                                  %td= link_to sr.vacancy.name, vacancy_path(sr.vacancy), id: 'vacancy-name'
-                                  %td= "кандидат #{link_to sr.candidate.name, candidate_path(sr.candidate.name)}".html_safe
+                                  %td= link_to sr.vacancy.try(:name), vacancy_path(sr.vacancy || '#'), id: 'vacancy-name'
+                                  %td= "кандидат #{link_to sr.candidate.try(:name), candidate_path(sr.candidate.try(:name) || '#')}".html_safe
                                   %td
                                     %span{ class: "label label-#{return_status_label(sr)}" }
                                       = sr.status
