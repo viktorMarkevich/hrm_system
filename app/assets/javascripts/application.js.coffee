@@ -12,7 +12,9 @@
 #
 #= require jquery
 #= require jquery_ujs
+#= require spacelab
 #= require twitter/bootstrap
+
 # require_tree .
 $(document).ready ->
   if window.location.pathname.indexOf('events') > 0
