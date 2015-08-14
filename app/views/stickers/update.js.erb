@@ -1,0 +1,4 @@
+$('#dialog').modal('toggle');
+
+$('#sticker_<%= @sticker.id %>').replaceWith('<%= j render (@sticker) %>')
+$('#stickers-pagination').html('<%= j render partial: 'stickers_pagination', locals: { stickers: @stickers } %>')

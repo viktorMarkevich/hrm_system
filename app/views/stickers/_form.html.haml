@@ -1,16 +1,11 @@
 = javascript_include_tag 'stickers'
 = javascript_include_tag 'charCount'
 
-= form_for @sticker do |f|
-  - if @sticker.errors.any?
-    %h2 Возникшие ошибки:
-    %ul
-      - @sticker.errors.full_messages.each do |message|
-        %li
-          = message
+= form_for @sticker, remote: true, html: { role: 'form' } do |f|
+  #error_explanation.bg-danger.text-danger
   .form-group.sticker_description
     = f.label 'Описание'
-    = f.text_area :description, class: 'form-control'
+    = f.text_field :description, class: 'form-control'
 
   -unless @sticker.new_record?
     .form-group.sticker_status
@@ -20,5 +15,4 @@
     = f.label 'Назначить на:'
     = f.select(:performer_id, [[]] + @performers, {}, class: 'form-control')
   .form-group
-    = f.submit @sticker.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
-    = link_to 'Назад', :back, class: 'btn btn-default'
+    = f.submit 'Сохранить', class: 'btn btn-default'

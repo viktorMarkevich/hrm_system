@@ -1,0 +1,2 @@
+$('#sticker_<%= @sticker.id %>').fadeOut();
+$('#stickers-pagination').html('<%= j render partial: 'stickers_pagination', locals: { stickers: @stickers } %>')
