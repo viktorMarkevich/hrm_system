@@ -36,42 +36,6 @@ ul.nav.navbar-nav > li > a {
   font-style: italic;
 }
 
-// candidates for vacancy modal
-#candidates-multiselect {
-  width: 62em;
-  height: 30em;
-  padding: 10px;
-  border: solid 1px #c0c0c0;
-  overflow:auto;
-}
-
-.td-primary{
-  background-color: #428bca ;
-  color: #ffffff;
-  .modal{
-    color: #212121;
-    table{
-      thead{
-        color: #fff;
-        background-color: #428bca;
-        font-size: 12px;
-      }
-      td{
-        height: auto;
-        width: auto;
-        line-height: 30px;
-        .label{
-          vertical-align: middle;
-        }
-        a{
-          text-decoration: none;
-        }
-      }
-
-    }
-  }
-}
-
 .add-shadows {
   -webkit-box-shadow: 8px 8px 6px -6px #999;
   -moz-box-shadow: 8px 8px 6px -6px #999;
