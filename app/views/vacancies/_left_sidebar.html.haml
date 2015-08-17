@@ -5,8 +5,9 @@
       Управление
   .panel-body
     - if status.present?
+      %code= "Текущий статус: #{status}"
       #current-status-vacancy{data: { vacancyid: @vacancy.id } }
-        %code Статус:
+        %code= 'Перевести в статус:'
         = select_tag(:applied_status, options_for_select(Vacancy::STATUSES))
     -else
       %code= 'Статус: в процессе'
