@@ -8,6 +8,10 @@ module ApplicationHelper
     "#{full_name_for(object.owner)} #{object.created_at.strftime('%F')}"
   end
 
+  def get_author_vacancy(object)
+    "#{full_name_for(object.owner)}"
+  end
+
   def return_upcoming_events(event)
     "&nbsp; c #{link_to 'Ланистер', candidate_path('#')} на
      <div class= 'label label-info'>#{event.starts_at.strftime('%e %b %H:%M')}</div>
