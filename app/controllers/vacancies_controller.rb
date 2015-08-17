@@ -34,7 +34,6 @@ class VacanciesController < ApplicationController
   end
 
   def update
-    puts "params = #{params.inspect}"
     @vacancy.associate_with_region(params[:region])
     @vacancy = Vacancy.find(params[:id])
 
