@@ -113,7 +113,7 @@ RSpec.describe VacanciesController, type: :controller do
   end
 
   context '#update' do
-    let(:vacancy_attrs) { { name: 'Менеджер', salary: '400' } }
+    let(:vacancy_attrs) { { name: 'Менеджер', salary: '400', status: 'В работе' } }
 
     before do
       put :update, id: vacancy, vacancy: vacancy_attrs, region: region.name
@@ -121,9 +121,10 @@ RSpec.describe VacanciesController, type: :controller do
     end
 
     context 'when successful' do
-      it 'has updated name and salary' do
+      it 'has updated name, salary and status' do
         expect(vacancy.name).to eql vacancy_attrs[:name]
         expect(vacancy.salary).to eql vacancy_attrs[:salary]
+        expect(vacancy.status).to eql vacancy_attrs[:status]
       end
 
       it 'redirect to vacancies index page' do
