@@ -1,6 +1,6 @@
 = javascript_include_tag 'vacancies'
 
-= render partial: 'vacancies/left_sidebar', locals: { status: @vacancy.status }
+= render partial: 'vacancies/left_sidebar', locals: { status: @vacancy.status, vacancy: @vacancy }
 = render partial: 'vacancies/footer_panel', locals: { example: nil }
 
 .panel.panel-success
