@@ -12,4 +12,9 @@ class Event < ActiveRecord::Base
     errors.add(:starts_at, 'дата должна быть предстоящей!') unless starts_at.future?
   end
 
+  def self.events_soon_mailer
+    @events_soon = Event.where(starts_at: Time.now..(Time.now + 1.day))
+    NoticeMailer.event_soon(@events_soon).deliver_now
+  end
+
 end
