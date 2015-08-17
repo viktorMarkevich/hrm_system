@@ -6,7 +6,7 @@
     = javascript_include_tag 'application'
     = csrf_meta_tags
   %body.jumbotron
-    %nav.navbar.navbar-inverse
+    %nav.navbar.navbar-inverse.add-shadows
       .navbar-header
         %button.navbar-toggle.collapsed{ 'aria-expanded' => 'false', 'data-target' => '#bs-navbar-collapse-1', 'data-toggle' => 'collapse', type: 'button' }
           %span.sr-only Toggle navigation
@@ -90,7 +90,7 @@
                                     %span{ class: "label label-#{return_status_label(sr)}" }
                                       = sr.status
                                   %td
-                                    .label.label-primary
+                                    .label.label-info
                                       = sr.updated_at.strftime('%e %b %H:%M')
             .col-xs-7
               .panel.panel-default.add-shadows
