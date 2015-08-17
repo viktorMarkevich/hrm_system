@@ -1,8 +1,10 @@
 = stylesheet_link_tag 'events'
 
-.panel.panel-success
-  .panel-heading.panel-title
-    Календарь
+.panel.panel-default
+  .panel-heading
+    .panel-title
+      Календарь событий
   .panel-body
     .calendar
+      = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
       = render partial: 'calendar', locals: { events: @events }
