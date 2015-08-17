@@ -52,24 +52,19 @@
           .row
             .col-xs-5
               - if @events.present?
-                .row
-                  .col-xs-12
-                    .panel.add-shadows
-                      .panel-heading
-                        .row.panel-title
-                          .col-xs-12
-                            = 'Предстоящие события'
-                      .panel-body
-                        .row
-                          .col-xs-12
-                            %table.table.table-striped
-                              %tbody
-                                - @events.each do |event|
-                                  %tr
-                                    %td
-                                      %span.label.label-default
-                                        Интервью
-                                      = return_upcoming_events(event)
+                .panel.add-shadows
+                  .panel-heading
+                    .panel-title
+                      = 'Предстоящие события'
+                  .panel-body
+                    %table.table.table-striped.+table-responsive
+                      %tbody
+                        - @events.each do |event|
+                          %tr
+                            %td{style: 'word-wrap: break-word;'}
+                              %span.label.label-default
+                                Интервью
+                              = return_upcoming_events(event)
               .row
                 .col-xs-12
                   .panel.add-shadows
