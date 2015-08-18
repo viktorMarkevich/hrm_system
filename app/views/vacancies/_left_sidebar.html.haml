@@ -6,10 +6,12 @@
   .panel-body
     - if status.present?
       #current-status-vacancy{data: { vacancyid: vacancy.id } }
-        %code Статус:
-        = select_tag(:applied_status, options_for_select(Vacancy::STATUSES))
+        %code Статус вакансии:
+        %span
+          = select_tag(:applied_status, options_for_select(Vacancy::STATUSES))
     -else
-      %code= 'Статус: в процессе'
+      %code= 'Статус вакансии: в процессе'
     %br
+    -#info success danger
     %code
       = "Ответственный: #{get_author_vacancy(vacancy)}"
