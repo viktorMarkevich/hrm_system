@@ -38,6 +38,7 @@ buildCandidatesTable = (data) ->
       "<td>" + candidate.salary + "</td>"+
       "<td><span class='label label-primary'>" + candidate.created_at + "</span></td>"+
       "<td><select name=\"status-picker\" class=\"status-picker\"></td>" +
+      "<td><a href=\"/events/new\" class=\"btn btn-success\">Добавить событие</a></td>" +
       "</tr>")
     $select = $('select').last()
 
@@ -116,12 +117,3 @@ $(document).ready ->
           $row_to_remove.remove() if response.status is "ok"
           if response.candidate
             addPassiveCandidateToList(response.candidate)
-
-    $('#applied_status').change ->
-      vacancy_id = $(this).parent().attr('data-vacancyid')
-      $.ajax
-        url: "/vacancies/#{vacancy_id}"
-        type: 'POST'
-        data:
-          _method: 'PUT',
-          vacancy: {status: $(this).val()}

@@ -4,5 +4,6 @@ FactoryGirl.define do
     notice 'Примечание'
     association :candidate
     association :vacancy
+    association :event
   end
 end

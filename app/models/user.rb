@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :performer_stickers, foreign_key: 'performer_id', class_name: 'Sticker'
   has_many :candidates
   has_many :companies
+  has_many :events
 
   accepts_nested_attributes_for :image
 
