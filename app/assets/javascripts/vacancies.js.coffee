@@ -117,12 +117,3 @@ $(document).ready ->
           $row_to_remove.remove() if response.status is "ok"
           if response.candidate
             addPassiveCandidateToList(response.candidate)
-
-    $('#applied_status').change ->
-      vacancy_id = $(this).parent().attr('data-vacancyid')
-      $.ajax
-        url: "/vacancies/#{vacancy_id}"
-        type: 'POST'
-        data:
-          _method: 'PUT',
-          vacancy: {status: $(this).val()}

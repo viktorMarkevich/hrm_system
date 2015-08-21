@@ -1,0 +1,17 @@
+= form_for @vacancy, remote: true, html: { role: 'form' } do |f|
+  #error_explanation.bg-danger.text-danger
+  .form-group
+    = f.radio_button :status, 'Не задействована'
+    = f.label 'Не задействована', class: 'label label-success'
+  .form-group
+    = f.radio_button :status, 'В работе'
+    = f.label 'В работе', class: 'label label-info'
+  .form-group
+    = f.radio_button :status, 'Закрыта'
+    = f.label 'Закрыта', class: 'label label-danger'
+  .form-group
+    = f.submit 'Сохранить', class: 'btn btn-default'
+
+
+
+

@@ -5,11 +5,10 @@
       Управление
   .panel-body
     - if status.present?
-      #current-status-vacancy{data: { vacancyid: vacancy.id } }
-        %code Статус:
-        = select_tag(:applied_status, options_for_select(Vacancy::STATUSES))
+      %code= 'Статус вакансии:'
+      = link_to status, edit_vacancy_path(vacancy), remote: true, class: 'label label-info'
     -else
-      %code= 'Статус: в процессе'
+      %code= 'Статус вакансии: в процессе'
     %br
     %code
       = "Ответственный: #{get_author_vacancy(vacancy)}"
