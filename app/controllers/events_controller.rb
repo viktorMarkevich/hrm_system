@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
 
+  before_action :staff_relations, except: [:index, :show]
   before_action :set_event, only: [:edit, :update, :destroy]
 
   def index
@@ -14,7 +15,8 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(event_params)
+    @event = current_user.events.build(event_params)
+    @event.staff_relation = StaffRelation.find(params[:staff_relation])
     respond_to do |format|
       if @event.save
         @events = Event.order(starts_at: :asc)
@@ -28,6 +30,7 @@ class EventsController < ApplicationController
   end
 
   def update
+    @event.staff_relation = StaffRelation.find(params[:staff_relation])
     respond_to do |format|
       if @event.update(event_params)
         @events = Event.order(starts_at: :asc)
@@ -54,6 +57,9 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
   end
 
+  def staff_relations
+    @staff_relations = StaffRelation.all
+  end
 
   def event_params
     params.require(:event).permit(:name, :starts_at, :description)
