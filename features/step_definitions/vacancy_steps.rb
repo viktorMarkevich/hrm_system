@@ -38,7 +38,7 @@ When(/^I fill in vacancy form$/) do
     fill_in('vacancy_salary', with: '450')
     choose('vacancy_salary_format_usd')
     select('Запорожье', from: 'region')
-    select('Открыта', from: 'Статус')
+    select('Не задействована', from: 'Статус')
     fill_in('vacancy_languages', with: 'Английский, Русский')
     fill_in('vacancy_requirements', with: 'Ответственный')
   end

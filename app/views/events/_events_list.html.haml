@@ -11,11 +11,12 @@
       - events.each do |event|
         %tr
           %td
-            %span.label.label-default Интервью
-          %td Рубист
-          %td Петров Пётр
+            %span.label.label-default= event.name
+            %td= event.staff_relation.vacancy.name if event.staff_relation
+            %td= event.staff_relation.candidate.name if event.staff_relation
           %td
             %span.label.label-primary= event.starts_at.strftime('%H:%M')
+            = event.starts_at.strftime('%d/%m/%Y')
           %td
             = link_to '', edit_event_path(event), class: 'glyphicon glyphicon-edit', remote: true
             = link_to '', event, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'

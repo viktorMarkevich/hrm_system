@@ -12,4 +12,8 @@ class NoticeMailer < ActionMailer::Base
     mail(to: @sticker.owner.email, from: @sticker.performer.email , subject: 'Sticker completed')
   end
 
+  def event_soon(events)
+    @events_soon = events
+    mail(to: @events_soon.first.owner.email, from: @events_soon.first.owner.email, subject: 'Event soon')
+  end
 end
