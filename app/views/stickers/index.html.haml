@@ -5,7 +5,7 @@
 .row
   .col-xs-3
     .btn-group-vertical.btn-block{ 'aria-label' => 'Vertical button group', role: 'group' }
-      = link_to 'Добавить стикер', new_sticker_path, remote: true, class: 'btn btn-success'
+      = link_to 'Добавить стикер', vacancy_path(vacancy), remote: true, class: 'label label-info'
       = link_to 'Закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-warning'
   #stickers
     = render @stickers
