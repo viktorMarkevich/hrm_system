@@ -49,19 +49,3 @@
       = flash[:notice]
       .row
         = yield
-        -#- else
-          -#
-          -#- if content_for?(:left_sidebar)
-          -#  .col-xs-2
-          -#    .panel.panel-body
-          -#      = yield :left_sidebar
-          -#  .col-xs-10
-          -#    .row
-          -#      .col-xs-12
-          -#        .panel.panel-body
-          -#          = yield
-          -#    = yield :footer_panel
-          -#
-          -#- else
-          -#  .col-xs-offset-3.col-xs-6
-          -#    = yield

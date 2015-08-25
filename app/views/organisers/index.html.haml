@@ -13,43 +13,46 @@
           %tbody
             - @events.each do |event|
               %tr
-                %td{style: 'word-wrap: break-word;'}
+                %td
                   %span.label.label-default
                     Интервью
-                  = return_upcoming_events(event)
+                %td="c #{link_to 'Ланистер', candidate_path('#')}".html_safe
+
+                %td
+                  %span.label.label-info
+                    "на #{event.starts_at.strftime('%e %b %H:%M')}"
+                %td="на должность #{link_to 'Рубист', vacancy_path('#')}".html_safe
 
   .panel.add-shadows
     .panel-heading
-      .row.panel-title
-        .col-xs-12
-          = 'Последние действия над вакансиями'
+      .panel-title
+        = 'Последние действия над вакансиями'
     .panel-body
-      .row
-        .col-xs-12
-          %table.table.table-striped
-            %tbody
-              - @staff_relations.each do |sr|
-                %tr
-                  %td= link_to sr.vacancy.try(:name), vacancy_path(sr.vacancy || '#'), id: 'vacancy-name'
-                  %td= "кандидат #{link_to sr.candidate.try(:name), candidate_path(sr.candidate.try(:name) || '#')}".html_safe
-                  %td
-                    %span{ class: "label label-#{return_status_label(sr)}" }
-                      = sr.status
-                  %td
-                    .label.label-info
-                      = sr.updated_at.strftime('%e %b %H:%M')
+      %table.table.table-striped.table-responsive
+        %tbody
+          - @staff_relations.each do |sr|
+            %tr
+              %td= link_to sr.vacancy.try(:name), vacancy_path(sr.vacancy || '#'), id: 'vacancy-name'
+              %td= "кандидат #{link_to sr.candidate.try(:name), candidate_path(sr.candidate.try(:name) || '#')}".html_safe
+              %td
+                %span{ class: "label label-#{return_status_label(sr)}" }
+                  = sr.status
+              %td
+                .label.label-info
+                  = sr.updated_at.strftime('%e %b %H:%M')
 .col-xs-7
-  .panel.panel-default.add-shadows
+  .panel.add-shadows
+    .panel-heading
+      .panel-title
     .panel-body
       .row
         .col-xs-3
           .btn-group-vertical.btn-block{ 'aria-label' => 'Vertical button group', role: 'group' }
             = link_to 'Добавить стикер', new_sticker_path, remote: true, class: 'btn btn-success'
             = link_to 'Закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-warning'
-        #stickers
-          = render  partial: 'sticker', collection: @stickers
+        = render  partial: 'sticker', collection: @stickers
         = render 'stickers/dialog'
-        .new_sticker
       .row
-        #stickers-pagination
-          = render partial: 'stickers_pagination', locals: { stickers: @stickers }
+        .col-xs-12
+          #stickers-pagination
+            = render partial: 'stickers_pagination', locals: { stickers: @stickers }
