@@ -1,6 +1,6 @@
 = stylesheet_link_tag 'events'
 
-.col-xs-6
+.col-xs-5
   .panel.add-shadows
     .panel-heading
       .panel-title
@@ -11,14 +11,12 @@
     .panel-body
       .event-list
         = render partial: 'events_list', locals: { events: @events }
-.col-xs-6
+.col-xs-7
   .panel.add-shadows
     .panel-heading
       .panel-title
         Календарь событий
     .panel-body
-      .row
-        .col-xs-10.col-xs-offset-1
-          .calendar
-            = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
-            = render partial: 'calendar', locals: { events: @events }
+      .calendar
+        = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
+        = render partial: 'calendar', locals: { events: @events }
