@@ -24,7 +24,32 @@
   white-space: nowrap;
   width: 35px;
 }
+.td-primary{
+  background-color: #428bca ;
+  color: #ffffff;
+  .modal{
+    color: #212121;
+    table{
+      thead{
+        color: #fff;
+        background-color: #428bca;
+        font-size: 12px;
+      }
+      td{
+        height: auto;
+        width: auto;
+        line-height: 30px;
+        .label{
+          vertical-align: middle;
+        }
+        a{
+          text-decoration: none;
+        }
+      }
 
+    }
+  }
+}
 .event-badge:empty {
   display: none;
 }
