@@ -1,34 +1,35 @@
-.panel.panel-success
-  .panel-heading.panel-title
-    Вакансии
-  .panel-body
-    %table.table.table-bordered.table-hover
-      %thead
-        %tr
-          %th №
-          %th Вакансия
-          %th Регион
-          %th Зарплата
-          %th Ответственный
-          %th Статус
-      %tbody
-        - @vacancies.each do |vacancy|
-          %tr
-            %th= vacancy.id
-            %td= link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
-            %td= vacancy.region.try(:name)
-            %td= get_salary(vacancy)
-            %td= full_name_for(vacancy.owner)
-            %td= vacancy.status
-    = paginate @vacancies
-
-
-- content_for :left_sidebar do
-  .panel-success
-    .panel-heading
-      Поиск
-  .panel-body
-    .form-group
-      %input#inputEmail3.form-control{ placeholder: 'Введите слово' }
-    .form-group
-      %button.btn.btn-success{ type: 'submit' } Найти
+.col-xs-12
+  .row
+    .col-xs-8.col-xs-offset-2
+      .panel-body
+        .input-group
+          %span.input-group-btn
+            = link_to '#', class: 'btn btn-success glyph_show_link' do
+              %i.glyphicon.glyphicon-search
+          %input.form-control{:placeholder => "Search for...", :type => "text"}
+  .row
+    .col-xs-12
+      .panel.add-shadows
+        .panel-heading
+          .panel-title
+            Вакансии
+        .panel-body
+          %table.table.table-bordered.table-hover
+            %thead
+              %tr
+                %th №
+                %th Вакансия
+                %th Регион
+                %th Зарплата
+                %th Ответственный
+                %th Статус
+            %tbody
+              - @vacancies.each do |vacancy|
+                %tr
+                  %th= vacancy.id
+                  %td= link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
+                  %td= vacancy.region.try(:name)
+                  %td= get_salary(vacancy)
+                  %td= full_name_for(vacancy.owner)
+                  %td= vacancy.status
+          = paginate @vacancies
