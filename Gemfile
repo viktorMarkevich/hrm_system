@@ -9,8 +9,6 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'dotenv-rails'
-gem 'unicorn'
-gem 'unicorn-rails'
 gem 'devise'
 gem 'devise_invitable', '~> 1.3.4'
 gem 'haml-rails'
