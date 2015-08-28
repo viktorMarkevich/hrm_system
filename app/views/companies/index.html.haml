@@ -1,36 +1,34 @@
-.panel.panel-success
-  .panel-heading.panel-title
-    Компании
-  .panel-body
-    %table.table.table-bordered.table-hover
-      %thead
-        %tr
-          %th №
-          %th Имя
-          %th Страница
-          %th Кандидаты
-          %th Регион
-          %th Дата регистрации
-          %th Краткое описание
+.col-xs-12
+  = render partial: 'share/search'
 
-      %tbody
-        - @companies.each do |company|
-          %tr
-            %th= company.id
-            %td= link_to company.name, company_path(company), id: 'company-name'
-            %td= company.url
-            %td= '777'
-            %td= company.region.try(:name)
-            %td= company.created_at
-            %td= truncate(company.description, length: 50)
-    = paginate @companies
+  .row
+    .col-xs-12
+      .panel.add-shadows
+        .panel-heading
+          .panel-title
+            Компании
+        .panel-body
+          %table.table.table-bordered.table-hover
+            %thead
+              %tr
+                %th №
+                %th Имя
+                %th Страница
+                %th Кандидаты
+                %th Регион
+                %th Дата регистрации
+                %th Краткое описание
 
-- content_for :left_sidebar do
-  .panel-success
-    .panel-heading
-      Поиск
-    .panel-body
-      .form-group
-        %input#inputEmail3.form-control{ placeholder: 'Введите слово' }
-      .form-group
-        %button.btn.btn-success{ type: 'submit' } Найти
+            %tbody
+              - @companies.each do |company|
+                %tr
+                  %th= company.id
+                  %td= link_to company.name, company_path(company), id: 'company-name'
+                  %td= company.url
+                  %td= '777'
+                  %td= company.region.try(:name)
+                  %td= company.created_at
+                  %td= truncate(company.description, length: 50)
+  .row
+    .col-xs-3
+      = paginate @companies

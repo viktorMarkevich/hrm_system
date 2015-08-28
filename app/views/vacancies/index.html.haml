@@ -1,12 +1,5 @@
 .col-xs-12
-  .row
-    .col-xs-8.col-xs-offset-2
-      .panel-body
-        .input-group
-          %span.input-group-btn
-            = link_to '#', class: 'btn btn-success glyph_show_link' do
-              %i.glyphicon.glyphicon-search
-          %input.form-control{:placeholder => "Search for...", :type => "text"}
+  = render partial: 'share/search'
   .row
     .col-xs-12
       .panel.add-shadows
@@ -32,4 +25,6 @@
                   %td= get_salary(vacancy)
                   %td= full_name_for(vacancy.owner)
                   %td= vacancy.status
-          = paginate @vacancies
+  .row
+    .col-xs-3
+      = paginate @vacancies

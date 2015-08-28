@@ -1,47 +1,46 @@
-.col-xs-3
-  .panel-body
-    .input-group
-      %span.input-group-btn
-        = link_to '#', class: 'btn btn-success glyph_show_link' do
-          %i.glyphicon.glyphicon-search
-      %input.form-control{:placeholder => "Search for...", :type => "text"}
+.col-xs-12
+  = render partial: 'share/search'
 
-.col-xs-9
-  .panel.panel-success
-    .panel-heading.panel-title
-      Кандидаты
-    .panel-body
-      .well
-        .row
-          .col-xs-6
-            %code Искать в
-            %button.btn.btn-default В Linkedin
-            %button.btn.btn-default В Интернет
-          .col-xs-offset-3.col-xs-3
-            %code Импортировать с
-            %button.btn.btn-default Почты
-            %button.btn.btn-default Файла
+  .row
+    .col-xs-12
+      .panel.add-shadows
+        .panel-heading
+          .panel-title
+            Кандидаты
+        .panel-body
+          .well
+            .row
+              .col-xs-6
+                %code Искать в
+                %button.btn.btn-default В Linkedin
+                %button.btn.btn-default В Интернет
+              .col-xs-offset-3.col-xs-3
+                %code Импортировать с
+                %button.btn.btn-default Почты
+                %button.btn.btn-default Файла
 
-      %table.table.table-bordered.table-hover
-        %thead
-          %tr
-            %th №
-            %th Кандидат
-            %th Должность
-            %th Регион
-            %th Зарплата
-            %th Ответственный
-            %th Статус
-            %th Добавлен
-        %tbody
-          - @candidates.each do |candidate|
-            %tr
-              %th= candidate.id
-              %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
-              %td= candidate.desired_position
-              %td= display_field_value_for(candidate.city_of_residence)
-              %td= display_field_value_for(candidate.salary)
-              %td= full_name_for(candidate.owner)
-              %td= candidate.status
-              %td= candidate.created_at.strftime('%F')
+          %table.table.table-bordered.table-hover
+            %thead
+              %tr
+                %th №
+                %th Кандидат
+                %th Должность
+                %th Регион
+                %th Зарплата
+                %th Ответственный
+                %th Статус
+                %th Добавлен
+            %tbody
+              - @candidates.each do |candidate|
+                %tr
+                  %th= candidate.id
+                  %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
+                  %td= candidate.desired_position
+                  %td= display_field_value_for(candidate.city_of_residence)
+                  %td= display_field_value_for(candidate.salary)
+                  %td= full_name_for(candidate.owner)
+                  %td= candidate.status
+                  %td= candidate.created_at.strftime('%F')
+  .row
+    .col-xs-3
       = paginate @candidates
