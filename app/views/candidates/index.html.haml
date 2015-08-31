@@ -19,28 +19,29 @@
                 %button.btn.btn-default Почты
                 %button.btn.btn-default Файла
 
-          %table.table.table-bordered.table-hover
-            %thead
-              %tr
-                %th №
-                %th Кандидат
-                %th Должность
-                %th Регион
-                %th Зарплата
-                %th Ответственный
-                %th Статус
-                %th Добавлен
-            %tbody
-              - @candidates.each do |candidate|
+          .items-list
+            %table.table.table-bordered.table-hover
+              %thead
                 %tr
-                  %th= candidate.id
-                  %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
-                  %td= candidate.desired_position
-                  %td= display_field_value_for(candidate.city_of_residence)
-                  %td= display_field_value_for(candidate.salary)
-                  %td= full_name_for(candidate.owner)
-                  %td= candidate.status
-                  %td= candidate.created_at.strftime('%F')
+                  %th №
+                  %th Кандидат
+                  %th Должность
+                  %th Регион
+                  %th Зарплата
+                  %th Ответственный
+                  %th Статус
+                  %th Добавлен
+              %tbody
+                - @candidates.each do |candidate|
+                  %tr
+                    %th= candidate.id
+                    %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
+                    %td= candidate.desired_position
+                    %td= display_field_value_for(candidate.city_of_residence)
+                    %td= display_field_value_for(candidate.salary)
+                    %td= full_name_for(candidate.owner)
+                    %td= candidate.status
+                    %td= candidate.created_at.strftime('%F')
   .row
     .col-xs-3
       = paginate @candidates

@@ -3,28 +3,29 @@
     .panel-title
       Менеджеры
   .panel-body
-    %table.table.table-bordered.table-hover
-      %thead
-        %tr
-          %th №
-          %th Полное имя
-          %th Должность
-          %th Регион
-          %th Skype
-          %th Телефон
-          %th Созданных вакансий
-          %th Созданных кандидатов
-      %tbody
-        - @users.each do |user|
+    .items-list
+      %table.table.table-bordered.table-hover
+        %thead
           %tr
-            %th= user.id
-            %td= full_name_for(user)
-            %td= user.post
-            %td= user.region_name
-            %td= user.skype
-            %td= user.phone
-            %td= user.vacancies.size
-            %td= user.candidates.size
+            %th №
+            %th Полное имя
+            %th Должность
+            %th Регион
+            %th Skype
+            %th Телефон
+            %th Созданных вакансий
+            %th Созданных кандидатов
+        %tbody
+          - @users.each do |user|
+            %tr
+              %th= user.id
+              %td= full_name_for(user)
+              %td= user.post
+              %td= user.region_name
+              %td= user.skype
+              %td= user.phone
+              %td= user.vacancies.size
+              %td= user.candidates.size
     = paginate @users
 
 - content_for :left_sidebar do
