@@ -25,33 +25,35 @@
   width: 35px;
 }
 
-.event-list{
+.events-list {
   color: #212121;
-  table{
-    thead{
+  table {
+    thead {
       color: #fff;
       background-color: #428bca;
       font-size: 12px;
     }
-    td{
+    td {
       height: auto;
       width: auto;
       line-height: 30px;
-      .label{
+      .label {
         vertical-align: middle;
       }
-      a{
+      a {
         text-decoration: none;
       }
     }
-
   }
 }
 
 .td-primary {
-  background-color: #428bca ;
+  background-color: #428bca;
   color: #ffffff;
+
+  @extend .events-list;
 }
+
 .event-badge:empty {
   display: none;
 }
