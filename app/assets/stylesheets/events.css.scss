@@ -25,35 +25,6 @@
   width: 35px;
 }
 
-.events-list {
-  color: #212121;
-  table {
-    thead {
-      color: #fff;
-      background-color: #428bca;
-      font-size: 12px;
-    }
-    td {
-      height: auto;
-      width: auto;
-      line-height: 30px;
-      .label {
-        vertical-align: middle;
-      }
-      a {
-        text-decoration: none;
-      }
-    }
-  }
-}
-
-.td-primary {
-  background-color: #428bca;
-  color: #ffffff;
-
-  @extend .events-list;
-}
-
 .event-badge:empty {
   display: none;
 }
