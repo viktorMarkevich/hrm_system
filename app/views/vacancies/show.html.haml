@@ -33,17 +33,6 @@
                   %th Требования:
                   %td= display_field_value_for(@vacancy.requirements)
   .row
-    .col-xs-3.col-xs-3
-      .panel
-        .panel-body
-          .btn-group
-            .btn-group-vertical{ data: { toggle: 'buttons-radio' } }
-              = link_to 'Найденные', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Найденные', vacancy_id: @vacancy.id}
-              = link_to 'Отобранные', '#',    class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Отобранные', vacancy_id: @vacancy.id }
-              = link_to 'Собеседование', '#', class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Собеседование', vacancy_id: @vacancy.id }
-              = link_to 'Утвержден', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Утвержден', vacancy_id: @vacancy.id }
-              = link_to 'Не подходит', '#',   class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Не подходит', vacancy_id: @vacancy.id }
-              = link_to 'Отказался', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Отказался', vacancy_id: @vacancy.id }
-    .col-xs-9
+    .col-xs-offset-3.col-xs-9
       = render partial: 'vacancies/footer_panel', locals: { example: nil }
   = render 'dialog'

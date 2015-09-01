@@ -5,8 +5,15 @@
       .pull-right
         = link_to 'Добавить кандидатов к этой вакансии', '#', class: 'btn btn-default', id: 'add-to-vacancy'
   .panel-body
-    .col-xs-10
-      .panel-body
+    .row
+      .col-xs-12
+        .btn-group{ role: 'group' }
+          = link_to 'Найденные', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Найденные', vacancy_id: @vacancy.id }
+          = link_to 'Отобранные', '#',    class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Отобранные', vacancy_id: @vacancy.id }
+          = link_to 'Собеседование', '#', class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Собеседование', vacancy_id: @vacancy.id }
+          = link_to 'Утвержден', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Утвержден', vacancy_id: @vacancy.id }
+          = link_to 'Не подходит', '#',   class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Не подходит', vacancy_id: @vacancy.id }
+          = link_to 'Отказался', '#',     class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Отказался', vacancy_id: @vacancy.id }
         %table.table.table-striped#vacancy-candidates
           %caption Кандидаты со статусом "Найденные"
           %thead
