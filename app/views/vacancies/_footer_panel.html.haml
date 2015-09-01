@@ -1,11 +1,11 @@
 %ul.nav.nav-tabs{ data: { tabs: 'tabs' } }
-  %li.active= link_to 'Найденные', '#',  class: ' candidates-for-vacancy', data: { status_name: 'Найденные', vacancy_id: @vacancy.id, toggle: 'tab' }
-  %li= link_to 'Отобранные', '#',    class: ' candidates-for-vacancy', data: { status_name: 'Отобранные', vacancy_id: @vacancy.id, toggle: 'tab' }
-  %li= link_to 'Собеседование', '#', class: ' candidates-for-vacancy', data: { status_name: 'Собеседование', vacancy_id: @vacancy.id, toggle: 'tab' }
-  %li= link_to 'Утвержден', '#',     class: ' candidates-for-vacancy', data: { status_name: 'Утвержден', vacancy_id: @vacancy.id, toggle: 'tab' }
-  %li= link_to 'Не подходит', '#',   class: ' candidates-for-vacancy', data: { status_name: 'Не подходит', vacancy_id: @vacancy.id, toggle: 'tab' }
-  %li= link_to 'Отказался', '#',     class: ' candidates-for-vacancy', data: { status_name: 'Отказался', vacancy_id: @vacancy.id, toggle: 'tab' }
-%table.table.table-hover#vacancy-candidates
+  %li= link_to 'Найденные', '#',  class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Найденные', vacancy_id: @vacancy.id, toggle: 'tab' }
+  %li= link_to 'Отобранные', '#',    class: 'btn btn-primary candidates-for-vacancy', data: { status_name: 'Отобранные', vacancy_id: @vacancy.id, toggle: 'tab' }
+  %li= link_to 'Собеседование', '#', class: 'btn btn-info candidates-for-vacancy', data: { status_name: 'Собеседование', vacancy_id: @vacancy.id, toggle: 'tab' }
+  %li= link_to 'Утвержден', '#',     class: 'btn btn-success candidates-for-vacancy', data: { status_name: 'Утвержден', vacancy_id: @vacancy.id, toggle: 'tab' }
+  %li= link_to 'Не подходит', '#',   class: 'btn btn-warning candidates-for-vacancy', data: { status_name: 'Не подходит', vacancy_id: @vacancy.id, toggle: 'tab' }
+  %li= link_to 'Отказался', '#',     class: 'btn btn-danger candidates-for-vacancy', data: { status_name: 'Отказался', vacancy_id: @vacancy.id, toggle: 'tab' }
+%table.table.table-hover.table-responsive#vacancy-candidates
   %thead
     %tr
       %th Имя
@@ -21,8 +21,8 @@
         %td
           %span.label.label-primary
             = candidate.created_at
-        %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(@vacancy)), class: 'status-picker', data: { vacancyid: @vacancy.id, candidateid: candidate.id }, :include_blank => 'Перевести в статус' )
-        %td= link_to "Добавить событие", new_event_path, class: 'btn btn-success'
+        %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(@vacancy)), class: 'status-picker', data: { vacancyid: @vacancy.id, candidateid: candidate.id } )
+        %td= link_to 'Добавить событие', new_event_path, remoute: true, class: 'btn btn-success'
 
 .modal.fade#myModal
   .modal-dialog.modal-lg
