@@ -2,18 +2,13 @@
 = stylesheet_link_tag 'vacancies'
 
 .col-xs-12
-  .row
-    .col-xs-3
-      = render partial: 'vacancies/left_sidebar', locals: { status: @vacancy.status, vacancy: @vacancy }
-    .col-xs-9
-      .panel
-        .panel-heading
-          .panel-title
-            = @vacancy.name
-            .pull-right
-              = link_to 'Редактировать', edit_vacancy_path(@vacancy), class: 'btn btn-default'
-              = link_to 'Назад', :back, class: 'btn btn-default'
-        .panel-body
+  .panel.add-shadows
+    .panel-heading
+      .panel-title
+        = @vacancy.name
+    .panel-body
+      .row
+        .col-xs-6.col-xs-offset-3
           %table.table.table-info
             %thead
               %tbody
@@ -32,7 +27,7 @@
                 %tr
                   %th Требования:
                   %td= display_field_value_for(@vacancy.requirements)
-  .row
-    .col-xs-offset-3.col-xs-9
+        .col-xs-6.col-xs-offset-3
+          = render partial: 'vacancies/left_sidebar', locals: { status: @vacancy.status, vacancy: @vacancy }
       = render partial: 'vacancies/footer_panel', locals: { example: nil }
   = render 'dialog'
