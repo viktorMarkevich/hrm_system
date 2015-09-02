@@ -1,5 +1,5 @@
 %ul.nav.nav-tabs{ data: { tabs: 'tabs' } }
-  %li= link_to 'Найденные', '#',  class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Найденные', vacancy_id: @vacancy.id, toggle: 'tab' }
+  %li.active= link_to 'Найденные', '#',  class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Найденные', vacancy_id: @vacancy.id, toggle: 'tab' }
   %li= link_to 'Отобранные', '#',    class: 'btn btn-primary candidates-for-vacancy', data: { status_name: 'Отобранные', vacancy_id: @vacancy.id, toggle: 'tab' }
   %li= link_to 'Собеседование', '#', class: 'btn btn-info candidates-for-vacancy', data: { status_name: 'Собеседование', vacancy_id: @vacancy.id, toggle: 'tab' }
   %li= link_to 'Утвержден', '#',     class: 'btn btn-success candidates-for-vacancy', data: { status_name: 'Утвержден', vacancy_id: @vacancy.id, toggle: 'tab' }
