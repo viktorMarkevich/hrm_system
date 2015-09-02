@@ -5,12 +5,13 @@
   %li= link_to 'Утвержден', '#',     class: 'btn btn-success candidates-for-vacancy', data: { status_name: 'Утвержден', vacancy_id: @vacancy.id, toggle: 'tab' }
   %li= link_to 'Не подходит', '#',   class: 'btn btn-warning candidates-for-vacancy', data: { status_name: 'Не подходит', vacancy_id: @vacancy.id, toggle: 'tab' }
   %li= link_to 'Отказался', '#',     class: 'btn btn-danger candidates-for-vacancy', data: { status_name: 'Отказался', vacancy_id: @vacancy.id, toggle: 'tab' }
+-#%table.table.table-hover.table-responsive
 %table.table.table-hover.table-responsive#vacancy-candidates
   %thead
     %tr
       %th Имя
       %th Зарплата
-      %th Добавлен
+      %th Перемещен
       %th Статус
   %tbody
     - @candidates_with_found_status.each do |candidate|
@@ -18,8 +19,8 @@
         %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
         %td= desired_salary_for(candidate)
         %td
-          %span.label.label-primary
-            = candidate.created_at
+          %span.label.label-info
+            = candidate.updated_at.strftime('%F в %I:%M')
         %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES,
                         candidate.status_for_vacancy(@vacancy)), class: 'status-picker',
                         data: { vacancyid: @vacancy.id, candidateid: candidate.id } )
