@@ -20,7 +20,9 @@
         %td
           %span.label.label-primary
             = candidate.created_at
-        %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(@vacancy)), class: 'status-picker', data: { vacancyid: @vacancy.id, candidateid: candidate.id } )
+        %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES,
+                        candidate.status_for_vacancy(@vacancy)), class: 'status-picker',
+                        data: { vacancyid: @vacancy.id, candidateid: candidate.id } )
 
 .modal.fade#myModal
   .modal-dialog.modal-lg

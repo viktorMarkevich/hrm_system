@@ -20,7 +20,8 @@
         %dt Требования:
         %dd= display_field_value_for(@vacancy.requirements)
         %dt Статус вакансии:
-        %dd= link_to @vacancy.status, edit_vacancy_path(@vacancy), class: 'label label-info'
+        %dd.vacancy_status
+          = render partial: 'vacancy_status', locals: { vacancy: @vacancy }
         %dt Ответственный:
         %dd= get_author_vacancy(@vacancy)
       %hr

@@ -40,10 +40,12 @@ class VacanciesController < ApplicationController
     respond_to do |format|
       if @vacancy.update_attributes(vacancy_params)
         format.html { redirect_to vacancies_path, notice: 'Вакансия успешно обновлена.' }
-        format.json { render json: { status: :ok } }
+        format.json { head :no_content }
+        format.js
       else
         format.html { render 'edit' }
-        format.json { render json: { status: :unprocessable_entity } }
+        format.json { render json: @vacancy.errors.full_messages,
+                             status: :unprocessable_entity }
       end
     end
   end

@@ -1,0 +1,4 @@
+$('#dialog').modal('toggle');
+$('.vacancy_status').html('<%= escape_javascript(render partial: 'vacancy_status',
+                                                  locals: { vacancy: @vacancy }) %>')
+$('.modal-backdrop').remove();
