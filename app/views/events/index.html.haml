@@ -5,7 +5,7 @@
     .panel-heading
       .panel-title
         - if @events.present?
-          = "Список событий за #{Event::MONTHS[@events.first.starts_at.month - 1]}"
+          = "Список событий за #{Event::MONTHS[set_month(params[:start_date])]}"
         - else
           Список событий за этот месяц пуст.
     .panel-body

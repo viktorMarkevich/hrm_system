@@ -17,4 +17,9 @@ module EventsHelper
       { class: td_class.join(' ') }
     }
   end
+
+  def set_month(date)
+    date.present? ? date[5,6].to_i-1 : 8
+  end
+
 end
