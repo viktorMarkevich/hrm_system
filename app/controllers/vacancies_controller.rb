@@ -15,8 +15,12 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    @candidates_with_found_status = @vacancy.candidates_with_status('Найденные')
+    @candidates_with_found_status = @vacancy.candidates_with_status(params[:status] || 'Найденные')
     @candidates = Candidate.includes(:staff_relations)
+    respond_to do |format|
+        format.html
+        format.js
+    end
   end
 
   def edit
