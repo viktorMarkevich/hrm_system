@@ -1,6 +1,22 @@
-.panel.panel-success
-  .panel-heading.panel-title
-    Календарь
-  .panel-body
-    .calendar
-      = render partial: 'calendar', locals: { events: @events }
+= stylesheet_link_tag 'events'
+
+.col-xs-5
+  .panel.add-shadows
+    .panel-heading
+      .panel-title
+        - if @events.present?
+          = "Список событий за #{Event::MONTHS[@events.first.starts_at.month - 1]}"
+        - else
+          Список событий за этот месяц пуст.
+    .panel-body
+      .items-list
+        = render partial: 'events_list', locals: { events: @events }
+.col-xs-7
+  .panel.add-shadows
+    .panel-heading
+      .panel-title
+        Календарь событий
+    .panel-body
+      .calendar
+        = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
+        = render partial: 'calendar', locals: { events: @events }

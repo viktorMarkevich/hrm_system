@@ -1,31 +1,40 @@
 = javascript_include_tag 'vacancies'
+= stylesheet_link_tag 'vacancies'
 
-= render partial: 'vacancies/left_sidebar', locals: { status: @vacancy.status, vacancy: @vacancy }
-= render partial: 'vacancies/footer_panel', locals: { example: nil }
-= render 'dialog'
 
-.panel.panel-success
-  .panel-heading.panel-title
-    = @vacancy.name
-  .panel-body
-    %table.table.table-info
-      %thead
-        %tbody
-          %tr
-            %th Зарплата:
-            %td= get_salary(@vacancy)
-          %tr
-            %th Регион:
-            %td= @vacancy.region.try(:name)
-          %tr
-            %th Языки:
-            %td= display_field_value_for(@vacancy.languages)
-          %tr
-            %th Добавлено:
-            %td= get_author_and_date(@vacancy)
-          %tr
-            %th Требования:
-            %td= display_field_value_for(@vacancy.requirements)
+.col-lg-6
+  .panel.add-shadows
+    .panel-heading
+      .panel-title.tip
+        = @vacancy.name
+    .panel-body
+      %dl.dl-horizontal
+        %dt Зарплата:
+        %dd= get_salary(@vacancy)
+        %dt Регион:
+        %dd= @vacancy.region.try(:name)
+        %dt Языки:
+        %dd= display_field_value_for(@vacancy.languages)
+        %dt Добавлено:
+        %dd= get_author_and_date(@vacancy)
+        %dt Требования:
+        %dd= display_field_value_for(@vacancy.requirements)
+        %dt Статус вакансии:
+        %dd= link_to @vacancy.status, edit_vacancy_path(@vacancy), class: 'label label-info'
+        %dt Ответственный:
+        %dd= get_author_vacancy(@vacancy)
+      %hr
+      %span.tip
+        Вы можете:
+      .pull-right
+        = link_to 'Редактировать вакансию', edit_vacancy_path(@vacancy), class: 'btn btn-default'
+        = link_to 'Вернуться', :back, class: 'btn btn-default'
+        %code
+          или
+        = link_to 'Добавить кандидатов к этой вакансии', '#', class: 'btn btn-default', id: 'add-to-vacancy'
 
-= link_to 'Редактировать', edit_vacancy_path(@vacancy), class: 'btn btn-default'
-= link_to 'Назад', :back, class: 'btn btn-default'
+.col-lg-6
+  .panel.add-shadows
+    .panel-body
+      = render partial: 'vacancies/right_panel', locals: { example: nil }
+  = render 'dialog'

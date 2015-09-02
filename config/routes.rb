@@ -5,9 +5,10 @@ Rails.application.routes.draw do
 
   devise_for :users, path_names: { sign_in: 'login', sign_out: 'logout' }, controllers: { invitations: 'devise/invitations' }
 
-  root 'stickers#index'
+  root 'organisers#index'
 
-  resources :stickers, except: [:show]
+  resources :organisers, only: :index
+  resources :stickers, except: [:show, :index]
 
   get 'archives/:object_name', to: 'archives#index', as: :archives
   delete 'archives/:object_name/:id', to: 'archives#destroy', as: :restore_object

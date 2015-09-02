@@ -3,16 +3,9 @@
 class StickersController < ApplicationController
   load_and_authorize_resource param_method: :sticker_params
 
-  include Events
-  include VacancyAction
-
   before_filter :authenticate_user!
   before_filter :find_sticker, only: [:update, :edit, :destroy]
   before_filter :prepare_performers, only: [:new, :edit, :create]
-
-  def index
-    set_stickers
-  end
 
   def new
     @sticker = Sticker.new
@@ -59,7 +52,7 @@ class StickersController < ApplicationController
       flash[:notice] = 'Стикер был успешно закрыт.'
       respond_to do |format|
         format.js
-        format.html { redirect_to stickers_url }
+        format.html { redirect_to organisers_url }
         format.json { head :no_content }
       end
     end

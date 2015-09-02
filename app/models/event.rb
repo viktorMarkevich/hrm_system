@@ -8,6 +8,8 @@ class Event < ActiveRecord::Base
   validates :name,  :description, presence: true
   validate :future_event?
 
+  MONTHS = %w(Январь Февраль Март Апрель Май Июнь Июль Август Сентябрь Октябрь Ноябрь Декабрь)
+
   def future_event?
     errors.add(:starts_at, 'дата должна быть предстоящей!') unless starts_at.future?
   end

@@ -1,0 +1,68 @@
+%ul.nav.nav-tabs{ data: { tabs: 'tabs' } }
+  %li.active= link_to 'Найденные', '#',  class: 'btn btn-default candidates-for-vacancy', data: { status_name: 'Найденные', vacancy_id: @vacancy.id, toggle: 'tab' }
+  %li= link_to 'Отобранные', '#',    class: 'btn btn-primary candidates-for-vacancy', data: { status_name: 'Отобранные', vacancy_id: @vacancy.id, toggle: 'tab' }
+  %li= link_to 'Собеседование', '#', class: 'btn btn-info candidates-for-vacancy', data: { status_name: 'Собеседование', vacancy_id: @vacancy.id, toggle: 'tab' }
+  %li= link_to 'Утвержден', '#',     class: 'btn btn-success candidates-for-vacancy', data: { status_name: 'Утвержден', vacancy_id: @vacancy.id, toggle: 'tab' }
+  %li= link_to 'Не подходит', '#',   class: 'btn btn-warning candidates-for-vacancy', data: { status_name: 'Не подходит', vacancy_id: @vacancy.id, toggle: 'tab' }
+  %li= link_to 'Отказался', '#',     class: 'btn btn-danger candidates-for-vacancy', data: { status_name: 'Отказался', vacancy_id: @vacancy.id, toggle: 'tab' }
+%table.table.table-hover.table-responsive#vacancy-candidates
+  %thead
+    %tr
+      %th Имя
+      %th Зарплата
+      %th Добавлен
+      %th Статус
+  %tbody
+    - @candidates_with_found_status.each do |candidate|
+      %tr
+        %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
+        %td= desired_salary_for(candidate)
+        %td
+          %span.label.label-primary
+            = candidate.created_at
+        %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(@vacancy)), class: 'status-picker', data: { vacancyid: @vacancy.id, candidateid: candidate.id } )
+
+.modal.fade#myModal
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        %button.close{ "aria-label" => "close", "data-dismiss" => "modal", type:'button' }
+          %span{ "aria-hidden" => true }
+            &times;
+        %h4.modal-title Кандидаты
+      .modal-body
+        #candidates-multiselect{data: { vacancyid: @vacancy.id } }
+          .panel.panel-primary
+            %table.table.table-bordered
+              %thead.td-primary
+                %tr
+                  %th Имя
+                  %th Зарплата
+                  %th Примечание
+              %tbody
+                - @candidates.each do |candidate|
+                  %tr
+                    %td
+                      = check_box_tag 'mark-as-found-candidate', candidate.id
+                      = candidate.name
+                    %td= candidate.salary
+                    %td
+                      - if candidate.is_passive?
+                        Имеет статус
+                        &nbsp;
+                        %span.label.label-primary
+                          = candidate.status
+                      - else
+                        - candidate.staff_relations.each do |sr|
+                          %p{style: 'font-size: 14px'}
+                            Имеет статус
+                            &nbsp;
+                            %span{ class: "label label-#{return_status_label(sr)}" }
+                              = sr.status
+                            &nbsp;
+                            для вакансии
+                            %span.label.label-info
+                              = sr.vacancy.name
+      .modal-footer
+        %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
+        %button.btn.btn-primary#btn-apply{ type: 'button' } Выбрать

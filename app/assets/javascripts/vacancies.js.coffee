@@ -1,14 +1,6 @@
 # coding 'utf-8'
-highlightDefaultTab = ->
-  $defaultTab = $(".candidates-for-vacancy").first()
-  $defaultTab.siblings().removeClass("active")
-  $defaultTab.addClass('active')
-
 disableDefaultOption = ->
   $('select.status-picker option:first-child').attr("disabled", "disabled");
-
-setCandidatesTableCaptionByStatus = (status) ->
-  $('#vacancy-candidates caption').text('Кандидаты со статусом "' + status + '"')
 
 addPassiveCandidateToList = (candidate) ->
   $('#candidates-multiselect tbody').append(
@@ -33,12 +25,10 @@ buildCandidatesTable = (data) ->
   for candidate in data.candidates
     $candidatesTable.append(
       "<tr>" +
-      "<th>" + candidate.id + "</th>" +
       "<td><a href='/candidates/'+id>" + candidate.name + "</a></td>"+
       "<td>" + candidate.salary + "</td>"+
       "<td><span class='label label-primary'>" + candidate.created_at + "</span></td>"+
       "<td><select name=\"status-picker\" class=\"status-picker\"></td>" +
-      "<td><a href=\"/events/new\" class=\"btn btn-success\">Добавить событие</a></td>" +
       "</tr>")
     $select = $('select').last()
 
@@ -66,7 +56,6 @@ $(document).ready ->
   # if we on the vacancy show page
   $getIntoStatusButton = $(".candidates-for-vacancy")
   if($getIntoStatusButton)
-    highlightDefaultTab()
     disableDefaultOption()
 
     addedToVacancyCandidatesIds = []
@@ -88,11 +77,8 @@ $(document).ready ->
           buildCandidatesTable(response)
           setCandidatesTableCaptionByStatus('Найденные')
           $('#myModal').modal('hide')
-          highlightDefaultTab()
 
     $getIntoStatusButton.click ->
-      # set active tab
-      $(this).siblings().removeClass("active");
       vacancy_id = $(this).data('vacancy-id')
       $.ajax
         url: "/vacancies/#{vacancy_id}/search_candidates_by_status"

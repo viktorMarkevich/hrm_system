@@ -14,7 +14,7 @@ module ApplicationHelper
 
   def return_upcoming_events(event)
     "&nbsp; c #{link_to 'Ланистер', candidate_path('#')} на
-     <div class= 'label label-primary'>#{event.starts_at.strftime('%e %b %H:%M')}</div>
+     <div class= 'label label-info'>#{event.starts_at.strftime('%e %b %H:%M')}</div>
      на должность #{link_to 'Рубист', vacancy_path('#')}".html_safe
   end
 

@@ -1,6 +1,3 @@
-= link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
-.new_event
-
 = render 'dialog'
 
 = month_calendar events: events, table: { class: 'table table-bordered' },
@@ -11,7 +8,7 @@
   %a.event-badge{ href: '#', 'data-target' => "#myModal#{date}", 'data-toggle' => 'modal' }= events.count if events.present?
 
   / Modal
-  .events-list.modal.fade{ 'aria-labelledby' => 'myModalLabel', role: 'dialog', tabindex: '-1', id: "myModal#{date}" }
+  .modal.fade{ 'aria-labelledby' => 'myModalLabel', role: 'dialog', tabindex: '-1', id: "myModal#{date}" }
     .modal-dialog{ role: 'document' }
       .modal-content
         .modal-header
