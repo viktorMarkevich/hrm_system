@@ -10,7 +10,7 @@
   %li{ class: get_active(params, 'Не подходит') }
     = link_to 'Не подходит', vacancy_path(@vacancy, status: 'Не подходит'), remote: true, class: 'btn btn-warning'
   %li{ class: get_active(params, 'Отказался') }
-    = link_to 'Отказался', vacancy_path(@vacancy, status: 'Отказался'), class: 'btn btn-danger'
+    = link_to 'Отказался', vacancy_path(@vacancy, status: 'Отказался'), remote: true, class: 'btn btn-danger'
 
 - if candidates.present?
   %table.table.table-hover.table-responsive
@@ -28,10 +28,14 @@
           %td
             %span.label.label-info
               = candidate.updated_at.strftime('%F в %I:%M')
-          %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES,
-                              candidate.status_for_vacancy(vacancy)), class: 'status-picker',
-                              data: { vacancyid: vacancy.id, candidateid: candidate.id } )
+          %td
+            = form_for @vacancy, remote: true, html: { role: 'form', id: "form-#{candidate.id}" } do |f|
+              #error_explanation.bg-danger.text-danger
+              = f.hidden_field :candidate_id, value: candidate.id
+              = f.select(:sr_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(vacancy)),
+                         {}, { class: candidate.id })
 - else
   .panel-body
     %pНи один кандидат не был выбран для этой категории
-    = image_tag 'facepalm.gif'
+    .text-center
+      = image_tag 'facepalm.gif'

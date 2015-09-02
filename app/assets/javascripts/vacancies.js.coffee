@@ -39,6 +39,12 @@ buildCandidatesTable = (data) ->
     $select.val(data.current_status)
 
 $(document).ready ->
+
+  $('#vacancy_sr_status').change ->
+    id = $(this).attr('class')
+    $('form#form-'+id).trigger 'submit.rails'
+    return
+
   # if we on the new vacancy form
   if $('#new_vacancy')
     $inputSalary = $('input[name="vacancy[salary]"]')
@@ -77,18 +83,6 @@ $(document).ready ->
           buildCandidatesTable(response)
           setCandidatesTableCaptionByStatus('Найденные')
           $('#myModal').modal('hide')
-
-    $getIntoStatusButton.click ->
-      vacancy_id = $(this).data('vacancy-id')
-      $.ajax
-        url: "/vacancies/#{vacancy_id}/search_candidates_by_status"
-        type: "GET"
-        data:
-          status: $(this).data('status-name')
-        success: (response) ->
-          buildCandidatesTable(response)
-          setCandidatesTableCaptionByStatus(response.current_status)
-          return
 
     $('#vacancy-candidates').on 'change', '.status-picker', ->
       $row_to_remove = $(this).parents('tr')
