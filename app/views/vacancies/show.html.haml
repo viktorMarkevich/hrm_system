@@ -20,7 +20,7 @@
         %dt Требования:
         %dd= display_field_value_for(@vacancy.requirements)
         %dt Статус вакансии:
-        -#%dd= link_to @vacancy.status, edit_vacancy_path(@vacancy), class: 'label label-info'
+        %dd= link_to @vacancy.status, edit_vacancy_path(@vacancy), class: 'label label-info'
         %dt Ответственный:
         %dd= get_author_vacancy(@vacancy)
       %hr
@@ -36,5 +36,5 @@
 .col-lg-6
   .panel.add-shadows
     .panel-body
-      = render partial: 'vacancies/footer_panel', locals: { example: nil }
+      = render partial: 'vacancies/right_panel', locals: { example: nil }
   = render 'dialog'

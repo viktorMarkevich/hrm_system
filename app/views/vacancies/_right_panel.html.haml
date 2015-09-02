@@ -12,7 +12,6 @@
       %th Зарплата
       %th Добавлен
       %th Статус
-      %th Событие
   %tbody
     - @candidates_with_found_status.each do |candidate|
       %tr
@@ -22,7 +21,6 @@
           %span.label.label-primary
             = candidate.created_at
         %td= select_tag(:applied_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(@vacancy)), class: 'status-picker', data: { vacancyid: @vacancy.id, candidateid: candidate.id } )
-        %td= link_to 'Добавить событие', new_event_path, remoute: true, class: 'btn btn-success'
 
 .modal.fade#myModal
   .modal-dialog.modal-lg
