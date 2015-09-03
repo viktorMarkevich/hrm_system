@@ -38,14 +38,14 @@ class VacanciesController < ApplicationController
   end
 
   def update
-    # @vacancy.associate_with_region(params[:region])
-
     if params_present?
       status = @vacancy.staff_relations.where(candidate_id: params[:vacancy][:candidate_id]).first.status
 
       @candidates_with_found_status = @vacancy.candidates_with_status(status || 'Найденные')
       @candidates = Candidate.includes(:staff_relations)
       StaffRelation.update_status(params)
+    else
+      @vacancy.associate_with_region(params[:region])
     end
 
     respond_to do |format|
@@ -60,25 +60,6 @@ class VacanciesController < ApplicationController
       end
     end
   end
-
-  # def change_candidate_status
-  #   #FIXME: Не работает выборка в контроллере! В консоли работает!
-  #   staff_relation = StaffRelation.find_by_vacancy_id_and_candidate_id(params[:id],params[:candidate_id])
-  #
-  #   unless params[:status] == 'Нейтральный'
-  #     if staff_relation.update(status: params[:status])
-  #       render json: { status: :ok }
-  #     else
-  #       render json: { status: :unprocessable_entity }
-  #     end
-  #   else
-  #     candidate = Candidate.find(params[:candidate_id])
-  #       if staff_relation.delete
-  #         candidate.update(status: 'Пассивен')
-  #       end
-  #     render json: { status: :ok, candidate: candidate }
-  #   end
-  # end
 
   private
 
