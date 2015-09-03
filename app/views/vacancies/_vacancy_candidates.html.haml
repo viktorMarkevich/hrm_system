@@ -29,7 +29,7 @@
             %span.label.label-info
               = candidate.updated_at.strftime('%F в %I:%M')
           %td
-            = form_for @vacancy, remote: true, html: { role: 'form', id: "form-#{candidate.id}" } do |f|
+            = form_for @vacancy, remote: true, method: :put, html: { role: 'form', id: "form-#{candidate.id}" } do |f|
               #error_explanation.bg-danger.text-danger
               = f.hidden_field :candidate_id, value: candidate.id
               = f.select(:sr_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(vacancy)),

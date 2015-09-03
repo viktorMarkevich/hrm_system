@@ -13,6 +13,8 @@ class StaffRelation < ActiveRecord::Base
     end
   end
 
-  def self.change_candidate_status
+  def self.update_status(options)
+    sr = where(candidate_id: options[:vacancy][:candidate_id], vacancy_id: options[:id]).first
+    sr.update_attributes(status: options[:vacancy][:sr_status])
   end
 end

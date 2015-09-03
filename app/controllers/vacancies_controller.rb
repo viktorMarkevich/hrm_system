@@ -38,14 +38,18 @@ class VacanciesController < ApplicationController
   end
 
   def update
-    @vacancy.associate_with_region(params[:region])
+    # @vacancy.associate_with_region(params[:region])
 
-    StaffRelation.change_candidate_status if can_change_candidate_status?
+    if params_present?
+      StaffRelation.update_status(params)
+      @candidates_with_found_status = @vacancy.candidates_with_status(params[:status] || 'Найденные')
+      @candidates = Candidate.includes(:staff_relations)
+    end
 
     respond_to do |format|
       if @vacancy.update_attributes(vacancy_params)
         format.html { redirect_to vacancies_path, notice: 'Вакансия успешно обновлена.' }
-        format.json { head :no_content }
+        # format.json { head :no_content }
         format.js
       else
         format.html { render 'edit' }
@@ -76,7 +80,7 @@ class VacanciesController < ApplicationController
 
   private
 
-    def can_change_candidate_status?
+    def params_present?
       params[:vacancy][:candidate_id].present? &&
           params[:vacancy][:sr_status].present?
     end
@@ -86,7 +90,7 @@ class VacanciesController < ApplicationController
         :name, :salary,
         :salary_format,
         :languages, :status,
-        :requirements, :region_id
+        :requirements, :region_id, :sr_status
       )
     end
 
