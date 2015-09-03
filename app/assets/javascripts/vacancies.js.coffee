@@ -1,42 +1,4 @@
 # coding 'utf-8'
-disableDefaultOption = ->
-  $('select.status-picker option:first-child').attr("disabled", "disabled");
-
-addPassiveCandidateToList = (candidate) ->
-  $('#candidates-multiselect tbody').append(
-    "<tr>" +
-      "<td>" +
-        "<input type=\"checkbox\"  name=\"mark-as-found-candidate\" id=\"mark-as-found-candidate\" value=\"" + candidate.id + "\">" +
-        " " + candidate.name +
-      "</td>" +
-      "<td>" + candidate.salary + "</td>" +
-      "<td>Имеет статус <span class='label label-primary'>" + 'Нейтрален' + "</span></td>" +
-    "</tr>"
-  )
-
-buildCandidatesTable = (data) ->
-  $candidatesTable = $('#vacancy-candidates tbody')
-  $candidatesTable.html('')
-  options = []
-  options.push "<option value='Перевести в статус'>Перевести в статус</option>"
-  for status in data.statuses
-    options.push "<option value='" + status + "'>" + status + "</option>"
-
-  for candidate in data.candidates
-    $candidatesTable.append(
-      "<tr>" +
-      "<td><a href='/candidates/'+id>" + candidate.name + "</a></td>"+
-      "<td>" + candidate.salary + "</td>"+
-      "<td><span class='label label-primary'>" + candidate.created_at + "</span></td>"+
-      "<td><select name=\"status-picker\" class=\"status-picker\"></td>" +
-      "</tr>")
-    $select = $('select').last()
-
-    $select.attr('data-candidateid', candidate.id);
-    $select.attr('data-vacancyid', data.vacancy_id);
-    $select.append(options)
-    disableDefaultOption()
-    $select.val(data.current_status)
 
 $(document).ready ->
 
