@@ -39,9 +39,8 @@ class VacanciesController < ApplicationController
 
   def update
     @vacancy.associate_with_region(params[:region])
-    p '*'*1000
 
-    change_candidate_status if can_change_candidate_status?
+    StaffRelation.change_candidate_status if can_change_candidate_status?
 
     respond_to do |format|
       if @vacancy.update_attributes(vacancy_params)
@@ -78,7 +77,8 @@ class VacanciesController < ApplicationController
   private
 
     def can_change_candidate_status?
-      params[:candidate_id].present? && params[:sr_status].present?
+      params[:vacancy][:candidate_id].present? &&
+          params[:vacancy][:sr_status].present?
     end
 
     def vacancy_params

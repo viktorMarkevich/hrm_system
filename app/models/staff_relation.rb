@@ -13,7 +13,6 @@ class StaffRelation < ActiveRecord::Base
     end
   end
 
-  def change_candidate_status
-    p '*'*1000
+  def self.change_candidate_status
   end
 end
