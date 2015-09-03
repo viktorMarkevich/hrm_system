@@ -29,13 +29,14 @@
             %span.label.label-info
               = candidate.updated_at.strftime('%F в %I:%M')
           %td
-            = form_for @vacancy, remote: true, html: { role: 'form', id: "form-#{candidate.id}" } do |f|
+            = form_for @vacancy, remote: true, method: :put, html: { role: 'form', id: "form-#{candidate.id}" } do |f|
               #error_explanation.bg-danger.text-danger
               = f.hidden_field :candidate_id, value: candidate.id
               = f.select(:sr_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(vacancy)),
-                         {}, { class: candidate.id })
+                         {}, { class: 'vacancy_sr_status', id: candidate.id })
 - else
   .panel-body
-    %pНи один кандидат не был выбран для этой категории
+    %p
+      Ни один кандидат не был выбран для этой категории
     .text-center
       = image_tag 'facepalm.gif'

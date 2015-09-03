@@ -38,16 +38,21 @@ class VacanciesController < ApplicationController
   end
 
   def update
-    @vacancy.associate_with_region(params[:region])
-    p '*'*1000
+    if params_present?
+      status = @vacancy.staff_relations.where(candidate_id: params[:vacancy][:candidate_id]).first.status
 
-    change_candidate_status if can_change_candidate_status?
+      @candidates_with_found_status = @vacancy.candidates_with_status(status || 'Найденные')
+      @candidates = Candidate.includes(:staff_relations)
+      StaffRelation.update_status(params)
+    else
+      @vacancy.associate_with_region(params[:region])
+    end
 
     respond_to do |format|
       if @vacancy.update_attributes(vacancy_params)
         format.html { redirect_to vacancies_path, notice: 'Вакансия успешно обновлена.' }
         format.json { head :no_content }
-        format.js
+        format.js{ render status: 200, action: 'show' }
       else
         format.html { render 'edit' }
         format.json { render json: @vacancy.errors.full_messages,
@@ -56,29 +61,11 @@ class VacanciesController < ApplicationController
     end
   end
 
-  # def change_candidate_status
-  #   #FIXME: Не работает выборка в контроллере! В консоли работает!
-  #   staff_relation = StaffRelation.find_by_vacancy_id_and_candidate_id(params[:id],params[:candidate_id])
-  #
-  #   unless params[:status] == 'Нейтральный'
-  #     if staff_relation.update(status: params[:status])
-  #       render json: { status: :ok }
-  #     else
-  #       render json: { status: :unprocessable_entity }
-  #     end
-  #   else
-  #     candidate = Candidate.find(params[:candidate_id])
-  #       if staff_relation.delete
-  #         candidate.update(status: 'Пассивен')
-  #       end
-  #     render json: { status: :ok, candidate: candidate }
-  #   end
-  # end
-
   private
 
-    def can_change_candidate_status?
-      params[:candidate_id].present? && params[:sr_status].present?
+    def params_present?
+      params[:vacancy][:candidate_id].present? &&
+          params[:vacancy][:sr_status].present?
     end
 
     def vacancy_params
@@ -86,7 +73,7 @@ class VacanciesController < ApplicationController
         :name, :salary,
         :salary_format,
         :languages, :status,
-        :requirements, :region_id
+        :requirements, :region_id, :sr_status
       )
     end
 
