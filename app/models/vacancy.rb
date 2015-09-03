@@ -7,6 +7,8 @@ class Vacancy < ActiveRecord::Base
   has_many :staff_relations
   has_many :candidates, through: :staff_relations, source: :candidate
 
+  attr_accessor :sr_status
+
   validates :name, :region_id, :status, :user_id, presence: true
   validates :salary, numericality: { only_integer: true, greater_than: 0 }, unless: 'salary_format == "По договоренности"'
 

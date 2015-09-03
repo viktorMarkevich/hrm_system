@@ -4,13 +4,12 @@
   .panel.add-shadows
     .panel-heading
       .panel-title
-        - if @events.present?
-          = "Список событий за #{Event::MONTHS[@events.first.starts_at.month - 1]}"
-        - else
-          Список событий за этот месяц пуст.
-    .panel-body
-      .items-list
-        = render partial: 'events_list', locals: { events: @events }
+        = "Список событий за #{Event::MONTHS[set_month(params[:start_date])]}"
+        = 'пуст.' unless events_current_month(params[:start_date]).present?
+      -if events_current_month(params[:start_date]).present?
+        .panel-body
+          .items-list
+            = render partial: 'events_list', locals: { events: @events }
 .col-xs-7
   .panel.add-shadows
     .panel-heading

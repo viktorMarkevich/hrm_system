@@ -15,8 +15,12 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    @candidates_with_found_status = @vacancy.candidates_with_status('Найденные')
+    @candidates_with_found_status = @vacancy.candidates_with_status(params[:status] || 'Найденные')
     @candidates = Candidate.includes(:staff_relations)
+    respond_to do |format|
+        format.html
+        format.js
+    end
   end
 
   def edit
@@ -35,7 +39,9 @@ class VacanciesController < ApplicationController
 
   def update
     @vacancy.associate_with_region(params[:region])
-    @vacancy = Vacancy.find(params[:id])
+    p '*'*1000
+
+    change_candidate_status if can_change_candidate_status?
 
     respond_to do |format|
       if @vacancy.update_attributes(vacancy_params)
@@ -50,53 +56,31 @@ class VacanciesController < ApplicationController
     end
   end
 
-  def search_candidates_by_status
-    vacancy = Vacancy.find(params[:id])
-    @matched_candidates = vacancy.candidates_with_status(params[:status])
-
-    render json: build_response_hash(@matched_candidates,
-                                     StaffRelation::STATUSES,
-                                     vacancy.id,
-                                     params[:status])
-  end
-
-  def change_candidate_status
-    #FIXME: Не работает выборка в контроллере! В консоли работает!
-    staff_relation = StaffRelation.find_by_vacancy_id_and_candidate_id(params[:id],params[:candidate_id])
-
-    unless params[:status] == 'Нейтральный'
-      if staff_relation.update(status: params[:status])
-        render json: { status: :ok }
-      else
-        render json: { status: :unprocessable_entity }
-      end
-    else
-      candidate = Candidate.find(params[:candidate_id])
-        if staff_relation.delete
-          candidate.update(status: 'Пассивен')
-        end
-      render json: { status: :ok, candidate: candidate }
-    end
-  end
-
-  def mark_candidates_as_found
-    found_status = 'Найденные'
-    @marked_as_found_candidates = Candidate.where('id IN (?)', params[:candidates_ids])
-    vacancy = Vacancy.find(params[:id])
-    @marked_as_found_candidates.each do |candidate|
-      candidate.update(status: 'В работе')
-      StaffRelation.create(candidate_id: candidate.id, vacancy_id: vacancy.id, status: found_status)
-    end
-
-    found_candidates = vacancy.candidates_with_status(found_status)
-
-    render json: build_response_hash(found_candidates,
-                                     StaffRelation::STATUSES,
-                                     vacancy.id,
-                                     found_status)
-  end
+  # def change_candidate_status
+  #   #FIXME: Не работает выборка в контроллере! В консоли работает!
+  #   staff_relation = StaffRelation.find_by_vacancy_id_and_candidate_id(params[:id],params[:candidate_id])
+  #
+  #   unless params[:status] == 'Нейтральный'
+  #     if staff_relation.update(status: params[:status])
+  #       render json: { status: :ok }
+  #     else
+  #       render json: { status: :unprocessable_entity }
+  #     end
+  #   else
+  #     candidate = Candidate.find(params[:candidate_id])
+  #       if staff_relation.delete
+  #         candidate.update(status: 'Пассивен')
+  #       end
+  #     render json: { status: :ok, candidate: candidate }
+  #   end
+  # end
 
   private
+
+    def can_change_candidate_status?
+      params[:candidate_id].present? && params[:sr_status].present?
+    end
+
     def vacancy_params
       params.require(:vacancy).permit(
         :name, :salary,

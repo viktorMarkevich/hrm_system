@@ -12,4 +12,8 @@ class StaffRelation < ActiveRecord::Base
       Event.find(event_id_was).destroy
     end
   end
+
+  def change_candidate_status
+    p '*'*1000
+  end
 end
