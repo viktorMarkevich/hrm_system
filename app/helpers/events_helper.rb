@@ -19,11 +19,15 @@ module EventsHelper
   end
 
   def set_month(date)
-    date.present? ? date[5,6].to_i-1 : 8
+    date.present? ? date[5,6].to_i-1 : DateTime.now.month.to_i-1
   end
 
   def events_current_month(date)
-    time = Date.new(date[0..3].to_i, date[5,6].to_i).to_time
+    if date.present?
+      time = Date.new(date[0..3].to_i,date[5,6].to_i).to_time
+    else
+      time = Date.new(DateTime.now.year.to_i, DateTime.now.month.to_i).to_time
+    end
     @events = Event.where(:starts_at => time..time.end_of_month)
   end
 
