@@ -1,3 +1,6 @@
 $('.vacancy-candidates').html('<%= raw escape_javascript(render partial: 'vacancy_candidates',
                                                                 locals: { candidates: @candidates_with_found_status,
                                                                           vacancy: @vacancy }) %>')
+$('.vacancy_status').html('<%= raw escape_javascript(render partial: 'vacancy_status',
+                                                                locals: { vacancy: @vacancy }) %>')
+$('#dialog').modal('hide')

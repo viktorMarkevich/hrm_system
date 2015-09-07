@@ -15,8 +15,6 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    @candidates_with_found_status = @vacancy.candidates_with_status(params[:status] || 'Найденные')
-    @candidates = Candidate.includes(:staff_relations)
     respond_to do |format|
         format.html
         format.js
@@ -44,8 +42,8 @@ class VacanciesController < ApplicationController
       @candidates_with_found_status = @vacancy.candidates_with_status(status || 'Найденные')
       @candidates = Candidate.includes(:staff_relations)
       StaffRelation.update_status(params)
-    else
-      @vacancy.associate_with_region(params[:region])
+    # elsif params[:vacancy][:name].present?
+    #   @vacancy.associate_with_region(params[:region])
     end
 
     respond_to do |format|
@@ -79,6 +77,8 @@ class VacanciesController < ApplicationController
 
     def find_vacancy
       @vacancy = Vacancy.find(params[:id])
+      @candidates_with_found_status = @vacancy.candidates_with_status(params[:status] || 'Найденные')
+      @candidates = Candidate.includes(:staff_relations)
     end
 
     def build_response_hash(candidates, statuses, vacancy_id, current_status)
