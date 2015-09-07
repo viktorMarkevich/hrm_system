@@ -16,8 +16,8 @@ module VacancyHelper
   end
 
   def get_active(params, status)
-    if params[:status]
-      params[:status] == status ? 'active' : ''
+    if params
+      params == status ? 'active' : ''
     else
       status == 'Найденные' ? 'active' : ''
     end

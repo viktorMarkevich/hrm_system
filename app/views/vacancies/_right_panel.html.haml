@@ -1,5 +1,5 @@
 .vacancy-candidates
-  = render partial: 'vacancies/vacancy_candidates', locals: { candidates: @candidates_with_found_status, vacancy: @vacancy }
+  = render partial: 'vacancies/vacancy_candidates', locals: { vacancy_candidates: @vacancy_candidates, vacancy: @vacancy, status: @status }
 
 
 .modal.fade#myModal
@@ -10,39 +10,8 @@
           %span{ "aria-hidden" => true }
             &times;
         %h4.modal-title Кандидаты
-      .modal-body
-        #candidates-multiselect{data: { vacancyid: @vacancy.id } }
-          .panel.panel-primary
-            %table.table.table-bordered
-              %thead.td-primary
-                %tr
-                  %th Имя
-                  %th Зарплата
-                  %th Примечание
-              %tbody
-                - @candidates.each do |candidate|
-                  %tr
-                    %td
-                      = check_box_tag 'mark-as-found-candidate', candidate.id
-                      = candidate.name
-                    %td= candidate.salary
-                    %td
-                      - if candidate.is_passive?
-                        Имеет статус
-                        &nbsp;
-                        %span.label.label-primary
-                          = candidate.status
-                      - else
-                        - candidate.staff_relations.each do |sr|
-                          %p{style: 'font-size: 14px'}
-                            Имеет статус
-                            &nbsp;
-                            %span{ class: "label label-#{return_status_label(sr)}" }
-                              = sr.status
-                            &nbsp;
-                            для вакансии
-                            %span.label.label-info
-                              = sr.vacancy.name
+      .modal-body.candidates_list_in_modal
+        = render 'candidates_list_in_modal', locals: { candidates: @candidates }
       .modal-footer
         %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
         %button.btn.btn-primary#btn-apply{ type: 'button' } Выбрать
