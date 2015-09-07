@@ -1,5 +1,7 @@
 $('#dialog').modal('toggle');
-$('.vacancy-candidates').html('<%= raw escape_javascript(render partial: 'vacancy_candidates',
-                                                                locals: { candidates: @candidates_with_found_status,
-                                                                          vacancy: @vacancy }) %>')
 $('.modal-backdrop').remove();
+
+$('.vacancy-candidates').html('<%= raw escape_javascript(render partial: 'vacancy_candidates',
+                                                                locals: { vacancy_candidates: @vacancy_candidates,
+                                                                          vacancy: @vacancy,
+                                                                          status: @status }) %>')

@@ -1,18 +1,18 @@
 %ul.nav.nav-tabs
-  %li{ class: get_active(params, 'Найденные') }
+  %li{ class: get_active(status, 'Найденные') }
     = link_to 'Найденные', vacancy_path(@vacancy, status: 'Найденные'), remote: true, class: 'btn btn-default'
-  %li{ class: get_active(params, 'Отобранные') }
+  %li{ class: get_active(status, 'Отобранные') }
     = link_to 'Отобранные', vacancy_path(@vacancy, status: 'Отобранные'), remote: true, class: 'btn btn-primary'
-  %li{ class: get_active(params, 'Собеседование') }
+  %li{ class: get_active(status, 'Собеседование') }
     = link_to 'Собеседование', vacancy_path(@vacancy, status: 'Собеседование'), remote: true, class: 'btn btn-info'
-  %li{ class: get_active(params, 'Утвержден') }
+  %li{ class: get_active(status, 'Утвержден') }
     = link_to 'Утвержден', vacancy_path(@vacancy, status: 'Утвержден'), remote: true, class: 'btn btn-success'
-  %li{ class: get_active(params, 'Не подходит') }
+  %li{ class: get_active(status, 'Не подходит') }
     = link_to 'Не подходит', vacancy_path(@vacancy, status: 'Не подходит'), remote: true, class: 'btn btn-warning'
-  %li{ class: get_active(params, 'Отказался') }
+  %li{ class: get_active(status, 'Отказался') }
     = link_to 'Отказался', vacancy_path(@vacancy, status: 'Отказался'), remote: true, class: 'btn btn-danger'
 
-- if candidates.present?
+- if vacancy_candidates.present?
   %table.table.table-hover.table-responsive
     %thead
       %tr
@@ -21,7 +21,7 @@
         %th Перемещен
         %th Статус
     %tbody
-      - candidates.each do |candidate|
+      - vacancy_candidates.each do |candidate|
         %tr
           %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
           %td= desired_salary_for(candidate)

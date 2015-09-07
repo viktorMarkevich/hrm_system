@@ -1,5 +1,5 @@
 .vacancy-candidates
-  = render partial: 'vacancies/vacancy_candidates', locals: { candidates: @candidates_with_found_status, vacancy: @vacancy }
+  = render partial: 'vacancies/vacancy_candidates', locals: { vacancy_candidates: @vacancy_candidates, vacancy: @vacancy, status: @status }
 
 
 .modal.fade#myModal
