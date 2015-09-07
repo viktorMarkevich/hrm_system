@@ -40,9 +40,9 @@ class VacanciesController < ApplicationController
   def update
     if params_present?
       status = @vacancy.staff_relations.where(candidate_id: params[:vacancy][:candidate_id]).first.status
-
       @candidates_with_found_status = @vacancy.candidates_with_status(status || 'Найденные')
       @candidates = Candidate.includes(:staff_relations)
+
       StaffRelation.update_status(params)
     # else
     #   @vacancy.associate_with_region(params[:region])
@@ -51,7 +51,8 @@ class VacanciesController < ApplicationController
     respond_to do |format|
       if @vacancy.update_attributes(vacancy_params)
         format.html { redirect_to vacancies_path, notice: 'Вакансия успешно обновлена.' }
-        format.js
+        format.json { head :no_content }
+        format.js #{ render status: 200, action: 'show' }
       else
         format.html { render 'edit' }
         format.json { render json: @vacancy.errors.full_messages,
