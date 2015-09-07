@@ -1,43 +1,55 @@
 = javascript_include_tag 'vacancies'
 
-= form_for @vacancy do |f|
+= form_for @vacancy, html: { class: 'form-horizontal' } do |f|
   - if @vacancy.errors.any?
     %h2 Возникшие ошибки:
     %ul
       - @vacancy.errors.full_messages.each do |message|
         %li
           = message
-  .row
-    .col-xs-6
-      .form-group
-        = f.label :name, 'Вакансия:'
-        = f.text_field :name, class: 'form-control'
-      .form-group
-        = f.label :salary do
-          Зарплата:
-          %span.tip Введите только цифры, например: 1000
-        = f.text_field :salary, class: 'form-control'
-      .form-group
-        = f.radio_button :salary_format, 'USD', checked: true
-        = f.label :salary_format, 'USD'
+  .form-group
+    .col-sm-2.control-label
+      = f.label :name, 'Вакансия:'
+    .col-sm-3
+      = f.text_field :name, class: 'form-control'
+  .form-group
+    .col-sm-2.control-label
+      = f.label :salary, 'Зарплата'
+    .col-sm-3
+      = f.text_field :salary, class: 'form-control', placeholder: 'Введите только цифры, например: 1000'
+  .form-group
+    .col-sm-2.control-label
+      = f.label :salary_format, 'Тип зарплаты'
+    .col-sm-3
+      = f.radio_button :salary_format, 'USD', checked: true
+      = f.label :salary_format, 'USD'
 
-        = f.radio_button :salary_format, 'UAH'
-        = f.label :salary_format, 'UAH'
+      = f.radio_button :salary_format, 'UAH'
+      = f.label :salary_format, 'UAH'
 
-        = f.radio_button :salary_format, 'По договоренности'
-        = f.label :salary_format, 'По договоренности'
-      .form-group
-        = f.label :region_id, 'Регион:'
-        = select_tag(:region,  options_for_select(Region::REGIONS, @vacancy.region_name), class: 'form-control')
-      .form-group
-        = f.label :status, 'Статус:'
-        = f.select(:status, options_for_select(Vacancy::STATUSES, @vacancy.status), {}, class: 'form-control')
-      .form-group
-        = f.label :laguages, 'Языки:'
-        = f.text_field :languages, class: 'form-control'
-      .form-group
-        = f.label :requirements, 'Требования:'
-        = f.text_area :requirements, rows: 5, class: 'form-control'
-      .form-group
-        = f.submit @vacancy.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
-        = link_to 'Назад', :back, class: 'btn btn-default'
+      = f.radio_button :salary_format, 'По договоренности'
+      = f.label :salary_format, 'По договоренности'
+  .form-group
+    .col-sm-2.control-label
+      = f.label :region_id, 'Регион:'
+    .col-sm-3
+      = select_tag(:region,  options_for_select(Region::REGIONS, @vacancy.region_name), class: 'form-control')
+  .form-group
+    .col-sm-2.control-label
+      = f.label :status, 'Статус:'
+    .col-sm-3
+      = f.select(:status, options_for_select(Vacancy::STATUSES, @vacancy.status), {}, class: 'form-control')
+  .form-group
+    .col-sm-2.control-label
+      = f.label :laguages, 'Языки:'
+    .col-sm-3
+      = f.text_field :languages, class: 'form-control'
+  .form-group
+    .col-sm-2.control-label
+      = f.label :requirements, 'Требования:'
+    .col-sm-3
+      = f.text_area :requirements, rows: 5, class: 'form-control'
+  .form-group
+    .col-sm-12
+      = f.submit @vacancy.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
+      = link_to 'Назад', :back, class: 'btn btn-default'
