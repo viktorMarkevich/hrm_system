@@ -16,6 +16,6 @@
       .panel-title
         Календарь событий
     .panel-body
+      = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
       .calendar
-        = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
         = render partial: 'calendar', locals: { events: @events }
