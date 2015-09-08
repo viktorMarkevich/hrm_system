@@ -1,4 +1,4 @@
 $('#dialog').modal('toggle');
 
-$('#stickers').html('<%= escape_javascript(render @stickers) %>')
-$('#stickers-pagination').html('<%= j render partial: 'stickers_pagination', locals: { stickers: @stickers } %>')
+$('#stickers').html('<%= escape_javascript(render  partial: 'organisers/sticker', collection: @stickers) %>')
+$('#stickers-pagination').html('<%= j render partial: 'organisers/stickers_pagination', locals: { stickers: @stickers } %>')
