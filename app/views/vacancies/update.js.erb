@@ -1,8 +1,10 @@
 $('#dialog').modal('toggle');
+
 $('.vacancy_status').html('<%= escape_javascript(render partial: 'vacancy_status',
-                                                        locals: { vacancy: @vacancy }) %>');
+                                                  locals: { vacancy: @vacancy }) %>')
+
 $('.vacancy-candidates').html('<%= raw escape_javascript(render partial: 'vacancy_candidates',
-                                                                locals: { vacancy_candidates: @vacancy_candidates,
-                                                                          vacancy: @vacancy,
-                                                                          status: @status }) %>');
+                                                                locals: { candidates: @candidates_with_found_status,
+                                                                          vacancy: @vacancy, vacancy_candidates: @vacancy_candidates,
+                                                                          status: @status}) %>')
 $('.modal-backdrop').remove();

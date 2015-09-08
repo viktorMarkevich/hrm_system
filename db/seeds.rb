@@ -29,7 +29,7 @@ for i in 1..10 do
       desired_position: 'Программист, язык руби',
       city_of_residence: 'Запорожье',
       salary: '300-500 USD',
-      status: 'Пассивен'
+      status: 'В работе'
   )
 end
 
