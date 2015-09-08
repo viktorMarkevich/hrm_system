@@ -25,5 +25,6 @@ Rails.application.routes.draw do
   resources :companies
   resources :candidates, except: [:destroy]
   resources :events, except: [:show]
+  resources :staff_relations, only: [:create]
 
 end
