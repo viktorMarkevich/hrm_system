@@ -83,13 +83,4 @@ class VacanciesController < ApplicationController
     def find_vacancy
       @vacancy = Vacancy.find(params[:id])
     end
-
-    def build_response_hash(candidates, statuses, vacancy_id, current_status)
-      {
-        candidates: candidates,
-        statuses: statuses,
-        vacancy_id: vacancy_id,
-        current_status: current_status
-      }.to_json
-    end
 end
