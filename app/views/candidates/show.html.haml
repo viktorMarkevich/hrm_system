@@ -1,63 +1,50 @@
-= render partial: 'candidates/left_sidebar'
+.col-lg-3
+  .panel.add-shadows
+    .panel-body
+      = render partial: 'candidates/left_sidebar'
 
-.panel.panel-success
-  .panel-heading.panel-title
-    = @candidate.name
-  .panel-body
-    %table.table.table-info
-      %thead
-        %tbody
-          %tr
-            %th День рождения:
-            %td= display_field_value_for(@candidate.birthday)
-          %tr
-            %th Зарплата:
-            %td= "#{display_field_value_for(@candidate.salary)} #{@candidate.salary_format}"
-          %tr
-            %th Образование:
-            %td= display_field_value_for(@candidate.education)
-          %tr
-            %th Языки:
-            %td= display_field_value_for(@candidate.languages)
-          %tr
-            %th Место проживания:
-            %td= display_field_value_for(@candidate.city_of_residence)
-          %tr
-            %th На должность:
-            %td= @candidate.desired_position
-          %tr
-            %th Опыт:
-            %td= display_field_value_for(@candidate.experience)
-          %tr
-            %th Статус:
-            %td= @candidate.status
-          %tr
-            %th Описание:
-            %td= display_field_value_for(@candidate.description)
-          %tr
-            %th Почта:
-            %td= display_field_value_for(@candidate.email)
-          %tr
-            %th Телефон:
-            %td= display_field_value_for(@candidate.phone)
-          %tr
-            %th Домашняя страница:
-            %td= display_field_value_for(@candidate.home_page)
-          %tr
-            %th Skype:
-            %td= display_field_value_for(@candidate.skype)
-          %tr
-            %th Linkedin:
-            %td= display_field_value_for(@candidate.linkedin)
-          %tr
-            %th Facebook:
-            %td= display_field_value_for(@candidate.facebook)
-          %tr
-            %th Vkontakte:
-            %td= display_field_value_for(@candidate.vkontakte)
-          %tr
-            %th Google+:
-            %td= display_field_value_for(@candidate.google_plus)
+.col-lg-9
+  .panel.add-shadows
+    .panel-heading
+      .panel-title
+        = @candidate.name
+    .panel-body
+      %dl.dl-horizontal
+        %dt День рождения:
+        %dd= display_field_value_for(@candidate.birthday)
+        %dt Зарплата:
+        %dd= "#{display_field_value_for(@candidate.salary)} #{@candidate.salary_format}"
+        %dt Образование:
+        %dd= display_field_value_for(@candidate.education)
+        %dt Языки:
+        %dd= display_field_value_for(@candidate.languages)
+        %dt Место проживания:
+        %dd= display_field_value_for(@candidate.city_of_residence)
+        %dt На должность:
+        %dd= @candidate.desired_position
+        %dt Опыт:
+        %dd= display_field_value_for(@candidate.experience)
+        %dt Статус:
+        %dd= @candidate.status
+        %dt Описание:
+        %dd= display_field_value_for(@candidate.description)
+        %dt Почта:
+        %dd= display_field_value_for(@candidate.email)
+        %dt Телефон:
+        %dd= display_field_value_for(@candidate.phone)
+        %dt Домашняя страница:
+        %dd= display_field_value_for(@candidate.home_page)
+        %dt Skype:
+        %dd= display_field_value_for(@candidate.skype)
+        %dt Linkedin:
+        %dd= display_field_value_for(@candidate.linkedin)
+        %dt Facebook:
+        %dd= display_field_value_for(@candidate.facebook)
+        %dt Vkontakte:
+        %dd= display_field_value_for(@candidate.vkontakte)
+        %dt Google+:
+        %dd= display_field_value_for(@candidate.google_plus)
+      %hr
 
-= link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-default'
-= link_to 'Назад', :back, class: 'btn btn-default'
+      = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-default'
+      = link_to 'Назад', :back, class: 'btn btn-default'

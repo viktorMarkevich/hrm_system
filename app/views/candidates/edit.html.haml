@@ -1,7 +1,12 @@
-.panel.panel-success
-  .panel-heading.panel-title
-    Редактирование кандидата
-  .panel-body
-    = render partial: 'candidates/form'
+.col-lg-3
+  .panel.add-shadows
+    .panel-body
+      = render partial: 'candidates/left_sidebar'
 
-= render partial: 'candidates/left_sidebar'
+.col-lg-9
+  .panel.add-shadows
+    .panel-heading
+      .panel-title
+        Редактирование кандидата
+    .panel-body
+      = render partial: 'candidates/form'
