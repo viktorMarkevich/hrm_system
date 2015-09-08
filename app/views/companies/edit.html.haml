@@ -1,7 +1,12 @@
-.panel.panel-success
-  .panel-heading.panel-title
-    Изменить данные компании
-  .panel-body
-    = render partial: 'companies/form'
+.col-lg-3
+  .panel.add-shadows
+    .panel-body
+      = render partial: 'companies/left_sidebar'
 
-= render partial: 'companies/left_sidebar'
+.col-lg-9
+  .panel.add-shadows
+    .panel-heading
+      .panel-title
+        Изменить данные компании
+    .panel-body
+      = render partial: 'companies/form'

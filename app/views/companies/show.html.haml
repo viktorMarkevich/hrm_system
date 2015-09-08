@@ -1,21 +1,21 @@
-= render partial: 'companies/left_sidebar'
+.col-lg-3
+  .panel.add-shadows
+    .panel-body
+      = render partial: 'companies/left_sidebar'
 
-.panel.panel-success
-  .panel-heading.panel-title
-    = @company.name
-  .panel-body
-    %table.table.table-info
-      %thead
-        %tbody
-          %tr
-            %th Страница компании:
-            %td= display_field_value_for(@company.url)
-          %tr
-            %th Регион:
-            %td= @company.region.try(:name)
-          %tr
-            %th Полная информация:
-            %td= display_field_value_for(@company.description)
-
-= link_to 'Редактировать', edit_company_path(@company), class: 'btn btn-default'
-= link_to 'Назад', companies_path, class: 'btn btn-default'
+.col-lg-9
+  .panel.add-shadows
+    .panel-heading
+      .panel-title
+        = @company.name
+    .panel-body
+      %dl.dl-horizontal
+        %dt Страница компании:
+        %dd= display_field_value_for(@company.url)
+        %dt Регион:
+        %dd= @company.region.try(:name)
+        %dt Полная информация:
+        %dd= display_field_value_for(@company.description)
+      %hr
+      = link_to 'Редактировать', edit_company_path(@company), class: 'btn btn-default'
+      = link_to 'Назад', companies_path, class: 'btn btn-default'
