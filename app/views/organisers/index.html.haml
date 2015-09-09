@@ -50,7 +50,10 @@
           .btn-group-vertical.btn-block{ 'aria-label' => 'Vertical button group', role: 'group' }
             = link_to 'Добавить стикер', new_sticker_path, remote: true, class: 'btn btn-success'
             = link_to 'Закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-warning'
-        = render  partial: 'sticker', collection: @stickers
+        .stickers
+          = render  partial: 'sticker', collection: @stickers
+          -#- @stickers.each do |sticker|
+            = render  partial: 'sticker', locals: { sticker: sticker }
         = render 'stickers/dialog'
       .row
         .col-xs-12
