@@ -15,8 +15,8 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    @status = params[:status] || 'Найденные'
-    @vacancy_candidates = @vacancy.candidates_with_status(@status)
+    @sr_status = params[:sr_status] || 'Найденные'
+    @vacancy_candidates = @vacancy.candidates_with_status(@sr_status)
     @candidates = Candidate.includes(:staff_relations)
     
     respond_to do |format|
@@ -26,6 +26,7 @@ class VacanciesController < ApplicationController
   end
 
   def edit
+    @sr_status = params[:sr_status]
   end
 
   def create
@@ -41,20 +42,18 @@ class VacanciesController < ApplicationController
 
   def update
     if params_present?
-      @status = @vacancy.staff_relations.where(candidate_id: params[:vacancy][:candidate_id]).first.status
+      @sr_status = @vacancy.staff_relations.where(candidate_id: params[:vacancy][:candidate_id]).first.status
       StaffRelation.update_status(params)
     else
-      @status = 'Найденные'
-      # @vacancy.associate_with_region(params[:region])
+      @sr_status = params[:sr_status]
     end
 
-    @vacancy_candidates = @vacancy.candidates_with_status(@status)
+    @vacancy_candidates = @vacancy.candidates_with_status(@sr_status)
     @candidates = Candidate.includes(:staff_relations)
 
     respond_to do |format|
       if @vacancy.update_attributes(vacancy_params)
         format.html { redirect_to vacancies_path, notice: 'Вакансия успешно обновлена.' }
-        format.json { head :no_content }
         format.js
       else
         format.html { render 'edit' }
