@@ -26,6 +26,15 @@ class VacanciesController < ApplicationController
   end
 
   def edit
+    @partial_name = params[:partial_name]
+    unless @partial_name == 'form_status'
+      @vacancy_candidates = @vacancy.candidates_with_status(@status)
+      @candidates = Candidate.includes(:staff_relations)
+    end
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create
