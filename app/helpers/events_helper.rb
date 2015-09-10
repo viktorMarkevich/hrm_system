@@ -29,6 +29,7 @@ module EventsHelper
       time = Date.new(DateTime.now.year.to_i, DateTime.now.month.to_i).to_time
     end
     @events = Event.where(:starts_at => time..time.end_of_month)
+    return @events
   end
 
 end

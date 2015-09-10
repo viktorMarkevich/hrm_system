@@ -5,6 +5,7 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.order(starts_at: :asc)
+    @date = params[:start_date] || DateTime.now
   end
 
   def new
@@ -43,6 +44,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
+    @event.staff_relation.update(event_id: nil)
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Событие успешно удалено.' }
