@@ -3,7 +3,10 @@ class StaffRelationsController < ApplicationController
   def new
     @staff_relation = StaffRelation.new
     @vacancy = Vacancy.find(params[:vacancy_id])
-    @candidates = Candidate.includes(:staff_relations)
+
+    @all_candidates = Candidate.includes(:staff_relations)
+    @current_candidates = @all_candidates.where(staff_relations: { vacancy_id: @vacancy.id })
+    @candidates = @all_candidates - @current_candidates
   end
 
   def create

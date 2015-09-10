@@ -7,26 +7,25 @@
         %th Примечание
     %tbody
       -@candidates.each do |candidate|
-        -unless StaffRelation.find_by(vacancy_id: @vacancy.id, candidate_id: candidate.id)
-          %tr
-            %td
-              = check_box_tag 'candidates_ids[]', candidate.id
-              = candidate.name
-            %td= candidate.salary
-            %td
-              - if candidate.is_passive?
-                Имеет статус
-                &nbsp;
-                %span.label.label-primary
-                  = candidate.status
-              - else
-                - candidate.staff_relations.each do |sr|
-                  %p{style: 'font-size: 14px'}
-                    Имеет статус
-                    &nbsp;
-                    %span{ class: "label label-#{return_status_label(sr)}" }
-                      = sr.status
-                    &nbsp;
-                    для вакансии
-                    %span.label.label-info
-                      = sr.vacancy.name
+        %tr
+          %td
+            = check_box_tag 'candidates_ids[]', candidate.id
+            = candidate.name
+          %td= candidate.salary
+          %td
+            - if candidate.is_passive?
+              Имеет статус
+              &nbsp;
+              %span.label.label-primary
+                = candidate.status
+            - else
+              - candidate.staff_relations.each do |sr|
+                %p{style: 'font-size: 14px'}
+                  Имеет статус
+                  &nbsp;
+                  %span{ class: "label label-#{return_status_label(sr)}" }
+                    = sr.status
+                  &nbsp;
+                  для вакансии
+                  %span.label.label-info
+                    = sr.vacancy.name
