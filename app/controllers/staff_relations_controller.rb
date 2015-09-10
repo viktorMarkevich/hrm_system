@@ -1,7 +1,6 @@
 class StaffRelationsController < ApplicationController
 
   def new
-    @staff_relation = StaffRelation.new
     @vacancy = Vacancy.find(params[:vacancy_id])
 
     @all_candidates = Candidate.includes(:staff_relations)

@@ -17,7 +17,6 @@ class VacanciesController < ApplicationController
   def show
     @sr_status = params[:sr_status] || 'Найденные'
     @vacancy_candidates = @vacancy.candidates_with_status(@sr_status)
-    @candidates = Candidate.includes(:staff_relations)
 
     respond_to do |format|
         format.html
@@ -42,14 +41,19 @@ class VacanciesController < ApplicationController
 
   def update
     if params_present?
-      @sr_status = @vacancy.staff_relations.where(candidate_id: params[:vacancy][:candidate_id]).first.status
-      StaffRelation.update_status(params)
+      if params[:vacancy][:sr_status] == 'Нейтральный'
+        sr = @vacancy.staff_relations.where(candidate_id: params[:vacancy][:candidate_id])
+        @sr_status = sr.first.status
+        sr.destroy_all
+      else
+        @sr_status = @vacancy.staff_relations.where(candidate_id: params[:vacancy][:candidate_id]).first.status
+        StaffRelation.update_status(params)
+      end
     else
       @sr_status = params[:sr_status]
     end
 
     @vacancy_candidates = @vacancy.candidates_with_status(@sr_status)
-    @candidates = Candidate.includes(:staff_relations)
 
     respond_to do |format|
       if @vacancy.update_attributes(vacancy_params)

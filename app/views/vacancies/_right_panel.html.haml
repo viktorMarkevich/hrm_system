@@ -11,7 +11,7 @@
         %h4.modal-title Кандидаты
       = form_tag staff_relations_path(vacancy_id: @vacancy), remote: 'true' do
         .modal-body.candidates_list_in_modal
-          = render 'candidates_list_in_modal', locals: { candidates: @candidates }
+          -#= render 'candidates_list_in_modal', locals: { candidates: @candidates }
         .modal-footer
           %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
           = submit_tag 'выполнить', class: 'btn btn-default'
