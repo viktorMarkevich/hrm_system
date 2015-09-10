@@ -6,4 +6,4 @@ $('.vacancy-candidates').html('<%= escape_javascript(render partial: 'vacancy_ca
                                                                       sr_status: @sr_status }) %>')
 
 $('.vacancy_status').html('<%= escape_javascript(render partial: 'vacancy_status',
-                                                  locals: { vacancy: @vacancy, sr_status: @sr_status }) %>')
+                                                        locals: { vacancy: @vacancy, sr_status: @sr_status }) %>')
