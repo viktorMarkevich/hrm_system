@@ -1,7 +1,12 @@
+$('#dialog').modal('toggle');
+
+$('#dialog').modal('hide');
+
 $('.vacancy_status').html('<%= escape_javascript(render partial: 'vacancy_status',
-                                                        locals: { vacancy: @vacancy }) %>');
-$('.vacancy-candidates').html('<%= raw escape_javascript(render partial: 'vacancy_candidates',
-                                                                locals: { vacancy_candidates: @vacancy_candidates,
-                                                                          vacancy: @vacancy,
-                                                                          status: @status }) %>');
+                                                        locals: { vacancy: @vacancy, sr_status: @sr_status }) %>')
+
+$('.vacancy-candidates').html('<%= escape_javascript(render partial: 'vacancy_candidates',
+                                                            locals: { candidates: @candidates_with_found_status,
+                                                                      vacancy: @vacancy, vacancy_candidates: @vacancy_candidates,
+                                                                      sr_status: @sr_status}) %>')
 $('.modal-backdrop').remove();

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :companies
   resources :candidates, except: [:destroy]
   resources :events, except: [:show]
+  resources :staff_relations, only: [:new, :create]
 
   get 'archives/:object_name', to: 'archives#index', as: :archives
   delete 'archives/:object_name/:id', to: 'archives#destroy', as: :restore_object

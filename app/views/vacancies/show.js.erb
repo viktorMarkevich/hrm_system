@@ -1,4 +1,9 @@
+$('#myModal').modal('hide');
+
 $('.vacancy-candidates').html('<%= escape_javascript(render partial: 'vacancy_candidates',
                                                             locals: { vacancy_candidates: @vacancy_candidates,
                                                                       vacancy: @vacancy,
-                                                                      status: @status }) %>')
+                                                                      sr_status: @sr_status }) %>')
+
+$('.vacancy_status').html('<%= escape_javascript(render partial: 'vacancy_status',
+                                                  locals: { vacancy: @vacancy, sr_status: @sr_status }) %>')

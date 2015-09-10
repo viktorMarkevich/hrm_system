@@ -15,8 +15,10 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    @status = params[:status] || 'Найденные'
-    @vacancy_candidates = @vacancy.candidates_with_status(@status)
+    @sr_status = params[:sr_status] || 'Найденные'
+    @vacancy_candidates = @vacancy.candidates_with_status(@sr_status)
+    @candidates = Candidate.includes(:staff_relations)
+
     respond_to do |format|
         format.html
         format.js
@@ -24,18 +26,7 @@ class VacanciesController < ApplicationController
   end
 
   def edit
-    @partial_name = params[:partial_name]
-    unless @partial_name == 'form_status'
-      @vacancy_candidates = @vacancy.candidates_with_status(@status)
-
-      @all_candidates = Candidate.includes(:staff_relations)
-      @current_candidates = @all_candidates.where(staff_relations: { vacancy_id: @vacancy.id })
-      @candidates = @all_candidates - @current_candidates
-    end
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    @sr_status = params[:sr_status]
   end
 
   def create
@@ -51,22 +42,18 @@ class VacanciesController < ApplicationController
 
   def update
     if params_present?
-      if params[:vacancy][:sr_status] == 'Нейтральный'
-        @vacancy.staff_relations.where(status:'Нейтральный').destroy_all
-      else
-        @status = @vacancy.staff_relations.where(candidate_id: params[:vacancy][:candidate_id]).first.status
-        StaffRelation.update_status(params)
-      end
+      @sr_status = @vacancy.staff_relations.where(candidate_id: params[:vacancy][:candidate_id]).first.status
+      StaffRelation.update_status(params)
     else
-      @status = 'Найденные'
-      # @vacancy.associate_with_region(params[:region])
+      @sr_status = params[:sr_status]
     end
 
-    @vacancy_candidates = @vacancy.candidates_with_status(@status)
+    @vacancy_candidates = @vacancy.candidates_with_status(@sr_status)
+    @candidates = Candidate.includes(:staff_relations)
+
     respond_to do |format|
       if @vacancy.update_attributes(vacancy_params)
         format.html { redirect_to vacancies_path, notice: 'Вакансия успешно обновлена.' }
-        format.json { head :no_content }
         format.js
       else
         format.html { render 'edit' }
