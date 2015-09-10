@@ -9,22 +9,13 @@ Rails.application.routes.draw do
 
   resources :organisers, only: :index
   resources :stickers, except: [:show, :index]
-
-  get 'archives/:object_name', to: 'archives#index', as: :archives
-  delete 'archives/:object_name/:id', to: 'archives#destroy', as: :restore_object
-
   resources :users, only: [:update, :edit, :show, :index]
-
-  resources :vacancies, except: [:destroy] do
-    member  do
-      get 'search_candidates_by_status', to: 'vacancies#search_candidates_by_status'
-      post 'change_candidate_status', to: 'vacancies#change_candidate_status'
-    end
-  end
-
+  resources :vacancies, except: [:destroy]
   resources :companies
   resources :candidates, except: [:destroy]
   resources :events, except: [:show]
-  resources :staff_relations, only: [:create]
 
+  get 'archives/:object_name', to: 'archives#index', as: :archives
+  delete 'archives/:object_name/:id', to: 'archives#destroy', as: :restore_object
+  
 end
