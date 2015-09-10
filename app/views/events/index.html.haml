@@ -2,14 +2,8 @@
 
 .col-xs-5
   .panel.add-shadows
-    .panel-heading
-      .panel-title
-        = "Список событий за #{Event::MONTHS[set_month(params[:start_date])]}"
-        = 'пуст.' unless events_current_month(params[:start_date]).present?
-      -if events_current_month(params[:start_date]).present?
-        .panel-body
-          .items-list
-            = render partial: 'events_list', locals: { events: @events }
+    .panel-heading-events
+      = render partial: 'events_list', locals: { events: @events }
 .col-xs-7
   .panel.add-shadows
     .panel-heading

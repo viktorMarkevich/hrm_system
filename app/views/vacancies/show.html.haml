@@ -1,7 +1,6 @@
 = javascript_include_tag 'vacancies'
 = stylesheet_link_tag 'vacancies'
 
-
 .col-lg-6
   .panel.add-shadows
     .panel-heading
@@ -21,7 +20,7 @@
         %dd= display_field_value_for(@vacancy.requirements)
         %dt Статус вакансии:
         %dd.vacancy_status
-          = render partial: 'vacancy_status', locals: { vacancy: @vacancy }
+          = render partial: 'vacancy_status', locals: { vacancy: @vacancy, sr_status: @sr_status }
         %dt Ответственный:
         %dd= get_author_vacancy(@vacancy)
       %hr
@@ -32,11 +31,7 @@
         = link_to 'Вернуться', :back, class: 'btn btn-default'
         %code
           или
-
-        = link_to 'Добавить кандидатов к этой вакансии',
-                  edit_vacancy_path(@vacancy, partial_name: 'candidates_list_in_modal'),
-                  remote: true,
-                  class: 'btn btn-default'
+        = link_to 'Добавить кандидатов к этой вакансии', new_staff_relation_path(vacancy_id: @vacancy.id, sr_status: @sr_status), remote: true, class: 'btn btn-default'
 
 .col-lg-6
   .panel.add-shadows
