@@ -12,4 +12,5 @@
     = f.radio_button :status, 'Закрыта'
     = f.label 'Закрыта', class: 'label label-danger'
   .form-group
-    = f.submit 'Сохранить', class: 'btn btn-default'
+    %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
+    = f.submit 'Сохранить', class: 'btn btn-primary'

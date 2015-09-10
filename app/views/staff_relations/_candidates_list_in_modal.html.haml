@@ -1,0 +1,34 @@
+= form_tag staff_relations_path(vacancy_id: @vacancy), remote: 'true' do
+  .panel.panel-primary
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th Имя
+          %th Зарплата
+          %th Примечание
+      %tbody
+        - @candidates.each do |candidate|
+          %tr
+            %td
+              = check_box_tag 'candidates_ids[]', candidate.id
+              = candidate.name
+            %td= candidate.salary
+            %td
+              - if candidate.is_passive?
+                Имеет статус
+                &nbsp;
+                %span.label.label-primary
+                  = candidate.status
+              - else
+                - candidate.staff_relations.each do |sr|
+                  %p{style: 'font-size: 14px'}
+                    Имеет статус
+                    &nbsp;
+                    %span{ class: "label label-#{return_status_label(sr)}" }
+                      = sr.status
+                    &nbsp;
+                    для вакансии
+                    %span.label.label-info
+                      = sr.vacancy.name
+  %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
+  = submit_tag 'Выполнить', class: 'btn btn-primary'
