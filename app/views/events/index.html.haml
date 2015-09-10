@@ -3,7 +3,7 @@
 .col-xs-5
   .panel.add-shadows
     .panel-heading-events
-      = render partial: 'events_list', locals: { events: @events }
+      = render partial: 'events_list', locals: { events: events_current_month(@date.to_s) }
 .col-xs-7
   .panel.add-shadows
     .panel-heading
