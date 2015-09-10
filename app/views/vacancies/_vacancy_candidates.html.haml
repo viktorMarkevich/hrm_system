@@ -1,15 +1,15 @@
 %ul.nav.nav-tabs
-  %li{ class: get_active(@sr_status, 'Найденные') }
+  %li{ class: get_active(sr_status, 'Найденные') }
     = link_to 'Найденные', vacancy_path(@vacancy, sr_status: 'Найденные'), remote: true, class: 'btn btn-default'
-  %li{ class: get_active(@sr_status, 'Отобранные') }
+  %li{ class: get_active(sr_status, 'Отобранные') }
     = link_to 'Отобранные', vacancy_path(@vacancy, sr_status: 'Отобранные'), remote: true, class: 'btn btn-primary'
-  %li{ class: get_active(@sr_status, 'Собеседование') }
+  %li{ class: get_active(sr_status, 'Собеседование') }
     = link_to 'Собеседование', vacancy_path(@vacancy, sr_status: 'Собеседование'), remote: true, class: 'btn btn-info'
-  %li{ class: get_active(@sr_status, 'Утвержден') }
+  %li{ class: get_active(sr_status, 'Утвержден') }
     = link_to 'Утвержден', vacancy_path(@vacancy, sr_status: 'Утвержден'), remote: true, class: 'btn btn-success'
-  %li{ class: get_active(@sr_status, 'Не подходит') }
+  %li{ class: get_active(sr_status, 'Не подходит') }
     = link_to 'Не подходит', vacancy_path(@vacancy, sr_status: 'Не подходит'), remote: true, class: 'btn btn-warning'
-  %li{ class: get_active(@sr_status, 'Отказался') }
+  %li{ class: get_active(sr_status, 'Отказался') }
     = link_to 'Отказался', vacancy_path(@vacancy, sr_status: 'Отказался'), remote: true, class: 'btn btn-danger'
 
 - if vacancy_candidates.present?
