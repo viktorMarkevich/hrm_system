@@ -13,8 +13,14 @@ class StaffRelation < ActiveRecord::Base
     end
   end
 
-  def self.update_status(options)
-    sr = where(candidate_id: options[:vacancy][:candidate_id], vacancy_id: options[:id]).first
-    sr.update_attributes(status: options[:vacancy][:sr_status])
+  def self.return_status(options)
+    staff_relation = where(candidate_id: options[:vacancy][:candidate_id], vacancy_id: options[:id]).first
+    status = staff_relation.status
+    if options[:vacancy][:sr_status] == 'Нейтральный'
+      staff_relation.delete
+    else
+      staff_relation.update_attributes(status: options[:vacancy][:sr_status])
+    end
+    status
   end
 end
