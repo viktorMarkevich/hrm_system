@@ -1,4 +1,5 @@
-= form_tag staff_relations_path(vacancy_id: @vacancy), remote: 'true' do
+= form_for @staff_relation, remote: 'true' do |f|
+  = f.hidden_field :vacancy_id, value: @vacancy.id
   .panel.panel-primary
     %table.table.table-bordered
       %thead
@@ -10,7 +11,7 @@
         - @candidates.each do |candidate|
           %tr
             %td
-              = check_box_tag 'candidates_ids[]', candidate.id
+              = f.check_box :candidate_id, name: "staff_relation[candidate_id][#{candidate.id}]"
               = candidate.name
             %td= candidate.salary
             %td
@@ -31,4 +32,4 @@
                     %span.label.label-info
                       = sr.vacancy.name
   %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
-  = submit_tag 'Выполнить', class: 'btn btn-primary'
+  = f.submit 'Выполнить', class: 'btn btn-primary'
