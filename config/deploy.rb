@@ -29,6 +29,7 @@ set :unicorn_conf, "#{fetch(:deploy_to)}/current/config/unicorn.rb"
 set :unicorn_pid, "#{fetch(:deploy_to)}/shared/pids/unicorn.pid"
 
 set :default_env, { path: "/opt/ruby/bin:$PATH" }
+set :assets_dependencies, %w(app/assets)
 
 set :keep_releases, 3
 # RVM установлена не системно
