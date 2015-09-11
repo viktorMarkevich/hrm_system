@@ -1,4 +1,5 @@
-$('#dialog').modal('toggle');
+$('#dialog').modal('hide');
+$('.modal-backdrop').remove();
 
-$('#sticker_<%= @sticker.id %>').replaceWith('<%= j render (@sticker) %>')
-$('#stickers-pagination').html('<%= j render partial: 'stickers_pagination', locals: { stickers: @stickers } %>')
+$('#sticker_<%= @sticker.id %>').replaceWith('<%= j render partial: 'organisers/sticker', locals: { sticker: @sticker } %>')
+$('#stickers-pagination').html('<%= j render partial: 'organisers/stickers_pagination', locals: { stickers: @stickers } %>')
