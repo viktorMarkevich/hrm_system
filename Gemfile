@@ -32,6 +32,11 @@ group :development do
   gem 'capistrano-rails'
 end
 
+group :staging, :production do
+  gem 'unicorn'
+  gem 'unicorn-rails'
+end
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
 end
