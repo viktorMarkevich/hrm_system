@@ -26,9 +26,9 @@
                     %th= company.id
                     %td= link_to company.name, company_path(company), id: 'company-name'
                     %td= company.url
-                    %td= '777'
+                    %td= company.candidates.count != 0 ? (link_to company.candidates.count, candidates_path(company_id: company.id)) : '0'
                     %td= company.region.try(:name)
-                    %td= company.created_at
+                    %td= company.created_at.strftime('%F')
                     %td= truncate(company.description, length: 50)
   .row
     .col-xs-3

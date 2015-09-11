@@ -78,6 +78,11 @@
           = f.text_field :skype, class: 'form-control'
       .form-group
         .col-sm-2.control-label
+          = f.label :status, 'Компания:'
+        .col-sm-8
+          = f.select(:company_id, @companies, {}, class: 'form-control')
+      .form-group
+        .col-sm-2.control-label
           = f.label :home_page, 'Мои странички:'
         .col-sm-8
           %span.tip https://www.example1.com, https://www.example2.com, ...

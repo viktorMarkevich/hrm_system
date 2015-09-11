@@ -25,7 +25,7 @@
         %dt Опыт:
         %dd= display_field_value_for(@candidate.experience)
         %dt Статус:
-        %dd= @candidate.status
+        %dd= display_field_value_for(@candidate.status)
         %dt Описание:
         %dd= display_field_value_for(@candidate.description)
         %dt Почта:
@@ -36,6 +36,8 @@
         %dd= display_field_value_for(@candidate.home_page)
         %dt Skype:
         %dd= display_field_value_for(@candidate.skype)
+        %dt Компания:
+        %dd= display_field_value_for(@candidate.try(:company).try(:name))
         %dt Linkedin:
         %dd= display_field_value_for(@candidate.linkedin)
         %dt Facebook:
