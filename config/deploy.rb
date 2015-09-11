@@ -67,6 +67,7 @@ namespace :deploy do
     on "deployer@192.168.137.75" do
       within "#{fetch(:deploy_to)}/current" do
         # execute :bundle, :exec, "rake vacancies RAILS_ENV=#{fetch(:rails_env)}"   # запускается этот таск /lib/tasks/vacancy
+        execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
       end
     end
   end
