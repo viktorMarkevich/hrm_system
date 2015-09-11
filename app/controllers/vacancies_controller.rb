@@ -40,19 +40,7 @@ class VacanciesController < ApplicationController
   end
 
   def update
-    if params_present?
-      if params[:vacancy][:sr_status] == 'Нейтральный'
-        sr = @vacancy.staff_relations.where(candidate_id: params[:vacancy][:candidate_id])
-        @sr_status = sr.first.status
-        sr.destroy_all
-      else
-        @sr_status = @vacancy.staff_relations.where(candidate_id: params[:vacancy][:candidate_id]).first.status
-        StaffRelation.update_status(params)
-      end
-    else
-      @sr_status = params[:sr_status]
-    end
-
+    @sr_status = get_staff_relation_status
     @vacancy_candidates = @vacancy.candidates_with_status(@sr_status)
 
     respond_to do |format|
@@ -68,6 +56,15 @@ class VacanciesController < ApplicationController
   end
 
   private
+
+    def get_staff_relation_status
+      if params_present?
+        StaffRelation.return_status(params)
+      else
+        @vacancy.associate_with_region(params[:region]) if params[:region].present?
+        params[:sr_status]
+      end
+    end
 
     def params_present?
       params[:vacancy][:candidate_id].present? &&
