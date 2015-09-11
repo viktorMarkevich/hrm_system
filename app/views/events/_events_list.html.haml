@@ -17,9 +17,8 @@
             %tr
               %td
                 %span.label.label-default= event.name
-              -if event.staff_relation
-                %td= event.staff_relation.vacancy.name
-                %td= event.staff_relation.candidate.name
+              %td= event.staff_relation.vacancy.name
+              %td= event.staff_relation.candidate.name
               %td
                 %span.label.label-primary= event.starts_at.strftime('%H:%M')
                 = event.starts_at.strftime('%d/%m/%Y')
