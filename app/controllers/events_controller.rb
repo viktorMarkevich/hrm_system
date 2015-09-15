@@ -4,9 +4,8 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:edit, :update, :destroy]
 
   def index
-    @events = Event.order(starts_at: :asc)
-    # @events_with_sr = Event.joins(:staff_relation)
-    @date = params[:start_date] || DateTime.now
+    date = params[:start_date] || DateTime.now
+    @events = Event.events_current_month(date).order(starts_at: :asc)
   end
 
   def new
