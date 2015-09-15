@@ -2,21 +2,23 @@
 .row
   .col-xs-3
     = link_to 'Вернуться назад', organisers_path, class: 'btn btn-default btn-block'
-  - stickers.each do |sticker|
-    .col-xs-3
-      .panel.panel-default
-        .panel-heading{ style: "background-color: #{sticker.bg_color}" }
-          .row
-            .col-xs-6.panel-title
-              = sticker.deleted_at.strftime('%F')
-            .col-xs-offset-2.col-xs-4.panel-title
-              = link_to restore_object_path(object_name: sticker.class.to_s, id: sticker),
-                        method: :delete, class: 'glyph_destroy_link' do
-                %i.glyphicon.glyphicon-open
-        .panel-body{ style: "background-color: #{sticker.bg_color}" }
-          .row
-            .col-xs-12.sticker-desc
-              = sticker.description
+  .col-xs-7
+    - stickers.each do |sticker|
+      .col-xs-3
+        .panel.add-shadows{ style: "background-color: #{sticker.bg_color}" }
+          .panel-heading{ style: 'min-height: 44px;'}
+            .row
+              .col-xs-8
+                .panel-title
+                  = sticker.deleted_at.strftime('%F')
+              .col-xs-4
+                .panel-title
+                  = link_to restore_object_path(object_name: sticker.class.to_s, id: sticker), method: :delete do
+                    %i.glyphicon.glyphicon-open
+          .panel-body
+            .row
+              .col-xs-12.sticker-desc
+                = sticker.description
 .row
   .col-xs-12
     = paginate stickers
