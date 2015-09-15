@@ -20,7 +20,7 @@ module EventsHelper
 
   def set_events_list_title(events, date = nil)
     if date && events.blank?
-      "Список событий за #{set_month(date.to_date)} пуст"
+      "Список событий за #{set_month(date)} пуст"
     elsif events.present?
       "Список событий за #{set_month(events.first.starts_at)}"
     else

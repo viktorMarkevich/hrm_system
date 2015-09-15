@@ -8,13 +8,13 @@
     - if @events.present?
       .panel-body
         .events-list
-          = render partial: 'events_list', locals: { events: @events }
+          = render partial: 'events_list', locals: { events: @events, date: @date }
 .col-md-6
   .panel.add-shadows
     .panel-heading
       .panel-title
         Календарь событий
     .panel-body
-      = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
+      = link_to 'Создать новое событие', new_event_path(start_date: @date), remote: true, class: 'btn btn-success pull-right'
       .calendar
         = render partial: 'calendar', locals: { events: @events }

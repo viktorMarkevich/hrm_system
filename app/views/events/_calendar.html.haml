@@ -19,4 +19,4 @@
             %span{ 'aria-hidden' => 'true' } ×
           %h3.modal-title= date.strftime('События на %m/%d/%Y')
         .modal-body
-          = render partial: 'events_list', locals: { events: events } if events.present?
+          = render partial: 'events_list', locals: { events: events, start_date: date } if events.present?
