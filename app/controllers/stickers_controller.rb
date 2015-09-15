@@ -5,7 +5,6 @@ class StickersController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :find_sticker, only: [:update, :edit, :destroy]
-  before_filter :prepare_performers, only: [:new, :edit, :create]
 
   def new
     @sticker = Sticker.new
@@ -58,24 +57,14 @@ class StickersController < ApplicationController
   private
 
     def set_stickers
-      @stickers = Sticker.all_my_stickers(current_user).order('created_at desc').page(params[:page]).per(11)
-    end
-
-    def can_send_notifier?
-      @sticker.previous_changes[:performer_id] &&
-          @sticker.performer_id &&
-          @sticker.status == 'Новый'
+      @stickers = current_user.owner_stickers.order('created_at desc').page(params[:page]).per(11)
     end
 
     def sticker_params
-      params.require(:sticker).permit(:description, :performer_id)
+      params.require(:sticker).permit(:description)
     end
 
     def find_sticker
       @sticker = Sticker.find(params[:id])
-    end
-
-    def prepare_performers
-      @performers = User.get_performers
     end
 end

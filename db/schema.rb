@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150915081827) do
+ActiveRecord::Schema.define(version: 20150915090757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,10 +124,9 @@ ActiveRecord::Schema.define(version: 20150915081827) do
 
   create_table "stickers", force: :cascade do |t|
     t.string   "description"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "owner_id"
-    t.integer  "performer_id"
     t.datetime "deleted_at"
     t.string   "bg_color"
   end

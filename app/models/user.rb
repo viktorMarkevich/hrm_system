@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   has_one :image
   has_many :vacancies
   has_many :owner_stickers, foreign_key: 'owner_id', class_name: 'Sticker', dependent: :destroy
-  has_many :performer_stickers, foreign_key: 'performer_id', class_name: 'Sticker'
   has_many :candidates
   has_many :companies
   has_many :events
