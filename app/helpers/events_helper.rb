@@ -18,8 +18,19 @@ module EventsHelper
     }
   end
 
+  def set_events_list_title(events, date = nil)
+    if date && events.blank?
+      "Список событий за #{set_month(date.to_date)} пуст"
+    elsif events.present?
+      "Список событий за #{set_month(events.first.starts_at)}"
+    else
+      "Список событий пуст"
+    end
+
+  end
+
   def set_month(date)
-    date.present? ? date[5,6].to_i-1 : DateTime.now.month.to_i-1
+    Event::MONTHS[date.month - 1]
   end
 
   def get_sr_name(sr)

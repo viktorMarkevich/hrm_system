@@ -4,8 +4,8 @@ class EventsController < ApplicationController
   before_action :set_sr, only: [:new, :edit]
 
   def index
-    date = params[:start_date] || DateTime.now
-    @events = Event.events_current_month(date).order(starts_at: :asc)
+    @date = params[:start_date] || DateTime.now
+    @events = Event.events_current_month(@date).order(starts_at: :asc)
   end
 
   def new

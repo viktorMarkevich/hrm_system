@@ -1,8 +1,11 @@
 = stylesheet_link_tag 'events'
 
 .col-md-6
-  - if @events
-    .panel.add-shadows
+  .panel.add-shadows
+    .panel-heading
+      .panel-title
+        = set_events_list_title(@events, @date)
+    - if @events.present?
       .panel-body
         .events-list
           = render partial: 'events_list', locals: { events: @events }
