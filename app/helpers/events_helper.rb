@@ -22,4 +22,8 @@ module EventsHelper
     date.present? ? date[5,6].to_i-1 : DateTime.now.month.to_i-1
   end
 
+  def get_sr_name(sr)
+    "#{sr.vacancy.try(:name) + ' | Кандидат: ' + sr.candidate.name + ' | ' + sr.status}"
+  end
+
 end

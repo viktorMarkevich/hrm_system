@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
 
   before_action :set_event, only: [:edit, :update, :destroy]
+  before_action :set_sr, only: [:new, :edit]
 
   def index
     date = params[:start_date] || DateTime.now
@@ -55,6 +56,10 @@ class EventsController < ApplicationController
 
   def set_event
     @event = Event.find(params[:id])
+  end
+
+  def set_sr
+    @staff_relations = StaffRelation.all
   end
 
   def event_params
