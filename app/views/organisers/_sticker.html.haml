@@ -4,13 +4,6 @@
       .row
         .col-xs-8
           .panel-title
-            - if sticker.performer_id
-              - if sticker.status == 'Новый'
-                %i.glyphicon.glyphicon-star-empty
-              - elsif sticker.status == 'Готово'
-                %i.glyphicon.glyphicon-star
-              - else
-                %i.glyphicon.glyphicon-fire
         .col-xs-4
           #actions.panel-title.hide
             = link_to edit_sticker_path(sticker), remote: true do

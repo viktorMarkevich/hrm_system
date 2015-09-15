@@ -19,7 +19,6 @@ class StickersController < ApplicationController
     respond_to do |format|
       if @sticker.save
         set_stickers
-        NoticeMailer.notice_of_appointment(@sticker).deliver_now if @sticker.performer_id
         flash[:notice] = 'Стикер был успешно создан.'
         format.json { head :no_content }
         format.js
@@ -34,7 +33,6 @@ class StickersController < ApplicationController
     respond_to do |format|
       if @sticker.update(sticker_params)
         set_stickers
-        NoticeMailer.notice_of_appointment(@sticker).deliver_now if can_send_notifier?
         flash[:notice] = 'Стикер был успешно обновлен.'
         format.json { head :no_content }
         format.js
@@ -46,7 +44,7 @@ class StickersController < ApplicationController
   end
 
   def destroy
-    if @sticker.is_destroyed?
+    if @sticker.destroy
       set_stickers
       flash[:notice] = 'Стикер был успешно закрыт.'
       respond_to do |format|
@@ -70,7 +68,7 @@ class StickersController < ApplicationController
     end
 
     def sticker_params
-      params.require(:sticker).permit(:description, :performer_id, :status)
+      params.require(:sticker).permit(:description, :performer_id)
     end
 
     def find_sticker
