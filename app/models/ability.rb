@@ -4,14 +4,9 @@ class Ability
   def initialize(user)
 
     user ||= User.new # guest user
-    if user.post == 'Директор' #HR Менеджер
-      can :manage, :all
-    else
-      can :manage, :all
-      cannot :new, Sticker
-      cannot :edit, Sticker
-      cannot :destroy, Sticker
-    end
+    # alias_action :create, :read, :update, :destroy, to: :crud
+
+    can :manage, Sticker, owner_id: user.id
 
   end
 

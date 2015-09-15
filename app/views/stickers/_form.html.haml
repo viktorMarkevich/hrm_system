@@ -6,13 +6,13 @@
   .form-group.sticker_description
     = f.label 'Описание'
     = f.text_field :description, class: 'form-control'
-
-  -unless @sticker.new_record?
+  - unless @sticker.new_record? || (cannot? :change_status, @sticker)
     .form-group.sticker_status
       = f.label 'Статус:'
       = f.select(:status, Sticker::STATUS, {}, class: 'form-control')
-  .form-group.sticker_performer
-    = f.label 'Назначить на:'
-    = f.select(:performer_id, [[]] + @performers, {}, class: 'form-control')
+  - if can? :assign, @sticker
+    .form-group.sticker_performer
+      = f.label 'Назначить на:'
+      = f.select(:performer_id, [[]] + @performers, {}, class: 'form-control')
   .form-group
     = f.submit 'Сохранить', class: 'btn btn-default'

@@ -51,11 +51,10 @@
             = link_to 'Добавить стикер', new_sticker_path, remote: true, class: 'btn btn-success'
             = link_to 'Закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-warning'
         .stickers
-          = render  partial: 'sticker', collection: @stickers
-          -#- @stickers.each do |sticker|
-            = render  partial: 'sticker', locals: { sticker: sticker }
-        = render 'stickers/dialog'
+          = render partial: 'sticker', collection: @stickers
       .row
         .col-xs-12
           #stickers-pagination
             = render partial: 'stickers_pagination', locals: { stickers: @stickers }
+
+= render 'stickers/dialog'

@@ -4,17 +4,19 @@
       .row
         .col-xs-8
           .panel-title
-            -if sticker.performer_id
-              = link_to '#', class: 'glyph_show_link' do
+            - if sticker.performer_id
+              - if sticker.status == 'Новый'
                 %i.glyphicon.glyphicon-star-empty
-              = sticker.status
+              - elsif sticker.status == 'Готово'
+                %i.glyphicon.glyphicon-star
+              - else
+                %i.glyphicon.glyphicon-fire
         .col-xs-4
           #actions.panel-title.hide
-            -if current_user.is_director?
-              = link_to edit_sticker_path(sticker), remote: true do
-                %i.glyphicon.glyphicon-pencil
-              = link_to sticker_path(sticker), method: :delete, remote: true, data: { confirm: "Удалить стикер: #{sticker.description}?" } do
-                %i.glyphicon.glyphicon-remove-circle
+            = link_to edit_sticker_path(sticker), remote: true do
+              %i.glyphicon.glyphicon-pencil
+            = link_to sticker_path(sticker), method: :delete, remote: true, data: { confirm: "Удалить стикер: #{sticker.description}?" } do
+              %i.glyphicon.glyphicon-remove-circle
     .panel-body
       .row
         .col-xs-12.sticker-desc

@@ -35,12 +35,11 @@ class StickersController < ApplicationController
       if @sticker.update(sticker_params)
         set_stickers
         NoticeMailer.notice_of_appointment(@sticker).deliver_now if can_send_notifier?
-        @sticker.destroy if @sticker.status == 'Закрыт'
         flash[:notice] = 'Стикер был успешно обновлен.'
         format.json { head :no_content }
         format.js
       else
-        format.json { render json: @event.errors.full_messages,
+        format.json { render json: @sticker.errors.full_messages,
                              status: :unprocessable_entity }
       end
     end
@@ -61,14 +60,13 @@ class StickersController < ApplicationController
   private
 
     def set_stickers
-      @stickers = Sticker.includes(:owner, :performer).order('created_at desc').page(params[:page]).per(11)
-      @stickers = @stickers.where('performer_id = ?', "#{current_user.id}") unless current_user.is_director?
+      @stickers = Sticker.all_my_stickers(current_user).order('created_at desc').page(params[:page]).per(11)
     end
 
     def can_send_notifier?
       @sticker.previous_changes[:performer_id] &&
           @sticker.performer_id &&
-          @sticker.status == 'Назначен'
+          @sticker.status == 'Новый'
     end
 
     def sticker_params
