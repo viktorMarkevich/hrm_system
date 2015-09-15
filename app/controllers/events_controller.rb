@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
 
-  before_action :staff_relations, except: [:index, :show]
   before_action :set_event, only: [:edit, :update, :destroy]
 
   def index
@@ -30,7 +29,7 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event.staff_relation = StaffRelation.find(params[:staff_relation])
+    @event.staff_relation = StaffRelation.find(params[:staff_relation]) if params[:staff_relation]
     respond_to do |format|
       if @event.update(event_params)
         @events = Event.order(starts_at: :asc)
@@ -44,7 +43,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event.staff_relation.update(event_id: nil)
+    @event.staff_relation.update(event_id: nil) if @event.staff_relation
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Событие успешно удалено.' }
@@ -56,10 +55,6 @@ class EventsController < ApplicationController
 
   def set_event
     @event = Event.find(params[:id])
-  end
-
-  def staff_relations
-    @staff_relations = StaffRelation.all
   end
 
   def event_params

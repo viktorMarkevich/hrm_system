@@ -21,7 +21,7 @@ class Event < ActiveRecord::Base
 
   def self.events_current_month(date)
     period = date.to_date
-    Event.where(starts_at: period.beginning_of_month..period.end_of_month)
+    Event.where(starts_at: period.beginning_of_month..period.end_of_month).includes(:staff_relation)
   end
 
 end
