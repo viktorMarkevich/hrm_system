@@ -17,7 +17,7 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.build(event_params)
-    @event.staff_relation = StaffRelation.find(params[:staff_relation]) if params[:staff_relation]
+    @event.staff_relation = StaffRelation.find(params[:event][:staff_relation]) if params[:event][:staff_relation]
     respond_to do |format|
       if @event.save
         @events = Event.order(starts_at: :asc)
@@ -30,7 +30,7 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event.staff_relation = StaffRelation.find(params[:staff_relation]) if params[:staff_relation]
+    @event.staff_relation = StaffRelation.find(params[:event][:staff_relation]) if params[:event][:staff_relation]
     respond_to do |format|
       if @event.update(event_params)
         @events = Event.order(starts_at: :asc)
