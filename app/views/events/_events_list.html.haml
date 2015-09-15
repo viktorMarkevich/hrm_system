@@ -1,6 +1,4 @@
 .panel-title
-  = "Список событий за #{Event::MONTHS[set_month(params[:start_date])]}"
-  = 'пуст.' unless events_current_month(params[:start_date]).present?
 -if @events.present?
   .panel-body
     .items-list
@@ -17,8 +15,12 @@
             %tr
               %td
                 %span.label.label-default= event.name
-              %td= event.staff_relation.vacancy.name
-              %td= event.staff_relation.candidate.name
+              - if event.staff_relation
+                %td= event.staff_relation.vacancy.name
+                %td= event.staff_relation.candidate.name
+              - else
+                %td= 'name'
+                %td= 'name'
               %td
                 %span.label.label-primary= event.starts_at.strftime('%H:%M')
                 = event.starts_at.strftime('%d/%m/%Y')

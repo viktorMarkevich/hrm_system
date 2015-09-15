@@ -5,6 +5,7 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.order(starts_at: :asc)
+    # @events_with_sr = Event.joins(:staff_relation)
     @date = params[:start_date] || DateTime.now
   end
 
@@ -17,7 +18,7 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.build(event_params)
-    @event.staff_relation = StaffRelation.find(params[:staff_relation])
+    @event.staff_relation = StaffRelation.find(params[:staff_relation]) if params[:staff_relation]
     respond_to do |format|
       if @event.save
         @events = Event.order(starts_at: :asc)

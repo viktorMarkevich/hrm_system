@@ -19,4 +19,13 @@ class Event < ActiveRecord::Base
     NoticeMailer.event_soon(@events_soon).deliver_now
   end
 
+  def events_current_month(date)
+    if date.present?
+      time = Date.new(date[0..3].to_i,date[5,6].to_i).to_time
+    else
+      time = Date.new(DateTime.now.year.to_i, DateTime.now.month.to_i).to_time
+    end
+    Event.where(starts_at: time..time.end_of_month)
+  end
+
 end

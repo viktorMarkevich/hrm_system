@@ -1,10 +1,6 @@
 = stylesheet_link_tag 'events'
 
-.col-xs-5
-  .panel.add-shadows
-    .panel-heading-events
-      = render partial: 'events_list', locals: { events: events_current_month(@date.to_s) }
-.col-xs-7
+.col-md-offset-2.col-md-8
   .panel.add-shadows
     .panel-heading
       .panel-title

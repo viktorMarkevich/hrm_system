@@ -20,8 +20,8 @@
                   %span.label.label-info
                     = event.starts_at.strftime('%e %b %H:%M')
 
-                %td="кандидат: #{link_to event.staff_relation.candidate.name, candidate_path(event.staff_relation.candidate.id)}".html_safe
-                %td="на должность #{link_to event.staff_relation.vacancy.name, vacancy_path(event.staff_relation.vacancy.id)}".html_safe
+                -#%td="кандидат: #{link_to event.staff_relation.candidate.name, candidate_path(event.staff_relation.candidate.id)}".html_safe
+                -#%td="на должность #{link_to event.staff_relation.vacancy.name, vacancy_path(event.staff_relation.vacancy.id)}".html_safe
 
   .panel.add-shadows
     .panel-heading
