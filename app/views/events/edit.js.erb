@@ -9,8 +9,3 @@ $('.modal-body').html('<%= j render partial: 'form', locals: { events: @events, 
 
 // Show the dynamic dialog
 $('#dialog').modal("show");
-
-// Set focus to the first element
-$('#dialog').on('shown.bs.modal', function () {
-    $('.first_input').focus()
-})

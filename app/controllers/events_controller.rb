@@ -21,7 +21,7 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.build(event_params)
-    @event.staff_relation = StaffRelation.find(params[:event][:staff_relation]) if params[:event][:staff_relation]
+    @event.staff_relation = StaffRelation.find(params[:event][:staff_relation]) if params[:event][:staff_relation].to_i !=0
     respond_to do |format|
       if @event.save
         @events = Event.events_current_month(@date, @the_exact_date).order(starts_at: :asc)
@@ -34,11 +34,10 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event.staff_relation = StaffRelation.find(params[:event][:staff_relation]) if params[:event][:staff_relation]
+    @event.staff_relation = StaffRelation.find(params[:event][:staff_relation]) if params[:event][:staff_relation].to_i !=0
     respond_to do |format|
       if @event.update(event_params)
         @events = Event.events_current_month(@date, @the_exact_date).order(starts_at: :asc)
-        format.json { head :no_content }
         format.js
       else
         format.json { render json: @event.errors.full_messages,
@@ -63,7 +62,7 @@ class EventsController < ApplicationController
   end
 
   def set_sr
-    @staff_relations = StaffRelation.all
+    @staff_relations = StaffRelation.where(status: ['Собеседование', 'Утвержден'])
   end
 
   def set_date

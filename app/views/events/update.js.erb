@@ -2,6 +2,6 @@ $('.panel-body .events-list').html('<%= escape_javascript(render partial: 'event
                                                   locals: { events: @events, date: @date }) %>')
 
 $('.calendar').html('<%= escape_javascript(render partial: 'calendar',
-                                                  locals: { events: @events, date: @date  }) %>')
+                                                  locals: { events: @events, date: @date }) %>')
 
 $('.modal-backdrop').remove();

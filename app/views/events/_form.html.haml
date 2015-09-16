@@ -1,12 +1,18 @@
-= form_for @event, remote: true, html: { role: 'form' } do |f|
+= javascript_include_tag 'events'
+
+= form_for @event, remote: true, html: { role: 'form', class: 'event_form' } do |f|
   #error_explanation.bg-danger.text-danger
   .form-group
-    = f.label 'Имя:'
-    = f.text_field :name, class: 'form-control'
+    .name_field
+      = f.label 'Название события: ', class: 'label_name'
+      .after_name_label
+        = f.text_field :name, class: 'form-control'
   - if @staff_relations.present?
     .form-group
       = f.label 'На вакансию:'
-      = f.select :staff_relation, @staff_relations.collect{ |sr| [get_sr_name(sr), sr.id] }, {}, { class: 'form-control' }
+      = f.select :staff_relation, @staff_relations.collect{ |sr| [get_sr_name(sr), sr.id, { data: { status: sr.status } }] },
+                                  { include_blank: true, prompt: 'Выберете одну из позиций' },
+                                  { class: 'form-control staff_relation' }
   .form-group
     = f.label 'Дата события:'
     = f.datetime_select :starts_at, default: @date, class: 'form-control'
