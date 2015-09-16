@@ -19,9 +19,17 @@ class Event < ActiveRecord::Base
     NoticeMailer.event_soon(@events_soon).deliver_now
   end
 
-  def self.events_current_month(date)
-    period = date.to_date
-    Event.where(starts_at: period.beginning_of_month..period.end_of_month).includes(:staff_relation)
+  def self.events_current_month(date, the_exact_date = nil)
+    if the_exact_date.present?
+      date_arr = date.strftime('%F').split('-')
+      year = date_arr[0]
+      month = date_arr[1]
+      day = date_arr[2]
+      Event.where("date_part('year', starts_at) = ? and date_part('month', starts_at) = ? and date_part('day', starts_at) = ?", year, month, day)
+    else
+      period = date.to_date
+      Event.where(starts_at: period.beginning_of_month..period.end_of_month).includes(:staff_relation)
+    end
   end
 
 end

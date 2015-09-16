@@ -2,7 +2,7 @@
 $('#dialog h3').html("Добавить событие");
 
 // Render the new form
-$('.modal-body.form').html('<%= j render('form') %>');
+$('.modal-body').html('<%= j render partial: 'form', locals: { events: @events, date: @date } %>');
 
 // Show the dynamic dialog
 $('#dialog').modal("show");

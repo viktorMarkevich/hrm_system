@@ -2,19 +2,21 @@ class EventsController < ApplicationController
 
   before_action :set_event, only: [:edit, :update, :destroy]
   before_action :set_sr, only: [:new, :edit]
+  before_action :set_date
 
   def index
-    @date = params[:start_date].to_date || DateTime.now
-    @events = Event.events_current_month(@date).order(starts_at: :asc)
+    @events = Event.events_current_month(@date, @the_exact_date).order(starts_at: :asc)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
-    @date = params[:start_date].to_date || DateTime.now
     @event = Event.new
   end
 
   def edit
-    @date = params[:start_date].to_date || DateTime.now
   end
 
   def create
@@ -22,7 +24,7 @@ class EventsController < ApplicationController
     @event.staff_relation = StaffRelation.find(params[:event][:staff_relation]) if params[:event][:staff_relation]
     respond_to do |format|
       if @event.save
-        @events = Event.order(starts_at: :asc)
+        @events = Event.events_current_month(@date, @the_exact_date).order(starts_at: :asc)
         format.js
       else
         format.json { render json: @event.errors.full_messages,
@@ -35,7 +37,7 @@ class EventsController < ApplicationController
     @event.staff_relation = StaffRelation.find(params[:event][:staff_relation]) if params[:event][:staff_relation]
     respond_to do |format|
       if @event.update(event_params)
-        @events = Event.order(starts_at: :asc)
+        @events = Event.events_current_month(@date, @the_exact_date).order(starts_at: :asc)
         format.json { head :no_content }
         format.js
       else
@@ -62,6 +64,11 @@ class EventsController < ApplicationController
 
   def set_sr
     @staff_relations = StaffRelation.all
+  end
+
+  def set_date
+    @date = params[:start_date].try(:to_date) || DateTime.now
+    @the_exact_date = params[:the_exact_date]
   end
 
   def event_params
