@@ -5,14 +5,14 @@
         %th Событие
         %th На вакансию
         %th С кем
-        %th Назначено на
+        %th Время события
         %th Описание
         %th Действия
     %tbody
       - events.each do |event|
         %tr
           %td
-            %span.label.label-default= event.name
+            %span.label{ class: set_label_class(event) }= event.name
           - if event.staff_relation
             %td= event.staff_relation.vacancy.name
             %td= event.staff_relation.candidate.name

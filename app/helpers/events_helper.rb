@@ -37,4 +37,15 @@ module EventsHelper
     "#{sr.vacancy.try(:name) + ' | Кандидат: ' + sr.candidate.name + ' | ' + sr.status}"
   end
 
+  def set_label_class(event)
+    case event.name
+      when 'Утвержден'
+        'label-success'
+      when 'Собеседование'
+        'label-info'
+      else
+        'label-default'
+    end
+  end
+
 end
