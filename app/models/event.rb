@@ -15,7 +15,7 @@ class Event < ActiveRecord::Base
   end
 
   def self.events_soon_mailer
-    @events_soon = Event.where(starts_at: Time.now..(Time.now + 1.day))
+    @events_soon = where(starts_at: Time.now..(Time.now + 1.day))
     NoticeMailer.event_soon(@events_soon).deliver_now
   end
 
@@ -25,10 +25,13 @@ class Event < ActiveRecord::Base
       year = date_arr[0]
       month = date_arr[1]
       day = date_arr[2]
-      Event.where("date_part('year', starts_at) = ? and date_part('month', starts_at) = ? and date_part('day', starts_at) = ?", year, month, day)
+      where("date_part('year', starts_at) = ? and date_part('month', starts_at) = ? and date_part('day', starts_at) = ?",
+            year,
+            month,
+            day)
     else
       period = date.to_date
-      Event.where(starts_at: period.beginning_of_month..period.end_of_month).includes(:staff_relation)
+      where(starts_at: period.beginning_of_month..period.end_of_month).includes(:staff_relation)
     end
   end
 
