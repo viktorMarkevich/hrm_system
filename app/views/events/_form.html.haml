@@ -10,8 +10,8 @@
   - if @staff_relations.present?
     .form-group
       = f.label 'На вакансию:'
-      = f.select :staff_relation, @staff_relations.collect{ |sr| [get_sr_name(sr), sr.id, { data: { status: sr.status } }] },
-                                  { include_blank: true, prompt: 'Выберете одну из позиций' },
+      = f.select :staff_relation, @staff_relations.collect{ |sr| [get_sr_name(sr), sr.id, { data: { status: sr.status } } ]},
+                                  { include_blank: true, prompt: 'Выберете одну из позиций', selected: (@event.staff_relation.id if @event.staff_relation ) },
                                   { class: 'form-control staff_relation' }
   .form-group
     = f.label 'Дата события:'
