@@ -18,10 +18,11 @@ class StickersController < ApplicationController
     respond_to do |format|
       if @sticker.save
         set_stickers
-        flash[:notice] = 'Стикер был успешно создан.'
+        flash[:success] = 'Стикер был успешно создан.'
         format.json { head :no_content }
         format.js
       else
+        flash[:error] = 'Стикер не был создан!'
         format.json { render json: @sticker.errors.full_messages,
                              status: :unprocessable_entity }
       end
@@ -36,6 +37,7 @@ class StickersController < ApplicationController
         format.json { head :no_content }
         format.js
       else
+        flash[:error] = 'Стикер не был обновлен!'
         format.json { render json: @sticker.errors.full_messages,
                              status: :unprocessable_entity }
       end

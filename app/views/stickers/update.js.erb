@@ -1,5 +1,7 @@
 $('#dialog').modal('hide');
 $('.modal-backdrop').remove();
 
+$('.flash-container').html('<%= escape_javascript(render partial: 'share/flash_messages', flash: flash) %>')
+
 $('#sticker_<%= @sticker.id %>').replaceWith('<%= j render partial: 'organisers/sticker', locals: { sticker: @sticker } %>')
 $('#stickers-pagination').html('<%= j render partial: 'organisers/stickers_pagination', locals: { stickers: @stickers } %>')

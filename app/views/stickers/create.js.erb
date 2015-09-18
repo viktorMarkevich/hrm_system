@@ -1,5 +1,7 @@
 $('#dialog').modal('hide');
 $('.modal-backdrop').remove();
 
+$('.flash-container').html('<%= escape_javascript(render partial: 'share/flash_messages', flash: flash) %>')
+
 $('.stickers').html('<%= escape_javascript(render partial: 'organisers/sticker', collection: @stickers) %>')
 $('#stickers-pagination').html('<%= escape_javascript render partial: 'organisers/stickers_pagination', locals: { stickers: @stickers } %>')
