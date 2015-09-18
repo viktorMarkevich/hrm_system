@@ -47,7 +47,7 @@ class CandidatesController < ApplicationController
 
     def candidate_params
       params.require(:candidate).permit(
-          :name, :birthday, :salary, :salary_format,
+          :name, :birthday, :salary, :salary_format, :notice,
           :education, :languages, :city_of_residence, :company_id,
           :ready_to_relocate, :desired_position, :experience,
           :status, :source, :description, :email, :phone, :linkedin,

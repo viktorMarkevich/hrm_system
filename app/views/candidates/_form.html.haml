@@ -112,6 +112,11 @@
         .col-sm-8
           %span.tip https://plus.google.com/123456789132456789123/
           = f.text_field :google_plus, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :notice, 'Примечание:'
+        .col-sm-8
+          = f.text_field :notice, class: 'form-control'
   .row
     .col-md-6
       .form-group
