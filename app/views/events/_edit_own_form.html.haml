@@ -1,0 +1,15 @@
+= javascript_include_tag 'events'
+
+= form_for @event, remote: true, html: { role: 'form', class: 'event_form' } do |f|
+  #error_explanation.bg-danger.text-danger
+  .form-group
+    = f.label :name, 'Название события: '
+    = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label 'Дата события:'
+    = f.datetime_select :starts_at, default: @date, class: 'form-control'
+  .form-group
+    = f.label 'Описание:'
+    = f.text_area :description, rows: 3, class: 'form-control'
+  .form-group
+    = f.submit 'Сохранить', class: 'btn btn-default'
