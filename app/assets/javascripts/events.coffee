@@ -1,33 +1,38 @@
 # coding 'utf-8'
 $(document).ready ->
 
+  $('body').on 'keyup', '#event_name', ->
+    val = $(this).val()
+    if val.length > 0
+      $('#staff_relation').hide(200)
+    else
+      $('#staff_relation').show(200)
+
   $('body').on 'change', '.staff_relation', ->
     val = $(this).find(':selected').data('status')
     if val != undefined
-      $('.name_field').find('.after_name_label').hide(200)
+      $('#event_name').hide(200)
 
-      status = $(".label_name").find('span.label')
+      status = $(".label_event_name").find('span.label')
       status.remove() if status.length > 0
 
-      hidden = $('.name_field').find("input[type=hidden]")
+      hidden = $('#hidden_event_name')
       hidden.remove() if hidden.length > 0
 
-      $('.label_name').append(
+      $('.label_event_name').append(
         if val == 'Утвержден'
           "<span class='label label-success'>" + val + "</span>"
         else
           "<span class='label label-info'>" + val + "</span>"
       )
 
-      $('.name_field').append( "<input id='event_name' type='hidden' name='event[name]' value='"+val+"'>" )
+      $('#event_name_group').append( "<input id='hidden_event_name' type='hidden' name='event[name]' value='"+val+"'>" )
     else
-      $('.name_field').find('.after_name_label').show(200)
+      $('#event_name').show(200)
 
-      status = $(".label_name").find('span.label')
+      status = $(".label_event_name").find('span.label')
       status.remove() if status.length > 0
 
-      hidden = $('.name_field').find("input[type=hidden]")
+      hidden = $('#hidden_event_name')
       hidden.remove() if hidden.length > 0
     return
-
-
