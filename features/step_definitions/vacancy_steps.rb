@@ -137,9 +137,9 @@ end
 When(/^I select candidate for vacancy$/) do
   click_link 'Добавить кандидатов к этой вакансии'
 
-  within('#candidates-multiselect') do
-    first('input[type="checkbox"]').click
-  end
+  # within('#candidates-multiselect') do
+  #   first('input[type="checkbox"]').click
+  # end
 
   click_button 'Выбрать'
 end
