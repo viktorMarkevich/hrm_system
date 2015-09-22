@@ -1,7 +1,5 @@
 # config valid only for Capistrano 3.4
 
-require 'capistrano/rvm'
-
 SSHKit.config.command_map[:rake]  = 'bundle exec rake'
 
 lock '3.4.0'
