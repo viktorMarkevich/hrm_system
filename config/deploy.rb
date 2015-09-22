@@ -10,15 +10,16 @@ set :application, 'faceit-hrm'
 set :scm, :git
 set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 
-set :rvm_type, :user
-
-set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm'      # Defaults to: 'default'
-
-
 # Имя пользователя на сервере и папка с проектом
 set :user, 'deployer'
-
 set :deploy_to, "/home/deployer/#{fetch(:stage)}/faceit-hrm"
+
+# set :rvm_type, :user
+#
+# set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm'      # Defaults to: 'default'
+set :rvm_type, :user                     # Defaults to: :auto
+set :rvm_ruby_version, '2.2.2'      # Defaults to: 'default'
+
 
 # Тип запуска Rails, метод доставки обновлений и локальные релизные версии
 set :deploy_via, :remote_cache
