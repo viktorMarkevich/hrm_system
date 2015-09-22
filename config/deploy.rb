@@ -18,7 +18,7 @@ set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm'      # Defaults to: 'default'
 # Имя пользователя на сервере и папка с проектом
 set :user, 'deployer'
 
-run "~#{user}/.rvm/bin/rvm gemset create #{application}"
+execute "~#{user}/.rvm/bin/rvm gemset create #{application}"
 
 set :deploy_to, "/home/deployer/#{fetch(:stage)}/faceit-hrm"
 
