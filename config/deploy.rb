@@ -16,13 +16,8 @@ set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 set :user, 'deployer'
 set :deploy_to, "/home/deployer/#{fetch(:stage)}/faceit-hrm"
 
-# set :rvm_type, :user
-#
-# set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm'      # Defaults to: 'default'
-set :rvm_type, :auto                     # Defaults to: :auto
-set :rvm_ruby_version, '2.2.2'      # Defaults to: 'default'
-# set :rvm_custom_path, "~.rvm/bin/rvm gemset create #{fetch(:application)}"
-
+set :rvm_type, :user
+set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm'      # Defaults to: 'default'
 
 # Тип запуска Rails, метод доставки обновлений и локальные релизные версии
 set :deploy_via, :remote_cache
