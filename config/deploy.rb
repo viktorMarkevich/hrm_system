@@ -26,8 +26,8 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 set :unicorn_conf, "#{fetch(:deploy_to)}/current/config/unicorn.rb"
 set :unicorn_pid, "#{fetch(:deploy_to)}/shared/pids/unicorn.pid"
 
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :default_env, { rvm_bin_path: '~/.rvm/bin' }
+set :copy_exclude, [ '.git' ]
 
 set :keep_releases, 3
 # RVM установлена не системно
