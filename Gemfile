@@ -30,7 +30,6 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'
   gem 'capistrano-rails'
-  gem 'rvm-capistrano'
 end
 
 group :staging, :production do
