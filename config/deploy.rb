@@ -1,4 +1,5 @@
 # config valid only for Capistrano 3.4
+require "rvm/capistrano"
 
 SSHKit.config.command_map[:rake]  = 'bundle exec rake'
 
@@ -13,6 +14,11 @@ set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 set :rvm_type, :user
 
 set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm'      # Defaults to: 'default'
+
+set :rvm_ruby_string, :local        # use the same ruby as used locally for deployment
+
+before 'deploy', 'rvm:install_rvm'  # install/update RVM
+before 'deploy', 'rvm:install_ruby' # install Ruby and create gemset (both if missing)
 
 
 # Имя пользователя на сервере и папка с проектом
