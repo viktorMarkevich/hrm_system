@@ -22,11 +22,7 @@ gem 'kaminari'
 gem 'cancancan', '~> 1.10'
 gem 'simple_calendar', '~> 1.1.0'
 gem 'rufus-scheduler', '~> 3.1.3' #awesome scheduler gem!!!
-
-
-group :assets do
-  gem 'coffee-rails', '~> 4.1.0'
-end
+gem 'coffee-rails', '~> 4.1.0'
 
 group :development do
   gem 'letter_opener'
