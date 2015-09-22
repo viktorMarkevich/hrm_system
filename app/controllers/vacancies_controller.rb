@@ -47,7 +47,7 @@ class VacanciesController < ApplicationController
       if @vacancy.update_attributes(vacancy_params)
         format.html { redirect_to vacancies_path, notice: 'Вакансия успешно обновлена.' }
         format.json { head :no_content, status: 200 }
-        format.js  #{ render :layout => false }
+        format.js  { render :layout => false }
       else
         format.html { render 'edit' }
         format.json { render json: @vacancy.errors.full_messages,
