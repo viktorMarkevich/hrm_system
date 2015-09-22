@@ -8,6 +8,10 @@ module ApplicationHelper
     "#{full_name_for(object.owner)} #{object.created_at.strftime('%F')}"
   end
 
+  def get_date_when_added(object)
+    object.created_at.strftime('%F')
+  end
+
   def get_author_vacancy(object)
     "#{full_name_for(object.owner)}"
   end
