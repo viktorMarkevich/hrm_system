@@ -19,6 +19,7 @@ set :deploy_to, "/home/deployer/#{fetch(:stage)}/faceit-hrm"
 # set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm'      # Defaults to: 'default'
 set :rvm_type, :user                     # Defaults to: :auto
 set :rvm_ruby_version, '2.2.2'      # Defaults to: 'default'
+set :rvm_custom_path, "~#{user}/.rvm/bin/rvm gemset create #{application}"
 
 
 # Тип запуска Rails, метод доставки обновлений и локальные релизные версии
