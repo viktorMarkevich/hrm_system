@@ -65,8 +65,8 @@ namespace :deploy do
   task :any_task do #здесь можно размещать любые таски, которые нужно запустить в той или иной среде
     on "deployer@192.168.137.75" do
       within "#{fetch(:deploy_to)}/current" do
-        # execute :bundle, :exec, "rake vacancies RAILS_ENV=#{fetch(:rails_env)}"   # запускается этот таск /lib/tasks/vacancy
-        execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
+        # execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
+        execute :bundle, :exec, "rake db:seed RAILS_ENV=#{fetch(:rails_env)}"
       end
     end
   end
