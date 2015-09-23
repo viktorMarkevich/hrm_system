@@ -21,14 +21,8 @@ class Event < ActiveRecord::Base
 
   def self.events_current_month(date, the_exact_date = nil)
     if the_exact_date.present?
-      date_arr = date.strftime('%F').split('-')
-      year = date_arr[0]
-      month = date_arr[1]
-      day = date_arr[2]
-      where("date_part('year', starts_at) = ? and date_part('month', starts_at) = ? and date_part('day', starts_at) = ?",
-            year,
-            month,
-            day)
+      date = Time.zone.parse(date.strftime('%F'))
+      where('starts_at BETWEEN ? AND ?', date, date + 23.hours + 59.minutes + 59.seconds)
     else
       period = date.to_date
       where(starts_at: period.beginning_of_month..period.end_of_month).includes(:staff_relation)
