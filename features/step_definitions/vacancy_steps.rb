@@ -74,9 +74,10 @@ Given(/^I am on the vacancy edit page$/) do
 end
 
 When(/^I change region in edit form$/) do
-  within('.edit_vacancy') do
-    select('Киев', from: 'region')
-  end
+  # within('name="region"') do
+  #   select('Киев', from: 'region')
+  # end
+  select 'Киев', from: 'region'
 end
 
 Then(/^I should see successfull message$/) do
