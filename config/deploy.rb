@@ -15,7 +15,7 @@ set :user, 'deployer'
 set :deploy_to, "/home/deployer/#{fetch(:stage)}/faceit-hrm"
 
 set :rvm_type, :user
-set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm'      # Defaults to: 'default'
+set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm --create'      # Defaults to: 'default'
 
 # Тип запуска Rails, метод доставки обновлений и локальные релизные версии
 set :deploy_via, :remote_cache
