@@ -49,6 +49,7 @@
       = f.label :requirements, 'Требования:'
     .col-sm-8
       = f.text_area :requirements, rows: 5, class: 'form-control'
+  %hr
   .form-group
     .col-sm-12
       = f.submit @vacancy.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'

@@ -1,39 +1,56 @@
-- content_for :left_sidebar, render(partial: 'left_sidebar')
+.col-lg-2.col-lg-offset-2
+  .panel.add-shadows
+    .panel-body.text-center
+      = render partial: 'left_sidebar'
 
-.panel.panel-success
-  .panel-heading.panel-title
-    = full_name_for(@user)
-  .panel-body
-    .row
-      .col-xs-6
-        - if @user.errors.any?
-          %h3 Возникшие ошибки:
-          %ul
-            - @user.errors.full_messages.each do |message|
-              %li
-                = message
-        =form_for @user, html: { multipart: true } do |f|
-          .form-group
+.col-lg-6
+  .panel.add-shadows
+    .panel-heading
+      .panel-title.tip
+        = full_name_for(@user)
+    .panel-body
+
+      - if @user.errors.any?
+        %h3 Возникшие ошибки:
+        %ul
+          - @user.errors.full_messages.each do |message|
+            %li
+              = message
+      =form_for @user, html: { multipart: true, class: 'form-horizontal' } do |f|
+        .form-group
+          .col-sm-2.control-label
             = f.label :first_name
+          .col-sm-8
             = f.text_field :first_name, class: 'form-control'
-          .form-group
+        .form-group
+          .col-sm-2.control-label
             = f.label :last_name
+          .col-sm-8
             = f.text_field :last_name, class: 'form-control'
-          .form-group
+        .form-group
+          .col-sm-2.control-label
             = f.label :email
+          .col-sm-8
             = f.email_field :email, class: 'form-control'
-          .form-group
+        .form-group
+          .col-sm-2.control-label
             = f.label :skype
+          .col-sm-8
             = f.text_field :skype, class: 'form-control'
-          .form-group
-            = f.label :phone do
-              Phone
-              %span.tip Пример ввода: +38-050-000-0000
+        .form-group
+          .col-sm-2.control-label
+            = f.label :phone
+          .col-sm-8
+            %span.tip Пример ввода: +38-050-000-0000
             = f.text_field :phone, class: 'form-control'
-          .form-group
-            = f.fields_for :image, Image.new do |img|
+        .form-group
+          = f.fields_for :image, Image.new do |img|
+            .col-sm-2.control-label
               = img.label :image
+            .col-sm-8
               = img.file_field :avatar
-          .form-group
+        %hr
+        .form-group
+          .col-sm-12
             = f.button 'Обновить', class: 'btn btn-default'
             = link_to 'Назад', user_path, class: 'btn btn-default'

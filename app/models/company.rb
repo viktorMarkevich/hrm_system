@@ -10,7 +10,7 @@ class Company < ActiveRecord::Base
                               message: 'address is invalid' }
 
   def self.get_company_name
-    ['Не работал']+self.all.map { |p| [p.name, p.id]}
+    ['Не работал'] + self.all.map{ |p| [p.name, p.id] }
   end
 
 end

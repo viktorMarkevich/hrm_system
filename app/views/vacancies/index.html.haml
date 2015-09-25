@@ -4,14 +4,13 @@
     .col-xs-12
       .panel.add-shadows
         .panel-heading
-          .panel-title
+          .panel-title.tip
             Вакансии
         .panel-body
           .items-list
             %table.table.table-hover.table-bordered
               %thead
                 %tr
-                  %th №
                   %th Вакансия
                   %th Регион
                   %th Зарплата
@@ -20,7 +19,6 @@
               %tbody
                 - @vacancies.each do |vacancy|
                   %tr
-                    %th= vacancy.id
                     %td= link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
                     %td= vacancy.region.try(:name)
                     %td= get_salary(vacancy)

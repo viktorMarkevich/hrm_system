@@ -3,7 +3,7 @@
 .col-md-6
   .panel.add-shadows
     .panel-heading
-      .panel-title
+      .panel-title.tip
         = set_events_list_title(@events, @date)
     .panel-body
       .events-list
@@ -12,7 +12,7 @@
 .col-md-6
   .panel.add-shadows
     .panel-heading
-      .panel-title
+      .panel-title.tip
         Календарь событий
     .panel-body
       = link_to 'Создать новое событие', new_event_path(start_date: @date), remote: true, class: 'btn btn-success pull-right'

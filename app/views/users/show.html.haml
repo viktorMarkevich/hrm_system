@@ -1,33 +1,32 @@
-- content_for :left_sidebar, render(partial: 'left_sidebar')
+.col-lg-2.col-lg-offset-2
+  .panel.add-shadows
+    .panel-body.text-center
+      = render partial: 'left_sidebar'
 
-.panel.panel-success
-  .panel-heading.panel-title
-    .row
-      .col-xs-3
-        = full_name_for(@user)
-      .col-xs-offset-5.col-xs-4
-        = link_to 'хочу изменить свой пароль', edit_user_registration_path, class: 'btn btn-default'
-    .clear
-  .panel-body
-    %table.table.table-info
-      %thead
-        %tbody
-          %tr
-            %th Email:
-            %td= @user.email
-          %tr
-            %th Должность:
-            %td= @user.post
-          %tr
-            %th Регион:
-            %td= @user.region.name
-          %tr
-            %th Skype:
-            %td= display_field_value_for(@user.skype)
-          %tr
-            %th Телефон:
-            %td= display_field_value_for(@user.phone)
+.col-lg-6
+  .panel.add-shadows
+    .panel-heading
+      .panel-title.tip
+        .row
+          .col-xs-3
+            = full_name_for(@user)
+          .col-xs-offset-5.col-xs-4
+            = link_to 'хочу изменить свой пароль', edit_user_registration_path, class: 'btn btn-default'
+      .clear
+    .panel-body
+      %dl.dl-horizontal
+        %dt Email:
+        %dd= @user.email
+        %dt Должность:
+        %dd= @user.post
+        %dt Регион:
+        %dd= @user.region.name
+        %dt Skype:
+        %dd= display_field_value_for(@user.skype)
+        %dt Телефон:
+        %dd= display_field_value_for(@user.phone)
+      %hr
 
-= link_to 'Редактировать', edit_user_path, class: 'btn btn-default'
-= link_to 'Назад', root_path, class: 'btn btn-default'
+      = link_to 'Редактировать', edit_user_path, class: 'btn btn-default'
+      = link_to 'Назад', root_path, class: 'btn btn-default'
 

@@ -56,7 +56,7 @@
           = f.check_box :ready_to_relocate
   .row
     .col-md-12
-      %h4 Контактные данные кандидата:
+      %h4.tip Контактные данные кандидата:
   .row
     .col-md-6
       .form-group
@@ -92,25 +92,21 @@
         .col-sm-2.control-label
           = f.label :linkedin, 'Linkedin:'
         .col-sm-8
-          %span.tip https://www.linkedin.com/pub/abbasi-com/84/472/58b
           = f.text_field :linkedin, class: 'form-control'
       .form-group
         .col-sm-2.control-label
           = f.label :facebook, 'Facebook:'
         .col-sm-8
-          %span.tip https://www.facebook.com/example_user
           = f.text_field :facebook, class: 'form-control'
       .form-group
         .col-sm-2.control-label
           = f.label :vkontakte, 'Vkontakte:'
         .col-sm-8
-          %span.tip https://www.vk.com/example_user
           = f.text_field :vkontakte, class: 'form-control'
       .form-group
         .col-sm-2.control-label
           = f.label :google_plus, 'Google+:'
         .col-sm-8
-          %span.tip https://plus.google.com/123456789132456789123/
           = f.text_field :google_plus, class: 'form-control'
       .form-group
         .col-sm-2.control-label
@@ -124,7 +120,9 @@
           = f.label :description, 'Описание:'
         .col-sm-8
           = f.text_area :description, rows: 5, class: 'form-control'
-      .form-group
-        .col-sm-12
-          = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
-          = link_to 'Назад', :back, class: 'btn btn-default'
+
+  %hr
+  .form-group
+    .col-sm-12
+      = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
+      = link_to 'Назад', :back, class: 'btn btn-default'
