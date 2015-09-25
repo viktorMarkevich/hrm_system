@@ -1,8 +1,5 @@
 # set :stage, :staging
 set :branch, 'develop'
-
-set :deploy_to, "/home/deployer/staging/faceit-hrm"
-
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary
