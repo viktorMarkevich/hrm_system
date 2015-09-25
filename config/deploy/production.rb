@@ -2,7 +2,7 @@ set :stage, :production
 set :branch, 'master'
 
 set :user, 'admin'
-set :deploy_to, "/home/production/#{fetch(:stage)}/faceit-hrm"
+set :deploy_to, "/home/admin/#{fetch(:stage)}/faceit-hrm"
 
 # Simple Role Syntax
 # ==================
