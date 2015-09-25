@@ -3,9 +3,9 @@
     .panel-heading{ style: 'min-height: 44px;'}
       .row
         .col-xs-8
-          .panel-title.tip
+          .panel-title
         .col-xs-4
-          #actions.panel-title.tip.hide
+          #actions.panel-title.hide
             = link_to edit_sticker_path(sticker), remote: true do
               %i.glyphicon.glyphicon-pencil
             = link_to sticker_path(sticker), method: :delete, remote: true, data: { confirm: "Удалить стикер: #{sticker.description}?" } do
