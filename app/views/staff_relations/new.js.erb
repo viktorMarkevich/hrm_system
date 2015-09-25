@@ -1,0 +1,5 @@
+$('#dialog h4').html("Выберете из списка одного или нескольких кандидатов");
+
+$('.modal-body').html('<%= j render('candidates_list_in_modal') %>');
+
+$('#dialog').modal("show");

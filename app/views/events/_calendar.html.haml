@@ -1,0 +1,9 @@
+= render 'dialog'
+
+= month_calendar events: events, table: { class: 'table table-bordered' },
+                                 tr: { class: 'calendar-row' },
+                                 td: default_td_classes(events),
+                                 day_names: 'date.day_names' do |date, events|
+  = date.day
+  - if events.present?
+    = link_to events.count, events_path(start_date: date, the_exact_date: 'true'), remote: true, class: 'event-badge'

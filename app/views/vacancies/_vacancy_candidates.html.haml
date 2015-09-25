@@ -1,0 +1,42 @@
+%ul.nav.nav-tabs
+  %li{ class: get_active(sr_status, 'Найденные') }
+    = link_to 'Найденные', vacancy_path(@vacancy, sr_status: 'Найденные'), remote: true, class: 'btn btn-default'
+  %li{ class: get_active(sr_status, 'Отобранные') }
+    = link_to 'Отобранные', vacancy_path(@vacancy, sr_status: 'Отобранные'), remote: true, class: 'btn btn-primary'
+  %li{ class: get_active(sr_status, 'Собеседование') }
+    = link_to 'Собеседование', vacancy_path(@vacancy, sr_status: 'Собеседование'), remote: true, class: 'btn btn-info'
+  %li{ class: get_active(sr_status, 'Утвержден') }
+    = link_to 'Утвержден', vacancy_path(@vacancy, sr_status: 'Утвержден'), remote: true, class: 'btn btn-success'
+  %li{ class: get_active(sr_status, 'Не подходит') }
+    = link_to 'Не подходит', vacancy_path(@vacancy, sr_status: 'Не подходит'), remote: true, class: 'btn btn-warning'
+  %li{ class: get_active(sr_status, 'Отказался') }
+    = link_to 'Отказался', vacancy_path(@vacancy, sr_status: 'Отказался'), remote: true, class: 'btn btn-danger'
+
+- if vacancy_candidates.present?
+  %table.table.table-hover.table-responsive
+    %thead
+      %tr
+        %th Имя
+        %th Зарплата
+        %th Перемещен
+        %th Статус
+    %tbody
+      - vacancy_candidates.each do |candidate|
+        %tr
+          %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
+          %td= desired_salary_for(candidate)
+          %td
+            %span.label.label-info
+              = candidate.updated_at.strftime('%F в %I:%M')
+          %td
+            = form_for @vacancy, remote: true, method: :put, html: { role: 'form', id: "form-#{candidate.id}" } do |f|
+              #error_explanation.bg-danger.text-danger
+              = f.hidden_field :candidate_id, value: candidate.id
+              = f.select(:sr_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(vacancy)),
+                         {}, { class: 'vacancy_sr_status', id: candidate.id })
+- else
+  .panel-body
+    %p
+      Ни один кандидат не был выбран для этой категории
+    .text-center
+      = image_tag 'facepalm.gif'

@@ -1,0 +1,20 @@
+= stylesheet_link_tag 'events'
+
+.col-md-6
+  .panel.add-shadows
+    .panel-heading
+      .panel-title.tip
+        = set_events_list_title(@events, @date)
+    .panel-body
+      .events-list
+        - if @events.present?
+          = render partial: 'events_list', locals: { events: @events, date: @date }
+.col-md-6
+  .panel.add-shadows
+    .panel-heading
+      .panel-title.tip
+        Календарь событий
+    .panel-body
+      = link_to 'Создать новое событие', new_event_path(start_date: @date), remote: true, class: 'btn btn-success pull-right'
+      .calendar
+        = render partial: 'calendar', locals: { events: @events }

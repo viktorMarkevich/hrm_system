@@ -1,0 +1,32 @@
+= form_for @company, html: { class: 'form-horizontal' } do |f|
+  - if @company.errors.any?
+    %h2 Возникшие ошибки:
+    %ul
+      - @company.errors.full_messages.each do |message|
+        %li
+          = message
+  .form-group
+    .col-sm-2.control-label
+      = f.label :name, 'Имя:'
+    .col-sm-6
+      = f.text_field :name, class: 'form-control'
+  .form-group
+    .col-sm-2.control-label
+      = f.label :url do
+        Страница компании:
+    .col-sm-6
+      = f.text_field :url, class: 'form-control', placeholder: 'http://www.company-name.com'
+  .form-group
+    .col-sm-2.control-label
+      = f.label :region_id, 'Регион:'
+    .col-sm-6
+      = select_tag(:region, options_for_select(Region::REGIONS, @company.region_name), class: 'form-control')
+  .form-group
+    .col-sm-2.control-label
+      = f.label :description, 'Полная информация:'
+    .col-sm-6
+      = f.text_area :description, rows: 5, class: 'form-control'
+  .form-group
+    .col-sm-12
+      = f.submit @company.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
+      = link_to 'Назад', :back, class: 'btn btn-default'

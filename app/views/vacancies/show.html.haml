@@ -1,0 +1,39 @@
+= javascript_include_tag 'vacancies'
+
+.col-lg-6
+  .panel.add-shadows
+    .panel-heading
+      .panel-title.tip
+        = @vacancy.name
+    .panel-body
+      %dl.dl-horizontal
+        %dt Зарплата:
+        %dd= get_salary(@vacancy)
+        %dt Регион:
+        %dd= @vacancy.region.try(:name)
+        %dt Языки:
+        %dd= display_field_value_for(@vacancy.languages)
+        %dt Добавлено:
+        %dd= get_date_when_added(@vacancy)
+        %dt Требования:
+        %dd= display_field_value_for(@vacancy.requirements)
+        %dt Статус вакансии:
+        %dd.vacancy_status
+          = render partial: 'vacancy_status', locals: { vacancy: @vacancy, sr_status: @sr_status }
+        %dt Ответственный:
+        %dd= get_author_vacancy(@vacancy)
+      %hr
+      %span.tip
+        Вы можете:
+      .pull-right
+        = link_to 'Редактировать вакансию', edit_vacancy_path(@vacancy), class: 'btn btn-default'
+        = link_to 'Вернуться', :back, class: 'btn btn-default'
+        %code
+          или
+        = link_to 'Добавить кандидатов к этой вакансии', new_staff_relation_path(vacancy_id: @vacancy.id, sr_status: @sr_status), remote: true, class: 'btn btn-default'
+
+.col-lg-6
+  .panel.add-shadows
+    .panel-body
+      = render partial: 'vacancies/right_panel', locals: { example: nil }
+= render 'dialog'

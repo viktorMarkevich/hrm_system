@@ -1,0 +1,128 @@
+= form_for @candidate, html: { class: 'form-horizontal' } do |f|
+  - if @candidate.errors.any?
+    %h2 Возникшие ошибки:
+    %ul
+      - @candidate.errors.full_messages.each do |message|
+        %li
+          = message
+  .row
+    .col-md-6
+      .form-group
+        .col-sm-2.control-label
+          = f.label :name, 'Имя:'
+        .col-sm-8
+          = f.text_field :name, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :birthday, 'Дата рождения:'
+        .col-sm-8
+          %span.tip dd/mm/yyyy or dd-mm-yyyy
+          = f.text_field :birthday, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :salary, 'Желаемая ЗП:'
+        .col-sm-8
+          = f.text_field :salary, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :education, 'Образование'
+        .col-sm-8
+          = f.text_field :education, class: 'form-control'
+    .col-md-6
+      .form-group
+        .col-sm-2.control-label
+          = f.label :city_of_residence, 'Место проживания:'
+        .col-sm-8
+          = f.text_field :city_of_residence, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :desired_position, 'На должность:'
+        .col-sm-8
+          = f.text_field :desired_position, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :experience, 'Опыт:'
+        .col-sm-8
+          = f.text_field :experience, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :status, 'Статус'
+        .col-sm-8
+          = f.select(:status, Candidate::STATUSES, {}, class: 'form-control')
+      .form-group
+        .col-sm-2.control-label
+          = f.label :ready_to_relocate, 'Готов к переезду:'
+        .col-sm-8
+          = f.check_box :ready_to_relocate
+  .row
+    .col-md-12
+      %h4.tip Контактные данные кандидата:
+  .row
+    .col-md-6
+      .form-group
+        .col-sm-2.control-label
+          = f.label :email, 'Почта:'
+        .col-sm-8
+          %span.tip example@gmail.com
+          = f.email_field :email, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :phone, 'Телефон:'
+        .col-sm-8
+          %span.tip Пример ввода: +38-050-000-0000
+          = f.text_field :phone, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :skype, 'Skype:'
+        .col-sm-8
+          = f.text_field :skype, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :status, 'Компания:'
+        .col-sm-8
+          = f.select(:company_id, @companies, {}, class: 'form-control')
+      .form-group
+        .col-sm-2.control-label
+          = f.label :home_page, 'Мои странички:'
+        .col-sm-8
+          %span.tip https://www.example1.com, https://www.example2.com, ...
+          = f.text_field :home_page, class: 'form-control'
+    .col-md-6
+      .form-group
+        .col-sm-2.control-label
+          = f.label :linkedin, 'Linkedin:'
+        .col-sm-8
+          = f.text_field :linkedin, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :facebook, 'Facebook:'
+        .col-sm-8
+          = f.text_field :facebook, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :vkontakte, 'Vkontakte:'
+        .col-sm-8
+          = f.text_field :vkontakte, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :google_plus, 'Google+:'
+        .col-sm-8
+          = f.text_field :google_plus, class: 'form-control'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :notice, 'Примечание:'
+        .col-sm-8
+          = f.text_field :notice, class: 'form-control'
+  .row
+    .col-md-6
+      .form-group
+        .col-sm-2.control-label
+          = f.label :description, 'Описание:'
+        .col-sm-8
+          = f.text_area :description, rows: 5, class: 'form-control'
+
+  %hr
+  .form-group
+    .col-sm-12
+      = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
+      = link_to 'Назад', :back, class: 'btn btn-default'

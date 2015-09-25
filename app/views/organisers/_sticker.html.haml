@@ -1,0 +1,28 @@
+.col-xs-3{ id: "sticker_#{sticker.id}", onmouseover: 'mOver(this)', onmouseout: 'mOut(this)' }
+  .panel.add-shadows{ style: "background-color: #{sticker.bg_color}" }
+    .panel-heading{ style: 'min-height: 44px;'}
+      .row
+        .col-xs-8
+          .panel-title
+        .col-xs-4
+          #actions.panel-title.hide
+            = link_to edit_sticker_path(sticker), remote: true do
+              %i.glyphicon.glyphicon-pencil
+            = link_to sticker_path(sticker), method: :delete, remote: true, data: { confirm: "Удалить стикер: #{sticker.description}?" } do
+              %i.glyphicon.glyphicon-remove-circle
+    .panel-body
+      .row
+        .col-xs-12.sticker-desc
+          = sticker.description
+
+:javascript
+
+  function mOver(obj){
+    $(obj).find('#actions.panel-title').removeClass('hide');
+  };
+
+  function mOut(obj){
+    $(obj).find('#actions.panel-title').addClass('hide');
+  };
+
+

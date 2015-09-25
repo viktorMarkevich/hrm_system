@@ -1,0 +1,60 @@
+:css
+  .table {
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -khtml-border-radius: 4px;
+  }
+  th,td{
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 20px;
+  }
+  thead{
+    background-color: #428bca;
+    border-radius: 0.25em;
+    color: #ffffff;
+  }
+  .label {
+      border-radius: 0.25em;
+      color: #ffffff;
+      display: inline;
+      font-size: 75%;
+      font-weight: bold;
+      line-height: 1;
+      padding: 0.2em 0.6em 0.3em;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+  }
+  .label-primary {
+      background-color: #428bca;
+  }
+  .label-default {
+    background-color: #777777;
+  }
+
+%h3 На заватра запланированно:
+%table.table.table-bordered
+  %thead
+    %tr
+      %th Событие
+      %th На вакансию
+      %th С кем
+      %th Назначено на
+  %tbody
+    - @events_soon.each do |event|
+      %tr
+        %td
+          %span.label.label-default= event.name
+        %td= link_to event.staff_relation.vacancy.name, vacancy_url(event.staff_relation.vacancy)
+        %td= link_to event.staff_relation.candidate.name, vacancy_url(event.staff_relation.candidate)
+        %td
+          %span.label.label-primary= event.starts_at.strftime('%H:%M')

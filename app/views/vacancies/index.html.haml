@@ -1,0 +1,29 @@
+.col-xs-12
+  = render partial: 'share/search'
+  .row
+    .col-xs-12
+      .panel.add-shadows
+        .panel-heading
+          .panel-title.tip
+            Вакансии
+        .panel-body
+          .items-list
+            %table.table.table-hover.table-bordered
+              %thead
+                %tr
+                  %th Вакансия
+                  %th Регион
+                  %th Зарплата
+                  %th Ответственный
+                  %th Статус
+              %tbody
+                - @vacancies.each do |vacancy|
+                  %tr
+                    %td= link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
+                    %td= vacancy.region.try(:name)
+                    %td= get_salary(vacancy)
+                    %td= full_name_for(vacancy.owner)
+                    %td= vacancy.status
+  .row
+    .col-xs-3
+      = paginate @vacancies

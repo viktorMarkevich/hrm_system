@@ -1,0 +1,52 @@
+!!!
+%html
+  %head
+    %title Faceit-hrm
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+  %body.jumbotron
+    %nav.navbar.navbar-inverse.add-shadows
+      .navbar-header
+        %button.navbar-toggle.collapsed{ 'aria-expanded' => 'false', 'data-target' => '#bs-navbar-collapse-1', 'data-toggle' => 'collapse', type: 'button' }
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        = link_to 'Faseit-HRM system', root_path, class: 'navbar-brand'
+      #bs-navbar-collapse-1.collapse.navbar-collapse
+        %ul.nav.navbar-nav
+          %li
+            = link_to 'Органайзер', organisers_path
+            = link_to events_path do
+              %i.glyphicon.glyphicon-calendar
+          %li
+            = link_to 'Вакансии', vacancies_path
+            %span.sr-only
+            = link_to new_vacancy_path, id: 'add-vacancy' do
+              %i.glyphicon.glyphicon-plus
+          %li
+            = link_to 'Кандидаты', candidates_path
+            = link_to new_candidate_path, id: 'add-candidate' do
+              %i.glyphicon.glyphicon-plus
+          %li
+            = link_to 'Компании', companies_path
+            = link_to new_company_path, id: 'add-company' do
+              %i.glyphicon.glyphicon-plus
+          - if current_user.try(:post) == 'Директор'
+            %li
+              = link_to 'Менеджеры', users_path
+        %ul.nav.navbar-nav.navbar-right
+          %li
+            = link_to user_path(current_user) do
+              %i.glyphicon.glyphicon-user
+              = current_user.email
+          %li
+            = link_to destroy_user_session_path do
+              %i.glyphicon.glyphicon-off
+              = 'Выйти'
+    .container-fluid
+      .flash-container
+        = render 'share/flash_messages'
+      .row
+        = yield
