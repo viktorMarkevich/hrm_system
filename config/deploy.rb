@@ -11,8 +11,8 @@ set :scm, :git
 set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 
 # Имя пользователя на сервере и папка с проектом
-set :user, 'deployer'
-set :deploy_to, "/home/deployer/#{fetch(:stage)}/faceit-hrm"
+# set :user, 'deployer'
+# set :deploy_to, "/home/deployer/#{fetch(:stage)}/faceit-hrm"
 
 set :rvm_type, :user
 set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm --create'      # Defaults to: 'default'
@@ -36,7 +36,7 @@ set :assets_roles, [:web, :app]
 
 namespace :deploy do
   task :restart do
-    on "deployer@192.168.137.75" do
+    on "#{fetch(:user)}@192.168.137.75" do
       execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -USR2 `cat #{fetch(:unicorn_pid)}`; else cd #{fetch(:deploy_to)}/current && bundle exec unicorn -c #{fetch(:unicorn_conf)} -E #{fetch(:rails_env)} -D; fi"
     end
   end
@@ -50,12 +50,12 @@ namespace :deploy do
   end
 
   task :stop do
-    on "deployer@192.168.137.75" do
+    on "#{fetch(:user)}@192.168.137.75" do
       execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -QUIT `cat #{fetch(:unicorn_pid)}`; fi"
     end
   end
   task :reset do
-    on "deployer@192.168.137.75" do
+    on "#{fetch(:user)}@192.168.137.75" do
       within "#{fetch(:deploy_to)}/current" do
         execute :bundle, :exec, "rake db:reset RAILS_ENV=#{fetch(:rails_env)}"
       end
@@ -63,7 +63,7 @@ namespace :deploy do
   end
 
   task :any_task do #здесь можно размещать любые таски, которые нужно запустить в той или иной среде
-    on "deployer@192.168.137.75" do
+    on "#{fetch(:user)}@192.168.137.75" do
       within "#{fetch(:deploy_to)}/current" do
         # execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
         execute :bundle, :exec, "rake db:seed RAILS_ENV=#{fetch(:rails_env)}"
