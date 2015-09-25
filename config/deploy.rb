@@ -43,7 +43,6 @@ namespace :deploy do
 
   task :start do
     on roles [:web, :app] do
-    on "#{fetch(:user)}@192.168.137.75" do
       within "#{fetch(:deploy_to)}/current" do
         execute :bundle,:exec, "unicorn -c #{fetch(:unicorn_conf)} -E #{fetch(:rails_env)} -D"
       end
