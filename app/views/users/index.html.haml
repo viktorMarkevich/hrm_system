@@ -1,13 +1,12 @@
 .panel.add-shadows
   .panel-heading
-    .panel-title
+    .panel-title.tip
       Менеджеры
   .panel-body
     .items-list
       %table.table.table-bordered.table-hover
         %thead
           %tr
-            %th №
             %th Полное имя
             %th Должность
             %th Регион
@@ -18,7 +17,6 @@
         %tbody
           - @users.each do |user|
             %tr
-              %th= user.id
               %td= full_name_for(user)
               %td= user.post
               %td= user.region_name

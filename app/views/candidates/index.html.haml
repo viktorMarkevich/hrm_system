@@ -5,7 +5,7 @@
     .col-xs-12
       .panel.add-shadows
         .panel-heading
-          .panel-title
+          .panel-title.tip
             Кандидаты
         .panel-body
           .well
@@ -23,7 +23,6 @@
             %table.table.table-bordered.table-hover
               %thead
                 %tr
-                  %th №
                   %th Кандидат
                   %th Должность
                   %th Регион
@@ -35,7 +34,6 @@
               %tbody
                 - @candidates.each do |candidate|
                   %tr
-                    %th= candidate.id
                     %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
                     %td= candidate.desired_position
                     %td= display_field_value_for(candidate.city_of_residence)
