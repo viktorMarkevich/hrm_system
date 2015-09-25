@@ -24,5 +24,7 @@
             = event.starts_at.strftime('%d/%m/%Y')
           %td= event.description
           %td
-            = link_to '', edit_event_path(event, start_date: date), class: 'glyphicon glyphicon-edit', remote: true
-            = link_to '', event, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
+            - if can? :update, event
+              = link_to '', edit_event_path(event, start_date: date), class: 'glyphicon glyphicon-edit', remote: true
+            - if can? :destroy, event
+              = link_to '', event, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'

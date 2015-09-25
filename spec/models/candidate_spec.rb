@@ -48,26 +48,6 @@ RSpec.describe Candidate, type: :model do
           expect(build(:candidate, phone: candidate.phone)).to_not be_valid
         end
       end
-
-      it 'has wrong linkedin url format' do
-        expect(build(:candidate, linkedin: 'wrong_url')).to_not be_valid
-      end
-
-      it 'has wrong facebook url format' do
-        expect(build(:candidate, facebook: 'wrong_url')).to_not be_valid
-      end
-
-      it 'has wrong vkontakte url format' do
-        expect(build(:candidate, vkontakte: 'wrong_url')).to_not be_valid
-      end
-
-      it 'has wrong google+ url format' do
-        expect(build(:candidate, google_plus: 'wrong_url')).to_not be_valid
-      end
-
-      it 'has wrong home_page url format' do
-        expect(build(:candidate, home_page: 'wrong_url')).to_not be_valid
-      end
     end
   end
 end

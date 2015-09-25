@@ -147,21 +147,14 @@ RSpec.describe VacanciesController, type: :controller do
 
   context '#mark_candidate_as_found' do
     let(:candidates_list) { create_list(:candidate, 2) }
-    let(:attrs) { { id: vacancy, candidates_ids: candidates_list.map(&:id) } }
 
     before do
-      post 'mark_candidates_as_found', attrs
-      candidates_list
+      put :update, id: vacancy, vacancy: { status: 'В работе' }
     end
 
     it 'updates candidates status on "В работе"' do
-      expect(assigns(:marked_as_found_candidates).pluck(:status).uniq).to eq ['В работе']
+      expect(assigns(:vacancy).status).to eq 'В работе'
     end
-
-    it 'creates staff_relations for each candidate' do
-      expect{ post 'mark_candidates_as_found', attrs }.to change(StaffRelation, :count).by(candidates_list.size)
-    end
-
   end
 
 end
