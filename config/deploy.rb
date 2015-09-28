@@ -11,7 +11,7 @@ set :scm, :git
 set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 
 # Имя пользователя на сервере и папка с проектом
-set :deploy_to, "/home/deployer/#{fetch(:stage)}/faceit-hrm"
+set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:stage)}/faceit-hrm"
 
 set :rvm_type, :user
 set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm'      # Defaults to: 'default'

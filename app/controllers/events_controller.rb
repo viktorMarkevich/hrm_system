@@ -21,7 +21,7 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.build(event_params)
-    @event.staff_relation = StaffRelation.find(params[:event][:staff_relation]) if params[:event][:staff_relation].to_i !=0
+    set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.save
         @events = Event.events_current_month(@date, @the_exact_date).order(starts_at: :asc)
@@ -34,7 +34,7 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event.staff_relation = StaffRelation.find(params[:event][:staff_relation]) if params[:event][:staff_relation].to_i !=0
+    set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.update(event_params)
         @events = Event.events_current_month(@date, @the_exact_date).order(starts_at: :asc)
@@ -56,6 +56,10 @@ class EventsController < ApplicationController
   end
 
   private
+
+  def set_event_sr
+    @event.staff_relation = StaffRelation.find(params[:event][:staff_relation])
+  end
 
   def set_event
     @event = Event.find(params[:id])

@@ -1,5 +1,6 @@
-# set :stage, :staging
+set :stage, :staging
 set :branch, 'develop'
+set :user, 'deployer'
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary
@@ -15,7 +16,7 @@ role :db,  %w{deployer@192.168.137.75}
 # definition into the server list. The second argument
 # something that quacks like a has can be used to set
 # extended properties on the server.
-server '192.168.137.75', user: 'deployer', roles: %w{web app}, my_property: :my_value
+server '192.168.137.75', user: fetch(:user), roles: %w{web app}, my_property: :my_value
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
