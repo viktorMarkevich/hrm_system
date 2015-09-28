@@ -11,6 +11,7 @@ set :scm, :git
 set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 
 # Имя пользователя на сервере и папка с проектом
+set :user, fetch(:stage) == 'production' ? :admin : :deployer
 set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:stage)}/faceit-hrm"
 
 set :rvm_type, :user
