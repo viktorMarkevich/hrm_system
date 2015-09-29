@@ -17,7 +17,13 @@ set :user, fetch(:stage) == :production ? :admin : :deployer
 set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:stage)}/faceit-hrm"
 
 set :rvm_type, :user
-# set :rvm_ruby_string, 'ruby-2.2.2@faceit-hrm'      # Defaults to: 'default'
+set :rvm_ruby_version, '2.2.2@faceit-hrm'      # Defaults to: 'default'
+# set :rvm_type, :system
+# set :rvm_ruby_version, "2.0.0-p353@#{fetch(:application)}"
+#
+set :bundle_path, nil
+set :bundle_binstubs, nil
+set :bundle_flags, '--system'
 
 # Тип запуска Rails, метод доставки обновлений и локальные релизные версии
 set :deploy_via, :remote_cache
@@ -26,7 +32,7 @@ set :linked_files, %w{config/database.yml .env config/unicorn.rb}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 set :unicorn_conf, "#{fetch(:deploy_to)}/current/config/unicorn.rb"
-set :unicorn_pid, "#{fetch(:deploy_to)}/shared/pids/unicorn.pid"
+set :unicorn_pid, "#{fetch(:deploy_to)}/shared/tmp/pids/unicorn.pid"
 
 set :default_env, { rvm_bin_path: '~/.rvm/bin' }
 set :copy_exclude, [ '.git' ]
