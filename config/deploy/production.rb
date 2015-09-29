@@ -25,13 +25,9 @@ server '192.168.137.75', user: fetch(:user), roles: %w{web app}, my_property: :m
 # set it globally
 set :ssh_options, {
                     forward_agent: true,
-                    auth_methods: %w(publickey)
+                    auth_methods: %w(publickey password),
+                    password: ENV['PRODUCTION_SSH_PASSWORD']
                   }
-# set :ssh_options, {
-#                     forward_agent: true,
-#                     auth_methods: %w(publickey password),
-#                     password: ENV['PRODUCTION_SSH_PASSWORD']
-#                 }
 # and/or per server
 # server 'example.com',
 #   user: 'user_name',
