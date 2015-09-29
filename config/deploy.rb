@@ -26,7 +26,7 @@ set :bundle_flags, '--system'
 # Тип запуска Rails, метод доставки обновлений и локальные релизные версии
 set :deploy_via, :remote_cache
 
-set :linked_files, %w{config/database.yml .env config/unicorn.rb}
+set :linked_files, %w{config/database.yml config/unicorn.rb}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 set :unicorn_conf, "#{fetch(:deploy_to)}/current/config/unicorn.rb"
