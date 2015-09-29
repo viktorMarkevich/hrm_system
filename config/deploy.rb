@@ -5,7 +5,7 @@ SSHKit.config.command_map[:rake]  = 'bundle exec rake'
 lock '3.4.0'
 
 set :application, 'faceit-hrm'
-set :using_rvm,       true
+set :using_rvm,   true
 set :use_sudo, false
 
 # Система управления версиями
@@ -18,9 +18,7 @@ set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:stage)}/faceit-hrm"
 
 set :rvm_type, :user
 set :rvm_ruby_version, '2.2.2@faceit-hrm'      # Defaults to: 'default'
-# set :rvm_type, :system
-# set :rvm_ruby_version, "2.0.0-p353@#{fetch(:application)}"
-#
+
 set :bundle_path, nil
 set :bundle_binstubs, nil
 set :bundle_flags, '--system'
@@ -79,5 +77,4 @@ namespace :deploy do
     end
   end
 end
-# before 'deploy', 'rvm:install_ruby'
-after "deploy:restart", "deploy:cleanup"
+after 'deploy:restart', 'deploy:cleanup'
