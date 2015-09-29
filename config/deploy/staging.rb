@@ -23,7 +23,8 @@ server '192.168.137.75', user: fetch(:user), roles: %w{web app}, my_property: :m
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
 # you can see them in [net/ssh documentation](http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start)
 # set it globally
-set :ssh_options, {
+set :ssh_options, { user: 'deployer', # overrides user setting above
+                    keys: %w(/home/deployer/.ssh/id_rsa),
                     forward_agent: true,
                     auth_methods: %w(publickey password),
                     password: ENV['STAGING_SSH_PASSWORD']
