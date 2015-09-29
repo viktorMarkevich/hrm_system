@@ -27,10 +27,10 @@ gem 'coffee-rails', '~> 4.1.0'
 
 group :development do
   gem 'letter_opener'
-  gem 'capistrano'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rvm'
-  gem 'capistrano-rails'
+  gem 'capistrano',         require: false
+  gem 'capistrano-rvm',     require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-bundler', require: false
 end
 
 group :staging, :production do
