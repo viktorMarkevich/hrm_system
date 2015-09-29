@@ -1,4 +1,4 @@
-set :stage, :production
+set :stage, 'production'
 set :branch, 'master'
 
 set :user, 'admin'
