@@ -36,7 +36,6 @@ set :default_env, { rvm_bin_path: '~/.rvm/bin' }
 set :copy_exclude, [ '.git' ]
 
 set :keep_releases, 3
-# RVM установлена не системно
 
 set :assets_roles, [:web, :app]
 
