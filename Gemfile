@@ -25,12 +25,11 @@ gem 'simple_calendar', '~> 1.1.0'
 gem 'rufus-scheduler', '~> 3.1.3' #awesome scheduler gem!!!
 gem 'coffee-rails', '~> 4.1.0'
 
+gem 'capistrano', '~> 3.4'
+gem 'capistrano-rails', '~> 1.1.3'
+
 group :development do
   gem 'letter_opener'
-  gem 'capistrano',         require: false
-  gem 'capistrano-rvm',     require: false
-  gem 'capistrano-rails',   require: false
-  gem 'capistrano-bundler', require: false
 end
 
 group :staging, :production do
