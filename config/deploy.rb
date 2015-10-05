@@ -37,8 +37,8 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # Default value for keep_releases is 5
 set :keep_releases, 3
 
-set :unicorn_conf, "#{fetch(:deploy_to)}/current/config/unicorn.rb"
-set :unicorn_pid, "#{fetch(:deploy_to)}/shared/tmp/pids/unicorn.pid"
+set :unicorn_conf, "/home/#{fetch(:user)}/#{fetch(:rails_env)}/#{fetch(:application)}/current/config/unicorn.rb"
+set :unicorn_pid, "/home/#{fetch(:user)}/#{fetch(:rails_env)}/#{fetch(:application)}/shared/tmp/pids/unicorn.pid"
 
 namespace :deploy do
 
