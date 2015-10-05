@@ -51,7 +51,9 @@ set :branch, 'develop'
 set :ssh_options, {
    keys: %w(/home/deployer/.ssh/id_rsa),
    forward_agent: false,
-   auth_methods: %w(password)
+   auth_methods: %w(password),
+   password: ENV['STAGING_SSH_PASSWORD']
+
 }
 #
 # The server-based syntax can be used to override options:
