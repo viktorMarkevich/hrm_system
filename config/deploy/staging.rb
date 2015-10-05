@@ -4,6 +4,7 @@
 # You can define all roles on a single server, or split them:
 set :application, 'faceit-hrm'
 set :rails_env, 'staging'
+set :user, 'deployer'
 
 # Defaults to 'db'
 set :migration_role, 'migrator'
@@ -11,7 +12,7 @@ set :migration_role, 'migrator'
 # Defaults to [:web]
 set :assets_roles, [:web, :app]
 
-server 'staging.faceit-hrm.loc', user: 'deployer', roles: %w{app db web}, my_property: :my_value
+server '192.168.137.75', user: 'deployer', roles: %w{app db web}, my_property: :my_value
 
 # role-based syntax
 # ==================
@@ -21,11 +22,9 @@ server 'staging.faceit-hrm.loc', user: 'deployer', roles: %w{app db web}, my_pro
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-# 192.168.137.75
-
-role :app, %w{deployer@staging.faceit-hrm.loc}, my_property: :my_value
-role :web, %w{deployer@staging.faceit-hrm.loc}, other_property: :other_value
-role :db,  %w{deployer@staging.faceit-hrm.loc}
+role :app, %w{deployer@192.168.137.75}, my_property: :my_value
+role :web, %w{deployer@192.168.137.75}, other_property: :other_value
+role :db,  %w{deployer@192.168.137.75}
 
 # Configuration
 # =============
@@ -34,9 +33,10 @@ role :db,  %w{deployer@staging.faceit-hrm.loc}
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-set :deploy_to, -> { "/var/www/#{fetch(:application)}" }
+set :deploy_to, -> { "/home/deployer/#{fetch(:rails_env)}/#{fetch(:application)}" }
+set :tmp_dir, "/tmp/faceit-hrm-st"
 
-set :rvm_ruby_version, "2.2.2-p247@#{fetch(:application)}-#{fetch(:rails_env)}"
+set :rvm_ruby_version, "2.2.2@#{fetch(:application)}-#{fetch(:rails_env)} --create"
 
 set :branch, 'develop'
 
