@@ -34,9 +34,9 @@ group :development do
 end
 
 group :staging, :production do
-  gem 'unicorn'
-  gem 'unicorn-rails'
 end
+gem 'unicorn'
+gem 'unicorn-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
