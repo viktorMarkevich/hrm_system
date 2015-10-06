@@ -27,15 +27,6 @@ set :unicorn_pid, -> { "/home/#{fetch(:user)}/#{fetch(:rails_env)}/#{fetch(:appl
 
 namespace :deploy do
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      within release_path do
-        execute :rake, 'cache:clear'
-      end
-    end
-  end
-
   task :restart do
     on "#{fetch(:user)}@192.168.137.75" do
       execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -USR2 `cat #{fetch(:unicorn_pid)}`; else cd #{fetch(:deploy_to)}/current && bundle exec unicorn -c #{fetch(:unicorn_conf)} -E #{fetch(:rails_env)} -D; fi"
