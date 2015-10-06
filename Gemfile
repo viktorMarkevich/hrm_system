@@ -28,6 +28,8 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'capistrano', '~> 3.4'
 gem 'capistrano-rails', '~> 1.1.3'
 gem 'rvm1-capistrano3'#, require: false
+gem 'capistrano-bundler'
+
 
 group :development do
   gem 'letter_opener'
