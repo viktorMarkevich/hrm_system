@@ -1,45 +1,30 @@
-# config valid only for Capistrano 3.4
-
-SSHKit.config.command_map[:rake]  = 'bundle exec rake'
-
+# config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'faceit-hrm'
-set :using_rvm,   true
-set :use_sudo, false
-
-# Система управления версиями
-set :scm, :git
+# set :application, 'my_app_name'
 set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 
-# Имя пользователя на сервере и папка с проектом
-set :user, fetch(:stage) == :production ? :admin : :deployer
-set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:stage)}/faceit-hrm"
+# deploy.rb or stage file (staging.rb, production.rb or else)
+set :rvm_type, :user                     # Defaults to: :auto
+set :rvm_ruby_version, -> { "2.2.2@#{fetch(:application)}" }
 
-set :rvm_type, :user
-set :rvm_ruby_version, 'ruby-2.2.2@faceit-hrm'      # Defaults to: 'default'
+set :tmp_dir, -> { "/home/#{fetch(:user)}/tmp" }
 
-set :bundle_path, nil
-set :bundle_binstubs, nil
-set :bundle_flags, '--system'
+# Default value for :format is :pretty
+set :format, :pretty
 
-# Тип запуска Rails, метод доставки обновлений и локальные релизные версии
-set :deploy_via, :remote_cache
+# Default value for :linked_files is []; # Default value for linked_dirs is []
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', 'config/unicorn.rb')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
-set :linked_files, %w{config/database.yml .env config/unicorn.rb}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :unicorn_conf, -> { "#{fetch(:deploy_to)}/current/config/unicorn.rb" }
+set :unicorn_pid, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/unicorn.pid" }
 
-set :unicorn_conf, "#{fetch(:deploy_to)}/current/config/unicorn.rb"
-set :unicorn_pid, "#{fetch(:deploy_to)}/shared/tmp/pids/unicorn.pid"
-
-set :default_env, { rvm_bin_path: '~/.rvm/bin' }
-set :copy_exclude, [ '.git' ]
-
+# Default value for keep_releases is 5
 set :keep_releases, 3
 
-set :assets_roles, [:web, :app]
-
 namespace :deploy do
+
   task :restart do
     on "#{fetch(:user)}@192.168.137.75" do
       execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -USR2 `cat #{fetch(:unicorn_pid)}`; else cd #{fetch(:deploy_to)}/current && bundle exec unicorn -c #{fetch(:unicorn_conf)} -E #{fetch(:rails_env)} -D; fi"
@@ -59,6 +44,7 @@ namespace :deploy do
       execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -QUIT `cat #{fetch(:unicorn_pid)}`; fi"
     end
   end
+
   task :reset do
     on "#{fetch(:user)}@192.168.137.75" do
       within "#{fetch(:deploy_to)}/current" do
@@ -75,5 +61,5 @@ namespace :deploy do
       end
     end
   end
+
 end
-after 'deploy:restart', 'deploy:cleanup'
