@@ -53,7 +53,6 @@ set :ssh_options, {
    forward_agent: true,
    auth_methods: %w(publickey password),
    password: ENV['STAGING_SSH_PASSWORD']
-
 }
 #
 # The server-based syntax can be used to override options:
