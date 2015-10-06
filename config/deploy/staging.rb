@@ -32,7 +32,9 @@ role :db,  %w{deployer@192.168.137.75}
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 set :deploy_to, -> { "/home/deployer/#{fetch(:rails_env)}/#{fetch(:application)}" }
-set :tmp_dir, "/tmp/faceit-hrm-st"
+
+# set :tmp_dir, "/tmp/faceit-hrm-st"
+set :tmp_dir, "/home/deployer/tmp"
 
 set :rvm_ruby_version, "2.2.2@#{fetch(:application)}"
 
