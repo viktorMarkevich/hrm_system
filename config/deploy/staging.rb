@@ -12,7 +12,7 @@ set :migration_role, 'migrator'
 # Defaults to [:web]
 set :assets_roles, [:web, :app]
 
-server '192.168.137.75', user: 'deployer', roles: %w{app db web}, my_property: :my_value
+server '192.168.137.75', user: 'deployer', roles: %w{app db web}
 
 # role-based syntax
 # ==================
@@ -22,8 +22,8 @@ server '192.168.137.75', user: 'deployer', roles: %w{app db web}, my_property: :
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-role :app, %w{deployer@192.168.137.75}, my_property: :my_value
-role :web, %w{deployer@192.168.137.75}, other_property: :other_value
+role :app, %w{deployer@192.168.137.75}
+role :web, %w{deployer@192.168.137.75}
 role :db,  %w{deployer@192.168.137.75}
 
 # Configuration
@@ -36,7 +36,7 @@ role :db,  %w{deployer@192.168.137.75}
 set :deploy_to, -> { "/home/deployer/#{fetch(:rails_env)}/#{fetch(:application)}" }
 set :tmp_dir, "/tmp/faceit-hrm-st"
 
-set :rvm_ruby_version, "2.2.2@#{fetch(:application)}-#{fetch(:rails_env)} --create"
+set :rvm_ruby_version, "2.2.2@#{fetch(:application)}"
 
 set :branch, 'develop'
 
