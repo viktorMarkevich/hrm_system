@@ -37,19 +37,19 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # Default value for keep_releases is 5
 set :keep_releases, 3
 
-set :unicorn_conf, "/home/#{fetch(:user)}/#{fetch(:rails_env)}/#{fetch(:application)}/current/config/unicorn.rb"
-set :unicorn_pid, "/home/#{fetch(:user)}/#{fetch(:rails_env)}/#{fetch(:application)}/shared/tmp/pids/unicorn.pid"
+set :unicorn_conf, -> { "/home/#{fetch(:user)}/#{fetch(:rails_env)}/#{fetch(:application)}/current/config/unicorn.rb" }
+set :unicorn_pid, -> { "/home/#{fetch(:user)}/#{fetch(:rails_env)}/#{fetch(:application)}/shared/tmp/pids/unicorn.pid" }
 
 namespace :deploy do
 
-  # after :restart, :clear_cache do
-  #   on roles(:web), in: :groups, limit: 3, wait: 10 do
-  #     # Here we can do anything such as:
-  #     within release_path do
-  #       execute :rake, 'cache:clear'
-  #     end
-  #   end
-  # end
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      within release_path do
+        execute :rake, 'cache:clear'
+      end
+    end
+  end
 
   task :restart do
     on "#{fetch(:user)}@192.168.137.75" do
