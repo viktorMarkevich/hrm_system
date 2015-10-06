@@ -69,9 +69,6 @@ GEM
     capistrano-rails (1.1.3)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
-    capistrano-rvm (0.1.2)
-      capistrano (~> 3.0)
-      sshkit (~> 1.2)
     capybara (2.4.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -265,6 +262,9 @@ GEM
     ruby_parser (3.7.0)
       sexp_processor (~> 4.1)
     rufus-scheduler (3.1.3)
+    rvm1-capistrano3 (1.3.2.2)
+      capistrano (~> 3.0)
+      sshkit (>= 1.2)
     sass (3.4.14)
     sass-rails (5.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -337,7 +337,6 @@ DEPENDENCIES
   cancancan (~> 1.10)
   capistrano (~> 3.4)
   capistrano-rails (~> 1.1.3)
-  capistrano-rvm
   capybara
   coffee-rails (~> 4.1.0)
   cucumber-rails
@@ -358,6 +357,7 @@ DEPENDENCIES
   rails (= 4.2.1)
   rspec-rails (~> 3.0)
   rufus-scheduler (~> 3.1.3)
+  rvm1-capistrano3
   sdoc (~> 0.4.0)
   shoulda-matchers
   simple_calendar (~> 1.1.0)
