@@ -50,8 +50,8 @@ set :branch, 'develop'
 # --------------
 set :ssh_options, {
    keys: %w(/home/deployer/.ssh/id_rsa),
-   forward_agent: false,
-   auth_methods: %w(password),
+   forward_agent: true,
+   auth_methods: %w(publickey password),
    password: ENV['STAGING_SSH_PASSWORD']
 
 }
