@@ -4,11 +4,10 @@ lock '3.4.0'
 # set :application, 'my_app_name'
 set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 
-# Default value for :scm is :git
-set :scm, :git
-
 # deploy.rb or stage file (staging.rb, production.rb or else)
 set :rvm_type, :user                     # Defaults to: :auto
+set :rvm_ruby_version, -> { "2.2.2@#{fetch(:application)}" }
+
 set :tmp_dir, -> { "/home/#{fetch(:user)}/tmp" }
 
 # Default value for :format is :pretty
