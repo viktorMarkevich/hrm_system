@@ -31,7 +31,7 @@ role :db,  %w{deployer@192.168.137.75}
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-set :deploy_to, -> { "/home/deployer/#{fetch(:rails_env)}/#{fetch(:application)}" }
+set :deploy_to,  "/home/deployer/#{fetch(:rails_env)}/#{fetch(:application)}"
 
 set :rvm_ruby_version, "2.2.2@#{fetch(:application)}"
 
