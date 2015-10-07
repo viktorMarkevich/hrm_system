@@ -45,7 +45,7 @@ class VacanciesController < ApplicationController
 
     respond_to do |format|
       if @vacancy.update_attributes(vacancy_params)
-        format.html { redirect_to vacancies_path, notice: 'Вакансия успешно обновлена.' }
+        format.html { redirect_to vacancy_path(@vacancy), notice: 'Вакансия успешно обновлена.' }
         format.json
         format.js
       else
