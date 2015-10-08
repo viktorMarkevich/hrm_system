@@ -4,7 +4,7 @@ class Vacancy < ActiveRecord::Base
 
   belongs_to :region
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
-  has_many :staff_relations
+  has_many :staff_relations, dependent: :destroy
   has_many :candidates, through: :staff_relations, source: :candidate
 
   attr_accessor :sr_status
