@@ -14,6 +14,7 @@ class CandidatesController < ApplicationController
   end
 
   def show
+    @candidate_vacancies = @candidate.vacancies
   end
 
   def edit
@@ -33,7 +34,7 @@ class CandidatesController < ApplicationController
   def update
     if @candidate.update(candidate_params)
       flash[:notice] = 'Запись успешно обновлена.'
-      redirect_to candidates_path
+      redirect_to candidate_path(@candidate)
     else
       render 'edit'
     end
