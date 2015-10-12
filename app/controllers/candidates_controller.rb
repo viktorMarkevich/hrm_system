@@ -23,11 +23,7 @@ class CandidatesController < ApplicationController
   end
 
   def create
-    if (vacancy_id = params[:candidate][:desired_position]).present?
-      params[:candidate].update(desired_position: Vacancy.find(vacancy_id).name, status: Candidate::STATUSES[1])
-      @candidate = current_user.candidates.build(candidate_params)
-      @candidate.staff_relations.build(status: 'Найденные', vacancy_id: vacancy_id)
-    end
+    @candidate = current_user.candidates.build(candidate_params)
     if @candidate.save!
       flash[:success] = 'Кандидат был успешно добавлен.'
       redirect_to candidates_path
@@ -38,10 +34,6 @@ class CandidatesController < ApplicationController
   end
 
   def update
-    if (vacancy_id = params[:candidate][:desired_position]).present?
-      params[:candidate].update(desired_position: Vacancy.find(vacancy_id).name)
-    end
-
     if @candidate.update(candidate_params)
       flash[:notice] = 'Запись успешно обновлена.'
       redirect_to candidates_path

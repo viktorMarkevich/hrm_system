@@ -33,11 +33,9 @@
       = f.text_field :city_of_residence, class: 'form-control'
   .form-group
     .col-sm-2.control-label
-      = f.label :desired_position, 'На должность:'
+      = f.label :desired_position, 'Желаемая должность:'
     .col-sm-6
-      = f.select(:desired_position, options_for_select(@vacancies.collect { |v| [ v.name, v.id ] }, 3),
-                                    { include_blank: true },
-                                    { class: 'form-control' })
+      = f.text_field :desired_position, class: 'form-control'
   .form-group
     .col-sm-2.control-label
       = f.label :experience, 'Опыт:'
