@@ -2,19 +2,17 @@ class Candidate < ActiveRecord::Base
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_one :image
-  has_many :staff_relations
+  has_many :staff_relations, dependent: :destroy
   has_many :vacancies, through: :staff_relations, source: :vacancy
   belongs_to :company
 
   accepts_nested_attributes_for :image
 
-  scope :with_status, -> (status) { Candidate.where(status: "#{status}") }
-
-  POST = %w(должность1 должность2 должность3)
+  scope :with_status, -> (status) { where(status: "#{status}") }
 
   STATUSES = %w(Пассивен В\ работе)
 
-  validates :name, :desired_position, :status, presence: true
+  validates :name, :status, presence: true
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
             message: 'is invalid.' }, if: 'email.present?'
   validates :phone, format:  { with: /\+?\d{2}-\d{3}-\d{3}-\d{4}/,
