@@ -11,15 +11,12 @@ class CandidatesController < ApplicationController
 
   def new
     @candidate = Candidate.new
-    @vacancies = Vacancy.all
   end
 
   def show
   end
 
   def edit
-    @vacancy = @candidate.vacancies.first
-    @vacancies = Vacancy.where.not(id: @vacancy)
   end
 
   def create
