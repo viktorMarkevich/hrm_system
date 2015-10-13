@@ -20,6 +20,13 @@ class StaffRelationsController < ApplicationController
     end
   end
 
+  def destroy
+    sr = StaffRelation.where(candidate_id: params[:candidate_id],
+                        vacancy_id: params[:vacancy_id] ).first
+    sr.delete
+    redirect_to :back
+  end
+
   private
 
   def st_params

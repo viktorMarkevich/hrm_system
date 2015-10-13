@@ -1,52 +1,50 @@
-.col-lg-2.col-lg-offset-2
-  .panel.add-shadows
-    .panel-body
-      = render partial: 'candidates/left_sidebar'
+- perc = set_the_percentage_of_completed_fields(@candidate)
+.row
+  .col-md-12
+    .row
+      .col-md-3
+        .tip{ style: 'font-size: 18px;'}
+          = @candidate.name
+      .col-md-6
+        = link_to edit_candidate_path(@candidate) do
+          .progress
+            .progress-bar.progress-bar-danger.progress-bar-striped{ 'aria-valuemax' => '100',
+                                                                    'aria-valuemin' => '0',
+                                                                    'aria-valuenow' => "#{perc}",
+                                                                    role: 'progressbar',
+                                                                    style: "width: #{perc}%;" }
+              = "#{perc}%"
+      .col-md-2
+        .pull-right
+          %span.label.label-info
+            = display_field_value_for(@candidate.status)
+      .col-md-offset-1
+    %hr
+.row
+  .col-md-3
+    = render partial: 'left_sidebar'
+    %hr
+    %dl.dl-horizontal
+      %dt Дата рождения:
+      %dd= display_field_value_for(@candidate.birthday)
+      %dt Город:
+      %dd= display_field_value_for(@candidate.city_of_residence)
+      %dt Желаемая должность:
+      %dd= @candidate.desired_position
+      %dt Хочу:
+      %dd= "#{display_field_value_for(@candidate.salary)} #{@candidate.salary_format}"
+    %hr
+    = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-primary'
+    = link_to 'Назад', :back, class: 'btn btn-default'
 
-.col-lg-6
-  .panel.add-shadows
-    .panel-heading
-      .panel-title.tip
-        = @candidate.name
-    .panel-body
-      %dl.dl-horizontal
-        %dt День рождения:
-        %dd= display_field_value_for(@candidate.birthday)
-        %dt Зарплата:
-        %dd= "#{display_field_value_for(@candidate.salary)} #{@candidate.salary_format}"
-        %dt Образование:
-        %dd= display_field_value_for(@candidate.education)
-        %dt Языки:
-        %dd= display_field_value_for(@candidate.languages)
-        %dt Место проживания:
-        %dd= display_field_value_for(@candidate.city_of_residence)
-        %dt На должность:
-        %dd= @candidate.desired_position
-        %dt Опыт:
-        %dd= display_field_value_for(@candidate.experience)
-        %dt Статус:
-        %dd= display_field_value_for(@candidate.status)
-        %dt Описание:
-        %dd= display_field_value_for(@candidate.description)
-        %dt Почта:
-        %dd= display_field_value_for(@candidate.email)
-        %dt Телефон:
-        %dd= display_field_value_for(@candidate.phone)
-        %dt Домашняя страница:
-        %dd= display_field_value_for(@candidate.home_page)
-        %dt Skype:
-        %dd= display_field_value_for(@candidate.skype)
-        %dt Компания:
-        %dd= display_field_value_for(@candidate.try(:company).try(:name))
-        %dt Linkedin:
-        %dd= display_field_value_for(@candidate.linkedin)
-        %dt Facebook:
-        %dd= display_field_value_for(@candidate.facebook)
-        %dt Vkontakte:
-        %dd= display_field_value_for(@candidate.vkontakte)
-        %dt Google+:
-        %dd= display_field_value_for(@candidate.google_plus)
-      %hr
-
-      = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-default'
-      = link_to 'Назад', :back, class: 'btn btn-default'
+  .col-md-4
+    = render partial: 'candidate_info', locals: { candidate: @candidate }
+    %hr
+  .col-md-4
+    .tip
+      %p Потенциальные вакансии:
+    .vacancies_list
+      = render partial: 'vacancies_list', locals: { candidate_vacancies: @candidate_vacancies,
+                                                    candidate: @candidate,
+                                                    vacancies: @vacancies }
+  .col-md-offset-1

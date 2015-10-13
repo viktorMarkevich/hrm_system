@@ -1,0 +1,43 @@
+.tip
+  %p Инфо:
+
+  %dl.dl-horizontal
+    %dt Образование:
+    %dd= display_field_value_for(candidate.education)
+    %dt Языки:
+    %dd= display_field_value_for(candidate.languages)
+    %dt Опыт:
+    %dd= display_field_value_for(candidate.experience)
+    %dt О себе:
+    %dd= display_field_value_for(candidate.description)
+
+  .tip
+    %p Мои компании:
+
+  %dl.dl-horizontal
+    %dt Компания:
+    %dd= display_field_value_for(candidate.try(:company).try(:name))
+
+  .tip
+    %p Контактные данные:
+  %dl.dl-horizontal
+    %dt Почта:
+    %dd= display_field_value_for(candidate.email)
+    %dt Телефон:
+    %dd= display_field_value_for(candidate.phone)
+    %dt Skype:
+    %dd= display_field_value_for(candidate.skype)
+    %dt Моя страница:
+    %dd= display_field_value_for(candidate.home_page)
+
+  .tip
+    %p Я в соц сетях:
+  %dl.dl-horizontal
+    %dt Linkedin:
+    %dd= display_field_value_for(candidate.linkedin)
+    %dt Facebook:
+    %dd= display_field_value_for(candidate.facebook)
+    %dt Vkontakte:
+    %dd= display_field_value_for(candidate.vkontakte)
+    %dt Google+:
+    %dd= display_field_value_for(candidate.google_plus)

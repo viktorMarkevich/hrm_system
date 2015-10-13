@@ -1,7 +1,7 @@
 class CandidatesController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :find_candidate, only: [:show, :edit, :update]
+  before_filter :find_candidate, only: [:show, :edit, :update, :set_vacancies]
   before_filter :set_companies, only: [:new, :edit]
 
   def index
@@ -14,6 +14,8 @@ class CandidatesController < ApplicationController
   end
 
   def show
+    @candidate_vacancies = @candidate.vacancies
+    @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
   end
 
   def edit
@@ -33,9 +35,21 @@ class CandidatesController < ApplicationController
   def update
     if @candidate.update(candidate_params)
       flash[:notice] = 'Запись успешно обновлена.'
-      redirect_to candidates_path
+      redirect_to candidate_path(@candidate)
     else
       render 'edit'
+    end
+  end
+
+  def set_vacancies
+    if params[:vacancy_id].present?
+      @candidate.staff_relations.create(status: 'Найденные', vacancy_id: params[:vacancy_id])
+    end
+    @candidate_vacancies = @candidate.vacancies
+    @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
+
+    respond_to do |format|
+      format.js
     end
   end
 
