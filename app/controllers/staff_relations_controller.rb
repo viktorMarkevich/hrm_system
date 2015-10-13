@@ -20,6 +20,10 @@ class StaffRelationsController < ApplicationController
     end
   end
 
+  def destroy
+
+  end
+
   private
 
   def st_params

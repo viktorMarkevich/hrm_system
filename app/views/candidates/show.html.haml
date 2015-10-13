@@ -43,15 +43,8 @@
   .col-md-4
     .tip
       %p Потенциальные вакансии:
-    .btn-group
-      %button.btn.btn-success{:type => "button"}= "Выберите вакансии для #{@candidate.name}"
-      %button.btn.btn-info.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-        %span.caret
-        %span.sr-only Toggle Dropdown
-      %ul.dropdown-menu
-        - @candidate_vacancies.each do |v|
-          %li
-            = link_to v.name, '#', id: "vacancy_#{v.id}"
-    .vacancies_list{style: 'padding-top: 20px;'}
-      = render partial: 'vacancies_list', locals: { vacancies: @candidate_vacancies }
+    .vacancies_list
+      = render partial: 'vacancies_list', locals: { candidate_vacancies: @candidate_vacancies,
+                                                    candidate: @candidate,
+                                                    vacancies: @vacancies }
   .col-md-offset-1

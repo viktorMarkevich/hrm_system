@@ -14,8 +14,10 @@ class CandidatesController < ApplicationController
   end
 
   def show
-    # @candidate_vacancies = @candidate.vacancies
-    @candidate_vacancies = Vacancy.all
+    @candidate_vacancies = @candidate.vacancies
+    unless @candidate_vacancies.blank?
+      @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
+    end
   end
 
   def edit
@@ -42,8 +44,15 @@ class CandidatesController < ApplicationController
   end
 
   def set_vacancies
-    p '*'*1000
-    redirect_to candidate_path(@candidate)
+    if params[:vacancy_id].present?
+      @candidate.staff_relations.create(status: 'Найденные', vacancy_id: params[:vacancy_id])
+    end
+    @candidate_vacancies = @candidate.vacancies
+    @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

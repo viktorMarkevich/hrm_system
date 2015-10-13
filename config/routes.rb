@@ -14,14 +14,14 @@ Rails.application.routes.draw do
   resources :companies
   resources :candidates, except: [:destroy] do
     member do
-      post :set_vacancies
+      get :set_vacancies
     end
   end
 
   resources :events, except: [:show]
   get 'events/:id', to: 'events#index'
 
-  resources :staff_relations, only: [:new, :create]
+  resources :staff_relations, only: [:new, :create, :destroy]
 
   get 'archives/:object_name', to: 'archives#index', as: :archives
   delete 'archives/:object_name/:id', to: 'archives#destroy', as: :restore_object
