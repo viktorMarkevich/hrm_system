@@ -1,7 +1,7 @@
 class CandidatesController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :find_candidate, only: [:show, :edit, :update]
+  before_filter :find_candidate, only: [:show, :edit, :update, :set_vacancies]
   before_filter :set_companies, only: [:new, :edit]
 
   def index
@@ -14,7 +14,8 @@ class CandidatesController < ApplicationController
   end
 
   def show
-    @candidate_vacancies = @candidate.vacancies
+    # @candidate_vacancies = @candidate.vacancies
+    @candidate_vacancies = Vacancy.all
   end
 
   def edit
@@ -38,6 +39,11 @@ class CandidatesController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def set_vacancies
+    p '*'*1000
+    redirect_to candidate_path(@candidate)
   end
 
   private

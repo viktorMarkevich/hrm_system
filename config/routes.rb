@@ -12,7 +12,12 @@ Rails.application.routes.draw do
   resources :users, only: [:update, :edit, :show, :index]
   resources :vacancies, except: [:destroy]
   resources :companies
-  resources :candidates, except: [:destroy]
+  resources :candidates, except: [:destroy] do
+    member do
+      post :set_vacancies
+    end
+  end
+
   resources :events, except: [:show]
   get 'events/:id', to: 'events#index'
 

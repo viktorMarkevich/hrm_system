@@ -5,14 +5,19 @@
       .col-md-3
         .tip{ style: 'font-size: 18px;'}
           = @candidate.name
-      .col-md-6
-        .progress
-          .progress-bar.progress-bar-danger{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{perc}", :role => "progressbar", :style => "width: #{perc}%;"}
-            = "#{perc}%"
-      .col-md-3
+      .col-md-5
+        = link_to edit_candidate_path(@candidate) do
+          .progress
+            .progress-bar.progress-bar-danger.progress-bar-striped{ 'aria-valuemax' => '100',
+                                                                    'aria-valuemin' => '0',
+                                                                    'aria-valuenow' => "#{perc}",
+                                                                    role: 'progressbar',
+                                                                    style: "width: #{perc}%;" }
+              = "#{perc}%"
+      .col-md-4
         .pull-right
           %span.label.label-info
-            = display_field_value_for(@candidate.status) # вывести на какие вакансии претендует(если он установлены)
+            = display_field_value_for(@candidate.status)
     %hr
 .row
   .col-md-3
@@ -27,8 +32,11 @@
       %dd= @candidate.desired_position
       %dt Хочу:
       %dd= "#{display_field_value_for(@candidate.salary)} #{@candidate.salary_format}"
+    %hr
+    = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-primary'
+    = link_to 'Назад', :back, class: 'btn btn-default'
 
-  .col-md-6
+  .col-md-5
     .tip
       %p Инфо:
 
@@ -58,7 +66,7 @@
       %dd= display_field_value_for(@candidate.phone)
       %dt Skype:
       %dd= display_field_value_for(@candidate.skype)
-      %dt Домашняя страница:
+      %dt Моя страница:
       %dd= display_field_value_for(@candidate.home_page)
 
     .tip
@@ -72,6 +80,17 @@
       %dd= display_field_value_for(@candidate.vkontakte)
       %dt Google+:
       %dd= display_field_value_for(@candidate.google_plus)
+    %hr
 
-    = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-default'
-    = link_to 'Назад', :back, class: 'btn btn-default'
+  .col-md-4
+    .tip
+      %p Потенциальные вакансии:
+    .btn-group
+      %button.btn.btn-success{:type => "button"}= "Выберите вакансии для #{@candidate.name}"
+      %button.btn.btn-info.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+        %span.caret
+        %span.sr-only Toggle Dropdown
+      %ul.dropdown-menu
+        - @candidate_vacancies.each do |v|
+          %li
+            %a{:href => "#"} #{v.name}
