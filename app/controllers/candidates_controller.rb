@@ -15,9 +15,7 @@ class CandidatesController < ApplicationController
 
   def show
     @candidate_vacancies = @candidate.vacancies
-    unless @candidate_vacancies.blank?
-      @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
-    end
+    @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
   end
 
   def edit
