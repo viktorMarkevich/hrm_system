@@ -1,3 +1,4 @@
+-#- ffff = candidate_vacancies.
 .btn-group{style: 'padding-bottom: 20px;'}
   %button.btn.btn-success{:type => "button"}= "Выберите вакансии для #{candidate.name}"
   %button.btn.btn-info.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
@@ -21,7 +22,7 @@
           %td= v.name
           %td= get_salary(v)
           %td
-            %span{class: "label #{get_label_class(v)}"}= v.status
+            %span{ class: "label #{get_sr_label_class(v, candidate)}" }= sr_status(v, candidate)
           %td
             = link_to destroy_staff_relations_path(candidate_id: candidate.id, vacancy_id: v.id), method: :delete do
               %i.glyphicon.glyphicon-remove-circle

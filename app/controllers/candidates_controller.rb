@@ -14,7 +14,8 @@ class CandidatesController < ApplicationController
   end
 
   def show
-    @candidate_vacancies = @candidate.vacancies
+    @candidate_vacancies = @candidate.vacancies.includes(:staff_relations)
+    # @staff_relations = @candidate.staff_relations
     @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
   end
 
@@ -42,10 +43,11 @@ class CandidatesController < ApplicationController
   end
 
   def set_vacancies
+    # @staff_relations = @candidate.staff_relations
     if params[:vacancy_id].present?
       @candidate.staff_relations.create(status: 'Найденные', vacancy_id: params[:vacancy_id])
     end
-    @candidate_vacancies = @candidate.vacancies
+    @candidate_vacancies = @candidate.vacancies.includes(:staff_relations)
     @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
 
     respond_to do |format|

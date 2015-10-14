@@ -25,11 +25,11 @@ set :keep_releases, 3
 
 namespace :deploy do
 
-  task :restart do
-    on "#{fetch(:user)}@192.168.137.75" do
-      execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -USR2 `cat #{fetch(:unicorn_pid)}`; else cd #{fetch(:deploy_to)}/current && bundle exec unicorn -c #{fetch(:unicorn_conf)} -E #{fetch(:rails_env)} -D; fi"
-    end
-  end
+  # task :restart do
+  #   on "#{fetch(:user)}@192.168.137.75" do
+  #     execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -USR2 `cat #{fetch(:unicorn_pid)}`; else cd #{fetch(:deploy_to)}/current && bundle exec unicorn -c #{fetch(:unicorn_conf)} -E #{fetch(:rails_env)} -D; fi"
+  #   end
+  # end
 
   task :start do
     on roles [:web, :app] do
