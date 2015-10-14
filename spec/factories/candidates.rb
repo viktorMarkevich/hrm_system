@@ -8,7 +8,6 @@ FactoryGirl.define do
     languages 'Английский, Русский'
     ready_to_relocate 'yes'
     desired_position 'Программист, руби'
-    experience '3 года'
     status 'Пассивен'
     sequence(:skype) { |n| "skype_login#{n}" }
     sequence(:email) { |n| "#{n}email@mail.ru" }

@@ -12,11 +12,20 @@ Rails.application.routes.draw do
   resources :users, only: [:update, :edit, :show, :index]
   resources :vacancies, except: [:destroy]
   resources :companies
-  resources :candidates, except: [:destroy]
+  resources :candidates, except: [:destroy] do
+    member do
+      get :set_vacancies
+    end
+  end
+
   resources :events, except: [:show]
   get 'events/:id', to: 'events#index'
 
-  resources :staff_relations, only: [:new, :create]
+  resources :staff_relations, only: [:new, :create] do
+    collection do
+      delete ':candidate_id/:vacancy_id', to: 'staff_relations#destroy', as: :destroy
+    end
+  end
 
   get 'archives/:object_name', to: 'archives#index', as: :archives
   delete 'archives/:object_name/:id', to: 'archives#destroy', as: :restore_object
