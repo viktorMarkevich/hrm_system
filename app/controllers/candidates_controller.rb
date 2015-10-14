@@ -63,9 +63,9 @@ class CandidatesController < ApplicationController
       params.require(:candidate).permit(
           :name, :birthday, :salary, :salary_format, :notice,
           :education, :languages, :city_of_residence, :company_id,
-          :ready_to_relocate, :desired_position, :experience,
-          :status, :source, :description, :email, :phone, :linkedin,
-          :facebook, :vkontakte, :google_plus, :full_info, :skype, :home_page
+          :ready_to_relocate, :desired_position, :status, :source,
+          :description, :email, :phone, :linkedin, :facebook,
+          :vkontakte, :google_plus, :full_info, :skype, :home_page
       )
     end
 

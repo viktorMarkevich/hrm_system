@@ -6,10 +6,6 @@
     %dd= display_field_value_for(candidate.education)
     %dt Языки:
     %dd= display_field_value_for(candidate.languages)
-    %dt Опыт:
-    %dd= display_field_value_for(candidate.experience)
-    %dt О себе:
-    %dd= display_field_value_for(candidate.description)
 
   .tip
     %p Мои компании:
@@ -41,3 +37,8 @@
     %dd= display_field_value_for(candidate.vkontakte)
     %dt Google+:
     %dd= display_field_value_for(candidate.google_plus)
+
+  .tip
+    %p  О себе:
+  %dl.dl-horizontal
+    %dd= display_field_value_for(candidate.description)

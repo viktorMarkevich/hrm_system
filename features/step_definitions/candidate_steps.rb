@@ -18,7 +18,6 @@ When(/^I fill in candidate form$/) do
     fill_in 'candidate_education', with: 'Оксфорд, бакалавр'
     fill_in 'candidate_city_of_residence', with: 'Запорожье'
     fill_in 'candidate_desired_position', with: 'должность1'
-    fill_in 'candidate_experience', with: '3 года'
     select('Пассивен', from: 'candidate_status')
     check('Готов к переезду')
     fill_in 'candidate_email', with: 'spetrov@mail.com'
