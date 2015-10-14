@@ -11,6 +11,7 @@ class Candidate < ActiveRecord::Base
   scope :with_status, -> (status) { where(status: "#{status}") }
 
   STATUSES = %w(Пассивен В\ работе)
+  # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
   validates :name, :status, presence: true
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
