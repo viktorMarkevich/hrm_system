@@ -1,4 +1,4 @@
-$('.panel-body .events-list').html('<%= escape_javascript(render partial: 'events_list',
+$('.events-list').html('<%= escape_javascript(render partial: 'events_list',
                                                   locals: { events: @events, date: @date }) %>')
 
 $('.calendar').html('<%= escape_javascript(render partial: 'calendar',
