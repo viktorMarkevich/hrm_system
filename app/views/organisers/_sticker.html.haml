@@ -1,5 +1,7 @@
-.col-xs-3{ id: "sticker_#{sticker.id}", onmouseover: 'mOver(this)', onmouseout: 'mOut(this)' }
-  .panel.add-shadows{ style: "background-color: #{sticker.bg_color}" }
+.pull-left{ style: 'padding-right: 15px;' }
+  .panel.add-shadows{ style: "background-color: #{sticker.bg_color}; min-height: 125px; width: 223px;",
+                      id: "sticker_#{sticker.id}",
+                      onmouseover: 'mOver(this)', onmouseout: 'mOut(this)' }
     .panel-heading{ style: 'min-height: 44px;'}
       .row
         .col-xs-8
