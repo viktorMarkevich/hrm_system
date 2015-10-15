@@ -48,12 +48,12 @@
       %p
         = 'Список стикеров'
 
+    .pull-left{ style: 'padding-right: 15px; padding-bottom: 15px;' }
+      .panel-body{ style: 'background-color: #777; min-height: 125px; width: 223px;' }
+        = link_to 'Добавить стикер', new_sticker_path, remote: true, class: 'btn btn-success btn-block'
+        = link_to 'Закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-warning btn-block'
     .stickers
-      .pull-left{ style: 'padding-right: 15px; padding-bottom: 15px;' }
-        .panel-body{ style: 'background-color: #777; min-height: 125px; width: 223px;' }
-          = link_to 'Добавить стикер', new_sticker_path, remote: true, class: 'btn btn-success btn-block'
-          = link_to 'Закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-warning btn-block'
-      = render partial: 'sticker', collection: @stickers
+    = render partial: 'sticker', collection: @stickers
 
     .row
       .col-xs-12
