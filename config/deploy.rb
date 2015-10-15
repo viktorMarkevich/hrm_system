@@ -14,7 +14,7 @@ set :tmp_dir, -> { "/home/#{fetch(:user)}/tmp" }
 set :format, :pretty
 
 # Default value for :linked_files is []; # Default value for linked_dirs is []
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', '.ruby-version', '.ruby-gemset', 'config/unicorn.rb')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', 'config/unicorn.rb')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 set :unicorn_conf, -> { "#{fetch(:deploy_to)}/current/config/unicorn.rb" }
