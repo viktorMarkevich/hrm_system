@@ -2,61 +2,62 @@
 = javascript_include_tag 'stickers'
 = javascript_include_tag 'charCount'
 
-.col-xs-5
-  - if @events.present?
-    .panel.add-shadows
-      .panel-heading
-        .panel-title.tip
-          = 'Предстоящие события'
-      .panel-body
-        %table.table.table-striped.table-responsive
-          %tbody
-            - @events.each do |event|
-              %tr
-                %td
-                  %span.label{ class: set_label_class(event) }= event.name
-                - if event.staff_relation
-                  %td= event.staff_relation.vacancy.name
-                  %td= event.staff_relation.candidate.name
-                - else
-                  %td= '------'
-                  %td= '------'
-                %td
-                  %span.label.label-primary= event.starts_at.strftime('%H:%M')
-                  = event.starts_at.strftime('%d/%m/%Y')
-
-  .panel.add-shadows
-    .panel-heading
-      .panel-title.tip
-        = 'Последние действия над вакансиями'
-    .panel-body
+.row
+  .col-lg-5
+    .tip
+      %p
+        = 'Предстоящие события'
+    - if @events.present?
       %table.table.table-striped.table-responsive
         %tbody
-          - @staff_relations.each do |sr|
+          - @events.each do |event|
             %tr
-              %td= link_to sr.vacancy.try(:name), vacancy_path(sr.vacancy || '#'), id: 'vacancy-name'
-              %td= "кандидат: #{link_to sr.candidate.try(:name), candidate_path(sr.candidate.id)}".html_safe
               %td
-                %span{ class: "label label-#{return_status_label(sr)}" }
-                  = sr.status
+                %span.label{ class: set_label_class(event) }= event.name
+              - if event.staff_relation
+                %td= event.staff_relation.vacancy.name
+                %td= event.staff_relation.candidate.name
+              - else
+                %td= '------'
+                %td= '------'
               %td
-                .label.label-info
-                  = sr.updated_at.strftime('%e %b %H:%M')
-.col-xs-7
-  .panel.add-shadows
-    .panel-heading
-      .panel-title.tip
-    .panel-body
-      .row
-        .col-xs-3
-          .btn-group-vertical.btn-block{ 'aria-label' => 'Vertical button group', role: 'group' }
-            = link_to 'Добавить стикер', new_sticker_path, remote: true, class: 'btn btn-success'
-            = link_to 'Закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-warning'
-        .stickers
-          = render partial: 'sticker', collection: @stickers
-      .row
-        .col-xs-12
-          #stickers-pagination
-            = render partial: 'stickers_pagination', locals: { stickers: @stickers }
+                %span.label.label-primary= event.starts_at.strftime('%H:%M')
+                = event.starts_at.strftime('%d/%m/%Y')
+    - else
+      %ul.list-group
+        %li.list-group-item.list-group-item-warning
+          У Вас нет ни единого события!
+    %hr
+    .tip
+      %p
+        = 'Последние действия над вакансиями'
+    %table.table.table-striped.table-responsive
+      %tbody
+        - @staff_relations.each do |sr|
+          %tr
+            %td= link_to sr.vacancy.try(:name), vacancy_path(sr.vacancy || '#'), id: 'vacancy-name'
+            %td= "кандидат: #{link_to sr.candidate.try(:name), candidate_path(sr.candidate.id)}".html_safe
+            %td
+              %span{ class: "label label-#{return_status_label(sr)}" }
+                = sr.status
+            %td
+              .label.label-info
+                = sr.updated_at.strftime('%e %b %H:%M')
+  .col-lg-7
+    .tip
+      %p
+        = 'Список стикеров'
+
+    .stickers
+      .pull-left{ style: 'padding-right: 15px; padding-bottom: 15px;' }
+        .panel-body{ style: 'background-color: #777; min-height: 125px; width: 223px;' }
+          = link_to 'Добавить стикер', new_sticker_path, remote: true, class: 'btn btn-success btn-block'
+          = link_to 'Закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-warning btn-block'
+      = render partial: 'sticker', collection: @stickers
+
+    .row
+      .col-xs-12
+        #stickers-pagination
+          = render partial: 'stickers_pagination', locals: { stickers: @stickers }
 
 = render 'stickers/dialog'

@@ -22,6 +22,6 @@
           %td= get_salary(v)
           %td
             %span{ class: "label #{get_sr_label_class(v, candidate)}" }= sr_status(v, candidate)
-          %td
+          %td.text-center
             = link_to destroy_staff_relations_path(candidate_id: candidate.id, vacancy_id: v.id), method: :delete do
               %i.glyphicon.glyphicon-remove-circle

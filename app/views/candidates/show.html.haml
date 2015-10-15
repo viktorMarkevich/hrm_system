@@ -3,16 +3,16 @@
   .col-md-12
     .row
       .col-md-3
-        .tip{ style: 'font-size: 18px;'}
+        .tip
           = @candidate.name
       .col-md-6
         = link_to edit_candidate_path(@candidate) do
           .progress
-            .progress-bar.progress-bar-danger.progress-bar-striped{ 'aria-valuemax' => '100',
-                                                                    'aria-valuemin' => '0',
-                                                                    'aria-valuenow' => "#{perc}",
-                                                                    role: 'progressbar',
-                                                                    style: "width: #{perc}%;" }
+            .progress-bar.progress-bar-danger.progress-bar-striped.active{ 'aria-valuemax' => '100',
+                                                                           'aria-valuemin' => '0',
+                                                                           'aria-valuenow' => "#{perc}",
+                                                                           role: 'progressbar',
+                                                                           style: "width: #{perc}%;" }
               = "#{perc}%"
       .col-md-2
         .pull-right
