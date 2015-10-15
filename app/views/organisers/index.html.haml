@@ -53,7 +53,7 @@
         = link_to 'Добавить стикер', new_sticker_path, remote: true, class: 'btn btn-success btn-block'
         = link_to 'Закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-warning btn-block'
     .stickers
-    = render partial: 'sticker', collection: @stickers
+      = render partial: 'sticker', collection: @stickers
 
     .row
       .col-xs-12
