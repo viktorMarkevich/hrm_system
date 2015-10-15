@@ -16,7 +16,7 @@ class Event < ActiveRecord::Base
 
   def self.events_soon_mailer
     @events_soon = where(starts_at: Time.now..(Time.now + 1.day))
-    NoticeMailer.event_soon(@events_soon).deliver_now
+    NoticeMailer.event_soon(@events_soon).deliver_now if @events_soon.present?
   end
 
   def self.events_current_month(date, the_exact_date = nil)
