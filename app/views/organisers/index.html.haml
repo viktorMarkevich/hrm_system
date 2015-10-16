@@ -31,18 +31,23 @@
     .tip
       %p
         = 'Последние действия над вакансиями'
-    %table.table.table-striped.table-responsive
-      %tbody
-        - @staff_relations.each do |sr|
-          %tr
-            %td= link_to sr.vacancy.try(:name), vacancy_path(sr.vacancy || '#'), id: 'vacancy-name'
-            %td= "кандидат: #{link_to sr.candidate.try(:name), candidate_path(sr.candidate.id)}".html_safe
-            %td
-              %span{ class: "label label-#{return_status_label(sr)}" }
-                = sr.status
-            %td
-              .label.label-info
-                = sr.updated_at.strftime('%e %b %H:%M')
+    - if @staff_relations.present?
+      %table.table.table-striped.table-responsive
+        %tbody
+          - @staff_relations.each do |sr|
+            %tr
+              %td= link_to sr.vacancy.try(:name), vacancy_path(sr.vacancy || '#'), id: 'vacancy-name'
+              %td= "кандидат: #{link_to sr.candidate.try(:name), candidate_path(sr.candidate.id)}".html_safe
+              %td
+                %span{ class: "label label-#{return_status_label(sr)}" }
+                  = sr.status
+              %td
+                .label.label-info
+                  = sr.updated_at.strftime('%e %b %H:%M')
+    - else
+      %ul.list-group
+        %li.list-group-item.list-group-item-warning
+          У Вас нет вакансий!
   .col-lg-7
     .tip
       %p
