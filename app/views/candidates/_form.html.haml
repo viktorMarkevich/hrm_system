@@ -5,6 +5,10 @@
       - @candidate.errors.full_messages.each do |message|
         %li
           = message
+  .row
+    .col-md-12
+      .tip
+        %p Личное:
   .form-group
     .col-sm-2.control-label
       = f.label :name, 'Имя:'
@@ -14,23 +18,9 @@
     .col-sm-2.control-label
       = f.label :birthday, 'Дата рождения:'
     .col-sm-6
-      %span.tip dd/mm/yyyy or dd-mm-yyyy
+      %span.tip
+        %p.subscription dd/mm/yyyy or dd-mm-yyyy
       = f.text_field :birthday, class: 'form-control'
-  .form-group
-    .col-sm-2.control-label
-      = f.label :salary, 'Желаемая ЗП:'
-    .col-sm-6
-      = f.text_field :salary, class: 'form-control'
-  .form-group
-    .col-sm-2.control-label
-      = f.label :education, 'Образование'
-    .col-sm-6
-      = f.text_field :education, class: 'form-control'
-  .form-group
-    .col-sm-2.control-label
-      = f.label :city_of_residence, 'Место проживания:'
-    .col-sm-6
-      = f.text_field :city_of_residence, class: 'form-control'
   .form-group
     .col-sm-2.control-label
       = f.label :desired_position, 'Желаемая должность:'
@@ -38,23 +28,54 @@
       = f.text_field :desired_position, class: 'form-control'
   .form-group
     .col-sm-2.control-label
+      = f.label :salary, 'Желаемая ЗП:'
+    .col-sm-6
+      = f.text_field :salary, class: 'form-control'
+  .form-group
+    .col-sm-2.control-label
+      = f.label :city_of_residence, 'Место проживания:'
+    .col-sm-6
+      = f.text_field :city_of_residence, class: 'form-control'
+  .form-group
+    .col-sm-2.control-label
       = f.label :ready_to_relocate, 'Готов к переезду:'
     .col-sm-6
       = f.check_box :ready_to_relocate
+  %hr
+
   .row
     .col-md-12
-      %h4.tip Контактные данные кандидата:
+      .tip
+        %p Инфо:
+  .form-group
+    .col-sm-2.control-label
+      = f.label :education, 'Образование'
+    .col-sm-6
+      = f.text_field :education, class: 'form-control'
+  .form-group
+    .col-sm-2.control-label
+      = f.label :languages, 'Языки'
+    .col-sm-6
+      = f.text_field :languages, class: 'form-control'
+
+  %hr
+  .row
+    .col-md-12
+      .tip
+        %p Контактные данные:
   .form-group
     .col-sm-2.control-label
       = f.label :email, 'Почта:'
     .col-sm-6
-      %span.tip example@gmail.com
+      %span.tip
+        %p.subscription example@gmail.com
       = f.email_field :email, class: 'form-control'
   .form-group
     .col-sm-2.control-label
       = f.label :phone, 'Телефон:'
     .col-sm-6
-      %span.tip Пример ввода: +38-050-000-0000
+      %span.tip
+        %p.subscription Пример ввода: +38-050-000-0000
       = f.text_field :phone, class: 'form-control'
   .form-group
     .col-sm-2.control-label
@@ -63,15 +84,29 @@
       = f.text_field :skype, class: 'form-control'
   .form-group
     .col-sm-2.control-label
-      = f.label :status, 'Компания:'
-    .col-sm-6
-      = f.select(:company_id, @companies, {}, class: 'form-control')
-  .form-group
-    .col-sm-2.control-label
       = f.label :home_page, 'Мои странички:'
     .col-sm-6
-      %span.tip https://www.example1.com, https://www.example2.com, ...
+      %span.tip
+        %p.subscription https://www.example1.com, https://www.example2.com, ...
       = f.text_field :home_page, class: 'form-control'
+  %hr
+
+  .row
+    .col-md-12
+      .tip
+        %p Мои компании:
+  .form-group
+    .col-sm-2.control-label
+      = f.label :company_id, 'Компания:'
+    .col-sm-6
+      = f.select(:company_id, @companies, {}, class: 'form-control')
+
+  %hr
+
+  .row
+    .col-md-12
+      .tip
+        %p Я в соц сетях:
   .form-group
     .col-sm-2.control-label
       = f.label :linkedin, 'Linkedin:'
@@ -92,20 +127,31 @@
       = f.label :google_plus, 'Google+:'
     .col-sm-6
       = f.text_field :google_plus, class: 'form-control'
+
+  %hr
+
+  .row
+    .col-md-12
+      .tip
+        %p Примечание:
   .form-group
     .col-sm-2.control-label
       = f.label :notice, 'Примечание:'
     .col-sm-6
       = f.text_field :notice, class: 'form-control'
+  %hr
 
+  .row
+    .col-md-12
+      .tip
+        %p О себе:
   .form-group
     .col-sm-2.control-label
       = f.label :description, 'Описание:'
     .col-sm-6
       = f.text_area :description, rows: 5, class: 'form-control'
-
   %hr
   .form-group
     .col-sm-12
-      = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
+      = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-success'
       = link_to 'Назад', :back, class: 'btn btn-default'
