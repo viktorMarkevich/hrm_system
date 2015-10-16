@@ -1,13 +1,13 @@
-.col-lg-3
-  .panel.add-shadows
-    .panel-body
-      = render partial: 'candidates/left_sidebar'
-
-.col-lg-9
-  .panel.add-shadows
-    .panel-heading
-      .panel-title.tip
+.row
+  .col-lg-12
+    .tip
+      %p
         Добавить кандидата
-    .panel-body
-      = render partial: 'candidates/form'
+%hr
+.row
+  .col-lg-3
+    = render partial: 'candidates/left_sidebar'
+
+  .col-lg-9
+    = render partial: 'candidates/form'
 

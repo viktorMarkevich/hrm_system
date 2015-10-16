@@ -1,6 +1,6 @@
 - perc = set_the_percentage_of_completed_fields(@candidate)
 .row
-  .col-md-12
+  .col-lg-12
     .row
       .col-md-3
         .tip
@@ -21,7 +21,7 @@
       .col-md-offset-1
     %hr
 .row
-  .col-md-3
+  .col-lg-3
     = render partial: 'left_sidebar'
     %hr
     %dl.dl-horizontal
@@ -37,14 +37,14 @@
     = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-primary'
     = link_to 'Назад', :back, class: 'btn btn-default'
 
-  .col-md-4
+  .col-lg-4
     = render partial: 'candidate_info', locals: { candidate: @candidate }
     %hr
-  .col-md-4
+  .col-lg-4
     .tip
       %p Потенциальные вакансии:
     .vacancies_list
       = render partial: 'vacancies_list', locals: { candidate_vacancies: @candidate_vacancies,
                                                     candidate: @candidate,
                                                     vacancies: @vacancies }
-  .col-md-offset-1
+  .col-lg-offset-1
