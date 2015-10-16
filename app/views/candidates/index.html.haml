@@ -1,45 +1,47 @@
-.col-xs-12
-  = render partial: 'share/search'
+.row
+  .col-lg-10.col-lg-offset-1
+    .well
+      .row
+        .col-xs-6
+          %code Искать в
+          %button.btn.btn-default В Linkedin
+          %button.btn.btn-default В Интернет
+        .col-xs-offset-3.col-xs-3
+          %code Импортировать с
+          %button.btn.btn-default Почты
+          %button.btn.btn-default Файла
 
-  .row
-    .col-xs-12
-      .tip
-        %p
-          Кандидаты
-      .well
-        .row
-          .col-xs-6
-            %code Искать в
-            %button.btn.btn-default В Linkedin
-            %button.btn.btn-default В Интернет
-          .col-xs-offset-3.col-xs-3
-            %code Импортировать с
-            %button.btn.btn-default Почты
-            %button.btn.btn-default Файла
+= render partial: 'share/search'
 
-      .items-list
-        %table.table.table-bordered.table-hover
-          %thead
+.row
+  .col-lg-10.col-lg-offset-1
+    .tip
+      %p
+        Кандидаты
+
+    .items-list
+      %table.table.table-bordered.table-hover
+        %thead
+          %tr
+            %th Кандидат
+            %th Должность
+            %th Регион
+            %th Зарплата
+            %th Ответственный
+            %th Добавлен
+            %th Статус
+            %th Примечание
+        %tbody
+          - @candidates.each do |candidate|
             %tr
-              %th Кандидат
-              %th Должность
-              %th Регион
-              %th Зарплата
-              %th Ответственный
-              %th Добавлен
-              %th Статус
-              %th Примечание
-          %tbody
-            - @candidates.each do |candidate|
-              %tr
-                %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
-                %td= candidate.desired_position
-                %td= display_field_value_for(candidate.city_of_residence)
-                %td= display_field_value_for(candidate.salary)
-                %td= full_name_for(candidate.owner)
-                %td= candidate.created_at.strftime('%F')
-                %td= candidate.status
-                %td= candidate.notice
-  .row
-    .col-xs-3
-      = paginate @candidates
+              %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
+              %td= candidate.desired_position
+              %td= display_field_value_for(candidate.city_of_residence)
+              %td= display_field_value_for(candidate.salary)
+              %td= full_name_for(candidate.owner)
+              %td= candidate.created_at.strftime('%F')
+              %td= candidate.status
+              %td= candidate.notice
+.row
+  .col-lg-3
+    = paginate @candidates
