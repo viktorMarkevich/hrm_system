@@ -4,6 +4,8 @@ class Event < ActiveRecord::Base
   has_calendar
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_one :staff_relation
+  has_one :vacancy, through: :staff_relation
+  has_one :candidate, through: :staff_relation
 
   validates :name,  :description, presence: true
   validate :future_event?

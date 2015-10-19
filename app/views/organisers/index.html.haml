@@ -14,7 +14,7 @@
             %tr
               %td
                 %span.label{ class: set_label_class(event) }= event.name
-              - if event.staff_relation
+              - if event.vacancy && event.candidate
                 %td= event.staff_relation.vacancy.name
                 %td= event.staff_relation.candidate.name
               - else
