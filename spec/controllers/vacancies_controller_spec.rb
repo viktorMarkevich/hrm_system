@@ -128,7 +128,7 @@ RSpec.describe VacanciesController, type: :controller do
       end
 
       it 'redirect to vacancies index page' do
-        expect(response).to redirect_to(vacancies_path)
+        expect(response).to redirect_to(vacancy_path(vacancy))
       end
     end
 
