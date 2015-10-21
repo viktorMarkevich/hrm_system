@@ -1,8 +1,9 @@
 FactoryGirl.define do
   factory :event do
     name 'Name'
-    starts_at DateTime.now+1.hours
+    will_begin_at { rand((DateTime.now + 1.hours)..DateTime.now.next_week) }
     description 'описание события'
+    user
   end
 
   factory :invalid_event, parent: :event do

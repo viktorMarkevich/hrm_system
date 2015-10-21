@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe EventsController, type: :controller do
 
-  let(:user) { create(:user) }
-  let(:event) { create(:event) }
+  # let(:user) { create(:user) }
+  let(:user) { create(:user_with_events) }
+  # let(:event) { create(:event) }
   let(:staff_relation) { create(:staff_relation) }
 
   before {
@@ -28,14 +29,14 @@ RSpec.describe EventsController, type: :controller do
 
     it 'assigns all events as @events' do
       get :index
-      expect(assigns(:events)).to eq([event])
+      expect(assigns(:events)).to eq(user.events.order(will_begin_at: :asc))
     end
   end
 
   context '#create' do
     context 'when successful' do
       let(:staff_relation) { create(:staff_relation) }
-      let(:event_params) { { event: { name: 'Name', starts_at: '2015-10-15 09:12:00', description: 'Описание' }, staff_relation: staff_relation.id } }
+      let(:event_params) { { event: { name: 'Name', will_begin_at: '2015-10-15 09:12:00', description: 'Описание' }, staff_relation: staff_relation.id } }
 
       before { post :create, event_params }
 
@@ -50,7 +51,7 @@ RSpec.describe EventsController, type: :controller do
 
     context 'when failed' do
       let(:staff_relation) { create(:staff_relation) }
-      let(:event_params) { { event: { name: nil, starts_at: '2011-12-11 12:11:12', description: nil }, staff_relation: staff_relation.id } }
+      let(:event_params) { { event: { name: nil, will_begin_at: '2011-12-11 12:11:12', description: nil }, staff_relation: staff_relation.id } }
 
       before { post :create, event_params }
 
@@ -120,11 +121,11 @@ RSpec.describe EventsController, type: :controller do
   end
 
   context '#destroy' do
-    let(:event) { create(:event) }
+    let(:event) { user.events.first }
 
     it 'destroys event' do
       delete :destroy, id: event
-      expect(Event.count).to eq 0
+      expect(Event.count).to eq 4
     end
 
     it 'redirects to events index page' do

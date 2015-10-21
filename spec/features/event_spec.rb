@@ -2,12 +2,10 @@ require 'rails_helper'
 
 describe 'Managing events', type: :feature do
   let(:user) { create(:user) }
-  let(:event) { create(:event) }
+  let(:event) { create(:event, user_id: user.id) }
   let(:staff_relation) { create(:staff_relation) }
 
   before do
-    event
-    staff_relation
     sign_in_as(user, nil)
   end
 
@@ -25,7 +23,7 @@ describe 'Managing events', type: :feature do
     visit '/events/new'
     within '#new_event' do
       fill_in 'event_name', with: 'This is name'
-      select "#{(Time.now + 1.month).strftime('%B')}", from: 'event_starts_at_2i'
+      select "#{(Time.now + 1.month).strftime('%B')}", from: 'event_will_begin_at_2i'
       option = first('#staff_relation').text
       select option, from: 'staff_relation'
       fill_in 'event_description', with: 'This is description'
@@ -38,7 +36,7 @@ describe 'Managing events', type: :feature do
     pending
     visit '/events'
     expect(page).to have_css('#myModalLabel')
-    expect(page).not_to have_content("#{event.starts_at}")
+    expect(page).not_to have_content("#{event.will_begin_at}")
   end
 
 end

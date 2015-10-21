@@ -5,9 +5,9 @@ class OrganisersController < ApplicationController
   def index
     @stickers = current_user.owner_stickers.order('created_at desc').page(params[:page]).per(11)
 
-    @events = Event.includes([:vacancy, :candidate]).
-                    where(starts_at: Date.today..Date.today.next_week).
-                    order(starts_at: :asc)
+    @events = current_user.events.includes([:vacancy, :candidate]).
+                                  where(will_begin_at: Date.today..Date.today.next_week).
+                                  order(will_begin_at: :asc)
 
     @staff_relations = StaffRelation.includes([:vacancy, :candidate]).
                                      order('updated_at DESC').limit(5)

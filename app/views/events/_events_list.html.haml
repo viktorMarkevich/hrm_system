@@ -20,8 +20,8 @@
             %td= '------'
             %td= '------'
           %td
-            %span.label.label-primary= event.starts_at.strftime('%H:%M')
-            = event.starts_at.strftime('%d/%m/%Y')
+            %span.label.label-primary= event.will_begin_at.strftime('%H:%M')
+            = event.will_begin_at.strftime('%d/%m/%Y')
           %td= event.description
           %td
             - if can? :update, event

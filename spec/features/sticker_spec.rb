@@ -21,7 +21,7 @@
 #
 #   scenario 'show event for sticker index page' do
 #     visit '/stickers'
-#     expect(page).to have_content event.starts_at.strftime('%e %b %H:%M')
+#     expect(page).to have_content event.will_begin_at.strftime('%e %b %H:%M')
 #   end
 #
 #   scenario 'show vacancy action for sticker index page' do

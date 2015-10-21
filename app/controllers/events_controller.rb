@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   before_action :set_date
 
   def index
-    @events = Event.events_current_month(@date, @the_exact_date).order(starts_at: :asc)
+    @events = Event.events_current_month(@date, @the_exact_date).order(will_begin_at: :asc)
     respond_to do |format|
       format.html
       format.js
@@ -24,7 +24,7 @@ class EventsController < ApplicationController
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.save
-        @events = Event.events_current_month(@date, @the_exact_date).order(starts_at: :asc)
+        @events = Event.events_current_month(@date, @the_exact_date).order(will_begin_at: :asc)
         format.js
       else
         format.json { render json: @event.errors.full_messages,
@@ -37,7 +37,7 @@ class EventsController < ApplicationController
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.update(event_params)
-        @events = Event.events_current_month(@date, @the_exact_date).order(starts_at: :asc)
+        @events = Event.events_current_month(@date, @the_exact_date).order(will_begin_at: :asc)
         format.js
       else
         format.json { render json: @event.errors.full_messages,
@@ -75,6 +75,6 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:name, :starts_at, :description)
+    params.require(:event).permit(:name, :will_begin_at, :description)
   end
 end
