@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021131428) do
+ActiveRecord::Schema.define(version: 20151021134058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,10 +113,10 @@ ActiveRecord::Schema.define(version: 20151021131428) do
   end
 
   create_table "staff_relations", force: :cascade do |t|
-    t.string   "status"
+    t.string   "status",       default: "Найденные"
     t.text     "notice"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.integer  "vacancy_id"
     t.integer  "candidate_id"
     t.integer  "event_id"

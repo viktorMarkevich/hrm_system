@@ -32,8 +32,11 @@ RSpec.describe OrganisersController, type: :controller do
 
     end
 
-    context 'to check the last vacancies actions' do
-      it 'vacancies' do
+    describe 'to check the last vacancies actions' do
+      context 'just check the vacancy status after creation' do
+        it 'vacancies' do
+          expect(sr.status).to eq 'Найденные'
+        end
       end
     end
   end

@@ -3,7 +3,7 @@ class OrganisersController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @stickers = current_user.owner_stickers.order('created_at desc').page(params[:page]).per(11)
+    @stickers = current_user.stickers.order('created_at desc').page(params[:page]).per(11)
 
     @events = current_user.events.includes([:vacancy, :candidate]).
                                   where(will_begin_at: Date.today..Date.today.next_week).

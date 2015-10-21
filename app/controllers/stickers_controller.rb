@@ -14,7 +14,7 @@ class StickersController < ApplicationController
   end
 
   def create
-    @sticker = current_user.owner_stickers.build(sticker_params.merge(bg_color: Sticker::BG_COLOR.sample))
+    @sticker = current_user.stickers.build(sticker_params.merge(bg_color: Sticker::BG_COLOR.sample))
     respond_to do |format|
       if @sticker.save
         set_stickers
@@ -59,7 +59,7 @@ class StickersController < ApplicationController
   private
 
     def set_stickers
-      @stickers = current_user.owner_stickers.order('created_at desc').page(params[:page]).per(11)
+      @stickers = current_user.stickers.order('created_at desc').page(params[:page]).per(11)
     end
 
     def sticker_params

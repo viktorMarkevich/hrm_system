@@ -1,9 +1,9 @@
 namespace :candidates do
   #TODO check this after all task are completed
-  desc 'Sets default status "Нейтральный" to all candidates'
+  desc 'Sets default status "Найденные" to all candidates'
   task set_default_status: :environment do
     StaffRelation.delete_all
-    default_status = 'Нейтральный'
+    default_status = 'Найденные'
     Candidate.all.each do |candidate|
       print '+ '
       StaffRelation.create(candidate_id: candidate.id, status: default_status)
