@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   belongs_to :region
   has_one :image
   has_many :vacancies
-  has_many :owner_stickers, foreign_key: 'owner_id', class_name: 'Sticker', dependent: :destroy
+  has_many :owner_stickers, foreign_key: 'user_id', class_name: 'Sticker', dependent: :destroy
   has_many :candidates
   has_many :companies
   has_many :events

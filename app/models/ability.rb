@@ -6,7 +6,7 @@ class Ability
     user ||= User.new # guest user
     # alias_action :create, :read, :update, :destroy, to: :crud
 
-    can :manage, Sticker, owner_id: user.id
+    can :manage, Sticker, user_id: user.id
     # can :manage, User, id: user.id
 
     if user.post == 'Директор'
