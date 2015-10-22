@@ -28,15 +28,7 @@ RSpec.describe OrganisersController, type: :controller do
         expect(assigns(:events)).to_not include(old_event)
         expect(assigns(:stickers)).to eq(user.stickers)
         expect(assigns(:staff_relations)).to eq([sr])
-      end
-
-    end
-
-    describe 'to check the last vacancies actions' do
-      context 'just check the vacancy status after creation' do
-        it 'vacancies' do
-          expect(sr.status).to eq 'Найденные'
-        end
+        expect(sr.status).to eq 'Найденные'
       end
     end
   end
