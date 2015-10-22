@@ -31,4 +31,7 @@ class Event < ActiveRecord::Base
     end
   end
 
+  def starts_at
+    self.will_begin_at
+  end
 end

@@ -28,6 +28,9 @@ RSpec.describe OrganisersController, type: :controller do
         expect(assigns(:events)).to_not include(old_event)
         expect(assigns(:stickers)).to eq(user.stickers)
         expect(assigns(:staff_relations)).to eq([sr])
+      end
+
+      it 'vacancy should have status "Найденные"' do
         expect(sr.status).to eq 'Найденные'
       end
     end
