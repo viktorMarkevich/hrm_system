@@ -30,13 +30,8 @@ RSpec.describe OrganisersController, type: :controller do
         expect(assigns(:staff_relations)).to eq([sr])
       end
 
-    end
-
-    describe 'to check the last vacancies actions' do
-      context 'just check the vacancy status after creation' do
-        it 'vacancies' do
-          expect(sr.status).to eq 'Найденные'
-        end
+      it 'vacancy should have status "Найденные"' do
+        expect(sr.status).to eq 'Найденные'
       end
     end
   end
