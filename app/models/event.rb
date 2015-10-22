@@ -21,13 +21,16 @@ class Event < ActiveRecord::Base
     NoticeMailer.event_soon(@events_soon).deliver_now if @events_soon.present?
   end
 
-  def self.events_current_month(date, the_exact_date = nil)
+  def self.events_current_month(date, the_exact_date = nil, user)
     if the_exact_date.present?
       date = Time.zone.parse(date.strftime('%F'))
-      where('will_begin_at BETWEEN ? AND ?', date, date + 23.hours + 59.minutes + 59.seconds)
+      where('user_id ? AND will_begin_at BETWEEN ? AND ?', user.id,
+                                                           date,
+                                                           date + 23.hours + 59.minutes + 59.seconds)
     else
       period = date.to_date
-      where(will_begin_at: period.beginning_of_month..period.end_of_month).includes(:staff_relation)
+      where(user_id: user.id,
+            will_begin_at: period.beginning_of_month..period.end_of_month).includes(:staff_relation)
     end
   end
 

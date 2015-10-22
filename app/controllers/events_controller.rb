@@ -3,9 +3,9 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:edit, :update, :destroy]
   before_action :set_sr, only: [:new, :edit]
   before_action :set_date
+  before_action :set_events_current_month, only: [:index]
 
   def index
-    @events = Event.events_current_month(@date, @the_exact_date).order(will_begin_at: :asc)
     respond_to do |format|
       format.html
       format.js
@@ -14,6 +14,10 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    respond_to do |format|
+      format.html { render nothing: true }
+      format.js
+    end
   end
 
   def edit
@@ -24,7 +28,7 @@ class EventsController < ApplicationController
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.save
-        @events = Event.events_current_month(@date, @the_exact_date).order(will_begin_at: :asc)
+        set_events_current_month
         format.js
       else
         format.json { render json: @event.errors.full_messages,
@@ -37,7 +41,7 @@ class EventsController < ApplicationController
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.update(event_params)
-        @events = Event.events_current_month(@date, @the_exact_date).order(will_begin_at: :asc)
+        set_events_current_month
         format.js
       else
         format.json { render json: @event.errors.full_messages,
@@ -58,7 +62,9 @@ class EventsController < ApplicationController
   private
 
   def set_event_sr
-    @event.staff_relation = StaffRelation.find(params[:event][:staff_relation])
+    sr = StaffRelation.find(params[:event][:staff_relation])
+    @event.staff_relation = sr
+    @event.name = sr.status
   end
 
   def set_event
@@ -66,7 +72,7 @@ class EventsController < ApplicationController
   end
 
   def set_sr
-    @staff_relations = StaffRelation.where(status: ['Собеседование', 'Утвержден'])
+    @staff_relations = StaffRelation.where('status IN (?) and event_id IS NOT NULL', ['Собеседование', 'Утвержден'])
   end
 
   def set_date
@@ -75,6 +81,10 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:name, :will_begin_at, :description)
+    params.require(:event).permit(:name, :will_begin_at, :description, :user_id)
+  end
+
+  def set_events_current_month
+    @events = Event.events_current_month(@date, @the_exact_date, current_user).order(will_begin_at: :asc)
   end
 end
