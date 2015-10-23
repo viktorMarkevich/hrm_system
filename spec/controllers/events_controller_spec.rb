@@ -44,7 +44,8 @@ RSpec.describe EventsController, type: :controller do
 
     context 'when successful without "staff_relations"' do
       let (:will_begin_at) { DateTime.now + 10.hours + 12.minutes }
-      before { post :create, event: event_params.update(will_begin_at: will_begin_at), format: :js }
+      before { post :create, event: event_params.update(will_begin_at: will_begin_at,
+                                                        user_id: current_user.id), format: :js }
 
       it 'creates new Event object' do
         expect(assigns(:events).length).to eq(6)
@@ -55,12 +56,28 @@ RSpec.describe EventsController, type: :controller do
 
     context 'when successful with "staff_relations"' do
       let(:staff_relation) { create(:staff_relation, status: 'Собеседование') }
-      before { post :create, event: event_params.update(staff_relation: staff_relation.id), format: :js }
+      before { post :create, event: event_params.update(staff_relation: staff_relation.id,
+                                                        user_id: current_user.id), format: :js }
 
       it 'creates new Event object' do
         expect(assigns(:events).length).to eq(6)
         expect(assigns(:event).name).to eq staff_relation.status
       end
+    end
+
+    context 'when failed' do
+      let(:invalid_event_params) { { event: (attributes_for :invalid_event,
+                                                            user_id: current_user.id), format: :json } }
+      before { post :create, invalid_event_params }
+
+      it %q{ doesn't create new record } do
+        expect(assigns(:events).count).to eq(5)
+      end
+
+      it 'error messages' do
+        # p response
+      end
+
     end
   end
 

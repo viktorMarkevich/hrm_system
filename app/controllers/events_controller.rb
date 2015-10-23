@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:edit, :update, :destroy]
   before_action :set_sr, only: [:new, :edit]
   before_action :set_date
-  before_action :set_events_current_month, only: [:index]
+  before_action :set_events_current_month, only: [:index, :update, :create]
 
   def index
     respond_to do |format|
@@ -28,7 +28,6 @@ class EventsController < ApplicationController
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.save
-        set_events_current_month
         format.js
       else
         format.json { render json: @event.errors.full_messages,
@@ -41,7 +40,6 @@ class EventsController < ApplicationController
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.update(event_params)
-        set_events_current_month
         format.js
       else
         format.json { render json: @event.errors.full_messages,
