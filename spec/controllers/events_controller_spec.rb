@@ -39,7 +39,7 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-  describe '#create' do
+  describe '#create action;' do
     let(:event_params) { attributes_for :event }
 
     context 'when successful without "staff_relations"' do
@@ -49,6 +49,7 @@ RSpec.describe EventsController, type: :controller do
       it 'creates new Event object' do
         expect(assigns(:events).length).to eq(6)
         expect(assigns(:event).will_begin_at).to eq will_begin_at
+        expect(assigns(:event).name).to eq 'Name'
       end
     end
 

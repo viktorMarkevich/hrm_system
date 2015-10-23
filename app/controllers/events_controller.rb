@@ -72,7 +72,7 @@ class EventsController < ApplicationController
   end
 
   def set_sr
-    @staff_relations = StaffRelation.where('status IN (?) and event_id IS NOT NULL', ['Собеседование', 'Утвержден'])
+    @staff_relations = StaffRelation.get_without_event
   end
 
   def set_date
