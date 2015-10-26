@@ -17,10 +17,14 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to render_template('index')
     end
 
-    it 'assigns all events as @events' do
+    it 'assigns future events as @events' do
+      expect(assigns(:events)).to eq(events_in_future(current_user))
+      expect(assigns(:events).length).to eq(events_in_future(current_user).count)
+    end
 
-      expect(assigns(:events)).to eq(events_of(current_user))
-      expect(assigns(:events).length).to eq(events_of(current_user).count)
+    it 'assigns old events as @events' do
+      expect(assigns(:events_past)).to eq(events_in_past(current_user))
+      expect(assigns(:events_past).length).to eq(events_in_past(current_user).count)
     end
   end
 
@@ -49,7 +53,7 @@ RSpec.describe EventsController, type: :controller do
                                                         user_id: current_user.id), format: :js }
 
       it 'creates new Event object' do
-        expect(assigns(:events).length).to eq(events_of(current_user).count)
+        expect(assigns(:events).length).to eq(events_in_future(current_user).count)
         expect(assigns(:event).will_begin_at).to eq will_begin_at
         expect(assigns(:event).name).to eq 'Name'
       end
@@ -61,7 +65,7 @@ RSpec.describe EventsController, type: :controller do
                                                         user_id: current_user.id), format: :js }
 
       it 'creates new Event object' do
-        expect(assigns(:events).length).to eq(events_of(current_user).count)
+        expect(assigns(:events).length).to eq(events_in_future(current_user).count)
         expect(assigns(:event).name).to eq staff_relation.status
       end
     end
@@ -72,7 +76,7 @@ RSpec.describe EventsController, type: :controller do
       before { post :create, invalid_event_params }
 
       it %q{ doesn't create new record } do
-        expect(assigns(:events).length).to eq(events_of(current_user).count)
+        expect(assigns(:events).length).to eq(events_in_future(current_user).count)
       end
 
       it 'error messages' do
@@ -82,10 +86,26 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-  def events_of(user)
-    user.events.where('will_begin_at BETWEEN ? AND ?', Time.zone.parse(DateTime.now.strftime('%F')),
-                                                       Time.zone.parse(DateTime.now.end_of_month.strftime('%F'))).
-                order(will_begin_at: :asc)
+  def events_in_future(user)
+    events_of(user, :end_of_month)
+  end
+
+  def events_in_past(user)
+    events_of(user, :beginning_of_month)
+  end
+
+  def events_of(user, position)
+    date_arr = [date_now.send(position), date_now]
+    date_arr.rotate! if position == :end_of_month
+    user.events.where('will_begin_at BETWEEN ? AND ?', date_in_tz(date_arr[0]), date_in_tz(date_arr[1])).order(will_begin_at: :asc)
+  end
+
+  def date_in_tz(date)
+    Time.zone.parse(date.strftime('%F'))
+  end
+
+  def date_now
+    DateTime.now
   end
 
   #   context 'when failed' do
