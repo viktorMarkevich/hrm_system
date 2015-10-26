@@ -97,7 +97,7 @@ RSpec.describe EventsController, type: :controller do
   def events_of(user, position)
     date_arr = [date_now.send(position), date_now]
     date_arr.rotate! if position == :end_of_month
-    user.events.where('will_begin_at BETWEEN ? AND ?', date_in_tz(date_arr[0]), date_in_tz(date_arr[1])).order(will_begin_at: :asc)
+    user.events.where(will_begin_at: date_in_tz(date_arr[0])..date_in_tz(date_arr[1])).order(will_begin_at: :asc)
   end
 
   def date_in_tz(date)

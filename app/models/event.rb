@@ -21,10 +21,21 @@ class Event < ActiveRecord::Base
     NoticeMailer.event_soon(@events_soon).deliver_now if @events_soon.present?
   end
 
-  def self.events_current_date_period(date, the_exact_date = nil, user)
-    date_from = date_with_time_zone(date)
-    date_to = set_date_to(date, the_exact_date)
-    where(user_id: user.id, will_begin_at: date_from..date_to).includes(:staff_relation)
+  def self.events_in_future(user, from, to)
+    to = to.present? ? to : :end_of_month
+    events_of(user, from, to)
+  end
+
+  def self.events_in_past(user)
+    from = date_now.beginning_of_month
+    to = date_now
+    events_of(user, from, to)
+  end
+
+  def self.events_of(user, from, to)
+    from = prepare_selected_date(from)
+    to = prepare_selected_date(to)
+    user.events.where(will_begin_at: date_in_tz(from)..date_in_tz(to)).order(will_begin_at: :asc)
   end
 
   def starts_at
@@ -33,11 +44,15 @@ class Event < ActiveRecord::Base
 
   private
 
-    def self.set_date_to(date, the_exact_date)
-      the_exact_date.present? ? date_with_time_zone(the_exact_date) : date_with_time_zone(date.end_of_month)
+    def self.prepare_selected_date(obj)
+      obj.is_a?(Symbol) ? date_now.send(obj) : obj
     end
 
-    def self.date_with_time_zone(date)
+    def self.date_in_tz(date)
       Time.zone.parse(date.strftime('%F'))
+    end
+
+    def self.date_now
+      DateTime.now
     end
 end
