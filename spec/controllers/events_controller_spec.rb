@@ -18,8 +18,9 @@ RSpec.describe EventsController, type: :controller do
     end
 
     it 'assigns all events as @events' do
-      expect(assigns(:events)).to eq(current_user.events.order(will_begin_at: :asc))
-      expect(assigns(:events).length).to eq 5
+
+      expect(assigns(:events)).to eq(events_of(current_user))
+      expect(assigns(:events).length).to eq(events_of(current_user).count)
     end
   end
 
@@ -48,7 +49,7 @@ RSpec.describe EventsController, type: :controller do
                                                         user_id: current_user.id), format: :js }
 
       it 'creates new Event object' do
-        expect(assigns(:events).length).to eq(6)
+        expect(assigns(:events).length).to eq(events_of(current_user).count)
         expect(assigns(:event).will_begin_at).to eq will_begin_at
         expect(assigns(:event).name).to eq 'Name'
       end
@@ -60,7 +61,7 @@ RSpec.describe EventsController, type: :controller do
                                                         user_id: current_user.id), format: :js }
 
       it 'creates new Event object' do
-        expect(assigns(:events).length).to eq(6)
+        expect(assigns(:events).length).to eq(events_of(current_user).count)
         expect(assigns(:event).name).to eq staff_relation.status
       end
     end
@@ -71,7 +72,7 @@ RSpec.describe EventsController, type: :controller do
       before { post :create, invalid_event_params }
 
       it %q{ doesn't create new record } do
-        expect(assigns(:events).count).to eq(5)
+        expect(assigns(:events).length).to eq(events_of(current_user).count)
       end
 
       it 'error messages' do
@@ -79,6 +80,12 @@ RSpec.describe EventsController, type: :controller do
       end
 
     end
+  end
+
+  def events_of(user)
+    user.events.where('will_begin_at BETWEEN ? AND ?', Time.zone.parse(DateTime.now.strftime('%F')),
+                                                       Time.zone.parse(DateTime.now.end_of_month.strftime('%F'))).
+                order(will_begin_at: :asc)
   end
 
   #   context 'when failed' do
