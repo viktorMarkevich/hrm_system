@@ -3,14 +3,14 @@
 .col-md-6
   .tip
     %p
-      = set_events_list_title(@events, @date)
+      = set_events_list_title(@events, DateTime.now)
   .events-list
     - if @events.present?
-      = render partial: 'events_list', locals: { events: @events, date: @date }
+      = render partial: 'events_list', locals: { events: @events }
 .col-md-6
   .tip
     %p
       Календарь событий
-  = link_to 'Создать новое событие', new_event_path(start_date: @date), remote: true, class: 'btn btn-success pull-right'
+  = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
   .calendar
     = render partial: 'calendar', locals: { events: @events }

@@ -77,8 +77,14 @@ class EventsController < ApplicationController
   end
 
   def set_date #нужно к стартовой дате добавить время.
-    @date_from = params[:start_date].try(:to_date) || DateTime.now
-    @date_to = params[:the_exact_date]
+    if params[:start_date].present?
+      date = params[:start_date].split('-')
+      @date_from = Time.new(date[0].to_i, date[1].to_i, date[2].to_i)
+      @date_to = @date_from.end_of_day
+    else
+      @date_from = Time.now
+      @date_to = @date_from.end_of_month
+    end
   end
 
   def event_params
@@ -86,7 +92,7 @@ class EventsController < ApplicationController
   end
 
   def set_events_in_date_period
-    @events = Event.events_in_future(current_user, @date_from, @date_to).order(will_begin_at: :asc)
-    @events_past = Event.events_in_past(current_user).order(will_begin_at: :asc)
+    @events = Event.events_of(current_user, @date_from, @date_to).order(will_begin_at: :asc)
+    @events_past = Event.events_of(current_user, DateTime.now.beginning_of_month, DateTime.now).order(will_begin_at: :asc)
   end
 end
