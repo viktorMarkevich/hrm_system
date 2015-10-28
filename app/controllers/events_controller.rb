@@ -78,8 +78,7 @@ class EventsController < ApplicationController
 
   def set_date
     if params[:start_date].present?
-      date = params[:start_date].split('-')
-      @date_from = Time.zone.(Time.new(date[0].to_i, date[1].to_i, date[2].to_i))
+      @date_from = Time.zone.parse(params[:start_date])
       @date_to = @date_from.end_of_day
     else
       @date_from = Time.zone.now

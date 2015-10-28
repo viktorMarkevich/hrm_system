@@ -24,7 +24,7 @@ module EventsHelper
     elsif events.present?
       "Список предстоящих событий за #{set_month(events.first.will_begin_at)}"
     else
-      "Список предстоящих событий пуст"
+      'Список предстоящих событий пуст'
     end
 
   end
