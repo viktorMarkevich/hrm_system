@@ -8,6 +8,18 @@ RSpec.describe EventsController, type: :controller do
      sign_in current_user
   end
 
+  def start_date
+    Time.zone.now + 1.hours
+  end
+
+  def end_date
+    Time.zone.now.end_of_month
+  end
+
+  def events_of(user, from, to)
+    user.events.where(will_begin_at: from..to).order(will_begin_at: :asc)
+  end
+
   context '#index' do
     before { get :index  }
 
@@ -18,13 +30,13 @@ RSpec.describe EventsController, type: :controller do
     end
 
     it 'assigns future events as @events' do
-      expect(assigns(:events)).to eq(events_in_future(current_user))
-      expect(assigns(:events).length).to eq(events_in_future(current_user).count)
+      expect(assigns(:events).length).to eq(events_of(current_user, start_date, end_date).count)
+      expect(assigns(:events)).to eq(events_of(current_user, start_date, end_date))
     end
 
     it 'assigns old events as @events' do
-      expect(assigns(:events_past)).to eq(events_in_past(current_user))
-      expect(assigns(:events_past).length).to eq(events_in_past(current_user).count)
+      expect(assigns(:events_past)).to eq(events_of(current_user, start_date.beginning_of_month, start_date))
+      expect(assigns(:events_past).length).to eq(events_of(current_user, start_date.beginning_of_month, start_date).count)
     end
   end
 
@@ -48,12 +60,12 @@ RSpec.describe EventsController, type: :controller do
     let(:event_params) { attributes_for :event }
 
     context 'when successful without "staff_relations"' do
-      let (:will_begin_at) { DateTime.now + 10.hours + 12.minutes }
+      let (:will_begin_at) { Time.zone.now + 10.hours + 12.minutes }
       before { post :create, event: event_params.update(will_begin_at: will_begin_at,
                                                         user_id: current_user.id), format: :js }
 
       it 'creates new Event object' do
-        expect(assigns(:events).length).to eq(events_in_future(current_user).count)
+        expect(assigns(:events).length).to eq(events_of(current_user, start_date, end_date).count)
         expect(assigns(:event).will_begin_at).to eq will_begin_at
         expect(assigns(:event).name).to eq 'Name'
       end
@@ -65,7 +77,7 @@ RSpec.describe EventsController, type: :controller do
                                                         user_id: current_user.id), format: :js }
 
       it 'creates new Event object' do
-        expect(assigns(:events).length).to eq(events_in_future(current_user).count)
+        expect(assigns(:events).length).to eq(events_of(current_user, start_date, end_date).count)
         expect(assigns(:event).name).to eq staff_relation.status
       end
     end
@@ -76,7 +88,7 @@ RSpec.describe EventsController, type: :controller do
       before { post :create, invalid_event_params }
 
       it %q{ doesn't create new record } do
-        expect(assigns(:events).length).to eq(events_in_future(current_user).count)
+        expect(assigns(:events).length).to eq(events_of(current_user, start_date, end_date).count)
       end
 
       it 'error messages' do
@@ -85,29 +97,7 @@ RSpec.describe EventsController, type: :controller do
 
     end
   end
-
-  def events_in_future(user)
-    events_of(user, :end_of_month)
-  end
-
-  def events_in_past(user)
-    events_of(user, :beginning_of_month)
-  end
-
-  def events_of(user, position)
-    date_arr = [date_now.send(position), date_now]
-    date_arr.rotate! if position == :end_of_month
-    user.events.where(will_begin_at: date_in_tz(date_arr[0])..date_in_tz(date_arr[1])).order(will_begin_at: :asc)
-  end
-
-  def date_in_tz(date)
-    Time.zone.parse(date.strftime('%F'))
-  end
-
-  def date_now
-    DateTime.now
-  end
-
+end
   #   context 'when failed' do
   #     let(:staff_relation) { create(:staff_relation) }
   #     let(:event_params) { { event: { name: nil, will_begin_at: '2011-12-11 12:11:12', description: nil }, staff_relation: staff_relation.id } }
@@ -178,4 +168,3 @@ RSpec.describe EventsController, type: :controller do
   #     expect(response).to redirect_to(events_path)
   #   end
   # end
-end

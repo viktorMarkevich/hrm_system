@@ -17,7 +17,7 @@ class Event < ActiveRecord::Base
   end
 
   def self.events_soon_mailer
-    @events_soon = where(will_begin_at: Time.now..(Time.now + 1.day))
+    @events_soon = where(will_begin_at: Time.zone.now..(Time.zone.now + 1.day))
     NoticeMailer.event_soon(@events_soon).deliver_now if @events_soon.present?
   end
 
@@ -28,11 +28,4 @@ class Event < ActiveRecord::Base
   def starts_at
     self.will_begin_at
   end
-
-  private
-
-    def self.date_in_tz(time)
-      Time.zone.parse(time.strftime('%F'))
-    end
-
 end

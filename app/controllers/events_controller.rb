@@ -76,13 +76,13 @@ class EventsController < ApplicationController
     @staff_relations = StaffRelation.get_without_event
   end
 
-  def set_date #нужно к стартовой дате добавить время.
+  def set_date
     if params[:start_date].present?
       date = params[:start_date].split('-')
-      @date_from = Time.new(date[0].to_i, date[1].to_i, date[2].to_i)
+      @date_from = Time.zone.(Time.new(date[0].to_i, date[1].to_i, date[2].to_i))
       @date_to = @date_from.end_of_day
     else
-      @date_from = Time.now
+      @date_from = Time.zone.now
       @date_to = @date_from.end_of_month
     end
   end
@@ -93,6 +93,6 @@ class EventsController < ApplicationController
 
   def set_events_in_date_period
     @events = Event.events_of(current_user, @date_from, @date_to).order(will_begin_at: :asc)
-    @events_past = Event.events_of(current_user, DateTime.now.beginning_of_month, DateTime.now).order(will_begin_at: :asc)
+    @events_past = Event.events_of(current_user, Time.now.beginning_of_month, Time.now).order(will_begin_at: :asc)
   end
 end
