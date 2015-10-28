@@ -1,16 +1,26 @@
 = stylesheet_link_tag 'events'
 
 .col-md-6
-  .tip
-    %p
-      = set_events_list_title(@events, @date)
-  .events-list
-    - if @events.present?
-      = render partial: 'events_list', locals: { events: @events, date: @date }
+  .row
+    .col-md-12
+      .tip
+        %p
+          = set_events_list_title(@events, DateTime.now)
+      .events-list
+        - if @events.present?
+          = render partial: 'events_list', locals: { events: @events, time_is: :future }
+  .row
+    .col-md-12
+      .tip
+        %p
+          = 'Прошедшие события'
+      .events-list
+        - if @events_past.present?
+          = render partial: 'events_list', locals: { events: @events_past, time_is: :past }
 .col-md-6
   .tip
     %p
       Календарь событий
-  = link_to 'Создать новое событие', new_event_path(start_date: @date), remote: true, class: 'btn btn-success pull-right'
+  = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
   .calendar
     = render partial: 'calendar', locals: { events: @events }

@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:edit, :update, :destroy]
   before_action :set_sr, only: [:new, :edit]
   before_action :set_date
-  before_action :set_events_current_date_period, only: [:index, :update]
+  before_action :set_events_in_date_period, only: [:index, :update]
 
   def index
     respond_to do |format|
@@ -14,7 +14,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    set_events_current_date_period
+    set_events_in_date_period
     respond_to do |format|
       format.html { render nothing: true }
       format.js
@@ -29,10 +29,10 @@ class EventsController < ApplicationController
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.save
-        set_events_current_date_period
+        set_events_in_date_period
         format.js
       else
-        set_events_current_date_period
+        set_events_in_date_period
         format.json { render json: @event.errors.full_messages,
                              status: :unprocessable_entity }
       end
@@ -77,15 +77,21 @@ class EventsController < ApplicationController
   end
 
   def set_date
-    @date = params[:start_date].try(:to_date) || DateTime.now
-    @the_exact_date = params[:the_exact_date]
+    if params[:start_date].present?
+      @date_from = Time.zone.parse(params[:start_date])
+      @date_to = @date_from.end_of_day
+    else
+      @date_from = Time.zone.now
+      @date_to = @date_from.end_of_month
+    end
   end
 
   def event_params
     params.require(:event).permit(:name, :will_begin_at, :description, :user_id)
   end
 
-  def set_events_current_date_period
-    @events = Event.events_current_date_period(@date, @the_exact_date, current_user).order(will_begin_at: :asc)
+  def set_events_in_date_period
+    @events = Event.events_of(current_user, @date_from, @date_to).order(will_begin_at: :asc)
+    @events_past = Event.events_of(current_user, Time.now.beginning_of_month, Time.now).order(will_begin_at: :asc)
   end
 end

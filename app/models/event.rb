@@ -17,27 +17,15 @@ class Event < ActiveRecord::Base
   end
 
   def self.events_soon_mailer
-    @events_soon = where(will_begin_at: Time.now..(Time.now + 1.day))
+    @events_soon = where(will_begin_at: Time.zone.now..(Time.zone.now + 1.day))
     NoticeMailer.event_soon(@events_soon).deliver_now if @events_soon.present?
   end
 
-  def self.events_current_date_period(date, the_exact_date = nil, user)
-    date_from = date_with_time_zone(date)
-    date_to = set_date_to(date, the_exact_date)
-    where(user_id: user.id, will_begin_at: date_from..date_to).includes(:staff_relation)
+  def self.events_of(user, from, to)
+    user.events.where(will_begin_at: from..to).order(will_begin_at: :asc)
   end
 
   def starts_at
     self.will_begin_at
   end
-
-  private
-
-    def self.set_date_to(date, the_exact_date)
-      the_exact_date.present? ? date_with_time_zone(the_exact_date) : date_with_time_zone(date.end_of_month)
-    end
-
-    def self.date_with_time_zone(date)
-      Time.zone.parse(date.strftime('%F'))
-    end
 end
