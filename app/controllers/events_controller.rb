@@ -3,9 +3,9 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:edit, :update, :destroy]
   before_action :set_sr, only: [:new, :edit]
   before_action :set_date
+  before_action :set_events_in_date_period, only: [:index, :update]
 
   def index
-    @events = Event.events_current_month(@date, @the_exact_date).order(will_begin_at: :asc)
     respond_to do |format|
       format.html
       format.js
@@ -14,9 +14,18 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    set_events_in_date_period
+    respond_to do |format|
+      format.html { render nothing: true }
+      format.js
+    end
   end
 
   def edit
+    respond_to do |format|
+      format.html { render nothing: true }
+      format.js
+    end
   end
 
   def create
@@ -24,9 +33,10 @@ class EventsController < ApplicationController
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.save
-        @events = Event.events_current_month(@date, @the_exact_date).order(will_begin_at: :asc)
+        set_events_in_date_period
         format.js
       else
+        set_events_in_date_period
         format.json { render json: @event.errors.full_messages,
                              status: :unprocessable_entity }
       end
@@ -37,7 +47,6 @@ class EventsController < ApplicationController
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.update(event_params)
-        @events = Event.events_current_month(@date, @the_exact_date).order(will_begin_at: :asc)
         format.js
       else
         format.json { render json: @event.errors.full_messages,
@@ -58,7 +67,9 @@ class EventsController < ApplicationController
   private
 
   def set_event_sr
-    @event.staff_relation = StaffRelation.find(params[:event][:staff_relation])
+    sr = StaffRelation.find(params[:event][:staff_relation])
+    @event.staff_relation = sr
+    @event.name = sr.status
   end
 
   def set_event
@@ -66,15 +77,25 @@ class EventsController < ApplicationController
   end
 
   def set_sr
-    @staff_relations = StaffRelation.where(status: ['Собеседование', 'Утвержден'])
+    @staff_relations = StaffRelation.get_without_event
   end
 
   def set_date
-    @date = params[:start_date].try(:to_date) || DateTime.now
-    @the_exact_date = params[:the_exact_date]
+    if params[:start_date].present?
+      @date_from = Time.zone.parse(params[:start_date])
+      @date_to = @date_from.end_of_day
+    else
+      @date_from = Time.zone.now
+      @date_to = @date_from.end_of_month
+    end
   end
 
   def event_params
-    params.require(:event).permit(:name, :will_begin_at, :description)
+    params.require(:event).permit(:name, :will_begin_at, :description, :user_id)
+  end
+
+  def set_events_in_date_period
+    @events = Event.events_of(current_user, @date_from, @date_to).order(will_begin_at: :asc)
+    @events_past = Event.events_of(current_user, Time.now.beginning_of_month, Time.now).order(will_begin_at: :asc)
   end
 end

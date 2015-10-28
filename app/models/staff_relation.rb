@@ -23,4 +23,8 @@ class StaffRelation < ActiveRecord::Base
     end
     status
   end
+
+  def self.get_without_event
+    StaffRelation.where('status IN (?) and event_id IS NULL', ['Собеседование', 'Утвержден'])
+  end
 end
