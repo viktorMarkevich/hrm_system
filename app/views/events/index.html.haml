@@ -6,7 +6,7 @@
       .tip
         %p
           = set_events_list_title(@events, DateTime.now)
-      .events-list
+      .events-list.future
         - if @events.present?
           = render partial: 'events_list', locals: { events: @events, time_is: :future }
   .row
@@ -14,7 +14,7 @@
       .tip
         %p
           = 'Прошедшие события'
-      .events-list
+      .events-list.past
         - if @events_past.present?
           = render partial: 'events_list', locals: { events: @events_past, time_is: :past }
 .col-md-6
