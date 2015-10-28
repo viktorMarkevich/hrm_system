@@ -20,6 +20,10 @@ RSpec.describe EventsController, type: :controller do
     user.events.where(will_begin_at: from..to).order(will_begin_at: :asc)
   end
 
+  def err_messages
+    ["Name can't be blank", "Description can't be blank", "Will begin at Дата должна быть предстоящей!"]
+  end
+
   context '#index' do
     before { get :index  }
 
@@ -92,79 +96,73 @@ RSpec.describe EventsController, type: :controller do
       end
 
       it 'error messages' do
-        # p response
+        expect(assigns(:event).errors.full_messages).to eq(err_messages)
+      end
+    end
+  end
+
+  context '#edit' do
+    let(:event) { current_user.events.first }
+    before { get :edit, id: current_user.events.first }
+
+    it 'has HTTP 200 status' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders "edit" template' do
+      expect(response).not_to render_template('edit')
+    end
+
+    it 'assigns event for edit' do
+      expect(assigns(:event)).to eq(event)
+    end
+  end
+
+  describe '#update' do
+    let(:event) { current_user.events.first }
+    let(:staff_relation) { create(:staff_relation) }
+    let(:event_attrs) { { name: 'Name', description: 'Редактирование описания' } }
+
+    context 'when successful' do
+      before do
+        put :update, id: event, event: event_attrs, staff_relation: staff_relation.id, format: :js
+        event.reload
       end
 
+      it 'has updated name' do
+        expect(event.name).to eql event_attrs[:name]
+      end
+
+      it 'redirects to events index page' do
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'when failed' do
+      before do
+        put :update, id: event, event: (attributes_for :invalid_event), staff_relation: staff_relation.id, format: :json
+      end
+
+      it 'renders "edit" template' do
+        expect(assigns(:event).errors.full_messages).to eq(err_messages)
+      end
+    end
+  end
+
+  context '#destroy' do
+    let(:event) { current_user.events.first }
+    let(:id) { event.id }
+    before do
+      delete :destroy, id: event
+    end
+
+    it 'destroys event' do
+      expect(Event.pluck(:id)).not_to include(id)
+    end
+
+    it 'redirects to events index page' do
+      expect(response).to redirect_to(events_path)
     end
   end
 end
-  #   context 'when failed' do
-  #     let(:staff_relation) { create(:staff_relation) }
-  #     let(:event_params) { { event: { name: nil, will_begin_at: '2011-12-11 12:11:12', description: nil }, staff_relation: staff_relation.id } }
-  #
-  #     before { post :create, event_params }
-  #
-  #     # it %q{ doesn't create new record } do
-  #     #   expect(Event.count).to eq(0)
-  #     # end
-  #
-  #     # it 'renders "new" template' do
-  #     #   expect(response).to render_template('new')
-  #     # end
-  #   end
-  # end
-  #
 
-  #
-  # context '#edit' do
-  #   before { get :edit, id: event }
-  #
-  #   # it 'has HTTP 200 status' do
-  #   #   expect(response).to have_http_status(200)
-  #   # end
-  #   #
-  #   # it 'renders "edit" template' do
-  #   #   expect(response).to render_template('edit')
-  #   # end
-  # end
-  #
-  # context '#update' do
-  #   let(:staff_relation) { create(:staff_relation) }
-  #   let(:event_attrs) { { name: 'Name', description: 'Редактирование описания' } }
-  #
-  #   context 'when successful' do
-  #     before do
-  #       put :update, id: event, event: event_attrs, staff_relation: staff_relation.id
-  #       event.reload
-  #     end
-  #
-  #     # it 'has updated name' do
-  #     #   expect(event.name).to eql event_attrs[:name]
-  #     # end
-  #     #
-  #     # it 'redirects to events index page' do
-  #     #   expect(response).to redirect_to(event)
-  #     # end
-  #   end
-  #
-  #   context 'when failed' do
-  #     # it 'renders "edit" template' do
-  #     #   put :update, id: event, event: (attributes_for :invalid_event), staff_relation: staff_relation.id
-  #     #   expect(response).to render_template('edit')
-  #     # end
-  #   end
-  # end
-  #
-  # context '#destroy' do
-  #   let(:event) { user.events.first }
-  #
-  #   it 'destroys event' do
-  #     delete :destroy, id: event
-  #     expect(Event.count).to eq 4
-  #   end
-  #
-  #   it 'redirects to events index page' do
-  #     delete :destroy, id: event
-  #     expect(response).to redirect_to(events_path)
-  #   end
-  # end

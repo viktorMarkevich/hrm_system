@@ -22,6 +22,10 @@ class EventsController < ApplicationController
   end
 
   def edit
+    respond_to do |format|
+      format.html { render nothing: true }
+      format.js
+    end
   end
 
   def create
