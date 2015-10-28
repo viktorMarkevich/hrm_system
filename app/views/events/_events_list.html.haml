@@ -1,5 +1,5 @@
-.items-list
-  %table.table.table-bordered.table-hover
+.items-list{ class: time_is.to_s }
+  %table.table.table-bordered{ class: time_is == :future ? 'table-hover' : nil }
     %thead
       %tr
         %th Событие
