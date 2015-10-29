@@ -24,11 +24,14 @@ RSpec.describe VacanciesController, type: :controller do
     end
   end
 
-  context '#create' do
+  describe '#create' do
     context 'when successful' do
-      before { post :create, vacancy_attrs }
 
       let(:vacancy_attrs) { { vacancy: attributes_for(:vacancy), region: region.name } }
+
+      before do
+        post :create, vacancy_attrs
+      end
 
       it 'creates new Vacancy object' do
         expect(Vacancy.count).to eq(1)
@@ -45,26 +48,17 @@ RSpec.describe VacanciesController, type: :controller do
     end
 
     context 'when failed' do
-      let(:wrong_vacancy_attrs) { { vacancy: attributes_for(:vacancy, status: nil)} }
+      let(:invalid_vacancy_attrs) { { vacancy: attributes_for(:invalid_vacancy)} }
 
-      it 'is invalid without region_id' do
-        expect(build(:vacancy, region_id: nil)).to_not be_valid
-      end
-
-      it 'is invalid without name' do
-        expect(build(:vacancy, name: nil)).to_not be_valid
-      end
-
-      it 'is invalid without status' do
-        expect(build(:vacancy, status: nil)).to_not be_valid
+      before do
+        post :create, invalid_vacancy_attrs
       end
 
       it %q{ doesn't create record } do
-        expect { post :create, wrong_vacancy_attrs }.to change(Vacancy, :count).by(0)
+        expect { Vacancy.count }.to change(Vacancy, :count).by(0)
       end
 
       it 'renders "new" template' do
-        post :create, wrong_vacancy_attrs
         expect(response).to render_template('new')
       end
     end
