@@ -49,7 +49,7 @@ class VacanciesController < ApplicationController
         format.json
         format.js
       else
-        format.html { render 'edit' }
+        format.html { render action: 'edit' }
         format.json { render json: @vacancy.errors.full_messages,
                              status: :unprocessable_entity }
       end

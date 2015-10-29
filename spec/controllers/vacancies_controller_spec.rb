@@ -8,6 +8,10 @@ RSpec.describe VacanciesController, type: :controller do
 
   before { sign_in user }
 
+  def err_messages
+    ["Name can't be blank", "Status can't be blank"]
+  end
+
   context '#index' do
     before { get :index }
 
@@ -106,7 +110,7 @@ RSpec.describe VacanciesController, type: :controller do
     end
   end
 
-  context '#update' do
+  describe '#update' do
     let(:vacancy_attrs) { { name: 'Менеджер', salary: '400', status: 'В работе' } }
 
     before do
@@ -127,19 +131,21 @@ RSpec.describe VacanciesController, type: :controller do
     end
 
     context 'when failed' do
+      before do
+        put :update, id: vacancy, vacancy: { name: nil, status: nil }
+      end
+
       it 'renders "edit" template without name' do
-        put :update, id: vacancy, vacancy: { name: nil }
         expect(response).to render_template('edit')
       end
 
-      it 'renders "edit" without status' do
-        put :update, id: vacancy, vacancy: { status: nil }
-        expect(response).to render_template('edit')
+      it 'error messages' do
+        expect(assigns(:vacancy).errors.full_messages).to eq(err_messages)
       end
     end
   end
 
-  context '#mark_candidate_as_found' do
+  describe '#mark_candidate_as_found' do
     let(:candidates_list) { create_list(:candidate, 2) }
 
     before do
