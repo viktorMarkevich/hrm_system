@@ -1,10 +1,10 @@
 class StaffRelationsController < ApplicationController
 
   def new
-    @vacancy = Vacancy.find(params[:vacancy_id])
+    @vacancy = Vacancy.find(params[:vacancy_id]) || Vacancy.only_deleted.where( id: params[:vacancy_id])
     @staff_relation = StaffRelation.new
 
-    @all_candidates = Candidate.includes(:staff_relations)
+    @all_candidates = Candidate.includes([:staff_relations, :vacancies])
     @current_candidates = @all_candidates.where(staff_relations: { vacancy_id: @vacancy.id })
     @candidates = @all_candidates - @current_candidates
   end

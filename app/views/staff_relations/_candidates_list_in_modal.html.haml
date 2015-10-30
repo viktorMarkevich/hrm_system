@@ -29,7 +29,12 @@
                       = sr.status
                     &nbsp;
                     для вакансии
-                    %span.label.label-info
-                      = sr.vacancy.name
+                    - if sr.vacancy.try(:name).present?
+                      %span.label.label-info
+                        = sr.vacancy.try(:name)
+                    - else
+                      %span.label.label-danger
+                        = @vacancy.name
+                      (Удалена)
   %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
   = f.submit 'Выполнить', class: 'btn btn-primary'

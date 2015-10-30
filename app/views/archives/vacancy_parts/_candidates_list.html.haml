@@ -1,0 +1,22 @@
+- if vacancy.candidates.present?
+  %table.table.table-hover.table-responsive
+    %thead
+      %tr
+        %th Имя
+        %th Зарплата
+        %th Перемещен
+        %th Статус
+    %tbody
+      - vacancy.candidates.each do |candidate|
+        %tr
+          %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
+          %td= desired_salary_for(candidate)
+          %td
+            %span.label.label-info
+              = candidate.updated_at.strftime('%F в %I:%M')
+          %td
+            %span.label{ class: "label-#{return_status_label(StaffRelation.where(vacancy_id: vacancy, candidate_id: candidate).first)}" }
+              = candidate.status_for_vacancy(vacancy)
+- else
+  %p
+    Ни один кандидат не был выбран для этой категории

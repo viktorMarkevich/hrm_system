@@ -20,6 +20,7 @@
             %th Зарплата
             %th Ответственный
             %th Статус
+            %th Действия
         %tbody
           - @vacancies.each do |vacancy|
             %tr
@@ -28,6 +29,11 @@
               %td= get_salary(vacancy)
               %td= full_name_for(vacancy.owner)
               %td= vacancy.status
+              %td.text-center
+                - if can? :update, vacancy
+                  = link_to '', edit_vacancy_path(vacancy), class: 'glyphicon glyphicon-edit'
+                - if can? :destroy, vacancy
+                  = link_to '', vacancy, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
 .row
   .col-lg-3
     = paginate @vacancies
