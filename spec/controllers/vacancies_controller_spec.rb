@@ -143,4 +143,19 @@ RSpec.describe VacanciesController, type: :controller do
       end
     end
   end
+
+  describe '#destroy' do
+
+    before do
+      delete :destroy, id: vacancy
+    end
+
+    it 'destroys vacancy' do
+      expect(Vacancy.pluck(:id)).not_to include(vacancy.id)
+    end
+
+    it 'redirects to vacancy index page' do
+      expect(response).to redirect_to(vacancies_path)
+    end
+  end
 end

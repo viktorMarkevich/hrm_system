@@ -4,7 +4,7 @@ class VacanciesController < ApplicationController
   include RegionSupporter
 
   before_filter :authenticate_user!
-  before_filter :find_vacancy, only: [:show, :edit, :update]
+  before_filter :set_vacancy, only: [:show, :edit, :update, :destroy]
 
   def index
     @vacancies = Vacancy.includes(:region, :owner).order('id').page(params[:page]).per(10)
@@ -56,6 +56,14 @@ class VacanciesController < ApplicationController
     end
   end
 
+  def destroy
+    @vacancy.destroy
+    respond_to do |format|
+      format.html { redirect_to vacancies_url, notice: 'Вакансии успешно удалено.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
     def get_staff_relation_status
@@ -77,7 +85,7 @@ class VacanciesController < ApplicationController
                                       :requirements, :region_id, :sr_status)
     end
 
-    def find_vacancy
+    def set_vacancy
       @vacancy = Vacancy.find(params[:id])
     end
 end

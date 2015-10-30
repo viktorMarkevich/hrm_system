@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :organisers, only: :index
   resources :stickers, except: [:show, :index]
   resources :users, only: [:update, :edit, :show, :index]
-  resources :vacancies, except: [:destroy]
+  resources :vacancies
   resources :companies
   resources :candidates, except: [:destroy] do
     member do
