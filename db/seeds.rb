@@ -17,7 +17,7 @@ for i in 1..10 do
     name: 'Программист руби' + i.to_s,
     salary: '500',
     salary_format: 'USD',
-    status: 'В работе',
+    status: 'Не задействована',
     region_id: 1,
     user_id: 1
   )

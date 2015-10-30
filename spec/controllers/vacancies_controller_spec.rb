@@ -9,7 +9,7 @@ RSpec.describe VacanciesController, type: :controller do
   before { sign_in user }
 
   def err_messages
-    ["Name can't be blank", "Status can't be blank"]
+    ["Name can't be blank"]
   end
 
   context '#index' do
@@ -111,7 +111,7 @@ RSpec.describe VacanciesController, type: :controller do
   end
 
   describe '#update' do
-    let(:vacancy_attrs) { { name: 'Менеджер', salary: '400', status: 'В работе' } }
+    let(:vacancy_attrs) { { name: 'Менеджер', salary: '400' } }
 
     before do
       put :update, id: vacancy, vacancy: vacancy_attrs, region: region.name
@@ -122,7 +122,6 @@ RSpec.describe VacanciesController, type: :controller do
       it 'has updated name, salary and status' do
         expect(vacancy.name).to eql vacancy_attrs[:name]
         expect(vacancy.salary).to eql vacancy_attrs[:salary]
-        expect(vacancy.status).to eql vacancy_attrs[:status]
       end
 
       it 'redirect to vacancies index page' do
@@ -132,7 +131,7 @@ RSpec.describe VacanciesController, type: :controller do
 
     context 'when failed' do
       before do
-        put :update, id: vacancy, vacancy: { name: nil, status: nil }
+        put :update, id: vacancy, vacancy: { name: nil }
       end
 
       it 'renders "edit" template without name' do
