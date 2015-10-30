@@ -1,10 +1,11 @@
 # coding: utf-8
 class Vacancy < ActiveRecord::Base
+  acts_as_paranoid
   include RegionSupporter
 
   belongs_to :region
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
-  has_many :staff_relations, dependent: :destroy
+  has_many :staff_relations
   has_many :candidates, through: :staff_relations, source: :candidate
 
   attr_accessor :sr_status
@@ -19,5 +20,9 @@ class Vacancy < ActiveRecord::Base
              .joins(:staff_relations)
              .where(%{ "staff_relations"."vacancy_id" = #{self.id}
                     AND "staff_relations"."status" = '#{status}' })
+  end
+
+  def self.update_status(id)
+    find(id).update_attributes(status: STATUSES[1])
   end
 end

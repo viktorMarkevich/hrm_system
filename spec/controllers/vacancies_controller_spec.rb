@@ -8,6 +8,10 @@ RSpec.describe VacanciesController, type: :controller do
 
   before { sign_in user }
 
+  def err_messages
+    ["Name can't be blank"]
+  end
+
   context '#index' do
     before { get :index }
 
@@ -24,11 +28,14 @@ RSpec.describe VacanciesController, type: :controller do
     end
   end
 
-  context '#create' do
+  describe '#create' do
     context 'when successful' do
-      before { post :create, vacancy_attrs }
 
       let(:vacancy_attrs) { { vacancy: attributes_for(:vacancy), region: region.name } }
+
+      before do
+        post :create, vacancy_attrs
+      end
 
       it 'creates new Vacancy object' do
         expect(Vacancy.count).to eq(1)
@@ -45,26 +52,17 @@ RSpec.describe VacanciesController, type: :controller do
     end
 
     context 'when failed' do
-      let(:wrong_vacancy_attrs) { { vacancy: attributes_for(:vacancy, status: nil)} }
+      let(:invalid_vacancy_attrs) { { vacancy: attributes_for(:invalid_vacancy)} }
 
-      it 'is invalid without region_id' do
-        expect(build(:vacancy, region_id: nil)).to_not be_valid
-      end
-
-      it 'is invalid without name' do
-        expect(build(:vacancy, name: nil)).to_not be_valid
-      end
-
-      it 'is invalid without status' do
-        expect(build(:vacancy, status: nil)).to_not be_valid
+      before do
+        post :create, invalid_vacancy_attrs
       end
 
       it %q{ doesn't create record } do
-        expect { post :create, wrong_vacancy_attrs }.to change(Vacancy, :count).by(0)
+        expect { Vacancy.count }.to change(Vacancy, :count).by(0)
       end
 
       it 'renders "new" template' do
-        post :create, wrong_vacancy_attrs
         expect(response).to render_template('new')
       end
     end
@@ -112,8 +110,8 @@ RSpec.describe VacanciesController, type: :controller do
     end
   end
 
-  context '#update' do
-    let(:vacancy_attrs) { { name: 'Менеджер', salary: '400', status: 'В работе' } }
+  describe '#update' do
+    let(:vacancy_attrs) { { name: 'Менеджер', salary: '400' } }
 
     before do
       put :update, id: vacancy, vacancy: vacancy_attrs, region: region.name
@@ -124,7 +122,6 @@ RSpec.describe VacanciesController, type: :controller do
       it 'has updated name, salary and status' do
         expect(vacancy.name).to eql vacancy_attrs[:name]
         expect(vacancy.salary).to eql vacancy_attrs[:salary]
-        expect(vacancy.status).to eql vacancy_attrs[:status]
       end
 
       it 'redirect to vacancies index page' do
@@ -133,28 +130,32 @@ RSpec.describe VacanciesController, type: :controller do
     end
 
     context 'when failed' do
-      it 'renders "edit" template without name' do
+      before do
         put :update, id: vacancy, vacancy: { name: nil }
+      end
+
+      it 'renders "edit" template without name' do
         expect(response).to render_template('edit')
       end
 
-      it 'renders "edit" without status' do
-        put :update, id: vacancy, vacancy: { status: nil }
-        expect(response).to render_template('edit')
+      it 'error messages' do
+        expect(assigns(:vacancy).errors.full_messages).to eq(err_messages)
       end
     end
   end
 
-  context '#mark_candidate_as_found' do
-    let(:candidates_list) { create_list(:candidate, 2) }
+  describe '#destroy' do
 
     before do
-      put :update, id: vacancy, vacancy: { status: 'В работе' }
+      delete :destroy, id: vacancy
     end
 
-    it 'updates candidates status on "В работе"' do
-      expect(assigns(:vacancy).status).to eq 'В работе'
+    it 'destroys vacancy' do
+      expect(Vacancy.pluck(:id)).not_to include(vacancy.id)
+    end
+
+    it 'redirects to vacancy index page' do
+      expect(response).to redirect_to(vacancies_path)
     end
   end
-
 end

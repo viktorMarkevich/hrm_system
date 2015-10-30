@@ -11,4 +11,17 @@ FactoryGirl.define do
     region
     association :owner, factory: :user
   end
+
+  factory :invalid_vacancy, parent: :vacancy do
+    name nil
+    salary nil
+    salary_format nil
+    status nil
+    languages nil
+    requirements nil
+  end
+
+  factory :deleted_vacancy, parent: :vacancy do
+    deleted_at Time.now
+  end
 end

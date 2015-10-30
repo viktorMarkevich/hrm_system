@@ -38,7 +38,6 @@ When(/^I fill in vacancy form$/) do
     fill_in('vacancy_salary', with: '450')
     choose('vacancy_salary_format_usd')
     select('Запорожье', from: 'region')
-    select('Не задействована', from: 'Статус')
     fill_in('vacancy_languages', with: 'Английский, Русский')
     fill_in('vacancy_requirements', with: 'Ответственный')
   end
@@ -62,7 +61,6 @@ Given(/^I have valid vacancy$/) do
       name: 'Программист руби',
       salary: '500',
       salary_format: 'USD',
-      status: 'Открыта',
       region_id: 1,
       user_id: 1
   )

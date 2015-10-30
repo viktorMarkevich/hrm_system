@@ -4,7 +4,7 @@ class VacanciesController < ApplicationController
   include RegionSupporter
 
   before_filter :authenticate_user!
-  before_filter :find_vacancy, only: [:show, :edit, :update]
+  before_filter :set_vacancy, only: [:show, :edit, :update, :destroy]
 
   def index
     @vacancies = Vacancy.includes(:region, :owner).order('id').page(params[:page]).per(10)
@@ -49,10 +49,19 @@ class VacanciesController < ApplicationController
         format.json
         format.js
       else
-        format.html { render 'edit' }
+        format.html { render action: 'edit' }
         format.json { render json: @vacancy.errors.full_messages,
                              status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @vacancy.update_attributes(status: Vacancy::STATUSES[2])
+    @vacancy.destroy
+    respond_to do |format|
+      format.html { redirect_to vacancies_url, notice: 'Вакансии успешно удалено.' }
+      format.json { head :no_content }
     end
   end
 
@@ -74,10 +83,10 @@ class VacanciesController < ApplicationController
 
     def vacancy_params
       params.require(:vacancy).permit(:name, :salary, :salary_format, :languages,
-                                      :status, :requirements, :region_id, :sr_status)
+                                      :requirements, :region_id, :sr_status)
     end
 
-    def find_vacancy
+    def set_vacancy
       @vacancy = Vacancy.find(params[:id])
     end
 end
