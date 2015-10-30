@@ -9,6 +9,6 @@ FactoryGirl.define do
   end
 
   factory :deleted_sticker, parent: :sticker do
-    deleted_at DateTime.now
+    deleted_at Time.now
   end
 end
