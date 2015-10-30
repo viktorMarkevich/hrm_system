@@ -144,17 +144,4 @@ RSpec.describe VacanciesController, type: :controller do
       end
     end
   end
-
-  describe '#mark_candidate_as_found' do
-    let(:candidates_list) { create_list(:candidate, 2) }
-
-    before do
-      put :update, id: vacancy, vacancy: { status: 'В работе' }
-    end
-
-    it 'updates candidates status on "В работе"' do
-      expect(assigns(:vacancy).status).to eq 'В работе'
-    end
-  end
-
 end
