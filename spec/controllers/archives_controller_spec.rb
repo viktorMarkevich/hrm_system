@@ -27,7 +27,7 @@ RSpec.describe ArchivesController, type: :controller do
         expect(Vacancy.only_deleted).to eq([deleted_vacancy])
       end
 
-      it 'should restore deleted sticker' do
+      it 'should restore deleted vacancy' do
         delete :destroy, object_name: 'vacancies', id: deleted_vacancy
         expect(Vacancy.only_deleted.count).to eq 0
         expect(Vacancy.only_deleted).to eq([])
