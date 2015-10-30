@@ -1,9 +1,16 @@
 = render partial: 'share/search'
 .row
   .col-lg-10.col-lg-offset-1
-    .tip
-      %p
-        Вакансии
+    .row
+      .col-md-6
+        .tip
+          %p
+            Вакансии
+      .col-md-6
+        .pull-right
+          = link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), class: 'btn btn-warning btn-block'
+    .row
+      .col-md-12
     .items-list
       %table.table.table-hover.table-bordered
         %thead

@@ -1,5 +1,6 @@
 # coding: utf-8
 class Vacancy < ActiveRecord::Base
+  acts_as_paranoid
   include RegionSupporter
 
   belongs_to :region
