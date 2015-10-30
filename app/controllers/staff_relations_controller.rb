@@ -11,10 +11,11 @@ class StaffRelationsController < ApplicationController
 
   def create
     begin
+      Vacancy.update_status(st_params[:vacancy_id])
       candidates_ids.each do |id|
         StaffRelation.create(st_params.merge!(status: 'Найденные', candidate_id: id))
       end
-      redirect_to vacancy_path(id: params[:staff_relation][:vacancy_id])
+      redirect_to vacancy_path(id: st_params[:vacancy_id])
     rescue Exception => error
       puts "I've see this error #{error}"
     end

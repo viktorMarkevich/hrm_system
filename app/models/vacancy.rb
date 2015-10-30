@@ -20,4 +20,8 @@ class Vacancy < ActiveRecord::Base
              .where(%{ "staff_relations"."vacancy_id" = #{self.id}
                     AND "staff_relations"."status" = '#{status}' })
   end
+
+  def self.update_status(id)
+    find(id).update_attributes(status: STATUSES[1])
+  end
 end
