@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :event do
     name 'Name'
-    will_begin_at { rand((Time.zone.now + 1.hours)..(Time.zone.now.end_of_month)) }
+    will_begin_at { rand(Time.zone.now..Time.zone.now + 7.days) }
     description 'описание события'
     user
   end

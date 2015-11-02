@@ -24,7 +24,7 @@ RSpec.describe OrganisersController, type: :controller do
 
       it 'to get the events' do
         expect(assigns(:events).count).to eq(5)
-        expect(assigns(:events)).to eq(user.events.where(will_begin_at: DateTime.now..DateTime.now + 7.days).
+        expect(assigns(:events)).to eq(user.events.where(will_begin_at: Time.zone.now..(Time.zone.now + 7.days)).
                                                    order(will_begin_at: :asc))
         expect(assigns(:events)).to_not include(old_event)
       end
