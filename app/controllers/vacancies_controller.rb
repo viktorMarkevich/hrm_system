@@ -57,7 +57,6 @@ class VacanciesController < ApplicationController
   end
 
   def destroy
-    @vacancy.update_attributes(status: Vacancy::STATUSES[2])
     @vacancy.destroy
     respond_to do |format|
       format.html { redirect_to vacancies_url, notice: 'Вакансии успешно удалено.' }

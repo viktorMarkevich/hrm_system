@@ -9,7 +9,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   def start_date
-    Time.zone.now + 1.hours
+    Time.zone.now
   end
 
   def end_date
