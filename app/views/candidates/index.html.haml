@@ -9,7 +9,10 @@
         .col-xs-offset-3.col-xs-3
           %code Импортировать с
           %button.btn.btn-default Почты
-          %button.btn.btn-default Файла
+          %button.btn.btn-default.resume_upload Файла
+          = form_for :upload_resume, html: {multipart: true, hidden: true}, method: "POST", url: upload_resume_candidates_path do |f|
+            = f.file_field :file
+            = f.submit 'save'
 
 = render partial: 'share/search'
 

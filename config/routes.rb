@@ -16,6 +16,9 @@ Rails.application.routes.draw do
     member do
       get :set_vacancies
     end
+    collection do
+      post :upload_resume
+    end
   end
 
   resources :events, except: [:show]
