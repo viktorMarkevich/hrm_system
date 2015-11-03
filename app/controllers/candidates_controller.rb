@@ -63,7 +63,7 @@ class CandidatesController < ApplicationController
     candidate.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{4}/).first || content.scan(/\d{1,2}\/\d{1,2}\/\d{4}/).first || content.scan(/\d{1,2}\.\d{1,2}\.\d{4}/).first
     candidate.facebook = content.scan(/[^\s]*facebook[^\s]*/).first
     candidate.vkontakte = content.scan(/[^\s]*vk.com[^\s]*/).first
-    candidate.google_plus = content.scan(/[^\s]*bla[^\s]*/).first
+    candidate.google_plus = content.scan(/[^\s]*plus.google.com[^\s]*/).first
     candidate.description = content
     if candidate.save
       flash[:notice] = 'ok'
