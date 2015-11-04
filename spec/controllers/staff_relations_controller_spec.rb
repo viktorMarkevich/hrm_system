@@ -6,15 +6,20 @@ RSpec.describe StaffRelationsController, type: :controller do
     let(:vacancy) { create :vacancy }
 
     let(:staff_relation_params) { { staff_relation: { vacancy_id: vacancy.id,
-                                                      candidate_id: { candidates_list.first.id.to_s => '1',
-                                                                      candidates_list.last.id.to_s => '1' } } } }
+                                                      candidate_id: [ candidates_list.first.id,
+                                                                      candidates_list.last.id ] } } }
+    let!(:user) { create(:user) }
+
     before do
-      post :create, staff_relation_params
-      vacancy.reload
+      sign_in user
     end
 
+
     it 'updates candidates status on "В работе"' do
-      expect(vacancy.status).to eq 'В работе'
+      post :create, staff_relation_params, format: :js
+      vacancy.reload
+
+      expect(assigns(:vacancy).status).to eq 'В работе'
     end
   end
 end

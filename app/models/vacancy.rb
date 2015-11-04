@@ -25,10 +25,6 @@ class Vacancy < ActiveRecord::Base
                     AND "staff_relations"."status" = '#{status}' })
   end
 
-  def self.update_status(id)
-    find(id).update_attributes(status: STATUSES[1])
-  end
-
   def set_default_status
     self.update(status: 'Не задействована')
   end

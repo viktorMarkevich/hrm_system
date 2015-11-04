@@ -17,8 +17,8 @@
     %dt Требования:
     %dd= display_field_value_for(@vacancy.requirements)
     %dt Статус вакансии:
-    %dd
-      %spant.label{ class: get_label_class(@vacancy) }= @vacancy.status
+    %dd.vacancy_status
+      = render partial: 'vacancy_status', locals: { vacancy: @vacancy }
     %dt Ответственный:
     %dd= get_author_vacancy(@vacancy)
   %hr

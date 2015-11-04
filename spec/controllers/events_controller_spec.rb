@@ -13,7 +13,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   def end_date
-    Time.zone.now.end_of_month
+    start_date.end_of_month
   end
 
   def events_of(user, from, to)
