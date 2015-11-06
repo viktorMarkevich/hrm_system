@@ -11,11 +11,16 @@ class StaffRelationsController < ApplicationController
 
   def create
     begin
-      Vacancy.update_status(st_params[:vacancy_id])
-      candidates_ids.each do |id|
-        StaffRelation.create(st_params.merge!(status: 'Найденные', candidate_id: id))
+      st_params[:candidate_id].each do |id|
+        StaffRelation.create(st_params.merge!(candidate_id: id))
       end
-      redirect_to vacancy_path(id: st_params[:vacancy_id])
+      @vacancy = Vacancy.find(st_params[:vacancy_id])
+      @vacancy_candidates = @vacancy.candidates_with_status('Найденные')
+
+      respond_to do |format|
+        format.html { render nothing: true }
+        format.js
+      end
     rescue Exception => error
       puts "I've see this error #{error}"
     end
@@ -31,11 +36,6 @@ class StaffRelationsController < ApplicationController
   private
 
   def st_params
-    params.require(:staff_relation).permit(:status, :notice, :vacancy_id, candidate_id: [])
+    params.require(:staff_relation).permit(:status, :notice, :vacancy_id, candidate_id: [] )
   end
-
-  def candidates_ids
-    params[:staff_relation][:candidate_id].map{|k, v| k if v == '1'}.compact
-  end
-
 end

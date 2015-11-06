@@ -23,5 +23,6 @@ FactoryGirl.define do
 
   factory :deleted_vacancy, parent: :vacancy do
     deleted_at Time.now
+    status 'Закрыта'
   end
 end

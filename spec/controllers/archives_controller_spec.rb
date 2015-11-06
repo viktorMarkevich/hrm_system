@@ -31,6 +31,8 @@ RSpec.describe ArchivesController, type: :controller do
         delete :destroy, object_name: 'vacancies', id: deleted_vacancy
         expect(Vacancy.only_deleted.count).to eq 0
         expect(Vacancy.only_deleted).to eq([])
+        expect(assigns(:object).status).to eq 'Не задействована'
+        expect(flash[:notice]).to eq 'Объект был успешно восстановлен.'
       end
     end
   end

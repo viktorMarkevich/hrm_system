@@ -11,7 +11,8 @@
         - @candidates.each do |candidate|
           %tr
             %td
-              = f.check_box :candidate_id, name: "staff_relation[candidate_id][#{candidate.id}]"
+              = f.check_box :candidate_id, { :multiple => true }, candidate.id, nil
+
               = candidate.name
             %td= candidate.salary
             %td

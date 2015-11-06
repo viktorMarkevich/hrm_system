@@ -13,6 +13,9 @@ class Vacancy < ActiveRecord::Base
   validates :name, :region_id, :status, :user_id, presence: true
   validates :salary, numericality: { only_integer: true, greater_than: 0 }, unless: 'salary_format == "По договоренности"'
 
+  after_restore :set_default_status
+  after_destroy :set_closed_status
+
   STATUSES = %w(Не\ задействована В\ работе Закрыта)
 
   def candidates_with_status(status)
@@ -22,7 +25,12 @@ class Vacancy < ActiveRecord::Base
                     AND "staff_relations"."status" = '#{status}' })
   end
 
-  def self.update_status(id)
-    find(id).update_attributes(status: STATUSES[1])
+  def set_default_status
+    self.update(status: 'Не задействована')
+  end
+
+  def set_closed_status
+    self.update(status: 'Закрыта')
   end
 end
+
