@@ -14,8 +14,8 @@ RSpec.describe Sticker, type: :model do
         expect(invalid_sticker).to_not be_valid
       end
 
-      it 'has no owner_id' do
-        invalid_sticker = build(:sticker, owner_id: nil)
+      it 'has no user_id' do
+        invalid_sticker = build(:sticker, user_id: nil)
         expect(invalid_sticker).to_not be_valid
       end
 

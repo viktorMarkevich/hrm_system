@@ -25,8 +25,6 @@ $(document).ready ->
         else
           "<span class='label label-info'>" + val + "</span>"
       )
-
-      $('#event_name_group').append( "<input id='hidden_event_name' type='hidden' name='event[name]' value='"+val+"'>" )
     else
       $('#event_name').show(200)
 

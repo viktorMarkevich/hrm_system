@@ -16,5 +16,6 @@ FactoryGirl.define do
     facebook 'http://www.facebook.com/test.user'
     vkontakte 'http://vk.com/test_man'
     google_plus 'https://plus.google.com/u/0/109854654'
+    association :owner, factory: :user
   end
 end

@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :staff_relation do
-    status 'Найденные'
+    # status 'Найденные'
     notice 'Примечание'
-    association :candidate
-    association :vacancy
-    association :event
+    candidate
+    vacancy
+    event
   end
 end

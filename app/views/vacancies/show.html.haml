@@ -18,7 +18,7 @@
     %dd= display_field_value_for(@vacancy.requirements)
     %dt Статус вакансии:
     %dd.vacancy_status
-      = render partial: 'vacancy_status', locals: { vacancy: @vacancy, sr_status: @sr_status }
+      = render partial: 'vacancy_status', locals: { vacancy: @vacancy }
     %dt Ответственный:
     %dd= get_author_vacancy(@vacancy)
   %hr

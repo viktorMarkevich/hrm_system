@@ -13,10 +13,6 @@ RSpec.describe Candidate, type: :model do
         expect(build(:candidate, name: '')).to_not be_valid
       end
 
-      it %q{ desired_position can't be blank } do
-        expect(build(:candidate, desired_position: '')).to_not be_valid
-      end
-
       it %q{ status can't be blank} do
         expect(build(:candidate, status: '')).to_not be_valid
       end

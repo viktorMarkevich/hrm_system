@@ -1,1 +1,1 @@
-= link_to vacancy.status, edit_vacancy_path(vacancy, sr_status: @sr_status), remote: true, class: "label #{get_label_class(vacancy)}"
+%spant.label{ class: get_label_class(vacancy) }= vacancy.status
