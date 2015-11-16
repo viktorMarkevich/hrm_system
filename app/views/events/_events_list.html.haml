@@ -1,5 +1,5 @@
-.items-list
-  %table.table.table-bordered.table-hover
+.items-list{ class: time_is.to_s }
+  %table.table.table-bordered{ class: time_is == :future ? 'table-hover' : nil }
     %thead
       %tr
         %th Событие
@@ -20,11 +20,11 @@
             %td= '------'
             %td= '------'
           %td
-            %span.label.label-primary= event.starts_at.strftime('%H:%M')
-            = event.starts_at.strftime('%d/%m/%Y')
+            %span.label.label-primary= event.will_begin_at.strftime('%H:%M')
+            = event.will_begin_at.strftime('%d/%m/%Y')
           %td= event.description
           %td
             - if can? :update, event
-              = link_to '', edit_event_path(event, start_date: date), class: 'glyphicon glyphicon-edit', remote: true
+              = link_to '', edit_event_path(event), class: 'glyphicon glyphicon-edit', remote: true
             - if can? :destroy, event
               = link_to '', event, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'

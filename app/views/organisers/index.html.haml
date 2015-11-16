@@ -21,8 +21,8 @@
                 %td= '------'
                 %td= '------'
               %td
-                %span.label.label-primary= event.starts_at.strftime('%H:%M')
-                = event.starts_at.strftime('%d/%m/%Y')
+                %span.label.label-primary= event.will_begin_at.strftime('%H:%M')
+                = event.will_begin_at.strftime('%d/%m/%Y')
     - else
       %ul.list-group
         %li.list-group-item.list-group-item-warning
@@ -37,7 +37,7 @@
           - @staff_relations.each do |sr|
             %tr
               %td= link_to sr.vacancy.try(:name), vacancy_path(sr.vacancy || '#'), id: 'vacancy-name'
-              %td= "кандидат: #{link_to sr.candidate.try(:name), candidate_path(sr.candidate.id)}".html_safe
+              %td= "кандидат: #{link_to sr.candidate.try(:name), candidate_path(sr.candidate || '#')}".html_safe
               %td
                 %span{ class: "label label-#{return_status_label(sr)}" }
                   = sr.status

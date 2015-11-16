@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028130145) do
+ActiveRecord::Schema.define(version: 20151030123031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,9 +89,9 @@ ActiveRecord::Schema.define(version: 20151028130145) do
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
-    t.datetime "starts_at"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "will_begin_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.text     "description"
     t.integer  "user_id"
   end
@@ -113,10 +113,10 @@ ActiveRecord::Schema.define(version: 20151028130145) do
   end
 
   create_table "staff_relations", force: :cascade do |t|
-    t.string   "status"
+    t.string   "status",       default: "Найденные"
     t.text     "notice"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.integer  "vacancy_id"
     t.integer  "candidate_id"
     t.integer  "event_id"
@@ -126,7 +126,7 @@ ActiveRecord::Schema.define(version: 20151028130145) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "owner_id"
+    t.integer  "user_id"
     t.datetime "deleted_at"
     t.string   "bg_color"
   end
@@ -183,6 +183,7 @@ ActiveRecord::Schema.define(version: 20151028130145) do
     t.datetime "updated_at",                                 null: false
     t.integer  "region_id"
     t.integer  "user_id"
+    t.time     "deleted_at"
   end
 
 end

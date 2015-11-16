@@ -12,7 +12,7 @@ module EventsHelper
       td_class << 'current-month' if start_date.month == current_calendar_date.month
       td_class << "wday-#{current_calendar_date.wday.to_s}"
       events.each do |event|
-        td_class = ['day'],["wday-#{current_calendar_date.wday.to_s}"],['td-primary'] if event.starts_at.to_date == current_calendar_date
+        td_class = ['day'],["wday-#{current_calendar_date.wday.to_s}"],['td-primary'] if event.will_begin_at.to_date == current_calendar_date
       end
       { class: td_class.join(' ') }
     }
@@ -20,11 +20,11 @@ module EventsHelper
 
   def set_events_list_title(events, date = nil)
     if date && events.blank?
-      "Список событий за #{set_month(date)} пуст"
+      "Список предстоящих событий за #{set_month(date)} пуст"
     elsif events.present?
-      "Список событий за #{set_month(events.first.starts_at)}"
+      "Список предстоящих событий за #{set_month(events.first.will_begin_at)}"
     else
-      "Список событий пуст"
+      'Список предстоящих событий пуст'
     end
 
   end

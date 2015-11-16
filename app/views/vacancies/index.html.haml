@@ -1,9 +1,16 @@
 = render partial: 'share/search'
 .row
   .col-lg-10.col-lg-offset-1
-    .tip
-      %p
-        Вакансии
+    .row
+      .col-md-6
+        .tip
+          %p
+            Вакансии
+      .col-md-6
+        .pull-right
+          = link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), class: 'btn btn-warning btn-block'
+    .row
+      .col-md-12
     .items-list
       %table.table.table-hover.table-bordered
         %thead
@@ -13,6 +20,7 @@
             %th Зарплата
             %th Ответственный
             %th Статус
+            %th Действия
         %tbody
           - @vacancies.each do |vacancy|
             %tr
@@ -21,6 +29,11 @@
               %td= get_salary(vacancy)
               %td= full_name_for(vacancy.owner)
               %td= vacancy.status
+              %td.text-center
+                - if can? :update, vacancy
+                  = link_to '', edit_vacancy_path(vacancy), class: 'glyphicon glyphicon-edit'
+                - if can? :destroy, vacancy
+                  = link_to '', vacancy, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
 .row
   .col-lg-3
     = paginate @vacancies

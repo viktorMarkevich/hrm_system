@@ -11,7 +11,8 @@
         - @candidates.each do |candidate|
           %tr
             %td
-              = f.check_box :candidate_id, name: "staff_relation[candidate_id][#{candidate.id}]"
+              = f.check_box :candidate_id, { :multiple => true }, candidate.id, nil
+
               = candidate.name
             %td= candidate.salary
             %td
@@ -29,7 +30,12 @@
                       = sr.status
                     &nbsp;
                     для вакансии
-                    %span.label.label-info
-                      = sr.vacancy.name
+                    - if sr.vacancy.try(:name).present?
+                      %span.label.label-info
+                        = sr.vacancy.try(:name)
+                    - else
+                      %span.label.label-danger
+                        = @vacancy.name
+                      (Удалена)
   %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
   = f.submit 'Выполнить', class: 'btn btn-primary'

@@ -57,4 +57,4 @@
         %td= link_to event.staff_relation.vacancy.name, vacancy_url(event.staff_relation.vacancy)
         %td= link_to event.staff_relation.candidate.name, vacancy_url(event.staff_relation.candidate)
         %td
-          %span.label.label-primary= event.starts_at.strftime('%H:%M')
+          %span.label.label-primary= event.will_begin_at.strftime('%H:%M')

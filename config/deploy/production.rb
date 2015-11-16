@@ -10,7 +10,7 @@ set :user, 'admin'
 set :deploy_to,  "/home/#{fetch(:user)}/#{fetch(:rails_env)}/#{fetch(:application)}"
 
 # Defaults to 'db'
-set :migration_role, 'migrator'
+# set :migration_role, 'migrator'
 
 # Defaults to [:web]
 set :assets_roles, [:web, :app]

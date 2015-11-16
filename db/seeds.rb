@@ -12,14 +12,16 @@ Region.delete_all
 StaffRelation.delete_all
 Event.delete_all
 
+Region.create(name: Region::REGIONS[0])
+
 for i in 1..10 do
   Vacancy.create(
     name: 'Программист руби' + i.to_s,
     salary: '500',
     salary_format: 'USD',
-    status: 'В работе',
-    region_id: 1,
-    user_id: 1
+    status: 'Не задействована',
+    region_id: Region.first.id,
+    user_id: User.first.id
   )
 end
 
@@ -36,7 +38,7 @@ end
 for i in  1..15 do
   Company.create(
       name: 'veloonline' + i.to_s,
-      region_id: 1,
+      region_id: Region.first.id,
       url: 'http://www.veloonline.com/view.shtml?id=8933',
       description: 'Купить Шатуны Shimano FC-M361 ACERA 48/38/28 по хорошей цене в интернет-магазине VeloOnline.com, мы предлагаем широкий ассортимент Shimano и привлекательные цены на Шатуны для велосипеда.'
   )

@@ -35,13 +35,6 @@ RSpec.describe CandidatesController, type: :controller do
         expect(response).to redirect_to candidates_path
       end
     end
-
-    context 'when failed' do
-      it 'renders "new" template' do
-        post :create, candidate: attributes_for(:candidate, status: nil)
-        expect(response).to render_template('new')
-      end
-    end
   end
 
   context '#new' do
@@ -99,7 +92,7 @@ RSpec.describe CandidatesController, type: :controller do
       end
 
       it 'redirect to candidates list page' do
-        expect(response).to redirect_to(candidates_path)
+        expect(response).to redirect_to(candidate_path(candidate))
       end
     end
 
