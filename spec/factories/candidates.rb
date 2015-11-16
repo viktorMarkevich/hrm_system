@@ -17,5 +17,6 @@ FactoryGirl.define do
     vkontakte 'http://vk.com/test_man'
     google_plus 'https://plus.google.com/u/0/109854654'
     association :owner, factory: :user
+    sequence(:source) { |n| "CV_ENG.docx#{n}" }
   end
 end

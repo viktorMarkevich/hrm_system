@@ -16,7 +16,3 @@ test:
 production:
   <<: *login
   database: youappdatabasename_production
-
-staging:
-  <<: *login
-  database: youappdatabasename_production

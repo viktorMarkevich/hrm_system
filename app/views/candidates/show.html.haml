@@ -1,6 +1,11 @@
 - perc = set_the_percentage_of_completed_fields(@candidate)
 .row
   .col-lg-12
+    %code
+      = "Источник резюме: <strong>#{@candidate.source}</strong>".html_safe
+%br
+.row
+  .col-lg-12
     .row
       .col-md-3
         .tip

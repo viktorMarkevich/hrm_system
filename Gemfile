@@ -29,6 +29,10 @@ gem 'capistrano', '~> 3.4'
 gem 'capistrano-rails', '~> 1.1.3'
 gem 'capistrano-rvm'
 
+gem 'yomu'
+
+gem 'docx', '~> 0.2.07', :require => ["docx"]
+
 group :development do
   gem 'letter_opener'
 end

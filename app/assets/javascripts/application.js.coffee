@@ -14,6 +14,7 @@
 #= require jquery_ujs
 #= require spacelab
 #= require twitter/bootstrap
+#= require candidates
 # require_tree .
 
 $(document).ready ->

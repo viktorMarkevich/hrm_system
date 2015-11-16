@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20151030123031) do
     t.string   "desired_position"
     t.string   "status",            default: "Пассивен"
     t.string   "source"
-    t.string   "description"
+    t.text     "description"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "email"
