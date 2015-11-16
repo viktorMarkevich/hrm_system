@@ -110,8 +110,9 @@ RSpec.describe CandidatesController, type: :controller do
     context 'when successful' do
       before do
         request.env["HTTP_REFERER"] = "where_i_came_from"
-        post :upload_resume, file: fixture_file_upload("#{Rails.root}/spec/fixtures/files/CV_ENG.docx", 'text/docx')
+        post :upload_resume, upload_resume: { file: fixture_file_upload("#{Rails.root}/spec/fixtures/files/CV_ENG.docx", 'text/docx') }
       end
+
       it 'has created new candidate' do
         candidate = Candidate.last
         expect(candidate.name).to eql "fake_name"
