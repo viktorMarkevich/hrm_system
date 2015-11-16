@@ -21,9 +21,9 @@ RSpec.describe Candidate, type: :model do
         expect(build(:candidate, email: 'wrong_email')).to_not be_valid
       end
 
-      it 'format phone not valid' do
-        expect(build(:candidate, phone: '38066505512')).to_not be_valid
-      end
+      #it 'format phone not valid' do
+      #  expect(build(:candidate, phone: '38066505512')).to_not be_valid
+      #end
 
       it 'format skype not valid' do
         expect(build(:candidate, skype: 'invalid login')).to_not be_valid
