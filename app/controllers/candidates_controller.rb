@@ -65,6 +65,7 @@ class CandidatesController < ApplicationController
     candidate.vkontakte = content.scan(/[^\s]*vk.com[^\s]*/).first
     candidate.google_plus = content.scan(/[^\s]*plus.google.com[^\s]*/).first
     candidate.description = content
+    candidate.source = params[:upload_resume][:file].original_filename
     if candidate.save
       flash[:notice] = 'ok'
     else

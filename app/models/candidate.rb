@@ -13,7 +13,8 @@ class Candidate < ActiveRecord::Base
   STATUSES = %w(Пассивен В\ работе)
   # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
-  validates :name, :status, presence: true
+  validates :name, :status, :source, presence: true
+  validates :source, uniqueness: true
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
             message: 'is invalid.' }, if: 'email.present?'
   #validates :phone, format:  { with: /\+?\d{2}-\d{3}-\d{3}-\d{4}/,
