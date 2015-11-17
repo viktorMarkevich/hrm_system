@@ -1,3 +1,4 @@
+# coding 'utf-8'
 class CandidatesController < ApplicationController
 
   before_filter :authenticate_user!
@@ -54,22 +55,14 @@ class CandidatesController < ApplicationController
   end
 
   def upload_resume
-    candidate = current_user.candidates.build
-    candidate.name = 'fake_name'
-    file = Yomu.new params[:upload_resume][:file]
-    content = file.text
-    candidate.phone = content.scan(/\b((?:[\s()\d-]{11,}\d)|\d{10,})\b/).join(', ')
-    candidate.email = content.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i).first
-    candidate.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{4}/).first || content.scan(/\d{1,2}\/\d{1,2}\/\d{4}/).first || content.scan(/\d{1,2}\.\d{1,2}\.\d{4}/).first
-    candidate.facebook = content.scan(/[^\s]*facebook[^\s]*/).first
-    candidate.vkontakte = content.scan(/[^\s]*vk.com[^\s]*/).first
-    candidate.google_plus = content.scan(/[^\s]*plus.google.com[^\s]*/).first
-    candidate.description = content
-    candidate.source = params[:upload_resume][:file].original_filename
-    if candidate.save
-      flash[:notice] = 'ok'
-    else
-      flash[:error] = candidate.errors.full_messages
+    begin
+      params[:upload_resume][:file].each do |file|
+        candidate = current_user.candidates.build
+        candidate.save_resume_to_candidate(file)
+      end
+      flash[:notice] = 'Данные сохранились успешно'
+    rescue Exception => error
+      flash[:error] = "I've see this error #{error}"
     end
     redirect_to :back
   end

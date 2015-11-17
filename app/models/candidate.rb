@@ -34,4 +34,22 @@ class Candidate < ActiveRecord::Base
   def is_passive?
     status == STATUSES[0]
   end
+
+  def save_resume_to_candidate(data)
+    file = Yomu.new(data)
+    content = file.text
+    full_name = content.scan(/([A-Z]+[a-zA-Z]* [A-Z]+[a-zA-Z]*)|([А-Я]+[а-яА-Я]* [А-Я]+[а-яА-Я]*)/).first.compact.first
+    self.name = full_name || 'fake_name'
+    self.phone = content.scan(/\b((?:[\s()\d-]{11,}\d)|\d{10,})\b/).join(', ')
+    self.email = content.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i).first
+    self.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{4}/).first ||
+                         content.scan(/\d{1,2}\/\d{1,2}\/\d{4}/).first ||
+                         content.scan(/\d{1,2}\.\d{1,2}\.\d{4}/).first
+    self.facebook = content.scan(/[^\s]*facebook[^\s]*/).first
+    self.vkontakte = content.scan(/[^\s]*vk.com[^\s]*/).first
+    self.google_plus = content.scan(/[^\s]*plus.google.com[^\s]*/).first
+    self.description = content
+    self.source = data.original_filename
+    self.save!
+  end
 end
