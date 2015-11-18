@@ -32,6 +32,6 @@ server '192.168.137.75',
        ssh_options: {
            keys: %w(/home/deployer/.ssh/id_rsa),
            forward_agent: true,
-           auth_methods: %w(password),
+           auth_methods: %w(publickey password),
            password: ENV['STAGING_SSH_PASSWORD']
        }
