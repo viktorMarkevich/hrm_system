@@ -12,6 +12,8 @@
   .form-group
     .col-sm-2.control-label
       = f.label :name, 'Имя:'
+      %span{ style: 'color:red;' }
+        *
     .col-sm-6
       = f.text_field :name, class: 'form-control'
   .form-group
@@ -36,6 +38,13 @@
       = f.label :city_of_residence, 'Место проживания:'
     .col-sm-6
       = f.text_field :city_of_residence, class: 'form-control'
+  .form-group
+    .col-sm-2.control-label
+      = f.label :source, 'Источник резюме'
+      %span{ style: 'color:red;' }
+        *
+    .col-sm-6
+      = f.text_field :source, class: 'form-control'
   .form-group
     .col-sm-2.control-label
       = f.label :ready_to_relocate, 'Готов к переезду:'

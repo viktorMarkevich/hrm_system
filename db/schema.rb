@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030123031) do
+ActiveRecord::Schema.define(version: 20151118125338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,10 +60,10 @@ ActiveRecord::Schema.define(version: 20151030123031) do
     t.string   "ready_to_relocate"
     t.string   "desired_position"
     t.string   "status",            default: "Пассивен"
-    t.string   "source"
+    t.string   "source",            default: "Другой источник"
     t.text     "description"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.string   "email"
     t.string   "phone"
     t.string   "linkedin"
