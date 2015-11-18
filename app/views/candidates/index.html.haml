@@ -1,26 +1,3 @@
-.row
-  .col-lg-10.col-lg-offset-1
-    .well
-      -#.row
-        .col-xs-6
-          %code Искать в
-          %button.btn.btn-default В Linkedin
-          %button.btn.btn-default В Интернет
-        .col-xs-offset-3.col-xs-3
-          %code Импортировать с
-          %button.btn.btn-default Почты
-          %button.btn.btn-default.resume_upload Файла
-          = form_for :upload_resume, html: {multipart: true, hidden: true}, method: "POST", url: upload_resume_candidates_path do |f|
-            = f.file_field :file
-            = f.submit 'save'
-      .row
-        .col-xs-offset-10.col-xs-2
-          %code Импортировать из
-          %button.btn.btn-default.resume_upload Файла
-          = form_for :upload_resume, html: { multipart: true, hidden: true }, method: 'POST', url: upload_resume_candidates_path do |f|
-            = f.file_field :file, multiple: true
-            = f.submit 'save'
-
 = render partial: 'share/search'
 
 .row

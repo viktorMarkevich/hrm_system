@@ -29,8 +29,23 @@
                 %i.glyphicon.glyphicon-plus
             %li
               = link_to 'Кандидаты', candidates_path
-              = link_to new_candidate_path, id: 'add-candidate' do
-                %i.glyphicon.glyphicon-plus
+              = link_to '#', class: 'dropdown-toggle', 'aria-expanded' => 'false', 'aria-haspopup' => 'false',
+                             'data-toggle' => 'dropdown', role: 'button', style: 'color:#ddd;', id: 'add-candidate' do
+                %i.glyphicon.glyphicon-th-list
+                %span.caret
+                %ul.dropdown-menu
+                  %li
+                    = link_to new_candidate_path, id: 'add-candidate' do
+                      %i.glyphicon.glyphicon-plus
+                      Добавить вручную
+                  %li
+                    %a.resume_upload
+                      %i.glyphicon.glyphicon-download-alt
+                      Загрузить из файла
+                    = form_for :upload_resume, html: { multipart: true, hidden: true }, method: 'POST', url: upload_resume_candidates_path do |f|
+                      = f.file_field :file, multiple: true
+                      = f.submit 'save'
+
             %li
               = link_to 'Компании', companies_path
               = link_to new_company_path, id: 'add-company' do
