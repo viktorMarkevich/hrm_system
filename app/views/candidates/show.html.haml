@@ -49,6 +49,14 @@
       .col-md-1
       .col-md-7
     %hr
+    = render partial: 'row_element', locals: { subscription: 'Владение языками:', column: :languages, candidate: @candidate }
+    = render partial: 'row_element', locals: { subscription: 'Зарплатные ожидания:', column: :salary, candidate: @candidate }
+    %hr
+    = render partial: 'row_element', locals: { subscription: 'Опыт работы:', column: :experience, candidate: @candidate }
+    %hr
+    = render partial: 'row_element', locals: { subscription: 'Образование:', column: :education, candidate: @candidate }
+    %hr
+    = render partial: 'row_element', locals: { subscription: 'Дополнительная информация:', column: :description, candidate: @candidate }
   .col-md-4
     .pull_left
       = image_tag 'missing_medium.png'
@@ -59,7 +67,3 @@
                                                     candidate: @candidate,
                                                     vacancies: @vacancies }
   .col-lg-offset-1
-
-    -#%dl.dl-horizontal
-    -#  %dt Хочу:
-    -#  %dd= "#{display_field_value_for(@candidate.salary)} #{@candidate.salary_format}"
