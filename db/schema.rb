@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20160610111302) do
   end
 
   create_table "history_events", force: :cascade do |t|
+    t.integer  "record_id"
     t.string   "name"
     t.string   "user"
     t.text     "body"
