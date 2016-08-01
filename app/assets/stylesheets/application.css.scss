@@ -27,6 +27,13 @@ ul.nav.navbar-nav > li > a {
   text-align: center;
 }
 
+.navbar-right{
+  li{
+    height: 50px;
+    padding: 12px 0px;
+  }
+}
+
 .tip {
   color: #333;
   font-style: italic;
