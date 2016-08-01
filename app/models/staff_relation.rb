@@ -1,4 +1,6 @@
 class StaffRelation < ActiveRecord::Base
+  include ChangesHistory
+
   belongs_to :vacancy
   belongs_to :candidate
   belongs_to :event
@@ -6,6 +8,7 @@ class StaffRelation < ActiveRecord::Base
   STATUSES = %w(Нейтральный Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
   after_create :set_found_status, unless: 'event_id.present?'
+  after_commit :write_history, on: :update
 
   # after_update :check_event
   #

@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
 
   after_create :assign_image
 
+  cattr_accessor :current_user
+
   POST = %w(Директор HR\ Менеджер)
 
   def is_director?

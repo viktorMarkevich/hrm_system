@@ -108,7 +108,7 @@
     .col-sm-2.control-label
       = f.label :company_id, 'Компания:'
     .col-sm-6
-      = f.select(:company_id, @companies, {}, class: 'form-control')
+      = f.select(:company_id, @companies.presence || '', {}, class: 'form-control')
 
   %hr
 

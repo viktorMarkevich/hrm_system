@@ -1,4 +1,5 @@
 class Candidate < ActiveRecord::Base
+  include ChangesHistory
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_one :image
@@ -7,6 +8,8 @@ class Candidate < ActiveRecord::Base
   belongs_to :company
 
   accepts_nested_attributes_for :image
+
+  after_commit :write_history, on: :update
 
   scope :with_status, -> (status) { where(status: "#{status}") }
 

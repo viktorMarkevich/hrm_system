@@ -32,4 +32,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_current_user
+    User.current_user = current_user if current_user
+  end
+
 end

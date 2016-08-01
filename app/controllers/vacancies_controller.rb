@@ -44,7 +44,7 @@ class VacanciesController < ApplicationController
     @vacancy_candidates = @vacancy.candidates_with_status(@sr_status)
 
     respond_to do |format|
-      if @vacancy.update_attributes(vacancy_params)
+      if !vacancy_params.nil? && @vacancy.update_attributes(vacancy_params)
         format.html { redirect_to vacancy_path(@vacancy), notice: 'Вакансия успешно обновлена.' }
         format.json
         format.js
@@ -77,7 +77,8 @@ class VacanciesController < ApplicationController
 
     def params_present?
       params[:vacancy][:candidate_id].present? &&
-          params[:vacancy][:sr_status].present?
+          params[:vacancy][:sr_status].present?&&
+          params[:id].present?
     end
 
     def vacancy_params
@@ -86,6 +87,10 @@ class VacanciesController < ApplicationController
     end
 
     def set_vacancy
-      @vacancy = Vacancy.find(params[:id])
+      if Vacancy.where(:id => params[:id]).present?
+        @vacancy = Vacancy.find(params[:id])
+      else
+        redirect_to vacancies_url
+      end
     end
 end
