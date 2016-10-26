@@ -38,7 +38,9 @@
             %tr
               %td
                 = "Изменения в: "
-                =link_to sr.name.capitalize,:controller => sr.name, :action => "show", :id => sr.record_id
+                %span{ style: 'color: red' }
+                  = 'каком-то объекте'
+                -#= link_to sr.name.capitalize,:controller => sr.name, :action => "show", :id => sr.record_id
               -#%td= "Пользователем: #{sr.user.try(:name)}".html_safe
               %td
                 - sr.try(:body).each do |k, v|
