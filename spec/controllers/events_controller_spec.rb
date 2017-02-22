@@ -64,7 +64,7 @@ RSpec.describe EventsController, type: :controller do
     let(:event_params) { attributes_for :event }
 
     context 'when successful without "staff_relations"' do
-      let (:will_begin_at) { Time.zone.now + 10.hours + 12.minutes }
+      let (:will_begin_at) { (Time.zone.now + 10.hours + 12.minutes).strftime("%FT%T%:z") }
       before { post :create, event: event_params.update(will_begin_at: will_begin_at,
                                                         user_id: current_user.id), format: :js }
 
