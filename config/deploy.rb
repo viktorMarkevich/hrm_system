@@ -14,11 +14,12 @@ set :tmp_dir, -> { "/home/#{fetch(:user)}/tmp" }
 set :format, :pretty
 
 # Default value for :linked_files is []; # Default value for linked_dirs is []
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', '.ruby-version', '.ruby-gemset', 'config/unicorn.rb')
+# set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', '.ruby-version', '.ruby-gemset', 'config/unicorn.rb')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', '.ruby-version', '.ruby-gemset')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
-set :unicorn_conf, -> { "#{fetch(:deploy_to)}/current/config/unicorn.rb" }
-set :unicorn_pid, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/unicorn.pid" }
+# set :unicorn_conf, -> { "#{fetch(:deploy_to)}/current/config/unicorn.rb" }
+# set :unicorn_pid, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/unicorn.pid" }
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
@@ -57,7 +58,7 @@ namespace :deploy do
     on "#{fetch(:user)}@192.168.0.251" do
       within "#{fetch(:deploy_to)}/current" do
         # execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
-        execute :bundle, :exec, "rake db:create RAILS_ENV=#{fetch(:rails_env)}"
+        execute :bundle, :exec, "rails s -p3001 -e #{fetch(:rails_env)}"
       end
     end
   end
