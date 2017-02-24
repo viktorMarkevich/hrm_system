@@ -6,7 +6,7 @@ set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 
 # deploy.rb or stage file (staging.rb, production.rb or else)
 set :rvm_type, :user                     # Defaults to: :auto
-set :rvm_ruby_version, -> { "2.4.0@#{fetch(:application)}" }
+set :rvm_ruby_version, -> { "2.4.0@#{fetch(:application)} --create" }
 
 set :tmp_dir, -> { "/home/#{fetch(:user)}/tmp" }
 
@@ -57,9 +57,10 @@ namespace :deploy do
     on "#{fetch(:user)}@192.168.0.251" do
       within "#{fetch(:deploy_to)}/current" do
         # execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
-        execute :bundle, :exec, "rake db:seed RAILS_ENV=#{fetch(:rails_env)}"
+        execute :bundle, :exec, "rake db:create RAILS_ENV=#{fetch(:rails_env)}"
       end
     end
   end
+
 
 end
