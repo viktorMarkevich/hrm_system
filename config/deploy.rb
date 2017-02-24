@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.4.0'
+lock '3.7.2'
 
 # set :application, 'my_app_name'
 set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
