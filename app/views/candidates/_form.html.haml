@@ -1,6 +1,10 @@
 = stylesheet_link_tag 'jquery.ui.datepicker'
 = javascript_include_tag 'jquery.ui.datepicker'
 = javascript_include_tag 'datepicker'
+= stylesheet_link_tag 'jquery.ui.autocomplete'
+= javascript_include_tag 'jquery.ui.autocomplete'
+= javascript_include_tag 'autocomplete'
+
 
 = form_for @candidate, html: { class: 'form-horizontal' } do |f|
   - if @candidate.errors.any?
