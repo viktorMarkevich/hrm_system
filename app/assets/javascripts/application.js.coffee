@@ -15,6 +15,7 @@
 #= require twitter/bootstrap
 #= require candidates
 # require_tree .
+#= require form-validator/jquery.form-validator
 
 $(document).ready ->
   if window.location.pathname.indexOf('events') > 0
