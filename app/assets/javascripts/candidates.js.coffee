@@ -7,6 +7,6 @@ $(document).ready ->
     $('#upload_resume_file').click()
 
   $.validate (
-    form: '#new_candidate'
+    form: '.candidate-form'
     lang: 'ru'
   )
