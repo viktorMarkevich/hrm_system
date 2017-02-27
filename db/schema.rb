@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610111302) do
+ActiveRecord::Schema.define(version: 20170227140227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,8 @@ ActiveRecord::Schema.define(version: 20160610111302) do
     t.integer  "company_id"
     t.string   "notice"
     t.text     "experience"
+    t.integer  "cv_source_id"
+    t.index ["cv_source_id"], name: "index_candidates_on_cv_source_id", using: :btree
   end
 
   create_table "companies", force: :cascade do |t|
@@ -83,6 +85,13 @@ ActiveRecord::Schema.define(version: 20160610111302) do
     t.datetime "updated_at",  null: false
     t.integer  "region_id"
     t.integer  "user_id"
+  end
+
+  create_table "cv_sources", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_cv_sources_on_name", unique: true, using: :btree
   end
 
   create_table "events", force: :cascade do |t|
@@ -191,4 +200,5 @@ ActiveRecord::Schema.define(version: 20160610111302) do
     t.time     "deleted_at"
   end
 
+  add_foreign_key "candidates", "cv_sources"
 end

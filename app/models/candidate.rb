@@ -7,6 +7,7 @@ class Candidate < ActiveRecord::Base
   has_many :staff_relations, dependent: :destroy
   has_many :vacancies, through: :staff_relations, source: :vacancy
   belongs_to :company
+  belongs_to :cv_source
 
   accepts_nested_attributes_for :image
 
