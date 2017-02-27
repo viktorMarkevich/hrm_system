@@ -1,3 +1,7 @@
+= stylesheet_link_tag 'jquery.ui.datepicker'
+= javascript_include_tag 'jquery.ui.datepicker'
+= javascript_include_tag 'datepicker'
+
 = form_for @candidate, html: { class: 'form-horizontal' } do |f|
   - if @candidate.errors.any?
     %h2 Возникшие ошибки:
@@ -20,9 +24,7 @@
     .col-sm-2.control-label
       = f.label :birthday, 'Дата рождения:'
     .col-sm-6
-      %span.tip
-        %p.subscription dd/mm/yyyy or dd-mm-yyyy
-      = f.text_field :birthday, class: 'form-control'
+      = f.text_field :birthday, class: 'form-control', id: 'datepicker'
   .form-group
     .col-sm-2.control-label
       = f.label :desired_position, 'Желаемая должность:'
