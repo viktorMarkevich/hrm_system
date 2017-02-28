@@ -10,11 +10,15 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_self
- *= require organiser
- *= require bootstrap_and_overrides
- * require_tree .
  */
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'organiser';
+@import  'events.css.scss';
+@import  'active_admin.css.scss';
+@import  'organiser.scss';
+@import  'spacelab.css.scss';
+@import  'stickers.css.scss';
 
 .current {
   border-bottom: 2px solid limegreen;

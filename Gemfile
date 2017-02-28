@@ -12,8 +12,6 @@ gem 'dotenv-rails'
 gem 'devise'
 gem 'devise_invitable', '~> 1.7.0'
 gem 'haml-rails'
-gem 'less-rails', '~> 2.7', '>= 2.7.1'
-gem 'twitter-bootstrap-rails'
 gem 'paperclip', '~> 4.2'
 gem 'activeadmin', '~> 1.0.0.pre4'
 gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resources'
@@ -32,7 +30,8 @@ gem 'capistrano-rvm'
 gem 'yomu'
 
 gem 'docx', '~> 0.2.07', :require => ["docx"]
-
+gem 'bootstrap-sass'
+gem 'sass-rails'
 group :development do
   gem 'letter_opener'
 end
