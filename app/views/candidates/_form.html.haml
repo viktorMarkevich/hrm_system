@@ -1,8 +1,7 @@
 = stylesheet_link_tag 'jquery.ui.datepicker'
-= javascript_include_tag 'jquery.ui.datepicker'
-= javascript_include_tag 'datepicker'
+= javascript_include_tag 'candidates'
 
-= form_for @candidate, html: { class: 'form-horizontal' } do |f|
+= form_for @candidate, html: { class: 'form-horizontal candidate-form' } do |f|
   - if @candidate.errors.any?
     %h2 Возникшие ошибки:
     %ul
@@ -34,7 +33,7 @@
     .col-sm-2.control-label
       = f.label :salary, 'Желаемая ЗП:'
     .col-sm-6
-      = f.text_field :salary, class: 'form-control'
+      = f.text_field :salary, class: 'form-control', 'data-validation' => 'number', 'data-validation-allowing' => 'float'
   .form-group
     .col-sm-2.control-label
       = f.label :city_of_residence, 'Место проживания:'
