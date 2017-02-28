@@ -65,7 +65,6 @@ class CandidatesController < ApplicationController
       flash[:error] = "I've see this error #{error}"
     end
     redirect_back(fallback_location: root_path)
-   # redirect_to :back `redirect_to :back` is deprecated and will be removed from Rails 5.1. Please use `redirect_back(fallback_location: fallback_location)`
   end
 
   private
