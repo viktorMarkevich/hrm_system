@@ -14,11 +14,10 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 @import 'organiser';
-@import  'events.css.scss';
-@import  'active_admin.css.scss';
-@import  'organiser.scss';
-@import  'spacelab.css.scss';
-@import  'stickers.css.scss';
+@import 'events';
+@import 'active_admin';
+@import 'spacelab';
+@import 'stickers';
 
 .current {
   border-bottom: 2px solid limegreen;
