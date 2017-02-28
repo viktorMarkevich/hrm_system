@@ -141,3 +141,6 @@ ul.nav.navbar-nav > li > a {
 
   @extend .items-list;
 }
+a, a:link, a:visited{
+  text-decoration: none;
+}
