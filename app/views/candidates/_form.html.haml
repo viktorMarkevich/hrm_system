@@ -1,3 +1,5 @@
+= javascript_include_tag 'form-validator/jquery.form-validator'
+= javascript_include_tag 'candidates'
 = form_for @candidate, html: { class: 'form-horizontal candidate-form' } do |f|
   - if @candidate.errors.any?
     %h2 Возникшие ошибки:
