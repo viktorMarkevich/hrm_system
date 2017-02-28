@@ -1,9 +1,9 @@
 # coding 'utf-8'
 class CandidatesController < ApplicationController
 
-  before_filter :authenticate_user!
-  before_filter :find_candidate, only: [:show, :edit, :update, :set_vacancies]
-  before_filter :set_companies, only: [:new, :edit]
+  before_action :authenticate_user!
+  before_action :find_candidate, only: [:show, :edit, :update, :set_vacancies]
+  before_action :set_companies, only: [:new, :edit]
 
   def index
     @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(10)
@@ -64,7 +64,8 @@ class CandidatesController < ApplicationController
     rescue Exception => error
       flash[:error] = "I've see this error #{error}"
     end
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
+   # redirect_to :back `redirect_to :back` is deprecated and will be removed from Rails 5.1. Please use `redirect_back(fallback_location: fallback_location)`
   end
 
   private

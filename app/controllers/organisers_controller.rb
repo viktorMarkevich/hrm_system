@@ -1,6 +1,6 @@
 class OrganisersController < ApplicationController
 
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
 
   def index
     @stickers = current_user.stickers.order('created_at desc').page(params[:page]).per(11)

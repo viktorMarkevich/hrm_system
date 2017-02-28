@@ -1,6 +1,6 @@
 class ArchivesController < ApplicationController
 
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
 
   def index
     @objects = klass.all.order('created_at desc').page(params[:page]).per(10)

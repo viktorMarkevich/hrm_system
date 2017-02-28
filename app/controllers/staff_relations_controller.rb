@@ -18,7 +18,7 @@ class StaffRelationsController < ApplicationController
       @vacancy_candidates = @vacancy.candidates_with_status('Найденные')
 
       respond_to do |format|
-        format.html { render nothing: true }
+        format.html { head :ok }
         format.js
       end
     rescue Exception => error
