@@ -23,7 +23,8 @@ class CandidatesController < ApplicationController
   end
 
   def create
-    @candidate = current_user.candidates.build(candidate_params)
+    cv_source = CvSource.find_or_create_by(name: candidate_params[:source])
+    @candidate = current_user.candidates.build(candidate_params.merge(cv_source_id: cv_source.id))
     if @candidate.save!
       flash[:success] = 'Кандидат был успешно добавлен.'
       redirect_to candidates_path
