@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227140227) do
+ActiveRecord::Schema.define(version: 20170228105830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,10 +57,10 @@ ActiveRecord::Schema.define(version: 20170227140227) do
     t.string   "ready_to_relocate"
     t.string   "desired_position"
     t.string   "status",            default: "Пассивен"
-    t.string   "source",            default: "Другой источник"
+    t.string   "source"
     t.text     "description"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "email"
     t.string   "phone"
     t.string   "linkedin"
@@ -73,8 +73,6 @@ ActiveRecord::Schema.define(version: 20170227140227) do
     t.integer  "company_id"
     t.string   "notice"
     t.text     "experience"
-    t.integer  "cv_source_id"
-    t.index ["cv_source_id"], name: "index_candidates_on_cv_source_id", using: :btree
   end
 
   create_table "companies", force: :cascade do |t|
@@ -200,5 +198,4 @@ ActiveRecord::Schema.define(version: 20170227140227) do
     t.time     "deleted_at"
   end
 
-  add_foreign_key "candidates", "cv_sources"
 end
