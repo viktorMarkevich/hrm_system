@@ -31,7 +31,7 @@ RSpec.describe VacanciesController, type: :controller do
   describe '#create' do
     context 'when successful' do
 
-      let(:vacancy_attrs) { { vacancy: attributes_for(:vacancy), region: region.name } }
+      let(:vacancy_attrs) { { params: {vacancy: attributes_for(:vacancy), region: region.name} } }
 
       before do
         post :create, vacancy_attrs
@@ -55,7 +55,7 @@ RSpec.describe VacanciesController, type: :controller do
       let(:invalid_vacancy_attrs) { { vacancy: attributes_for(:invalid_vacancy)} }
 
       before do
-        post :create, invalid_vacancy_attrs
+        post :create, params: invalid_vacancy_attrs
       end
 
       it %q{ doesn't create record } do
@@ -86,7 +86,7 @@ RSpec.describe VacanciesController, type: :controller do
 
   context '#edit' do
     before do
-      get :edit, id: vacancy
+      get :edit, params: {id: vacancy}
     end
 
     it 'has HTTP 200 status' do
@@ -99,7 +99,7 @@ RSpec.describe VacanciesController, type: :controller do
   end
 
   context '#show' do
-    before { get :show, id: vacancy }
+    before { get :show, params: {id: vacancy} }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -114,7 +114,7 @@ RSpec.describe VacanciesController, type: :controller do
     let(:vacancy_attrs) { { name: 'Менеджер', salary: '400' } }
 
     before do
-      put :update, id: vacancy, vacancy: vacancy_attrs, region: region.name
+      put :update, params: {id: vacancy, vacancy: vacancy_attrs, region: region.name}
       vacancy.reload
     end
 
@@ -131,7 +131,7 @@ RSpec.describe VacanciesController, type: :controller do
 
     context 'when failed' do
       before do
-        put :update, id: vacancy, vacancy: { name: nil }
+        put :update, params: {id: vacancy, vacancy: { name: nil }}
       end
 
       it 'renders "edit" template without name' do
@@ -147,7 +147,7 @@ RSpec.describe VacanciesController, type: :controller do
   describe '#destroy' do
 
     before do
-      delete :destroy, id: vacancy
+      delete :destroy, params: {id: vacancy}
     end
 
     it 'destroys vacancy' do

@@ -3,8 +3,8 @@
 class VacanciesController < ApplicationController
   include RegionSupporter
 
-  before_filter :authenticate_user!
-  before_filter :set_vacancy, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_vacancy, only: [:show, :edit, :update, :destroy]
 
   def index
     @vacancies = Vacancy.includes(:region, :owner).order('id').page(params[:page]).per(10)

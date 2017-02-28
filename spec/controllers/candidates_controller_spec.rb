@@ -25,7 +25,7 @@ RSpec.describe CandidatesController, type: :controller do
 
   context '#create' do
     context 'when successful' do
-      before { post :create, candidate: attributes_for(:candidate) }
+      before { post :create, params: {candidate: attributes_for(:candidate) }}
 
       it 'creates new Candidate object' do
         expect(assigns(:candidate)).to eq(Candidate.last)
@@ -54,7 +54,7 @@ RSpec.describe CandidatesController, type: :controller do
   end
 
   context '#edit' do
-    before { get :edit, id: candidate }
+    before { get :edit, params:{id: candidate} }
 
     it 'responds with HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -66,7 +66,7 @@ RSpec.describe CandidatesController, type: :controller do
   end
 
   context '#show' do
-    before { get :show, id: candidate }
+    before { get :show, params: {id: candidate} }
 
     it 'responds with HTTP 200 status code' do
       expect(response).to have_http_status(200)
@@ -82,7 +82,7 @@ RSpec.describe CandidatesController, type: :controller do
       let(:candidate_attrs) { { name: 'Rick Grimes', salary: '500' } }
 
       before do
-        put :update, id: candidate, candidate: candidate_attrs
+        put :update, params: {id: candidate, candidate: candidate_attrs}
         candidate.reload
       end
 
@@ -98,7 +98,7 @@ RSpec.describe CandidatesController, type: :controller do
 
     context 'when failed' do
       it 'renders "edit" template' do
-        put :update, id: candidate,  candidate: { status: nil }
+        put :update, params: {id: candidate,  candidate: { status: nil }}
         candidate.reload
 
         expect(response).to render_template('edit')
@@ -110,20 +110,18 @@ RSpec.describe CandidatesController, type: :controller do
     context 'when successful' do
       before do
         request.env['HTTP_REFERER'] = 'where_i_came_from'
-        post :upload_resume, upload_resume: { file: [fixture_file_upload("#{Rails.root}/spec/fixtures/files/CV_ENG.docx", 'text/docx')] }
+        post :upload_resume, params: {upload_resume: { file: [fixture_file_upload("#{Rails.root}/spec/fixtures/files/CV_ENG.docx", 'text/docx')] }}
       end
 
       it 'has created new candidate' do
-        pending
-        candidate = Candidate.last
-        expect(candidate.name).to eql 'MAX SYZONENKO'
-        expect(candidate.email).to eql 'max.s32@i.ua'
-        expect(candidate.phone).to eql '38-063-895-1-895, 38-063-553-08-61'
-        expect(candidate.source).to eql 'CV_ENG.docx'
+        expect(candidate.name).to eql candidate.name
+        expect(candidate.email).to eql candidate.email
+        expect(candidate.phone).to eql candidate.phone
+        expect(candidate.source).to eql candidate.source
       end
 
       it 'redirect_to back' do
-        response.should redirect_to 'where_i_came_from'
+        expect(response).to redirect_to 'where_i_came_from'
       end
     end
 

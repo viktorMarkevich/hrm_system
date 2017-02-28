@@ -1,7 +1,7 @@
 class CompaniesController < ApplicationController
   include RegionSupporter
 
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   before_action :find_company, only: [:edit, :update, :show]
 
 
