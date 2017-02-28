@@ -16,14 +16,14 @@ class EventsController < ApplicationController
     @event = Event.new
     set_events_in_date_period
     respond_to do |format|
-      format.html { render nothing: true }
+      format.html {  head :ok  }
       format.js
     end
   end
 
   def edit
     respond_to do |format|
-      format.html { render nothing: true }
+      format.html { head :ok }
       format.js
     end
   end

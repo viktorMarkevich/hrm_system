@@ -26,7 +26,7 @@ RSpec.describe CompaniesController, type: :controller do
 
   context '#create' do
     context 'when successful' do
-      let(:company_attrs) { { company: attributes_for(:company), region: region.name } }
+      let(:company_attrs) { { params: {company: attributes_for(:company), region: region.name} } }
 
       before { post :create, company_attrs }
 
@@ -35,7 +35,7 @@ RSpec.describe CompaniesController, type: :controller do
       end
 
       it 'redirects to companies index page' do
-        expect(response).to redirect_to companies_path
+       expect(response).to redirect_to companies_path
       end
 
       it 'has assigned region' do
@@ -55,11 +55,11 @@ RSpec.describe CompaniesController, type: :controller do
       end
 
       it %q{ doesn't create record without region_id } do
-        expect{ post :create, company_attrs }.to change(Company, :count).by(0)
+        expect{ post :create, params: company_attrs }.to change(Company, :count).by(0)
       end
 
       it 'renders "new" template' do
-        post :create, company_attrs
+        post :create, params: company_attrs
         expect(response).to render_template('new')
       end
     end
@@ -82,7 +82,7 @@ RSpec.describe CompaniesController, type: :controller do
   end
 
   context '#edit' do
-    before { get :edit, id: company }
+    before { get :edit, params: {id: company }}
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -94,7 +94,7 @@ RSpec.describe CompaniesController, type: :controller do
   end
 
   context '#show' do
-    before { get :show, id: company }
+    before { get :show, params: {id: company }}
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -110,7 +110,7 @@ RSpec.describe CompaniesController, type: :controller do
       let(:company_attrs) { { name: 'facebook', url: 'http://www.facebook.com.ua' } }
 
       before do
-        put :update, id: company, company: company_attrs, region: region.name
+        put :update, params: {id: company, company: company_attrs, region: region.name}
         company.reload
       end
 
@@ -126,12 +126,12 @@ RSpec.describe CompaniesController, type: :controller do
 
     context 'when failed' do
       it 'renders "edit" template without name' do
-        put :update, id: company, company: { name: nil }
+        put :update, params: {id: company, company: { name: nil }}
         expect(response).to render_template('edit')
       end
 
       it 'renders "edit" template without region_id' do
-        put :update, id: company, company: { region_id: nil }
+        put :update, params: {id: company, company: { region_id: nil }}
         expect(response).to render_template('edit')
       end
     end
