@@ -32,5 +32,7 @@ Rails.application.routes.draw do
 
   get 'archives/:object_name', to: 'archives#index', as: :archives
   delete 'archives/:object_name/:id', to: 'archives#destroy', as: :restore_object
+
+  resources :cv_sources, only: :index
   
 end

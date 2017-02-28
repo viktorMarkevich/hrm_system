@@ -2,6 +2,8 @@
 #=require jquery.ui.datepicker
 #=require datepicker
 #=require form-validator/jquery.form-validator
+#=require jquery.ui.autocomplete
+#=require autocomplete
 
 
 $(document).ready ->

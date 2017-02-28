@@ -23,6 +23,7 @@ class CandidatesController < ApplicationController
   end
 
   def create
+    CvSource.find_or_create_by(name: candidate_params[:source])
     @candidate = current_user.candidates.build(candidate_params)
     if @candidate.save!
       flash[:success] = 'Кандидат был успешно добавлен.'

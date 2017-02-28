@@ -9,5 +9,4 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css.less, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w(events.js stickers.js charCount.js vacancies.js stickers.css events.css
-                                                 jquery.ui.datepicker.css jquery.ui.datepicker.js datepicker.js.coffee
-                                                 form-validator/jquery.form-validator.js candidates.js.coffee)
+                                                 form-validator/jquery.form-validator.js candidates.js.coffee candidates.css)
