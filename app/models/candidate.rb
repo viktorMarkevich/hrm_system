@@ -7,6 +7,7 @@ class Candidate < ActiveRecord::Base
   has_many :staff_relations, dependent: :destroy
   has_many :vacancies, through: :staff_relations, source: :vacancy
   belongs_to :company
+  belongs_to :geo_name
 
   accepts_nested_attributes_for :image
 
@@ -31,6 +32,7 @@ class Candidate < ActiveRecord::Base
                     if: 'skype.present?'
   #validates :birthday, format: { with: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/, multiline: true,
   #          message: 'wrong format' }, if: 'birthday.present?'
+  before_validation :check_geo_name, on: [ :create, :update ]
 
   def status_for_vacancy(vacancy)
     StaffRelation.find_by_candidate_id_and_vacancy_id(self.id, vacancy.id).status
@@ -75,4 +77,13 @@ class Candidate < ActiveRecord::Base
 
     self.save!
   end
+
+  private
+    def check_geo_name
+      if self.city_of_residence.blank?
+        self.geo_name = nil
+      else
+        self.geo_name = GeoName.joins(:geo_alternate_names).find_by(fclass: 'P', geo_alternate_names: {name: self.city_of_residence})
+      end
+    end
 end
