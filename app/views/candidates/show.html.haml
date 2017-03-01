@@ -1,15 +1,10 @@
 - perc = set_the_percentage_of_completed_fields(@candidate)
 .row
   .col-lg-12
-    %code
-      = "Источник резюме: <strong>#{@candidate.source}</strong>".html_safe
-%br
-.row
-  .col-lg-12
     .row
       .col-md-3
-        .tip
-          = @candidate.name
+        %code
+          = "Источник резюме: <strong>#{@candidate.source}</strong>".html_safe
       .col-md-6
         = link_to edit_candidate_path(@candidate) do
           .progress
@@ -26,26 +21,45 @@
       .col-md-offset-1
     %hr
 .row
-  .col-lg-3
-    = render partial: 'left_sidebar'
+  .col-md-7
+    .row
+      .col-md-4
+        .tip
+          = @candidate.name
+      .col-md-8.text-right
+        = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-primary'
+        = link_to 'Назад', :back, class: 'btn btn-default'
     %hr
-    %dl.dl-horizontal
-      %dt Дата рождения:
-      %dd= display_field_value_for(@candidate.birthday)
-      %dt Город:
-      %dd= display_field_value_for(@candidate.city_of_residence)
-      %dt Желаемая должность:
-      %dd= @candidate.desired_position
-      %dt Хочу:
-      %dd= "#{display_field_value_for(@candidate.salary)} #{@candidate.salary_format}"
+    = render partial: 'row_element', locals: { subscription: 'Желаемая должность:', column: :desired_position, candidate: @candidate }
+    = render partial: 'row_element', locals: { subscription: 'Дата рождения:', column: :birthday, candidate: @candidate }
+    = render partial: 'row_element', locals: { subscription: 'Город:', column: :city_of_residence, candidate: @candidate }
     %hr
-    = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-primary'
-    = link_to 'Назад', :back, class: 'btn btn-default'
+    = render partial: 'row_element', locals: { subscription: 'Почта:', column: :email, candidate: @candidate }
+    = render partial: 'row_element', locals: { subscription: 'Телефон:', column: :phone, candidate: @candidate }
+    = render partial: 'row_element', locals: { subscription: 'Skype:', column: :skype, candidate: @candidate }
+    = render partial: 'row_element', locals: { subscription: 'Linkedin:', column: :linkedin, candidate: @candidate }
+    = render partial: 'row_element', locals: { subscription: 'Facebook:', column: :facebook, candidate: @candidate }
+    = render partial: 'row_element', locals: { subscription: 'Vkontakte::', column: :vkontakte, candidate: @candidate }
 
-  .col-lg-4
-    = render partial: 'candidate_info', locals: { candidate: @candidate }
+    .row
+      .col-md-4.text-right
+        .tip
+          %p.subscription
+            Другое:
+      .col-md-1
+      .col-md-7
     %hr
-  .col-lg-4
+    = render partial: 'row_element', locals: { subscription: 'Владение языками:', column: :languages, candidate: @candidate }
+    = render partial: 'row_element', locals: { subscription: 'Зарплатные ожидания:', column: :salary, candidate: @candidate }
+    %hr
+    = render partial: 'row_element', locals: { subscription: 'Опыт работы:', column: :experience, candidate: @candidate }
+    %hr
+    = render partial: 'row_element', locals: { subscription: 'Образование:', column: :education, candidate: @candidate }
+    %hr
+    = render partial: 'row_element', locals: { subscription: 'Дополнительная информация:', column: :description, candidate: @candidate }
+  .col-md-4
+    .pull_left
+      = image_tag 'missing_medium.png'
     .tip
       %p Потенциальные вакансии:
     .vacancies_list

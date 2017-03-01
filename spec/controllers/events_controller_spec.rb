@@ -64,9 +64,9 @@ RSpec.describe EventsController, type: :controller do
     let(:event_params) { attributes_for :event }
 
     context 'when successful without "staff_relations"' do
-      let (:will_begin_at) { Time.zone.now + 10.hours + 12.minutes }
-      before { post :create, event: event_params.update(will_begin_at: will_begin_at,
-                                                        user_id: current_user.id), format: :js }
+      let (:will_begin_at) { (Time.zone.now + 10.hours + 12.minutes).strftime("%FT%T%:z") }
+      before { post :create, params: {event: event_params.update(will_begin_at: will_begin_at,
+                                                        user_id: current_user.id), format: :js }}
 
       it 'creates new Event object' do
         expect(assigns(:events).length).to eq(events_of(current_user, start_date, end_date).count)
@@ -77,8 +77,8 @@ RSpec.describe EventsController, type: :controller do
 
     context 'when successful with "staff_relations"' do
       let(:staff_relation) { create(:staff_relation, status: 'Собеседование') }
-      before { post :create, event: event_params.update(staff_relation: staff_relation.id,
-                                                        user_id: current_user.id), format: :js }
+      before { post :create, params: {event: event_params.update(staff_relation: staff_relation.id,
+                                                        user_id: current_user.id), format: :js }}
 
       it 'creates new Event object' do
         expect(assigns(:events).length).to eq(events_of(current_user, start_date, end_date).count)
@@ -89,7 +89,7 @@ RSpec.describe EventsController, type: :controller do
     context 'when failed' do
       let(:invalid_event_params) { { event: (attributes_for :invalid_event,
                                                             user_id: current_user.id), format: :json } }
-      before { post :create, invalid_event_params }
+      before { post :create, params: invalid_event_params }
 
       it %q{ doesn't create new record } do
         expect(assigns(:events).length).to eq(events_of(current_user, start_date, end_date).count)
@@ -103,7 +103,7 @@ RSpec.describe EventsController, type: :controller do
 
   context '#edit' do
     let(:event) { current_user.events.first }
-    before { get :edit, id: current_user.events.first }
+    before { get :edit, params: {id: current_user.events.first} }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -125,7 +125,7 @@ RSpec.describe EventsController, type: :controller do
 
     context 'when successful' do
       before do
-        put :update, id: event, event: event_attrs, staff_relation: staff_relation.id, format: :js
+        put :update, params: {id: event, event: event_attrs, staff_relation: staff_relation.id, format: :js}
         event.reload
       end
 
@@ -140,7 +140,7 @@ RSpec.describe EventsController, type: :controller do
 
     context 'when failed' do
       before do
-        put :update, id: event, event: (attributes_for :invalid_event), staff_relation: staff_relation.id, format: :json
+        put :update, params: {id: event, event: (attributes_for :invalid_event), staff_relation: staff_relation.id, format: :json}
       end
 
       it 'renders "edit" template' do
@@ -153,7 +153,7 @@ RSpec.describe EventsController, type: :controller do
     let(:event) { current_user.events.first }
     let(:id) { event.id }
     before do
-      delete :destroy, id: event
+      delete :destroy, params: {id: event}
     end
 
     it 'destroys event' do

@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe UsersController, type: :controller do
+  Devise::Test::ControllerHelpers
 
   let(:user) { create :user }
 
@@ -23,7 +24,7 @@ describe UsersController, type: :controller do
   end
 
   context '#edit' do
-    before { get :edit, id: user }
+    before { get :edit, params: {id: user }}
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -35,7 +36,7 @@ describe UsersController, type: :controller do
   end
 
   context '#show' do
-    before { get :show, id: user }
+    before { get :show, params: {id: user }}
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -53,7 +54,7 @@ describe UsersController, type: :controller do
     context 'when successful' do
       context 'updates the same attributes' do
         before do
-          put :update, id: user, user: user_attrs
+          put :update, params: {id: user, user: user_attrs}
           user.reload
         end
 
@@ -68,7 +69,7 @@ describe UsersController, type: :controller do
       end
 
       it 'has updated region_id' do
-        put :update, id: user, user: { region_id: region.id }
+        put :update, params: {id: user, user: { region_id: region.id }}
         user.reload
         expect(assigns(:user).region_id).to eq(region.id)
       end
@@ -76,7 +77,7 @@ describe UsersController, type: :controller do
 
     context 'when failed' do
       it 'renders "edit" template' do
-        put :update, id: user, user: (attributes_for :invalid_user)
+        put :update, params:{id: user, user: (attributes_for :invalid_user)}
         expect(response).to render_template('edit')
       end
     end

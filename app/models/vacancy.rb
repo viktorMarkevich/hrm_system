@@ -2,6 +2,7 @@
 class Vacancy < ActiveRecord::Base
   acts_as_paranoid
   include RegionSupporter
+  include ChangesHistory
 
   belongs_to :region
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
@@ -15,6 +16,7 @@ class Vacancy < ActiveRecord::Base
 
   after_restore :set_default_status
   after_destroy :set_closed_status
+  after_commit :write_history, on: :update
 
   STATUSES = %w(Не\ задействована В\ работе Закрыта)
 
@@ -32,5 +34,6 @@ class Vacancy < ActiveRecord::Base
   def set_closed_status
     self.update(status: 'Закрыта')
   end
+
 end
 

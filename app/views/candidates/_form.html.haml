@@ -1,4 +1,7 @@
-= form_for @candidate, html: { class: 'form-horizontal' } do |f|
+= stylesheet_link_tag 'candidates'
+= javascript_include_tag 'candidates'
+
+= form_for @candidate, html: { class: 'form-horizontal candidate-form' } do |f|
   - if @candidate.errors.any?
     %h2 Возникшие ошибки:
     %ul
@@ -20,8 +23,6 @@
     .col-sm-2.control-label
       = f.label :birthday, 'Дата рождения:'
     .col-sm-6
-      %span.tip
-        %p.subscription dd/mm/yyyy or dd-mm-yyyy
       = f.text_field :birthday, class: 'form-control'
   .form-group
     .col-sm-2.control-label
@@ -32,7 +33,7 @@
     .col-sm-2.control-label
       = f.label :salary, 'Желаемая ЗП:'
     .col-sm-6
-      = f.text_field :salary, class: 'form-control'
+      = f.text_field :salary, class: 'form-control', 'data-validation' => 'number', 'data-validation-allowing' => 'float'
   .form-group
     .col-sm-2.control-label
       = f.label :city_of_residence, 'Место проживания:'
@@ -108,7 +109,7 @@
     .col-sm-2.control-label
       = f.label :company_id, 'Компания:'
     .col-sm-6
-      = f.select(:company_id, @companies, {}, class: 'form-control')
+      = f.select(:company_id, @companies.presence || '', {}, class: 'form-control')
 
   %hr
 

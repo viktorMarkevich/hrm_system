@@ -5,7 +5,7 @@
 set :application, 'faceit-hrm'
 set :rails_env, 'staging'
 set :branch, 'develop'
-set :user, 'deployer'
+set :user, 'stagin'
 
 set :deploy_to,  "/home/#{fetch(:user)}/#{fetch(:rails_env)}/#{fetch(:application)}"
 
@@ -20,17 +20,17 @@ set :assets_roles, [:web, :app]
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-role :app, %w{deployer@192.168.137.75}
-role :web, %w{deployer@192.168.137.75}
-role :db,  %w{deployer@192.168.137.75}
+role :app, %w{stagin@192.168.0.251}
+role :web, %w{stagin@192.168.0.251}
+role :db,  %w{stagin@192.168.0.251}
 
 # Custom SSH Options
 # ------------------------------------
-server '192.168.137.75',
-       user: 'deployer',
+server 'stagin@192.168.0.251',
+       user: 'stagin',
        roles: %w{app db web},
        ssh_options: {
-           keys: %w(/home/deployer/.ssh/id_rsa),
+           keys: %w(/home/stagin/.ssh/id_rsa),
            forward_agent: true,
            auth_methods: %w(publickey password),
            password: ENV['STAGING_SSH_PASSWORD']

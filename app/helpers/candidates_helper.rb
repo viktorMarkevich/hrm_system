@@ -1,5 +1,14 @@
 module CandidatesHelper
 
+  def set_item_for(column, sub)
+    arr_column = [:email, :phone, :skype, :linkedin, :facebook, :vkontakte]
+    if arr_column.include?(column)
+      image_tag('icons/' + column.to_s + '.png')
+    else
+      sub
+    end
+  end
+
   def desired_salary_for(candidate)
     "#{candidate.salary} #{candidate.salary_format}"
   end

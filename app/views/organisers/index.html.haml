@@ -30,17 +30,33 @@
     %hr
     .tip
       %p
-        = 'Последние действия над вакансиями'
-    - if @staff_relations.present?
-      %table.table.table-striped.table-responsive
+        = 'Последние действия на сайте: '
+    - if @changes_history.present?
+      %table.table.table-striped.table-responsive.history
         %tbody
-          - @staff_relations.each do |sr|
+          - @changes_history.each  do |sr|
             %tr
-              %td= link_to sr.vacancy.try(:name), vacancy_path(sr.vacancy || '#'), id: 'vacancy-name'
-              %td= "кандидат: #{link_to sr.candidate.try(:name), candidate_path(sr.candidate || '#')}".html_safe
               %td
-                %span{ class: "label label-#{return_status_label(sr)}" }
-                  = sr.status
+                = "Изменения в: "
+                %span{ style: 'color: red' }
+                  = 'каком-то объекте'
+                -#= link_to sr.name.capitalize,:controller => sr.name, :action => "show", :id => sr.record_id
+              -#%td= "Пользователем: #{sr.user.try(:name)}".html_safe
+              %td
+                - sr.try(:body).each do |k, v|
+                  - if !v.blank?
+                    %p
+                      .field #{k}
+                      %strong
+                        со
+                        %span{ style: "color: blue;" }
+                          старого статуса
+                      -##{truncate(v[0].presence || 'empty', :length => 25, :separator => ' ')}
+                      %strong
+                        на
+                        %span{ style: "color: red;" }
+                          новый статус
+                      -##{truncate(v[1].presence || 'empty', :length => 25, :separator => ' ')}
               %td
                 .label.label-info
                   = sr.updated_at.strftime('%e %b %H:%M')
