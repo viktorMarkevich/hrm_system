@@ -10,11 +10,14 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_self
- *= require organiser
- *= require bootstrap_and_overrides
- * require_tree .
  */
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'organiser';
+@import 'events';
+@import 'active_admin';
+@import 'spacelab';
+@import 'stickers';
 
 .current {
   border-bottom: 2px solid limegreen;
@@ -137,4 +140,7 @@ ul.nav.navbar-nav > li > a {
   color: #ffffff;
 
   @extend .items-list;
+}
+a, a:link, a:visited{
+  text-decoration: none;
 }
