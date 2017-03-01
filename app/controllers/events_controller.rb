@@ -81,13 +81,9 @@ class EventsController < ApplicationController
   end
 
   def set_date
-    if params[:start_date].present?
-      @date_from = Time.zone.parse(params[:start_date])
-      @date_to = @date_from.end_of_month
-    else
-      @date_from = Time.zone.now
-      @date_to = @date_from.end_of_month
-    end
+    @date_from = Time.zone.parse(params[:start_date].to_s) || Time.zone.now
+    @date_from = @date_from.beginning_of_month if @date_from > Time.zone.now
+    @date_to = @date_from.end_of_month
   end
 
   def event_params
@@ -97,6 +93,6 @@ class EventsController < ApplicationController
   def set_events_in_date_period
     @events = Event.events_of(current_user, @date_from, @date_to).order(will_begin_at: :asc)
     @events_month = Event.events_of(current_user, @date_from.beginning_of_month, @date_to).order(will_begin_at: :asc)
-    @events_past = Event.events_of(current_user, @date_from.beginning_of_month, @date_from).order(will_begin_at: :asc)
+    @events_past = Event.events_of(current_user, @date_from.beginning_of_month, Time.zone.now).order(will_begin_at: :asc)
   end
 end
