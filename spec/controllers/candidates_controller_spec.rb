@@ -114,10 +114,11 @@ RSpec.describe CandidatesController, type: :controller do
       end
 
       it 'has created new candidate' do
-        expect(candidate.name).to eql candidate.name
-        expect(candidate.email).to eql candidate.email
-        expect(candidate.phone).to eql candidate.phone
-        expect(candidate.source).to eql candidate.source
+        candidate = Candidate.last
+        expect(candidate.name).to eql 'MAX SYZONENKO'
+        expect(candidate.email).to eql 'max.s32@i.ua'
+        expect(candidate.phone).to eql '38-063-895-1-895, 38-063-553-08-61'
+        expect(candidate.source).to eql 'CV_ENG.docx'
       end
 
       it 'redirect_to back' do
