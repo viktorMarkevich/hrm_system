@@ -42,7 +42,7 @@ class Candidate < ActiveRecord::Base
 
   def save_resume_to_candidate(data)
     file = Yomu.new(data)
-    file_source = data.original_filename.scan(/(?:[\s]*|^)(rabota.ua|Workua)(?=[\s]*|$)/).first[0]
+    file_source = data.original_filename.scan(/(?:[\s]*|^)(rabota.ua|Workua)(?=[\s]*|$)/).first(0)
     content = file.text.to_s
     full_name = content.scan(/([A-Z]+[a-zA-Z]* [A-Z]+[a-zA-Z]*)|([А-Я]+[а-яА-Я]* [А-Я]+[а-яА-Я]*)/).first.compact.first
     self.name = full_name
