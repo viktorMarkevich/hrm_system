@@ -41,14 +41,13 @@ class Candidate < ActiveRecord::Base
   end
 
   def save_resume_to_candidate(data)
-    file = Yomu.new(data)
-    content = file.text.to_s
-    full_name = content.scan(/([A-Z]+[a-zA-Z]* [A-Z]+[a-zA-Z]*)|([А-Я]+[а-яА-Я]* [А-Я]+[а-яА-Я]*)/).first.compact.first
-    self.name = full_name
-    self.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{4}/).first ||
-        content.scan(/\d{1,2}\/\d{1,2}\/\d{4}/).first ||
-        content.scan(/\d{1,2}\.\d{1,2}\.\d{4}/).first
-    self.languages = content.scan(/(?:[\s]|^)(English|Русский|Українська|Français|Ukrainian|Russian|Polish)(?=[\s]|$)/).compact.join(', ')
+    content = Yomu.new(data).text.to_s
+    self.name = content.scan(/([A-Z]+[a-zA-Z]* [A-Z]+[a-zA-Z]*)|([А-Я]+[а-яА-Я]* [А-Я]+[а-яА-Я]*)/).first.compact.first
+    self.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{2,4}/).first ||
+        content.scan(/\d{1,2}\/\d{1,2}\/\d{2,4}/).first ||
+        content.scan(/\d{1,2}\.\d{1,2}\.\d{2,4}/).first
+    self.salary = content.scan(/(?:[\s]|^)([-~]*[0-9]{2,7}\s*)(?=грн|ГРН|usd|USD|долл|\$)/).first
+    self.languages = content.scan(/(?:[\s]|^)(English|Английский|Англійська|Russian|Русский|Російська|Ukrainian|Украинский|Українська|Français|Polish)(?:[.,:;-]*)(?=[\s]|$)/).compact.join(', ')
     self.source = data.original_filename
     self.email = content.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i).first
     self.phone = content.scan(/\b((?:[\s()\d-]{11,}\d)|\d{10,})\b/).join(', ')
@@ -58,6 +57,10 @@ class Candidate < ActiveRecord::Base
     self.vkontakte = content.scan(/[^\s]*vk.com[^\s]*/).first
     self.google_plus = content.scan(/[^\s]*plus.google.com[^\s]*/).first
     self.description = content
+    # self.education = content.scan(/(?<=Образование\n)((.|\n)*?)(?=Профессиональные навыки)/).join('')
+    # self.experience = content.scan(/(?<=Опыт работы\n)((.|\n)*?)(?=Образование\n)/).join('')
+    # self.city_of_residence = content.scan(/(?<=Город: )([^\n\r]*)/).first.join('')
+    # self.desired_position = content.scan(/([A-Z]+[a-zA-Z._%+-]*)/).first.join('')
 
     self.save!
   end

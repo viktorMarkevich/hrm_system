@@ -62,10 +62,11 @@ class CandidatesController < ApplicationController
         @candidate.save_resume_to_candidate(file)
       end
       flash[:notice] = 'Данные сохранились успешно'
+      redirect_to edit_candidate_path(@candidate)
     rescue Exception => error
       flash[:error] = "I've see this error #{error}"
+      redirect_to new_candidate_path
     end
-    redirect_to edit_candidate_path(@candidate)
   end
 
   private
