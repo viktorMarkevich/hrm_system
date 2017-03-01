@@ -42,23 +42,9 @@ class Candidate < ActiveRecord::Base
 
   def save_resume_to_candidate(data)
     file = Yomu.new(data)
-    file_source = data.original_filename.scan(/(?:[\s]*|^)(rabota.ua|Workua)(?=[\s]*|$)/).first(0)
     content = file.text.to_s
     full_name = content.scan(/([A-Z]+[a-zA-Z]* [A-Z]+[a-zA-Z]*)|([А-Я]+[а-яА-Я]* [А-Я]+[а-яА-Я]*)/).first.compact.first
     self.name = full_name
-    if file_source == "rabota.ua" then
-      # self.education = content.scan(/(?<=Образование\n)((.|\n)*?)(?=Профессиональные навыки)/).join('')
-      # self.experience = content.scan(/(?<=Опыт работы\n)((.|\n)*?)(?=Образование\n)/).join('')
-      # self.city_of_residence = content.scan(/(?:[\s]*|^)(Kiev||Українська|Français|Ukrainian|Russian|Polish)(?=[\s]*|$)/).first.join('')
-      # # self.ready_to_relocate
-      # self.desired_position = content.scan(/([A-Z]+[a-zA-Z._%+-]*)/).first.join('')
-    elsif file_source == "Workua" then
-      self.education = content.scan(/(?<=Образование\n)((.|\n)*?)(?=Профессиональные навыки)/).join('')
-      self.experience = content.scan(/(?<=Опыт работы\n)((.|\n)*?)(?=Образование\n)/).join('')
-      self.city_of_residence = content.scan(/(?<=Город: )([^\n\r]*)/).first.join('')
-      # # self.ready_to_relocate
-      self.desired_position = content.scan(/([A-Z]+[a-zA-Z._%+-]*)/).first.join('')
-    end
     self.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{4}/).first ||
         content.scan(/\d{1,2}\/\d{1,2}\/\d{4}/).first ||
         content.scan(/\d{1,2}\.\d{1,2}\.\d{4}/).first

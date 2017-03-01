@@ -58,14 +58,14 @@ class CandidatesController < ApplicationController
   def upload_resume
     begin
       params[:upload_resume][:file].each do |file|
-        candidate = current_user.candidates.build
-        candidate.save_resume_to_candidate(file)
+        @candidate = current_user.candidates.build
+        @candidate.save_resume_to_candidate(file)
       end
       flash[:notice] = 'Данные сохранились успешно'
     rescue Exception => error
       flash[:error] = "I've see this error #{error}"
     end
-    redirect_back(fallback_location: root_path)
+    redirect_to edit_candidate_path(@candidate)
   end
 
   private
