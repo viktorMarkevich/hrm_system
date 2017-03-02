@@ -5,7 +5,7 @@
     .col-md-12
       .tip
         %p
-          = set_events_list_title(@events, DateTime.now)
+          = set_events_list_title(@events, @date_from)
       .events-list.future
         - if @events.present?
           = render partial: 'events_list', locals: { events: @events, time_is: :future }
@@ -23,4 +23,4 @@
       Календарь событий
   = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
   .calendar
-    = render partial: 'calendar', locals: { events: @events }
+    = render partial: 'calendar', locals: { events: @events_month }
