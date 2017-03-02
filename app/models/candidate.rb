@@ -42,25 +42,22 @@ class Candidate < ActiveRecord::Base
 
   def save_resume_to_candidate(data)
     content = Yomu.new(data).text.to_s
-    self.name = content.scan(/(?:[A-Z]+[a-zA-Z]* [A-Z]+[a-zA-Z]*)|(?:[А-Я]+[а-яА-Я]* [А-Я]+[а-яА-Я]*)/).compact.first.strip
-    self.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{2,4}/).first.strip ||
-        content.scan(/\d{1,2}\/\d{1,2}\/\d{2,4}/).first.strip ||
-        content.scan(/\d{1,2}\.\d{1,2}\.\d{2,4}/).first.strip
-    self.salary = content.scan(/^*\s*(?=[-~])*[0-9]{2,7}\s*(?=грн|ГРН|usd|USD|долл|\$)/).first.strip
-    self.city_of_residence = content.scan(/(?<=Город:|Регион:|Адрес:)\s*$*.*(?=$)/).first.strip
+    self.name = content.scan(/(?:[A-Z]+[a-zA-Z]* [A-Z]+[a-zA-Z]*)|(?:[А-Я]+[а-яА-Я]* [А-Я]+[а-яА-Я]*)/).to_a.compact.first.to_s.strip
+    self.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{2,4}/).to_a.compact.first.to_s.strip ||
+        content.scan(/\d{1,2}\/\d{1,2}\/\d{2,4}/).to_a.compact.first.to_s.strip ||
+        content.scan(/\d{1,2}\.\d{1,2}\.\d{2,4}/).to_a.compact.first.to_s.strip
+    self.salary = content.scan(/^*\s*(?=[-~])*[0-9]{2,7}\s*(?=грн|ГРН|usd|USD|долл|\$)/).to_a.compact.first.to_s.strip
+    self.city_of_residence = content.scan(/(?<=Город:|Регион:|Адрес:)\s*$*.*(?=$)/).to_a.compact.first.to_s.strip
     self.source = data.original_filename
-    # self.education = content.scan(/(?<=[Оо]бразование[:\n]|[Ee]ducation[:\n])(.|\n)*\w+/).join('')
-    self.languages = content.scan(/^*\s*(?:English|Английский|Англійська|Russian|Русский|Російська|Ukrainian|Украинский|Українська|Français|Polish)(?=[\.\-,:;\s$])/).compact.join(', ')
-    self.email = content.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i).first.strip
-    self.phone = content.scan(/\b((?:[\s()\d-]{11,}\d)|\d{10,})\b/).join(', ')
-    self.skype = content.scan(/(?<=[Ss]kype:)\s*[a-zA-Z]+\w*(?:[-.:]\w+)*(?=[\s$])/).compact.first.strip
-    self.linkedin = content.scan(/(?<=[Ll]inked[Ii]n:)\s*.*(?=[\s$])/).first.strip
-    self.facebook = content.scan(/(?<=[Ff]acebook:)\s*.*(?=[\s$])/).first.strip
-    self.vkontakte = content.scan(/(?<=[Vv]kontakte:|[Vv][Kk]:)\s*.*(?=[\s$])/).first.strip
-    self.google_plus = content.scan(/(?<=[Gg]oogle\+:|[Gg]oogle[Pp]lus:)\s*.*(?=[\s$])/).first.strip
+    self.languages = content.scan(/^*\s*(?:English|Английский|Англійська|Russian|Русский|Російська|Ukrainian|Украинский|Українська|Français|Polish)(?=[\.\-,:;\s$])/).to_a.compact.join(', ')
+    self.email = content.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i).to_a.compact.first.to_s.strip
+    self.phone = content.scan(/\b((?:[\s()\d-]{11,}\d)|\d{10,})\b/).to_a.compact.join(', ')
+    self.skype = content.scan(/(?<=[Ss]kype:)\s*[a-zA-Z]+\w*(?:[-.:]\w+)*(?=[\s$])/).to_a.compact.first.to_s.strip
+    self.linkedin = content.scan(/(?<=[Ll]inked[Ii]n:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
+    self.facebook = content.scan(/(?<=[Ff]acebook:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
+    self.vkontakte = content.scan(/(?<=[Vv]kontakte:|[Vv][Kk]:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
+    self.google_plus = content.scan(/(?<=[Gg]oogle\+:|[Gg]oogle[Pp]lus:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
     self.description = content
-
-    # self.experience = content.scan(/(?<=Опыт работы\n)((.|\n)*?)(?=Образование\n)/).join('')
 
     self.save!
   end
