@@ -83,7 +83,7 @@ class Candidate < ActiveRecord::Base
       if self.city_of_residence.blank?
         self.geo_name = nil
       else
-        self.geo_name = GeoName.joins(:geo_alternate_names).find_by(fclass: 'P', geo_alternate_names: {name: self.city_of_residence})
+        self.geo_name = GeoName.joins(:geo_alternate_names).find_by(fclass: 'P', geo_alternate_names: { name: self.city_of_residence })
       end
     end
 end
