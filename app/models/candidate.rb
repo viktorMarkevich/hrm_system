@@ -43,9 +43,9 @@ class Candidate < ActiveRecord::Base
   def save_resume_to_candidate(data)
     content = Yomu.new(data).text.to_s
     self.name = content.scan(/(?:[A-Z]+[a-zA-Z]* [A-Z]+[a-zA-Z]*)|(?:[А-Я]+[а-яА-Я]* [А-Я]+[а-яА-Я]*)/).to_a.compact.first.to_s.strip
-    self.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{2,4}/).to_a.compact.first.to_s.strip ||
-        content.scan(/\d{1,2}\/\d{1,2}\/\d{2,4}/).to_a.compact.first.to_s.strip ||
-        content.scan(/\d{1,2}\.\d{1,2}\.\d{2,4}/).to_a.compact.first.to_s.strip
+    self.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{4}/).to_a.compact.first.to_s.strip ||
+        content.scan(/\d{1,2}\/\d{1,2}\/\d{4}/).to_a.compact.first.to_s.strip ||
+        content.scan(/\d{1,2}\.\d{1,2}\.\d{4}/).to_a.compact.first.to_s.strip
     self.salary = content.scan(/^*\s*(?=[-~])*[0-9]{2,7}\s*(?=грн|ГРН|usd|USD|долл|\$)/).to_a.compact.first.to_s.strip
     self.city_of_residence = content.scan(/(?<=Город:|Регион:|Адрес:)\s*$*.*(?=$)/).to_a.compact.first.to_s.strip
     self.source = data.original_filename
