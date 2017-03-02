@@ -5,7 +5,7 @@
     .col-md-12
       .tip
         %p
-          = set_events_list_title(@events, DateTime.now)
+          = set_events_list_title(@events, DateTime.parse(params[:start_date]) || DateTime.now )
       .events-list.future
         - if @events.present?
           = render partial: 'events_list', locals: { events: @events, time_is: :future }
