@@ -42,8 +42,8 @@
                     %a.resume_upload
                       %i.glyphicon.glyphicon-download-alt
                       Загрузить из файла
-                    = form_for :upload_resume, html: { multipart: true, hidden: true }, method: 'POST', url: upload_resume_candidates_path do |f|
-                      = f.file_field :file, multiple: true
+                    = form_for :upload_resume, html: { hidden: true }, method: 'POST', url: upload_resume_candidates_path do |f|
+                      = f.file_field :file
                       = f.submit 'save'
 
             %li
