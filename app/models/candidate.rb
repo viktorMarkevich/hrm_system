@@ -17,8 +17,9 @@ class Candidate < ActiveRecord::Base
   STATUSES = %w(Пассивен В\ работе)
   # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
-  validates :name, :status, :source, presence: true
-  # validates :source, uniqueness: true
+  validates :name, :status, presence: true
+  validates :source, presence: true, if: 'file_name.nil?'
+  validates :source, uniqueness: true, if: 'source.present?'
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
             message: 'is invalid.' }, if: 'email.present?'
   #validates :phone, format:  { with: /\+?\d{2}-\d{3}-\d{3}-\d{4}/,
@@ -48,7 +49,7 @@ class Candidate < ActiveRecord::Base
         content.scan(/\d{1,2}\.\d{1,2}\.\d{4}/).to_a.compact.first.to_s.strip
     self.salary = content.scan(/^*\s*(?=[-~])*[0-9]{2,7}\s*(?=грн|ГРН|usd|USD|долл|\$)/).to_a.compact.first.to_s.strip
     self.city_of_residence = content.scan(/(?<=Город:|Регион:|Адрес:)\s*$*.*(?=$)/).to_a.compact.first.to_s.strip
-    self.source = data.original_filename
+    self.file_name = data.original_filename
     self.languages = content.scan(/^*\s*(?:English|Английский|Англійська|Russian|Русский|Російська|Ukrainian|Украинский|Українська|Français|French|Французский|Французька|Deutsch|German|Немецкий|Німецька|Polish|Polski|Польский|Польська)(?=[\.\-,:;\s$])/).to_a.compact.join(', ')
     self.email = content.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i).to_a.compact.first.to_s.strip
     self.phone = content.scan(/\b((?:[\s()\d-]{11,}\d)|\d{10,})\b/).to_a.compact.join(', ')
