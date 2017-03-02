@@ -33,7 +33,7 @@
     .col-sm-2.control-label
       = f.label :salary, 'Желаемая ЗП:'
     .col-sm-6
-      = f.text_field :salary, class: 'form-control', 'data-validation' => 'number', 'data-validation-allowing' => 'float'
+      = f.text_field :salary, class: 'form-control', 'data-validation' => 'number_not_required', 'data-validation-allowing' => 'float'
   .form-group
     .col-sm-2.control-label
       = f.label :city_of_residence, 'Место проживания:'
