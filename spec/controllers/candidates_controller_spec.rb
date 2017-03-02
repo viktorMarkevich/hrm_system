@@ -109,7 +109,6 @@ RSpec.describe CandidatesController, type: :controller do
   context '#upload_resume' do
     context 'when successful' do
       before do
-        request.env['HTTP_REFERER'] = 'where_i_came_from'
         post :upload_resume, params: {upload_resume: { file: [fixture_file_upload("#{Rails.root}/spec/fixtures/files/CV_ENG.docx", 'text/docx')] }}
         @candidate = Candidate.last
       end
@@ -121,7 +120,7 @@ RSpec.describe CandidatesController, type: :controller do
         expect(@candidate.source).to eql 'CV_ENG.docx'
       end
 
-      it 'redirect_to back' do
+      it 'redirect_to edit uploaded candidate' do
         expect(response).to redirect_to edit_candidate_path(@candidate)
       end
     end
