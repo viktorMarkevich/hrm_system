@@ -109,7 +109,7 @@ RSpec.describe CandidatesController, type: :controller do
   context '#upload_resume' do
     context 'when successful' do
       before do
-        post :upload_resume, params: {upload_resume: { file: [fixture_file_upload("#{Rails.root}/spec/fixtures/files/CV_ENG.docx", 'text/docx')] }}
+        post :upload_resume, params: {upload_resume: { file: fixture_file_upload("#{Rails.root}/spec/fixtures/files/CV_ENG.docx", 'text/docx') }}
         @candidate = Candidate.last
       end
 
