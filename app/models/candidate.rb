@@ -80,10 +80,8 @@ class Candidate < ActiveRecord::Base
 
   private
     def check_geo_name
-      if self.city_of_residence.blank?
-        self.geo_name = nil
-      else
-        self.geo_name = GeoName.joins(:geo_alternate_names).find_by(fclass: 'P', geo_alternate_names: { name: self.city_of_residence })
-      end
+      self.geo_name = if city_of_residence.present?
+                        GeoName.joins(:geo_alternate_names).find_by(fclass: 'P', geo_alternate_names: { name: city_of_residence })
+                      end || nil
     end
 end
