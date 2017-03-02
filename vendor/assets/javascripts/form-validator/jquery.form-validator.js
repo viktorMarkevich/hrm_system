@@ -1287,7 +1287,7 @@
         addValidClassOnAll: false, // whether or not to apply class="valid" even if the input wasn't validated
         decimalSeparator: '.',
         inputParentClassOnError: 'has-error', // twitter-bootstrap default class name
-        inputParentClassOnSuccess: 'has-success', // twitter-bootstrap default class name
+        inputParentClassOnSuccess: '', // twitter-bootstrap default class name
         validateHiddenInputs: false, // whether or not hidden inputs should be validated
         inlineErrorMessageCallback: false,
         submitErrorMessageCallback: false
@@ -2287,6 +2287,72 @@
     }
     //   errorMessage : '', // set above in switch statement
     //   errorMessageKey: '' // not used
+  });
+
+  $.formUtils.addValidator({
+    name: 'number_not_required',
+    validatorFunction: function (val, $el, conf) {
+      if (val !== '') {
+        var allowing = $el.valAttr('allowing') || '',
+          decimalSeparator = $el.valAttr('decimal-separator') || conf.decimalSeparator,
+          allowsRange = false,
+          begin, end,
+          steps = $el.valAttr('step') || '',
+          allowsSteps = false,
+          sanitize = $el.attr('data-sanitize') || '',
+          isFormattedWithNumeral = sanitize.match(/(^|[\s])numberFormat([\s]|$)/i);
+
+        if (isFormattedWithNumeral) {
+          if (!window.numeral) {
+            throw new ReferenceError('The data-sanitize value numberFormat cannot be used without the numeral' +
+              ' library. Please see Data Validation in http://www.formvalidator.net for more information.');
+          }
+          //Unformat input first, then convert back to String
+          if (val.length) {
+            val = String(numeral().unformat(val));
+          }
+        }
+
+        if (allowing.indexOf('number') === -1) {
+          allowing += ',number';
+        }
+
+        if (allowing.indexOf('negative') === -1 && val.indexOf('-') === 0) {
+          return false;
+        }
+
+        if (allowing.indexOf('range') > -1) {
+          begin = parseFloat(allowing.substring(allowing.indexOf('[') + 1, allowing.indexOf(';')));
+          end = parseFloat(allowing.substring(allowing.indexOf(';') + 1, allowing.indexOf(']')));
+          allowsRange = true;
+        }
+
+        if (steps !== '') {
+          allowsSteps = true;
+        }
+
+        if (decimalSeparator === ',') {
+          if (val.indexOf('.') > -1) {
+            return false;
+          }
+          // Fix for checking range with floats using ,
+          val = val.replace(',', '.');
+        }
+        if (val.replace(/[0-9-]/g, '') === '' && (!allowsRange || (val >= begin && val <= end)) && (!allowsSteps || (val % steps === 0))) {
+          return true;
+        }
+
+        if (allowing.indexOf('float') > -1 && val.match(new RegExp('^([0-9-]+)\\.([0-9]+)$')) !== null && (!allowsRange || (val >= begin && val <= end)) && (!allowsSteps || (val % steps === 0))) {
+          return true;
+        }
+      }
+      if (val == '') {
+        return true
+      }
+      return false;
+    },
+    errorMessage: '',
+    errorMessageKey: 'badInt'
   });
 
 })(jQuery);
