@@ -4,6 +4,8 @@ class StaffRelation < ActiveRecord::Base
   belongs_to :vacancy
   belongs_to :candidate
   belongs_to :event
+  has_many :history_events, as: :history_eventable, dependent: :destroy
+
 
   STATUSES = %w(Нейтральный Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
@@ -38,5 +40,17 @@ class StaffRelation < ActiveRecord::Base
 
   def self.get_without_event
     StaffRelation.where('status IN (?) and event_id IS NULL', ['Собеседование', 'Утвержден'])
+  end
+  def write_history
+    if !self.previous_changes.blank?
+      p '-'*100
+      p self.previous_changes.to_hash.symbolize_keys.compact.except(:updated_at)
+
+      prev_hash = self.previous_changes.to_hash.symbolize_keys.compact.except(:updated_at)
+      history_event = self.history_events.create(user: User.current_user.try(:id), old_status: prev_hash[:status][0], new_status: prev_hash[:status][1] )
+      history_event.save!
+    else
+      return self.errors[:messages]
+    end
   end
 end

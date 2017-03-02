@@ -40,23 +40,21 @@
                 = "Изменения в: "
                 %span{ style: 'color: red' }
                   = 'каком-то объекте'
-                = link_to sr.name.capitalize,:controller => sr.name, :action => "show", :id => sr.record_id
+                -#%a{href:"#{sr.history_eventable_type.downcase}_path(#{sr.history_eventable_id})"} #TODO FIX
+                -#  =sr.history_eventable_type.downcase
               %td= "Пользователем: #{sr.user.try(:name)}".html_safe
               %td
-                - sr.try(:body).each do |k, v|
-                  - if !v.blank?
-                    %p
-                      .field #{k}
-                      %strong
-                        со
-                        %span{ style: "color: blue;" }
-                          старого статуса
-                      #{truncate(v[0].presence || 'empty', :length => 25, :separator => ' ')}
-                      %strong
-                        на
-                        %span{ style: "color: red;" }
-                          новый статус
-                      #{truncate(v[1].presence || 'empty', :length => 25, :separator => ' ')}
+
+                %strong
+                  со
+                  %span{ style: "color: blue;" }
+                    старого статуса
+                =sr.new_status
+                %strong
+                  на
+                  %span{ style: "color: red;" }
+                    новый статус
+                =sr.new_status
               %td
                 .label.label-info
                   = sr.updated_at.strftime('%e %b %H:%M')

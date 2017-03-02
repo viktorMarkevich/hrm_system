@@ -1,3 +1,4 @@
 class HistoryEvent < ActiveRecord::Base
-  serialize :body
+belongs_to :history_evetable, polymorphic: true
+
 end
