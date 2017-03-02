@@ -40,8 +40,8 @@
                 = "Изменения в: "
                 %span{ style: 'color: red' }
                   = 'каком-то объекте'
-                -#= link_to sr.name.capitalize,:controller => sr.name, :action => "show", :id => sr.record_id
-              -#%td= "Пользователем: #{sr.user.try(:name)}".html_safe
+                = link_to sr.name.capitalize,:controller => sr.name, :action => "show", :id => sr.record_id
+              %td= "Пользователем: #{sr.user.try(:name)}".html_safe
               %td
                 - sr.try(:body).each do |k, v|
                   - if !v.blank?
@@ -51,12 +51,12 @@
                         со
                         %span{ style: "color: blue;" }
                           старого статуса
-                      -##{truncate(v[0].presence || 'empty', :length => 25, :separator => ' ')}
+                      #{truncate(v[0].presence || 'empty', :length => 25, :separator => ' ')}
                       %strong
                         на
                         %span{ style: "color: red;" }
                           новый статус
-                      -##{truncate(v[1].presence || 'empty', :length => 25, :separator => ' ')}
+                      #{truncate(v[1].presence || 'empty', :length => 25, :separator => ' ')}
               %td
                 .label.label-info
                   = sr.updated_at.strftime('%e %b %H:%M')

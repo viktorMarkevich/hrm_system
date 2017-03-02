@@ -9,6 +9,7 @@ class Vacancy < ActiveRecord::Base
   has_many :staff_relations
   has_many :candidates, through: :staff_relations, source: :candidate
 
+
   attr_accessor :sr_status
 
   validates :name, :region_id, :status, :user_id, presence: true
@@ -21,10 +22,13 @@ class Vacancy < ActiveRecord::Base
   STATUSES = %w(Не\ задействована В\ работе Закрыта)
 
   def candidates_with_status(status)
+
     Candidate.select(%{ "candidates".* })
              .joins(:staff_relations)
              .where(%{ "staff_relations"."vacancy_id" = #{self.id}
                     AND "staff_relations"."status" = '#{status}' })
+
+
   end
 
   def set_default_status
