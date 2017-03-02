@@ -40,10 +40,9 @@ $(document).ajaxError (event, xhr, options, exc) ->
   $('#error_explanation').html er
   return
 
+$(document).ready ->
+  $('body').on 'change', '#upload_resume_file', ->
+    $(this).closest("form").submit()
 
-
-
-
-
-
-
+  $('.resume_upload').on 'click', ->
+    $('#upload_resume_file').click()
