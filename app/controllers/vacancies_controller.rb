@@ -82,7 +82,7 @@ class VacanciesController < ApplicationController
 
     def vacancy_params
       params.require(:vacancy).permit(:name, :salary, :salary_format, :languages,
-                                      :requirements, :region_id, :sr_status, :user_id, :candidate_id)
+                                      :requirements, :region_id, :sr_status, :user_id)
     end
 
     def set_vacancy

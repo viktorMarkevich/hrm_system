@@ -37,13 +37,13 @@
           - @changes_history.each  do |sr|
             %tr
               %td
-                = "Изменения: "
-                = link_to @staff_relations.find(sr.history_eventable_id).candidate.name, candidate_path(@staff_relations.find(sr.history_eventable_id).candidate_id)
+                = "Изменения кандидата: "
+                = link_to sr.history_eventable.candidate.name, candidate_path(sr.history_eventable.candidate_id)
                 %span{ style: 'color: red' }
-                  = 'в объекте'
-                = link_to @staff_relations.find(sr.history_eventable_id).vacancy.name, vacancy_path(@staff_relations.find(sr.history_eventable_id).vacancy_id)
+                  = 'в вакансии'
+                = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
 
-              %td= "Пользователем: #{sr.user.try(:name)}".html_safe
+              %td= "Пользователем: #{sr.user.first_name} #{sr.user.last_name}".html_safe
               %td
 
                 %strong
