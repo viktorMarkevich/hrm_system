@@ -154,18 +154,9 @@
       = f.label :notice, 'Примечание:'
     .col-sm-6
       = f.text_field :notice, class: 'form-control'
+
   %hr
 
-  .row
-    .col-md-12
-      .tip
-        %p О себе:
-  .form-group
-    .col-sm-2.control-label
-      = f.label :original_cv_data, 'Описание:'
-    .col-sm-6
-      = f.text_area :original_cv_data, rows: 5, class: 'form-control'
-  %hr
   .form-group
     .col-sm-12
       = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-success'
