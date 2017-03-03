@@ -79,7 +79,7 @@ RSpec.describe CandidatesController, type: :controller do
 
   context '#update' do
     context 'when successful' do
-      let(:candidate_attrs) { { name: 'Rick Grimes', salary: '500' } }
+      let(:candidate_attrs) { { name: 'Rick Grimes', salary: '500'} }
 
       before do
         put :update, id: candidate, candidate: candidate_attrs
@@ -102,6 +102,19 @@ RSpec.describe CandidatesController, type: :controller do
         candidate.reload
 
         expect(response).to render_template('edit')
+      end
+    end
+
+    context 'when update  city_of_residence' do
+      let!(:geo_alternate_name) { create(:geo_alternate_name) }
+      let(:candidate_attrs) { { name: 'Rick Grimes', salary: '500', city_of_residence: "Киев" } }
+
+      before do
+        put :update, id: candidate, candidate: candidate_attrs
+        candidate.reload
+      end
+      it 'increase candidates_count' do
+        expect(GeoName.find(geo_alternate_name.geo_geoname_id).candidates_count).to be_equal(GeoName.find(geo_alternate_name.geo_geoname_id).candidates.count)
       end
     end
   end

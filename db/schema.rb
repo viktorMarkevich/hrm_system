@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301144734) do
+ActiveRecord::Schema.define(version: 20170302130853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,8 +121,9 @@ ActiveRecord::Schema.define(version: 20170301144734) do
     t.integer  "elevation"
     t.integer  "gtopo30"
     t.string   "timezone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "candidates_count", default: 0
   end
 
   create_table "history_events", force: :cascade do |t|
