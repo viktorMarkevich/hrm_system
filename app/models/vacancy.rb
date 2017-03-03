@@ -7,7 +7,6 @@ class Vacancy < ActiveRecord::Base
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_many :staff_relations
   has_many :candidates, through: :staff_relations, source: :candidate
-  has_many :history_events, as: :history_eventable, dependent: :destroy
 
 
 
@@ -18,7 +17,6 @@ class Vacancy < ActiveRecord::Base
 
   after_restore :set_default_status
   after_destroy :set_closed_status
-  after_commit :write_history, on: :update
 
 
   STATUSES = %w(Не\ задействована В\ работе Закрыта)
@@ -41,18 +39,7 @@ class Vacancy < ActiveRecord::Base
     self.update(status: 'Закрыта')
   end
 
-  def write_history
-    if !self.previous_changes.blank?
-      p '-'*100
-      p self.previous_changes.to_hash.symbolize_keys.compact.except(:updated_at)
 
-      prev_hash = self.previous_changes.to_hash.symbolize_keys.compact.except(:updated_at)
-        history_event = self.history_events.create(user: User.current_user.try(:id), old_status: prev_hash[:status][0], new_status: prev_hash[:status][1] )
-      history_event.save!
-    else
-      return self.errors[:messages]
-    end
-  end
 
 end
 

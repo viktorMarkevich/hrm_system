@@ -7,10 +7,8 @@ class Candidate < ActiveRecord::Base
   has_many :staff_relations, dependent: :destroy
   has_many :vacancies, through: :staff_relations, source: :vacancy
   belongs_to :company
-  has_many :history_events, as: :history_evetable, dependent: :destroy
   accepts_nested_attributes_for :image
 
-  after_commit :write_history, on: :update
 
   scope :with_status, -> (status) { where(status: "#{status}") }
 
@@ -75,16 +73,5 @@ class Candidate < ActiveRecord::Base
 
     self.save!
   end
-  def write_history
-    if !self.previous_changes.blank?
-      p '-'*100
-      p self.previous_changes.to_hash.symbolize_keys.compact.except(:updated_at)
 
-      prev_hash = self.previous_changes.to_hash.symbolize_keys.compact.except(:updated_at)
-      history_event = self.history_events.create(user: User.current_user.try(:id), old_status: prev_hash[:status][0], new_status: prev_hash[:status][1] )
-      history_event.save!
-    else
-      return self.errors[:messages]
-    end
-  end
 end

@@ -37,11 +37,12 @@
           - @changes_history.each  do |sr|
             %tr
               %td
-                = "Изменения в: "
+                = "Изменения: "
+                = link_to @staff_relations.find(sr.history_eventable_id).candidate.name, candidate_path(@staff_relations.find(sr.history_eventable_id).candidate_id)
                 %span{ style: 'color: red' }
-                  = 'каком-то объекте'
-                -#%a{href:"#{sr.history_eventable_type.downcase}_path(#{sr.history_eventable_id})"} #TODO FIX
-                -#  =sr.history_eventable_type.downcase
+                  = 'в объекте'
+                = link_to @staff_relations.find(sr.history_eventable_id).vacancy.name, vacancy_path(@staff_relations.find(sr.history_eventable_id).vacancy_id)
+
               %td= "Пользователем: #{sr.user.try(:name)}".html_safe
               %td
 
@@ -49,7 +50,7 @@
                   со
                   %span{ style: "color: blue;" }
                     старого статуса
-                =sr.new_status
+                =sr.old_status
                 %strong
                   на
                   %span{ style: "color: red;" }
