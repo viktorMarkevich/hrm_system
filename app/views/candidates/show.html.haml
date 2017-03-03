@@ -29,6 +29,24 @@
       .col-md-8.text-right
         = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-primary'
         = link_to 'Назад', :back, class: 'btn btn-default'
+        - if @candidate.original_cv_data
+          %button{type: 'button', class: 'btn btn-info', 'data-toggle' => 'modal', 'data-target' => '#myModal'}
+            Посмотреть резюме
+          %div{class: 'modal fade bs-example-modal-lg', id: 'myModal', tabindex: '-1', role: 'dialog', 'aria-labelledby' => 'myModalLabel'}
+            %div{class: 'modal-dialog', role: 'document'}
+              .modal-content
+                .modal-header
+                  %button{type: 'button', class: 'close', 'data-dismiss' => 'modal', 'aria-label' => 'Close'}
+                    %span{'aria-hidden' => 'true'}
+                      &times;
+                  %h4#myModalLabel.modal-title
+                    Оригинальное резюме кандидата
+                .modal-body
+                  = render partial: 'candidates/resume'
+                .modal-footer
+                  %button{type: 'button', class: 'btn btn-default', 'data-dismiss' => 'modal'}
+                    Закрыть
+
     %hr
     = render partial: 'row_element', locals: { subscription: 'Желаемая должность:', column: :desired_position, candidate: @candidate }
     = render partial: 'row_element', locals: { subscription: 'Дата рождения:', column: :birthday, candidate: @candidate }
