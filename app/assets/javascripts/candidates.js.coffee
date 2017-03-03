@@ -5,3 +5,4 @@
 #=require form-validator/jquery.form-validator
 #=require jquery.ui.autocomplete
 #=require autocomplete
+#=require candidates_geo_names.js

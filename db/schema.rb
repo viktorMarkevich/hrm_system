@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20170302150735) do
     t.integer  "company_id"
     t.string   "notice"
     t.text     "experience"
+    t.integer  "geo_name_id"
     t.string   "file_name"
   end
 
@@ -100,6 +101,37 @@ ActiveRecord::Schema.define(version: 20170302150735) do
     t.datetime "updated_at",    null: false
     t.text     "description"
     t.integer  "user_id"
+  end
+
+  create_table "geo_alternate_names", force: :cascade do |t|
+    t.integer  "geo_geoname_id"
+    t.string   "language"
+    t.string   "name"
+    t.string   "alternate_name"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "geo_names", force: :cascade do |t|
+    t.string   "name"
+    t.string   "asciiname"
+    t.decimal  "lat"
+    t.decimal  "lng"
+    t.string   "fclass"
+    t.string   "fcode"
+    t.string   "country"
+    t.string   "cc2"
+    t.string   "admin1"
+    t.string   "admin2"
+    t.string   "admin3"
+    t.string   "admin4"
+    t.integer  "population"
+    t.integer  "elevation"
+    t.integer  "gtopo30"
+    t.string   "timezone"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "candidates_count", default: 0
   end
 
   create_table "history_events", force: :cascade do |t|

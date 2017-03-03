@@ -46,4 +46,21 @@ RSpec.describe Candidate, type: :model do
       end
     end
   end
+
+  context 'check geo_names after create or update candidate' do
+    let!(:candidate) { create(:candidate) }
+    let!(:geo_alternate_name) { create(:geo_alternate_name) }
+
+    it 'geo_name is blank' do
+      @candidate = candidate
+      @candidate.update(city_of_residence: 'поселок')
+      expect(@candidate.geo_name).to be_blank
+    end
+
+    it 'geo_name is not blank'do
+      @candidate = candidate
+      @candidate.update(city_of_residence: 'Киев')
+      expect(@candidate.geo_name).to_not be_blank
+    end
+  end
 end
