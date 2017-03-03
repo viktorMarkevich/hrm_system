@@ -12,7 +12,6 @@
 #
 #= require jquery
 #= require jquery_ujs
-#= require candidates
 #= require bootstrap-sprockets
 # require_tree .
 

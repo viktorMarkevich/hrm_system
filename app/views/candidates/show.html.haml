@@ -4,7 +4,7 @@
     .row
       .col-md-3
         %code
-          = "Источник резюме: <strong>#{@candidate.source}</strong>".html_safe
+          = "Источник резюме/файл: <strong>#{@candidate.file_name||@candidate.source}</strong>".html_safe
       .col-md-6
         = link_to edit_candidate_path(@candidate) do
           .progress

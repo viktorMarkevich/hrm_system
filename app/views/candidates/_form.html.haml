@@ -41,11 +41,16 @@
       = f.text_field :city_of_residence, class: 'form-control'
   .form-group
     .col-sm-2.control-label
-      = f.label :source, 'Источник резюме'
+      = f.label :source, 'Источник резюме:'
       %span{ style: 'color:red;' }
         *
     .col-sm-6
       = f.text_field :source, class: 'form-control'
+  .form-group
+    .col-sm-2.control-label
+      = f.label :file_name, 'Имя файла:'
+    .col-sm-6
+      = f.text_field :file_name, class: 'form-control', readonly: true
   .form-group
     .col-sm-2.control-label
       = f.label :ready_to_relocate, 'Готов к переезду:'
