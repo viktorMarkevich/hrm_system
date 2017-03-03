@@ -1,18 +1,18 @@
 = stylesheet_link_tag 'candidates'
 
 .row
-  .col-lg-12
+  .col-sm-12
     .tip
       %p
         Редактирование кандидата
 .row
-  .col-lg-2
-    = image_tag 'missing_medium.png'
+  .col-md-2
+    = image_tag 'missing_medium.png', class: 'img-responsive'
 
-  .col-lg-5
+  .col-md-5
     = render partial: 'candidates/form'
 
-  .col-lg-5
+  .col-md-5
     - if @candidate.original_cv_data
       %button{class: 'btn btn-info', type: 'button', 'data-toggle' => 'collapse', 'data-target' => '#collapseExample', 'aria-expanded' => 'false', 'aria-controls' => 'collapseExample'}
         Показать резюме
