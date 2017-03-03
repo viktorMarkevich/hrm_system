@@ -3,9 +3,12 @@ class ChangeFieldHistoryEvent < ActiveRecord::Migration[5.0]
     remove_column :history_events, :name
     remove_column :history_events, :record_id
     remove_column :history_events, :body
+    remove_column :history_events, :user
     add_column :history_events, :history_eventable_type, :string
     add_column :history_events, :history_eventable_id, :integer
     add_column :history_events, :old_status, :string
     add_column :history_events, :new_status, :string
+    add_column :history_events, :user_id, :integer
+
   end
 end
