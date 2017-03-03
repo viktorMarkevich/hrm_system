@@ -58,7 +58,7 @@ class Candidate < ActiveRecord::Base
     self.facebook = content.scan(/(?<=[Ff]acebook:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
     self.vkontakte = content.scan(/(?<=[Vv]kontakte:|[Vv][Kk]:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
     self.google_plus = content.scan(/(?<=[Gg]oogle\+:|[Gg]oogle[Pp]lus:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
-    self.description = content
+    self.original_cv_data = content
 
     self.save!
   end
