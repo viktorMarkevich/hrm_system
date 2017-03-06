@@ -2,7 +2,7 @@
 class CandidatesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :find_candidate, only: [:show, :edit, :update, :set_vacancies]
+  before_action :find_candidate, only: [:show, :edit, :update, :set_vacancies, :update_resume]
   before_action :set_companies, only: [:new, :edit]
 
   def index
@@ -64,6 +64,14 @@ class CandidatesController < ApplicationController
     rescue Exception => error
       flash[:error] = "I've see this error #{error}"
       redirect_to new_candidate_path
+    end
+  end
+
+  def update_resume
+    respond_to do |format|
+      format.html
+      # format.json { @candidate.update(original_cv_data: params[:original_cv_data]) }
+      format.json { @candidate.update(original_cv_data: strip_tags(params[:original_cv_data])) }
     end
   end
 
