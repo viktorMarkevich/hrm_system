@@ -1,5 +1,6 @@
 = stylesheet_link_tag 'candidates_form'
 = javascript_include_tag 'candidates_form'
+= javascript_include_tag 'candidates'
 
 = form_for @candidate, html: { class: 'form-horizontal candidate-form' } do |f|
   - if @candidate.errors.any?
