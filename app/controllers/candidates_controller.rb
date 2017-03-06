@@ -4,6 +4,7 @@ class CandidatesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_candidate, only: [:show, :edit, :update, :set_vacancies]
   before_action :set_companies, only: [:new, :edit]
+  before_action :find_candidate_vacancies, :find_vacancies, only: [:show, :set_vacancies]
 
   def index
     @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(10)
@@ -15,8 +16,6 @@ class CandidatesController < ApplicationController
   end
 
   def show
-    @candidate_vacancies = @candidate.vacancies.includes(:staff_relations)
-    @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
   end
 
   def edit
@@ -47,11 +46,10 @@ class CandidatesController < ApplicationController
     if params[:vacancy_id].present?
       @candidate.staff_relations.create(status: 'Найденные', vacancy_id: params[:vacancy_id])
     end
-    @candidate_vacancies = @candidate.vacancies.includes(:staff_relations)
-    @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
 
     respond_to do |format|
       format.js
+      format.json
     end
   end
 
@@ -87,4 +85,11 @@ class CandidatesController < ApplicationController
       @candidate = Candidate.find(params[:id])
     end
 
+    def find_candidate_vacancies
+      @candidate_vacancies = @candidate.vacancies.includes(:staff_relations)
+    end
+
+    def find_vacancies
+      @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
+    end
 end
