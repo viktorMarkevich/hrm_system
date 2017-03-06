@@ -9,7 +9,7 @@ class OrganisersController < ApplicationController
                                   where(will_begin_at: Time.zone.now..Time.zone.now + 7.days).
                                   order(will_begin_at: :asc)
 
-    @changes_history = HistoryEvent.preload([:user, :history_eventable]).order('updated_at DESC').limit(5)
+    @changes_history = HistoryEvent.preload([:user, history_eventable: [:vacancy, :candidate]]).order('updated_at DESC').limit(5)
     @staff_relations = StaffRelation.preload([:vacancy, :candidate]).
                                      order('updated_at DESC').limit(5)
   end
