@@ -18,5 +18,6 @@ FactoryGirl.define do
     google_plus 'https://plus.google.com/u/0/109854654'
     association :owner, factory: :user
     sequence(:source) { |n| "CV_ENG.docx#{n}" }
+    city_of_residence 'Киев'
   end
 end

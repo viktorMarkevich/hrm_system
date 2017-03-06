@@ -7,6 +7,9 @@ class Candidate < ActiveRecord::Base
   has_many :staff_relations, dependent: :destroy
   has_many :vacancies, through: :staff_relations, source: :vacancy
   belongs_to :company
+
+  belongs_to :geo_name, counter_cache: true
+
   accepts_nested_attributes_for :image
 
 
@@ -15,8 +18,9 @@ class Candidate < ActiveRecord::Base
   STATUSES = %w(Пассивен В\ работе)
   # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
-  validates :name, :status, :source, presence: true
-  # validates :source, uniqueness: true
+  validates :name, :status, presence: true
+  validates :source, presence: true, if: 'file_name.nil?'
+  validates :source, uniqueness: true, if: 'source.present?'
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
             message: 'is invalid.' }, if: 'email.present?'
   #validates :phone, format:  { with: /\+?\d{2}-\d{3}-\d{3}-\d{4}/,
@@ -25,11 +29,12 @@ class Candidate < ActiveRecord::Base
   validates :phone, uniqueness: true, if: 'phone.present?'
   validates :skype, uniqueness: true,
                     length: { minimum: 6, maximum: 32 },
-                    format: { with: /(\A[a-zA-Z]+\w*([-.:]\w+)*\z)/, message: 'is invalid.' },
+                    format: { with: /(\A[a-zA-Z]+\w*(?:[-.:]\w+)*\z)/, message: 'is invalid.' },
                     if: 'skype.present?'
   #validates :birthday, format: { with: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/, multiline: true,
   #          message: 'wrong format' }, if: 'birthday.present?'
 
+  before_validation :check_geo_name
   def status_for_vacancy(vacancy)
     StaffRelation.find_by_candidate_id_and_vacancy_id(self.id, vacancy.id).status
   end
@@ -39,39 +44,32 @@ class Candidate < ActiveRecord::Base
   end
 
   def save_resume_to_candidate(data)
-    file = Yomu.new(data)
-    file_source = data.original_filename.scan(/(?:[\s]*|^)(rabota.ua|Workua)(?=[\s]*|$)/).first[0]
-    content = file.text.to_s
-    full_name = content.scan(/([A-Z]+[a-zA-Z]* [A-Z]+[a-zA-Z]*)|([А-Я]+[а-яА-Я]* [А-Я]+[а-яА-Я]*)/).first.compact.first
-    self.name = full_name
-    if file_source == "rabota.ua" then
-      # self.education = content.scan(/(?<=Образование\n)((.|\n)*?)(?=Профессиональные навыки)/).join('')
-      # self.experience = content.scan(/(?<=Опыт работы\n)((.|\n)*?)(?=Образование\n)/).join('')
-      # self.city_of_residence = content.scan(/(?:[\s]*|^)(Kiev||Українська|Français|Ukrainian|Russian|Polish)(?=[\s]*|$)/).first.join('')
-      # # self.ready_to_relocate
-      # self.desired_position = content.scan(/([A-Z]+[a-zA-Z._%+-]*)/).first.join('')
-    elsif file_source == "Workua" then
-      self.education = content.scan(/(?<=Образование\n)((.|\n)*?)(?=Профессиональные навыки)/).join('')
-      self.experience = content.scan(/(?<=Опыт работы\n)((.|\n)*?)(?=Образование\n)/).join('')
-      self.city_of_residence = content.scan(/(?<=Город: )([^\n\r]*)/).first.join('')
-      # # self.ready_to_relocate
-      self.desired_position = content.scan(/([A-Z]+[a-zA-Z._%+-]*)/).first.join('')
-    end
-    self.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{4}/).first ||
-        content.scan(/\d{1,2}\/\d{1,2}\/\d{4}/).first ||
-        content.scan(/\d{1,2}\.\d{1,2}\.\d{4}/).first
-    self.languages = content.scan(/(?:[\s]|^)(English|Русский|Українська|Français|Ukrainian|Russian|Polish)(?=[\s]|$)/).compact.join(', ')
-    self.source = data.original_filename
-    self.email = content.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i).first
-    self.phone = content.scan(/\b((?:[\s()\d-]{11,}\d)|\d{10,})\b/).join(', ')
-    self.skype = content.scan(/(?<=kype: )([^\n\r]*)/).compact.join()
-    self.linkedin = content.scan(/[^\s]*linkedin[^\s]*/).first
-    self.facebook = content.scan(/[^\s]*facebook[^\s]*/).first
-    self.vkontakte = content.scan(/[^\s]*vk.com[^\s]*/).first
-    self.google_plus = content.scan(/[^\s]*plus.google.com[^\s]*/).first
-    self.description = content
+    content = Yomu.new(data).text.to_s
+    self.name = content.scan(/(?:[A-Z]+[a-zA-Z]* [A-Z]+[a-zA-Z]*)|(?:[А-Я]+[а-яА-Я]* [А-Я]+[а-яА-Я]*)/).to_a.compact.first.to_s.strip
+    self.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{4}/).to_a.compact.first.to_s.strip ||
+        content.scan(/\d{1,2}\/\d{1,2}\/\d{4}/).to_a.compact.first.to_s.strip ||
+        content.scan(/\d{1,2}\.\d{1,2}\.\d{4}/).to_a.compact.first.to_s.strip
+    self.salary = content.scan(/^*\s*(?=[-~])*[0-9]{2,7}\s*(?=грн|ГРН|usd|USD|долл|\$)/).to_a.compact.first.to_s.strip
+    self.city_of_residence = content.scan(/(?<=Город:|Регион:|Адрес:)\s*$*.*(?=$)/).to_a.compact.first.to_s.strip
+    self.file_name = data.original_filename
+    self.languages = content.scan(/(?:English|Английский|Англійська|Russian|Русский|Російська|Ukrainian|Украинский|Українська|Français|French|Французский|Французька|Deutsch|German|Немецкий|Німецька|Polish|Polski|Польский|Польська)(?=[\.\-\/,:;\s$])/).to_a.compact.join(', ')
+    self.email = content.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i).to_a.compact.first.to_s.strip
+    self.phone = content.scan(/\b((?:[\s()\d-]{11,}\d)|\d{10,})\b/).to_a.compact.join(', ')
+    self.skype = content.scan(/(?<=[Ss]kype:)\s*[a-zA-Z]+\w*(?:[-.:]\w+)*(?=[\s$])/).to_a.compact.first.to_s.strip
+    self.linkedin = content.scan(/(?<=[Ll]inked[Ii]n:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
+    self.facebook = content.scan(/(?<=[Ff]acebook:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
+    self.vkontakte = content.scan(/(?<=[Vv]kontakte:|[Vv][Kk]:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
+    self.google_plus = content.scan(/(?<=[Gg]oogle\+:|[Gg]oogle[Pp]lus:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
+    self.original_cv_data = content
 
     self.save!
   end
 
+
+  private
+    def check_geo_name
+      self.geo_name_id = if city_of_residence.present?
+                           GeoName.joins(:geo_alternate_names).find_by(fclass: 'P', geo_alternate_names: { name: self.city_of_residence })&.id
+                      end || nil
+    end
 end
