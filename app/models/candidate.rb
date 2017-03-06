@@ -1,23 +1,16 @@
 # encoding: utf-8
 class Candidate < ActiveRecord::Base
   include ChangesHistory
-
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_one :image
   has_many :staff_relations, dependent: :destroy
   has_many :vacancies, through: :staff_relations, source: :vacancy
   belongs_to :company
-
   belongs_to :geo_name, counter_cache: true
-
   accepts_nested_attributes_for :image
-
-
   scope :with_status, -> (status) { where(status: "#{status}") }
-
   STATUSES = %w(Пассивен В\ работе)
   # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
-
   validates :name, :status, presence: true
   validates :source, presence: true, if: 'file_name.nil?'
   validates :source, uniqueness: true, if: 'source.present?'
@@ -33,8 +26,8 @@ class Candidate < ActiveRecord::Base
                     if: 'skype.present?'
   #validates :birthday, format: { with: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/, multiline: true,
   #          message: 'wrong format' }, if: 'birthday.present?'
-
   before_validation :check_geo_name
+
   def status_for_vacancy(vacancy)
     StaffRelation.find_by_candidate_id_and_vacancy_id(self.id, vacancy.id).status
   end
@@ -64,7 +57,6 @@ class Candidate < ActiveRecord::Base
 
     self.save!
   end
-
 
   private
     def check_geo_name

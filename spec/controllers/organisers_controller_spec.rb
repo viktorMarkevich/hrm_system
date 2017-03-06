@@ -11,6 +11,7 @@ RSpec.describe OrganisersController, type: :controller do
     let(:candidate) { create(:candidate) }
     let(:vacancy) { create(:vacancy) }
     let(:sr) { create(:staff_relation )}
+    let(:history_event) { create(:history_event)}
 
     before { sign_in user }
 
@@ -36,6 +37,10 @@ RSpec.describe OrganisersController, type: :controller do
 
       it 'vacancy should have status "Найденные"' do
         expect(sr.status).to eq 'Найденные'
+      end
+
+      it 'to get change_history' do
+        expect(assigns(:history_events).count).to eq(0)
       end
     end
   end

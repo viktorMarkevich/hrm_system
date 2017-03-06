@@ -31,10 +31,10 @@
     .tip
       %p
         = 'Последние действия на сайте: '
-    - if @changes_history.present?
+    - if @history_events.present?
       %table.table.table-striped.table-responsive.history
         %tbody
-          - @changes_history.each  do |sr|
+          - @history_events.each  do |sr|
             %tr
               %td
                 = "Изменения кандидата: "
