@@ -1,4 +1,5 @@
 = stylesheet_link_tag 'events'
+= javascript_include_tag 'events'
 
 .col-md-6
   .row
@@ -21,6 +22,7 @@
   .tip
     %p
       Календарь событий
-  = link_to 'Создать новое событие', new_event_path, remote: true, class: 'btn btn-success pull-right'
+  %button.btn-primary.btn-dialog.pull-right
+    Создать новое событие
   .calendar
     = render partial: 'calendar', locals: { events: @events_month }

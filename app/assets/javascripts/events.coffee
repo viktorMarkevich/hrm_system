@@ -1,5 +1,7 @@
 # coding 'utf-8'
 $(document).ready ->
+  $('.btn-dialog').click ->
+    $('#dialog').modal('show')
 
   $('body').on 'keyup', '#event_name', ->
     val = $(this).val()

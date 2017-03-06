@@ -8,16 +8,7 @@ class EventsController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.js
-    end
-  end
-
-  def new
-    @event = Event.new
-    set_events_in_date_period
-    respond_to do |format|
-      format.html {  head :ok  }
-      format.js
+      format.json { render :index }
     end
   end
 
