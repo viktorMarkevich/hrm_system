@@ -6,7 +6,7 @@
   %ul.dropdown-menu
     - vacancies.each do |v|
       %li
-        = link_to v.name, set_vacancies_candidate_path(id: candidate.id, vacancy_id: v.id), remote: true
+        = link_to v.name, set_vacancies_candidate_path(id: candidate.id, vacancy_id: v.id)
 - unless candidate_vacancies.blank?
   %table.table.table-bordered.table-hover
     %thead
