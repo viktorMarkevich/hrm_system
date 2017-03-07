@@ -8,6 +8,10 @@ class CandidatesController < ApplicationController
   def index
     @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(10)
     @candidates = @candidates.where('company_id = ?', params[:company_id]) if params[:company_id]
+    respond_to do |format|
+      format.html
+      format.csv { send_data @candidates.to_csv, filename:"candidates-#{Date.today}.csv" }
+    end
   end
 
   def new
