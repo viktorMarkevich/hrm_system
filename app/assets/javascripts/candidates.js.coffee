@@ -28,6 +28,5 @@ $(document).ready ->
         $('.froala-editor').froalaEditor 'destroy'
         $('.resume-save-btn').addClass('resume-edit-btn').removeClass('resume-save-btn');
         btn.text 'Редактировать'
-      console.log ('OK')
     )
     return false

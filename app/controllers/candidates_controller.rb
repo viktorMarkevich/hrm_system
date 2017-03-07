@@ -72,7 +72,7 @@ class CandidatesController < ApplicationController
       format.html
       format.json do
         if @candidate.update(original_cv_data: params[:original_cv_data])
-          render json: { ok: 'ok' }, status: :no_content;
+          render json: {}
         end
       end
     end
