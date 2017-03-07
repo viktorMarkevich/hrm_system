@@ -71,6 +71,13 @@ GEM
     arel (7.1.4)
     autoprefixer-rails (6.7.5)
       execjs
+    axlsx (2.1.0.pre)
+      htmlentities (~> 4.3.1)
+      nokogiri (>= 1.4.1)
+      rubyzip (~> 1.1.7)
+    axlsx_rails (0.5.0)
+      actionpack (>= 3.1)
+      axlsx (>= 2.0.1)
     bcrypt (3.1.11)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
@@ -179,6 +186,7 @@ GEM
       haml (~> 4.0)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
+    htmlentities (4.3.4)
     i18n (0.8.1)
     jbuilder (2.6.3)
       activesupport (>= 3.0.0, < 5.2)
@@ -354,6 +362,8 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin (~> 1.0.0.pre4)
+  axlsx (= 2.1.0.pre)
+  axlsx_rails
   bootstrap-sass
   cancancan (~> 1.10)
   capistrano (~> 3.4)
@@ -381,6 +391,7 @@ DEPENDENCIES
   rails (= 5.0.1)
   rails-controller-testing
   rspec-rails
+  rubyzip (~> 1.1.0)
   rufus-scheduler (~> 3.1.3)
   sass-rails
   sdoc (~> 0.4.0)

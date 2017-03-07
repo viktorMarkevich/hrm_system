@@ -66,12 +66,10 @@ class Candidate < ActiveRecord::Base
   end
 
   def self.to_csv
-    # attributes = %w{name desired_position city_of_residence salary owner created_at status notice}
     column_names =  %w{Кандидат Должность Регион Зарплата Ответственный Добавлен Статус Примечание}
     CSV.generate do |csv|
       csv << column_names
       all.each do |candidate|
-      #   csv << attributes.map{ |attr| candidate.send(attr) }
         csv << [candidate.name, candidate.desired_position, candidate.city_of_residence, candidate.salary, candidate.owner.full_name,
                 candidate.created_at.strftime('%F'), candidate.status, candidate.notice]
       end

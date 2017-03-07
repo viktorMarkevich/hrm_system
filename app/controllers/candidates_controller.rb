@@ -11,6 +11,8 @@ class CandidatesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @candidates.to_csv, filename:"candidates-#{Date.today}.csv" }
+      format.pdf
+      format.xls
     end
   end
 
