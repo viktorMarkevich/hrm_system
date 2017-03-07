@@ -70,8 +70,11 @@ class CandidatesController < ApplicationController
   def update_resume
     respond_to do |format|
       format.html
-      # format.json { @candidate.update(original_cv_data: params[:original_cv_data]) }
-      format.json { @candidate.update(original_cv_data: strip_tags(params[:original_cv_data])) }
+      format.json do
+        if @candidate.update(original_cv_data: params[:original_cv_data])
+          render json: { ok: 'ok' }, status: :no_content;
+        end
+      end
     end
   end
 

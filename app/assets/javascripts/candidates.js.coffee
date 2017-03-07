@@ -13,19 +13,21 @@ $(document).ready ->
     )
     $('.resume-edit-btn').addClass('resume-save-btn').removeClass( 'resume-edit-btn');
     $(this).text 'Сохранить'
-    return
+    return false
 
   $('body').on 'click', '.resume-save-btn', (e) ->
+    btn = $(this)
     e.preventDefault()
-    if $('.froala-editor').data('froala.editor')
-      $('.froala-editor').froalaEditor 'destroy'
-      $('.resume-save-btn').addClass('resume-edit-btn').removeClass( 'resume-save-btn');
-      $(this).text 'Редактировать'
-
-    $.ajax
+    $.ajax(
       url: $(this).attr('href')
-      data: original_cv_data: $('.resume').text()
+#      data: original_cv_data: $('.resume').text()
+      data: original_cv_data: $('div.froala-editor').froalaEditor 'html.get'
       type: 'POST'
-      dataType: 'json'
-
+      dataType: 'json').done( ->
+      if $('.froala-editor').data('froala.editor')
+        $('.froala-editor').froalaEditor 'destroy'
+        $('.resume-save-btn').addClass('resume-edit-btn').removeClass('resume-save-btn');
+        btn.text 'Редактировать'
+      console.log ('OK')
+    )
     return false
