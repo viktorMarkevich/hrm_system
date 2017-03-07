@@ -32,7 +32,6 @@ RSpec.describe OrganisersController, type: :controller do
 
       it 'to get the stickers, vacancies' do
         expect(assigns(:stickers)).to eq(user.stickers)
-        expect(assigns(:staff_relations)).to eq([sr])
       end
 
       it 'vacancy should have status "Найденные"' do
@@ -40,8 +39,9 @@ RSpec.describe OrganisersController, type: :controller do
       end
 
       it 'to get change_history' do
-        expect(assigns(:history_events).count).to eq(0)
+        expect(assigns(:history_events)).to eq([history_event])
       end
+
     end
   end
 end
