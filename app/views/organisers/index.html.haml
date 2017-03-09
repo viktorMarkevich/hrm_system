@@ -35,30 +35,31 @@
       %table.table.table-striped.table-responsive.history
         %tbody
           - @history_events.each  do |sr|
-            %tr
-              %td
-                = "Изменения кандидата: "
-                = link_to sr.history_eventable.candidate.name, candidate_path(sr.history_eventable.candidate_id)
-                %span{ style: 'color: red' }
-                  = 'в вакансии'
-                = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
+            -if sr.history_eventable.present?
+              %tr
+                %td
+                  = "Изменения кандидата: "
+                  = link_to sr.history_eventable.candidate.name, candidate_path(sr.history_eventable.candidate_id)
+                  %span{ style: 'color: red' }
+                    = 'в вакансии'
+                  = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
 
-              %td= "Пользователем: #{sr.user.first_name} #{sr.user.last_name}".html_safe
-              %td
+                %td= "Пользователем: #{sr.user.first_name} #{sr.user.last_name}".html_safe
+                %td
 
-                %strong
-                  со
-                  %span{ style: "color: blue;" }
-                    старого статуса
-                =sr.old_status
-                %strong
-                  на
-                  %span{ style: "color: red;" }
-                    новый статус
-                =sr.new_status
-              %td
-                .label.label-info
-                  = sr.updated_at.strftime('%e %b %H:%M')
+                  %strong
+                    со
+                    %span{ style: "color: blue;" }
+                      старого статуса
+                  =sr.old_status
+                  %strong
+                    на
+                    %span{ style: "color: red;" }
+                      новый статус
+                  =sr.new_status
+                %td
+                  .label.label-info
+                    = sr.updated_at.strftime('%e %b %H:%M')
     - else
       %ul.list-group
         %li.list-group-item.list-group-item-warning

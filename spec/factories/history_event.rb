@@ -6,4 +6,8 @@ FactoryGirl.define do
     user
     association :history_eventable, factory: :staff_relation
   end
+  factory :invalid_history_event, parent: :history_event do
+    history_eventable_type nil
+    history_eventable_id nil
+  end
 end
