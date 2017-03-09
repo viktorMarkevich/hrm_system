@@ -22,7 +22,7 @@ $(document).ready ->
       url: $(this).attr('href')
 #      data: original_cv_data: $('.resume').text()
       data: original_cv_data: $('div.froala-editor').froalaEditor 'html.get'
-      type: 'POST'
+      type: 'PUT'
       dataType: 'json').done( ->
       if $('.froala-editor').data('froala.editor')
         $('.froala-editor').froalaEditor 'destroy'

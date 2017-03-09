@@ -138,4 +138,17 @@ RSpec.describe CandidatesController, type: :controller do
       end
     end
   end
+
+  context '#update_resume' do
+    context 'when update resume' do
+      let(:candidate) { create(:candidate) }
+
+      it "change original_cv_data" do
+        put :update_resume, params: { format: :json, id: candidate, original_cv_data: 'data' }
+        candidate.reload
+        expect(response.content_type).to eq "application/json"
+        expect(candidate.original_cv_data).to eql('data')
+      end
+    end
+  end
 end

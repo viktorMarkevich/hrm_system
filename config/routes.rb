@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :candidates, except: [:destroy] do
     member do
       get :set_vacancies
-      post :update_resume
+      put :update_resume
     end
     collection do
       post :upload_resume
