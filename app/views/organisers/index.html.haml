@@ -43,20 +43,19 @@
                   %span{ style: 'color: red' }
                     = 'в вакансии'
                   = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
-
-                %td= "Пользователем: #{sr.user.first_name} #{sr.user.last_name}".html_safe
                 %td
-
+                  = "Пользователем: #{sr.user.first_name} #{sr.user.last_name}".html_safe
+                %td
                   %strong
                     со
                     %span{ style: "color: blue;" }
                       старого статуса
-                  =sr.old_status
+                  = sr.old_status
                   %strong
                     на
                     %span{ style: "color: red;" }
                       новый статус
-                  =sr.new_status
+                  = sr.new_status
                 %td
                   .label.label-info
                     = sr.updated_at.strftime('%e %b %H:%M')

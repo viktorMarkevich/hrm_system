@@ -1,16 +1,17 @@
 # encoding: utf-8
 class Candidate < ActiveRecord::Base
-  include ChangesHistory
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_one :image
   has_many :staff_relations, dependent: :destroy
   has_many :vacancies, through: :staff_relations, source: :vacancy
   belongs_to :company
   belongs_to :geo_name, counter_cache: true
+
   accepts_nested_attributes_for :image
   scope :with_status, -> (status) { where(status: "#{status}") }
   STATUSES = %w(Пассивен В\ работе)
   # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
+
   validates :name, :status, presence: true
   validates :source, presence: true, if: 'file_name.nil?'
   validates :source, uniqueness: true, if: 'source.present?'
@@ -54,7 +55,6 @@ class Candidate < ActiveRecord::Base
     self.vkontakte = content.scan(/(?<=[Vv]kontakte:|[Vv][Kk]:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
     self.google_plus = content.scan(/(?<=[Gg]oogle\+:|[Gg]oogle[Pp]lus:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
     self.original_cv_data = content
-
     self.save!
   end
 
