@@ -2,7 +2,7 @@ class EventsController < ApplicationController
 
   before_action :set_event, only: [:edit, :update, :destroy]
   before_action :set_sr, only: [:new, :edit]
-  before_action :set_date
+  before_action :set_date, only: [:index, :edit, :update, :destroy]
   before_action :set_events_in_date_period, only: [:index, :update]
 
   def index
@@ -24,10 +24,9 @@ class EventsController < ApplicationController
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.save
-        set_events_in_date_period
-        format.js
+        format.html { flash[:notice] = 'Event created!' }
+        format.json { render @event, status: :created }
       else
-        set_events_in_date_period
         format.json { render json: @event.errors.full_messages,
                              status: :unprocessable_entity }
       end

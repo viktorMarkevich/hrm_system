@@ -1,5 +1,3 @@
-= javascript_include_tag 'events'
-
 #dialog.modal.fade{ 'aria-hidden' => 'true', 'aria-labelledby' => 'myModalLabel',
                     'data-backdrop' => 'static', 'data-keyboard' => 'true',
                     role: 'dialog', tabindex: '1' }
@@ -11,11 +9,11 @@
         %h3.modal-title
           Добавить событие
       .modal-body
-        = form_for current_user.events.build, url: events_path(current_user), html: { role: 'form', class: 'event_form' } do |f|
+        = form_for current_user.events.build, url: events_path, html: { role: 'form', class: 'event_form' } do |f|
           #error_explanation.bg-danger.text-danger
           .form-group#event_name_group
             = f.label :name, 'Название события: ', class: 'label_event_name'
-            = f.text_field :name, class: 'form-control'
+            = f.text_field :name, class: 'form-control', required: true
           - if @staff_relations.present?
             .form-group#staff_relation
               = f.label 'На вакансию:'
@@ -27,6 +25,6 @@
             = f.datetime_select :will_begin_at, default: DateTime.now, class: 'form-control'
           .form-group
             = f.label 'Описание:'
-            = f.text_area :description, rows: 3, class: 'form-control'
+            = f.text_area :description, rows: 3, class: 'form-control', required: true
           .form-group
             = f.submit 'Сохранить', class: 'btn btn-default'
