@@ -7,7 +7,7 @@
     - vacancies.each do |v|
       %li
         = link_to v.name, set_vacancies_candidate_path(id: candidate.id, vacancy_id: v.id)
-- unless candidate_vacancies.blank?
+- unless staff_relations.blank?
   %table.table.table-bordered.table-hover
     %thead
       %tr
@@ -16,12 +16,11 @@
         %th Статус
         %th Отменить
     %tbody
-      - candidate_vacancies.each do |v|
+      - staff_relations.each do |relation|
         %tr
-          %td= v.name
-          %td= get_salary(v)
-          %td
-            %span{ class: "label #{get_sr_label_class(v, candidate)}" }= sr_status(v, candidate)
+          %td= relation.vacancy.name
+          %td= get_salary(relation.vacancy)
+          %td= relation.status
           %td.text-center
-            = link_to destroy_staff_relations_path(candidate_id: candidate.id, vacancy_id: v.id), method: :delete do
+            = link_to staff_relation_path(relation), method: :delete do
               %i.glyphicon.glyphicon-remove-circle

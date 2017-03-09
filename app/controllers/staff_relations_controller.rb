@@ -27,10 +27,11 @@ class StaffRelationsController < ApplicationController
   end
 
   def destroy
-    sr = StaffRelation.where(candidate_id: params[:candidate_id],
-                             vacancy_id: params[:vacancy_id] ).first
-    sr.delete
-    redirect_to :back
+    StaffRelation.find(params[:id]).delete
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.json { render json: {}, status: 204 }
+    end
   end
 
   private

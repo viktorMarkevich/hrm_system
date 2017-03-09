@@ -24,11 +24,7 @@ Rails.application.routes.draw do
   resources :events, except: [:show]
   get 'events/:id', to: 'events#index'
 
-  resources :staff_relations, only: [:new, :create] do
-    collection do
-      delete ':candidate_id/:vacancy_id', to: 'staff_relations#destroy', as: :destroy
-    end
-  end
+  resources :staff_relations, only: [:new, :create, :destroy]
 
   resources :geo_names, only: [:index]
 

@@ -15,8 +15,8 @@ class CandidatesController < ApplicationController
   end
 
   def show
-    @candidate_vacancies = @candidate.vacancies.includes(:staff_relations)
-    @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
+    @staff_relations = @candidate.staff_relations
+    @vacancies = Vacancy.where.not(id: @staff_relations.pluck(:vacancy_id))
   end
 
   def edit
@@ -45,8 +45,8 @@ class CandidatesController < ApplicationController
 
   def set_vacancies
     if params[:vacancy_id].present?
-      staff_relation = @candidate.staff_relations.new(status: 'Найденные', vacancy_id: params[:vacancy_id])
-      if staff_relation.save
+      @staff_relation = @candidate.staff_relations.new(status: 'Найденные', vacancy_id: params[:vacancy_id])
+      if @staff_relation.save
         @vacancy = Vacancy.find(params[:vacancy_id])
         respond_to { |format| format.json }
       else

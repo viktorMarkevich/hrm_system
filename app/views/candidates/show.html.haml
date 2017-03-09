@@ -84,7 +84,7 @@
     .tip
       %p Потенциальные вакансии:
     .vacancies_list
-      = render partial: 'vacancies_list', locals: { candidate_vacancies: @candidate_vacancies,
-                                                    candidate: @candidate,
-                                                    vacancies: @vacancies }
+      = render partial: 'vacancies_list', locals: { candidate: @candidate,
+                                                    vacancies: @vacancies,
+                                                    staff_relations: @staff_relations }
   .col-lg-offset-1
