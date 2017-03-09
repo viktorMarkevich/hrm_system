@@ -2,7 +2,10 @@
 class Candidate < ActiveRecord::Base
   include ChangesHistory
 
-  belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
+  acts_as_xlsx columns: [:name, :desired_position, :city_of_residence, :salary, :'owner.full_name',
+                         :created_at, :status, :notice], i18n: true
+
+      belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_one :image
   has_many :staff_relations, dependent: :destroy
   has_many :vacancies, through: :staff_relations, source: :vacancy

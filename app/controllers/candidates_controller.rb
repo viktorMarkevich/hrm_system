@@ -10,9 +10,10 @@ class CandidatesController < ApplicationController
     @candidates = @candidates.where('company_id = ?', params[:company_id]) if params[:company_id]
     respond_to do |format|
       format.html
-      format.csv { send_data @candidates.to_csv, filename:"candidates-#{Date.today}.csv" }
+      format.csv { send_data @candidates.to_csv, filename: "candidates-#{Date.today}.csv" }
       format.pdf
-      format.xls
+      format.xlsx { send_data @candidates.to_xlsx.to_stream.read, :filename =>  "candidates-#{Date.today}.xlsx", :type => "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet" }
+
     end
   end
 

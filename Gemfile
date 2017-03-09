@@ -36,7 +36,7 @@ gem 'sass-rails'
 gem 'rubyzip', '~> 1.1.0'
 gem 'axlsx', '2.1.0.pre'
 gem 'axlsx_rails'
-
+gem 'acts_as_xlsx', git: "git://github.com/straydogstudio/acts_as_xlsx.git"
 group :development do
   gem 'letter_opener'
 end

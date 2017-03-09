@@ -21,3 +21,17 @@
 
 en:
   hello: "Hello world"
+
+  activerecord:
+    attributes:
+      candidate:
+        name: Кандидат,
+        desired_position: Должность,
+        city_of_residence: Регион,
+        salary: Зарплата,
+        owner:
+          full_name: Ответственный,
+        created_at: Добавлен,
+        status: Статус,
+        notice: Примечание
+
