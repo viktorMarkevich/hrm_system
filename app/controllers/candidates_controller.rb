@@ -16,10 +16,14 @@ class CandidatesController < ApplicationController
         send_data pdf.render, filename: 'candidates-#{Date.today}.pdf', type: 'application/pdf'
       end
       format.xlsx do
-        I18n.locale = :ru
-        send_data @candidates.to_xlsx.to_stream.read, filename: "candidates-#{Date.today}.xlsx", type: "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet"
-        I18n.locale = I18n.default_locale
+         response.headers['Content-Disposition'] = "attachment; filename=candidates-#{Date.today}.xlsx"
       end
+      # format.xlsx do
+      #   I18n.locale = :ru
+      #   send_data @candidates.to_xlsx.to_stream.read, filename: "candidates-#{Date.today}.xlsx", type: "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet"
+      #   I18n.locale = I18n.default_locale
+      # end
+
     end
   end
 
