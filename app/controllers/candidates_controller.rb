@@ -6,8 +6,15 @@ class CandidatesController < ApplicationController
   before_action :set_companies, only: [:new, :edit]
 
   def index
+
     @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(10)
     @candidates = @candidates.where('company_id = ?', params[:company_id]) if params[:company_id]
+    @candidates = @candidates.where('status = ?', params[:status]) if params[:status]
+    respond_to do |format|
+      format.html
+      format.js
+    end
+
   end
 
   def new

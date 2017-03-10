@@ -16,19 +16,19 @@
             %th Зарплата
             %th Ответственный
             %th Добавлен
-            %th Статус
+            %th
+              .dropdown.show
+                %a#dropdownMenuLink.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "https://example.com"}
+                  Статус
+                .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
+                  = link_to " Все", candidates_path, remote: true, class: 'dropdown-item'
+                  %br
+                  = link_to "Пассивен", candidates_path(status: 'Пассивен'), remote: true, class: 'dropdown-item'
+                  %br
+                  = link_to "В работе", candidates_path(status: 'В работе'), remote: true, class: 'dropdown-item'
             %th Примечание
-        %tbody
-          - @candidates.each do |candidate|
-            %tr
-              %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
-              %td= candidate.desired_position
-              %td= display_field_value_for(candidate.city_of_residence)
-              %td= display_field_value_for(candidate.salary)
-              %td= full_name_for(candidate.owner)
-              %td= candidate.created_at.strftime('%F')
-              %td= candidate.status
-              %td= candidate.notice
+        %tbody.candidate
+          = render partial: 'candidate_show', :locals => {candidates: @candidates}
 .row
   .col-lg-3
     = paginate @candidates
