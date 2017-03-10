@@ -20,7 +20,6 @@ $(document).ready ->
     , 'JSON'
     ).fail( (data) ->
       resetForm(form)
-      $('#dialog').modal('hide')
       alertMessage(data, form)
     )
 
@@ -55,7 +54,7 @@ $(document).ready ->
       event_day_td.addClass('td-primary').append(calendar_event)
 
   alertMessage = (data, container) ->
-    alert = "<div class='alert alert-danger'>#{data.responseJSON.errors.join('<br>')}</div>"
+    alert = "<div class='alert alert-danger'>#{ data.responseJSON.errors.join('<br>') }</div>"
     $(alert).insertBefore(container)
 
   resetForm = (form) ->

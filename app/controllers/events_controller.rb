@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
 
   before_action :set_event, only: [:edit, :update, :destroy]
-  before_action :set_sr, only: [:new, :edit]
+  before_action :set_sr, only: [ :edit]
   before_action :set_date, only: [:index, :edit, :update, :destroy]
   before_action :set_events_in_date_period, only: [:index, :update]
 
@@ -27,8 +27,8 @@ class EventsController < ApplicationController
         format.html { flash[:notice] = 'Event created!' }
         format.json { render @event, status: :created }
       else
-        format.json { render json: @event.errors.full_messages,
-                             status: :unprocessable_entity }
+        format.html { flash[:danger] = @event.errors.full_messages }
+        format.json { render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity }
       end
     end
   end
@@ -83,6 +83,6 @@ class EventsController < ApplicationController
   def set_events_in_date_period
     @events = Event.events_of(current_user, @date_from, @date_to).order(will_begin_at: :asc)
     @events_month = Event.events_of(current_user, @date_from.beginning_of_month, @date_to).order(will_begin_at: :asc)
-    @events_past = Event.events_of(current_user, @date_from.beginning_of_month, Time.zone.now).order(will_begin_at: :asc)
+    @events_past = Event.events_of(current_user, @date_from.beginning_of_month, Time.zone.now.advance(minutes: -1)).order(will_begin_at: :asc)
   end
 end
