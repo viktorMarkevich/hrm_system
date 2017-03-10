@@ -13,11 +13,7 @@ class Candidate < ActiveRecord::Base
   belongs_to :geo_name, counter_cache: true
 
   accepts_nested_attributes_for :image
-
-  after_commit :write_history, on: :update
-
   scope :with_status, -> (status) { where(status: "#{status}") }
-
   STATUSES = %w(Пассивен В\ работе)
   # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
@@ -36,8 +32,8 @@ class Candidate < ActiveRecord::Base
                     if: 'skype.present?'
   #validates :birthday, format: { with: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/, multiline: true,
   #          message: 'wrong format' }, if: 'birthday.present?'
-
   before_validation :check_geo_name
+
   def status_for_vacancy(vacancy)
     StaffRelation.find_by_candidate_id_and_vacancy_id(self.id, vacancy.id).status
   end
@@ -64,7 +60,6 @@ class Candidate < ActiveRecord::Base
     self.vkontakte = content.scan(/(?<=[Vv]kontakte:|[Vv][Kk]:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
     self.google_plus = content.scan(/(?<=[Gg]oogle\+:|[Gg]oogle[Pp]lus:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
     self.original_cv_data = content
-
     self.save!
   end
 
@@ -73,7 +68,7 @@ class Candidate < ActiveRecord::Base
     CSV.generate do |csv|
       csv << column_names
       all.each do |candidate|
-        csv << [candidate.name, candidate.desired_position, candidate.city_of_residence, candidate.salary, candidate.owner.full_name,
+        csv << [candidate.name, candidate.desired_position, candidate.city_of_residence, candidate.salary, candidate.owner&.full_name,
                 candidate.created_at.strftime('%F'), candidate.status, candidate.notice]
       end
     end

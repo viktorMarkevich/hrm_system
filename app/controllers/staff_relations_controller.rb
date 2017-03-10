@@ -12,10 +12,11 @@ class StaffRelationsController < ApplicationController
   def create
     begin
       st_params[:candidate_id].each do |id|
-        StaffRelation.create(st_params.merge!(candidate_id: id))
+       @st = StaffRelation.create(st_params.merge!(candidate_id: id))
       end
       @vacancy = Vacancy.find(st_params[:vacancy_id])
       @vacancy_candidates = @vacancy.candidates_with_status('Найденные')
+      history_event = @st.history_events.create(user_id: current_user.id, old_status: 'Пасивен', new_status: 'Найденные' )
 
       respond_to do |format|
         format.html { head :ok }

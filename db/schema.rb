@@ -135,12 +135,13 @@ ActiveRecord::Schema.define(version: 20170303104550) do
   end
 
   create_table "history_events", force: :cascade do |t|
-    t.integer  "record_id"
-    t.string   "name"
-    t.string   "user"
-    t.text     "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "history_eventable_type"
+    t.integer  "history_eventable_id"
+    t.string   "old_status"
+    t.string   "new_status"
+    t.integer  "user_id"
   end
 
   create_table "images", force: :cascade do |t|
