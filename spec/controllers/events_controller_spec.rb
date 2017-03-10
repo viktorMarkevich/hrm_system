@@ -44,45 +44,26 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-  context '#new' do
-    before { get :new }
-
-    it 'has HTTP 200 status code' do
-      expect(response).to have_http_status(200)
-    end
-
-    it 'renders "new" template' do
-      expect(response).not_to render_template('new')
-    end
-
-    it 'creates an instance of Event class' do
-      expect(assigns(:event)).to be_a_new(Event)
-    end
-  end
-
   describe '#create action;' do
     let(:event_params) { attributes_for :event }
 
     context 'when successful without "staff_relations"' do
       let (:will_begin_at) { (Time.zone.now + 10.hours + 12.minutes).strftime("%FT%T%:z") }
       before { post :create, params: {event: event_params.update(will_begin_at: will_begin_at,
-                                                        user_id: current_user.id), format: :js }}
+                                                        user_id: current_user.id), format: :json }}
 
       it 'creates new Event object' do
-        expect(assigns(:events).length).to eq(events_of(current_user, start_date, end_date).count)
-        expect(assigns(:event).will_begin_at).to eq will_begin_at
-        expect(assigns(:event).name).to eq 'Name'
+        expect(response).to have_http_status(:created)
       end
     end
 
     context 'when successful with "staff_relations"' do
       let(:staff_relation) { create(:staff_relation, status: 'Собеседование') }
       before { post :create, params: {event: event_params.update(staff_relation: staff_relation.id,
-                                                        user_id: current_user.id), format: :js }}
+                                                        user_id: current_user.id), format: :json }}
 
       it 'creates new Event object' do
-        expect(assigns(:events).length).to eq(events_of(current_user, start_date, end_date).count)
-        expect(assigns(:event).name).to eq staff_relation.status
+        expect(response).to have_http_status(:created)
       end
     end
 
@@ -92,11 +73,11 @@ RSpec.describe EventsController, type: :controller do
       before { post :create, params: invalid_event_params }
 
       it %q{ doesn't create new record } do
-        expect(assigns(:events).length).to eq(events_of(current_user, start_date, end_date).count)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'error messages' do
-        expect(assigns(:event).errors.full_messages).to eq(err_messages)
+        expect(JSON.parse(response.body)['errors']).to eq(err_messages)
       end
     end
   end

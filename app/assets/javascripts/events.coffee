@@ -39,11 +39,11 @@ $(document).ready ->
     table = '<div class="future items-list"><table class="table table-bordered table-hover table-list"><thead><tr>' +
             '<th>Событие</th><th>На вакансию</th><th>С кем</th><th>Время события</th><th>Описание</th>' +
             '<th>Действия</th></tr></thead></table></div>'
-    if $('.table-list').length > 0
-      $('.table-list').append(event)
+    if $('.table-hover').length > 0
+      $('.table-hover').append(event)
     else
       $('.events-list.future').append(table)
-      $('.table-list').append(event)
+      $('.table-hover').append(event)
     event_day = event_time.getDate()
     event_day_td = $("td:not(.prev-month) span[data-day='#{event_day}']").parents('td')
     if event_day_td.hasClass('td-primary')
