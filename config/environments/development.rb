@@ -41,5 +41,5 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
-  config.i18n.default_locale = :ru
+  # config.i18n.default_locale = :ru
 end

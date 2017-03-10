@@ -3,11 +3,8 @@ class CandidatesPdf < Prawn::Document
     super()
     @candidates = candidates
     font_families.update("OpenSans" => {
-        # normal: '/assets/fonts/OpenSans-Regular.ttf',
-        # italic: '/assets/fonts/OpenSans-Italic.ttf',
         normal: Rails.root.join('app','assets','fonts','OpenSans-Regular.ttf')
     })
-    puts font_families
     font "OpenSans", size: 10 do
       data = [%w{Кандидат Должность Регион Зарплата Ответственный Добавлен Статус Примечание}]
       candidates.each do |candidate|

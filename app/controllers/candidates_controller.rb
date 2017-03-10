@@ -15,7 +15,11 @@ class CandidatesController < ApplicationController
         pdf = CandidatesPdf.new(@candidates)
         send_data pdf.render, filename: 'candidates-#{Date.today}.pdf', type: 'application/pdf'
       end
-      format.xlsx { send_data @candidates.to_xlsx.to_stream.read, filename: "candidates-#{Date.today}.xlsx", type: "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet" }
+      format.xlsx do
+        I18n.locale = :ru
+        send_data @candidates.to_xlsx.to_stream.read, filename: "candidates-#{Date.today}.xlsx", type: "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet"
+        I18n.locale = I18n.default_locale
+      end
     end
   end
 
