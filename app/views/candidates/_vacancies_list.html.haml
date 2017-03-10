@@ -20,7 +20,8 @@
         %tr
           %td= relation.vacancy.name
           %td= get_salary(relation.vacancy)
-          %td= relation.status
+          %td
+            %span{ class: "label #{get_sr_label_class(relation.status)}" }= relation.status
           %td.text-center
             = link_to staff_relation_path(relation), method: :delete do
               %i.glyphicon.glyphicon-remove-circle
