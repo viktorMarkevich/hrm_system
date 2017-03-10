@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :candidates
   has_many :companies
   has_many :events
+  has_many :history_events
 
   accepts_nested_attributes_for :image
 

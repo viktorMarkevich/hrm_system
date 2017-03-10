@@ -32,6 +32,7 @@
             = form_for @vacancy, remote: true, method: :put, html: { role: 'form', id: "form-#{candidate.id}" } do |f|
               #error_explanation.bg-danger.text-danger
               = f.hidden_field :candidate_id, value: candidate.id
+              = f.hidden_field :user_id, value: current_user.id
               = f.select(:sr_status, options_for_select(StaffRelation::STATUSES, candidate.status_for_vacancy(vacancy)),
                          {}, { class: 'vacancy_sr_status', id: candidate.id })
 - else

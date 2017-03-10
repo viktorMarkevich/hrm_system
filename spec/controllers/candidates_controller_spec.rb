@@ -98,7 +98,7 @@ RSpec.describe CandidatesController, type: :controller do
 
     context 'when failed' do
       it 'renders "edit" template' do
-        put :update, params: {id: candidate,  candidate: { status: nil }}
+        put :update, params: { id: candidate,  candidate: { status: nil } }
         candidate.reload
 
         expect(response).to render_template('edit')
@@ -110,7 +110,7 @@ RSpec.describe CandidatesController, type: :controller do
       let(:candidate_attrs) { { name: 'Rick Grimes', salary: '500', city_of_residence: "Киев" } }
 
       before do
-        put :update, id: candidate, candidate: candidate_attrs
+        put :update, params: { id: candidate, candidate: candidate_attrs }
         candidate.reload
       end
       it 'increase candidates_count' do
