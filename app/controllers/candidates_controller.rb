@@ -11,9 +11,11 @@ class CandidatesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @candidates.to_csv, filename: "candidates-#{Date.today}.csv" }
-      format.pdf
-      format.xlsx { send_data @candidates.to_xlsx.to_stream.read, :filename =>  "candidates-#{Date.today}.xlsx", :type => "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet" }
-
+      format.pdf do
+        pdf = CandidatesPdf.new(@candidates)
+        send_data pdf.render, filename: 'candidates-#{Date.today}.pdf', type: 'application/pdf'
+      end
+      format.xlsx { send_data @candidates.to_xlsx.to_stream.read, filename: "candidates-#{Date.today}.xlsx", type: "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet" }
     end
   end
 
