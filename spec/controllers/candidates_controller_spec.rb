@@ -156,7 +156,7 @@ RSpec.describe CandidatesController, type: :controller do
 
     it 'has return xlsx' do
       get :index, format: :xlsx
-      expect(response.content_type).to eq "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet"
+      expect(response.content_type).to eq "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     end
   end
 end
