@@ -6,7 +6,6 @@ class CandidatesController < ApplicationController
   before_action :set_companies, only: [:new, :edit]
 
   def index
-
     if params[:status]
       @candidates = Candidate.where('status = ?', params[:status]).includes(:owner).order('id').page(params[:page]).per(10)
     else

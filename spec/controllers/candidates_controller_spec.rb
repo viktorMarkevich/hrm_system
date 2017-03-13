@@ -28,17 +28,17 @@ RSpec.describe CandidatesController, type: :controller do
     end
   end
   context 'index with params status: Паcсивен' do
-    before { get :index, params: {status: 'Паcсивен'} }
+    before { get :index, params: {status: cand.status} }
     it 'has candidates list with params status: Паcсивен' do
-      expect(cand.status).to eql 'Пассивен'
+      expect(assigns(:candidates).map(&:status)).to include( 'Пассивен')
     end
   end
 
   context 'index with params status: В работе' do
-    before { get :index, params: {status: 'В работе'} }
+    before { get :index, params: {status: candidate.status} }
     it 'has candidates list with params status: В работе' do
-      expect(assigns(:candidates)).to eq([candidate])
-      expect(candidate.status).to eql 'В работе'
+      expect(assigns(:candidates).map(&:status)).to include( 'В работе')
+
     end
   end
 
