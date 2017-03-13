@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe EventsController, type: :controller do
   render_views
-  let!(:current_user) { create(:user_with_events) }
-  let!(:user) { create(:user_with_events, events_count: 2) }
+  let!(:current_user) { create :user_with_events }
+  let!(:user) { create :user_with_events, events_count: 2 }
 
   before do
      sign_in current_user
@@ -47,10 +47,11 @@ RSpec.describe EventsController, type: :controller do
 
   describe '#create action;' do
     let (:will_begin_at) { (Time.zone.now + 10.hours + 12.minutes).strftime("%FT%T%:z") }
+    let(:json_response) { JSON.parse(response.body) }
 
     context 'when successful without "staff_relations"' do
-      before { post :create, params: { event: {name: 'Test_name', description: 'Test_description',
-                                      will_begin_at: will_begin_at, user_id: current_user.id}, format: :json }}
+      before { post :create, params: { event: { name: 'Test_name', description: 'Test_description',
+                                      will_begin_at: will_begin_at, user_id: current_user.id }, format: :json } }
 
       it 'creates new Event object' do
         json = {
@@ -62,16 +63,16 @@ RSpec.describe EventsController, type: :controller do
               'destroy_path' => "#{event_path(Event.last)}",
               'will_begin_at' => "#{will_begin_at}"
               }
-        expect(JSON.parse(response.body)).to eq json
+        expect(json_response).to eq json
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'when successful with "staff_relations"' do
-      let(:staff_relation) { create(:staff_relation, status: 'Собеседование') }
-      before { post :create, params: { event: {name: 'Test_name', description: 'Test_description',
+      let(:staff_relation) { create :staff_relation, status: 'Собеседование' }
+      before { post :create, params: { event: { name: 'Test_name', description: 'Test_description',
                                                will_begin_at: will_begin_at, user_id: current_user.id,
-                                               staff_relation: staff_relation.id}, format: :json }}
+                                               staff_relation: staff_relation.id }, format: :json }}
 
       it 'creates new Event object' do
         json = {
@@ -82,8 +83,8 @@ RSpec.describe EventsController, type: :controller do
             'update_path' => "#{edit_event_path(Event.last)}",
             'destroy_path' => "#{event_path(Event.last)}",
             'will_begin_at' => "#{will_begin_at}"
-        }
-        expect(JSON.parse(response.body)).to eq json
+                }
+        expect(json_response).to eq json
         expect(response).to have_http_status(:created)
       end
     end
@@ -103,19 +104,19 @@ RSpec.describe EventsController, type: :controller do
             'destroy_path' => "#{event_path(Event.last)}",
             'will_begin_at' => nil
         }
-        expect(JSON.parse(response.body)).not_to eq json
+        expect(json_response).not_to eq json
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'error messages' do
-        expect(JSON.parse(response.body)['errors']).to eq(err_messages)
+        expect(json_response['errors']).to eq(err_messages)
       end
     end
   end
 
   context '#edit' do
     let(:event) { current_user.events.first }
-    before { get :edit, params: {id: current_user.events.first} }
+    before { get :edit, params: { id: current_user.events.first } }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -137,7 +138,7 @@ RSpec.describe EventsController, type: :controller do
 
     context 'when successful' do
       before do
-        put :update, params: {id: event, event: event_attrs, staff_relation: staff_relation.id, format: :js}
+        put :update, params: { id: event, event: event_attrs, staff_relation: staff_relation.id, format: :js }
         event.reload
       end
 
@@ -152,7 +153,7 @@ RSpec.describe EventsController, type: :controller do
 
     context 'when failed' do
       before do
-        put :update, params: {id: event, event: (attributes_for :invalid_event), staff_relation: staff_relation.id, format: :json}
+        put :update, params: { id: event, event: (attributes_for :invalid_event), staff_relation: staff_relation.id, format: :json}
       end
 
       it 'renders "edit" template' do
@@ -165,7 +166,7 @@ RSpec.describe EventsController, type: :controller do
     let(:event) { current_user.events.first }
     let(:id) { event.id }
     before do
-      delete :destroy, params: {id: event}
+      delete :destroy, params: { id: event }
     end
 
     it 'destroys event' do
