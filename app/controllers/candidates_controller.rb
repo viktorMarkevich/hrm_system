@@ -7,9 +7,12 @@ class CandidatesController < ApplicationController
 
   def index
 
-    @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(10)
-    @candidates = @candidates.where('company_id = ?', params[:company_id]) if params[:company_id]
-    @candidates = @candidates.where('status = ?', params[:status]) if params[:status]
+    if params[:status]
+      @candidates = Candidate.where('status = ?', params[:status]).includes(:owner).order('id').page(params[:page]).per(10)
+    else
+      @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(10)
+      @candidates = @candidates.where('company_id = ?', params[:company_id]) if params[:company_id]
+    end
     respond_to do |format|
       format.html
       format.js

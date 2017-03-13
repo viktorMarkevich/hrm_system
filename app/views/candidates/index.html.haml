@@ -1,34 +1,4 @@
 = render partial: 'share/search'
+.candidates_partial
+  = render partial: 'candidate_show', :locals => {candidates: @candidates}
 
-.row
-  .col-lg-10.col-lg-offset-1
-    .tip
-      %p
-        Кандидаты
-
-    .items-list
-      %table.table.table-bordered.table-hover
-        %thead
-          %tr
-            %th Кандидат
-            %th Должность
-            %th Регион
-            %th Зарплата
-            %th Ответственный
-            %th Добавлен
-            %th
-              .dropdown.show
-                %a#dropdownMenuLink.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "https://example.com"}
-                  Статус
-                .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
-                  = link_to " Все", candidates_path, remote: true, class: 'dropdown-item'
-                  %br
-                  = link_to "Пассивен", candidates_path(status: 'Пассивен'), remote: true, class: 'dropdown-item'
-                  %br
-                  = link_to "В работе", candidates_path(status: 'В работе'), remote: true, class: 'dropdown-item'
-            %th Примечание
-        %tbody.candidate
-          = render partial: 'candidate_show', :locals => {candidates: @candidates}
-.row
-  .col-lg-3
-    = paginate @candidates
