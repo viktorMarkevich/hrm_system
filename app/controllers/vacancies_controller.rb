@@ -42,7 +42,6 @@ class VacanciesController < ApplicationController
   def update
     @sr_status = get_staff_relation_status
     @vacancy_candidates = @vacancy.candidates_with_status(@sr_status)
-
     respond_to do |format|
       if !vacancy_params.nil? && @vacancy.update_attributes(vacancy_params)
         format.html { redirect_to vacancy_path(@vacancy), notice: 'Вакансия успешно обновлена.' }
@@ -83,7 +82,7 @@ class VacanciesController < ApplicationController
 
     def vacancy_params
       params.require(:vacancy).permit(:name, :salary, :salary_format, :languages,
-                                      :requirements, :region_id, :sr_status)
+                                      :requirements, :region_id, :sr_status, :user_id)
     end
 
     def set_vacancy
