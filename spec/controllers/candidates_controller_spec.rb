@@ -4,6 +4,7 @@ RSpec.describe CandidatesController, type: :controller do
 
   let(:user) { create(:user) }
   let(:candidate) { create(:candidate) }
+  let(:cand) { create(:cand) }
 
   before { sign_in user }
 
@@ -20,6 +21,24 @@ RSpec.describe CandidatesController, type: :controller do
 
     it 'has candidates list with only created candidate' do
       expect(assigns(:candidates)).to eq([candidate])
+    end
+
+    it 'has candidates list with only created candidate' do
+      expect(assigns(:candidates)).to eq([candidate])
+    end
+  end
+  context 'index with params status: Паcсивен' do
+    before { get :index, params: {status: 'Паcсивен'} }
+    it 'has candidates list with params status: Паcсивен' do
+      expect(cand.status).to eql 'Пассивен'
+    end
+  end
+
+  context 'index with params status: В работе' do
+    before { get :index, params: {status: 'В работе'} }
+    it 'has candidates list with params status: В работе' do
+      expect(assigns(:candidates)).to eq([candidate])
+      expect(candidate.status).to eql 'В работе'
     end
   end
 
