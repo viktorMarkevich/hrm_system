@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe EventsController, type: :controller do
+  render_views
   let!(:current_user) { create(:user_with_events) }
   let!(:user) { create(:user_with_events, events_count: 2) }
 
@@ -45,24 +46,44 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe '#create action;' do
-    let(:event_params) { attributes_for :event }
+    let (:will_begin_at) { (Time.zone.now + 10.hours + 12.minutes).strftime("%FT%T%:z") }
 
     context 'when successful without "staff_relations"' do
-      let (:will_begin_at) { (Time.zone.now + 10.hours + 12.minutes).strftime("%FT%T%:z") }
-      before { post :create, params: {event: event_params.update(will_begin_at: will_begin_at,
-                                                        user_id: current_user.id), format: :json }}
+      before { post :create, params: { event: {name: 'Test_name', description: 'Test_description',
+                                      will_begin_at: will_begin_at, user_id: current_user.id}, format: :json }}
 
       it 'creates new Event object' do
+        json = {
+              'name' => 'Test_name',
+              'description' => 'Test_description',
+              'vacancy_name' => nil,
+              'candidate_name' => nil,
+              'update_path' => "#{edit_event_path(Event.last)}",
+              'destroy_path' => "#{event_path(Event.last)}",
+              'will_begin_at' => "#{will_begin_at}"
+              }
+        expect(JSON.parse(response.body)).to eq json
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'when successful with "staff_relations"' do
       let(:staff_relation) { create(:staff_relation, status: 'Собеседование') }
-      before { post :create, params: {event: event_params.update(staff_relation: staff_relation.id,
-                                                        user_id: current_user.id), format: :json }}
+      before { post :create, params: { event: {name: 'Test_name', description: 'Test_description',
+                                               will_begin_at: will_begin_at, user_id: current_user.id,
+                                               staff_relation: staff_relation.id}, format: :json }}
 
       it 'creates new Event object' do
+        json = {
+            'name' => "#{staff_relation.status}",
+            'description' => 'Test_description',
+            'vacancy_name' => "#{Event.last.staff_relation.vacancy.name}",
+            'candidate_name' => "#{Event.last.staff_relation.candidate.name}",
+            'update_path' => "#{edit_event_path(Event.last)}",
+            'destroy_path' => "#{event_path(Event.last)}",
+            'will_begin_at' => "#{will_begin_at}"
+        }
+        expect(JSON.parse(response.body)).to eq json
         expect(response).to have_http_status(:created)
       end
     end
@@ -73,6 +94,16 @@ RSpec.describe EventsController, type: :controller do
       before { post :create, params: invalid_event_params }
 
       it %q{ doesn't create new record } do
+        json = {
+            'name' => nil,
+            'description' => nil,
+            'vacancy_name' => nil,
+            'candidate_name' => nil,
+            'update_path' => "#{edit_event_path(Event.last)}",
+            'destroy_path' => "#{event_path(Event.last)}",
+            'will_begin_at' => nil
+        }
+        expect(JSON.parse(response.body)).not_to eq json
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
