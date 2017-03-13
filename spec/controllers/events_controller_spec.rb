@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe EventsController, type: :controller do
   render_views
-  let!(:current_user) { create :user_with_events }
-  let!(:user) { create :user_with_events, events_count: 2 }
+  let! (:current_user) { create :user_with_events }
+  let! (:user) { create :user_with_events, events_count: 2 }
 
   before do
      sign_in current_user
@@ -46,64 +46,60 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe '#create action;' do
+    let (:event_params) { attributes_for :event }
     let (:will_begin_at) { (Time.zone.now + 10.hours + 12.minutes).strftime("%FT%T%:z") }
-    let(:json_response) { JSON.parse(response.body) }
+    let (:json_response) { JSON.parse(response.body) }
 
     context 'when successful without "staff_relations"' do
-      before { post :create, params: { event: { name: 'Test_name', description: 'Test_description',
-                                      will_begin_at: will_begin_at, user_id: current_user.id }, format: :json } }
+      before { post :create, params: { event: event_params.update(will_begin_at: will_begin_at,
+                                                                  user_id: current_user.id), format: :json } }
 
       it 'creates new Event object' do
-        json = {
-              'name' => 'Test_name',
-              'description' => 'Test_description',
+        json = JSON.parse((attributes_for :event).to_json).update(
               'vacancy_name' => nil,
               'candidate_name' => nil,
               'update_path' => "#{edit_event_path(Event.last)}",
               'destroy_path' => "#{event_path(Event.last)}",
               'will_begin_at' => "#{will_begin_at}"
-              }
+              )
         expect(json_response).to eq json
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'when successful with "staff_relations"' do
-      let(:staff_relation) { create :staff_relation, status: 'Собеседование' }
-      before { post :create, params: { event: { name: 'Test_name', description: 'Test_description',
-                                               will_begin_at: will_begin_at, user_id: current_user.id,
-                                               staff_relation: staff_relation.id }, format: :json }}
+      let (:staff_relation) { create :staff_relation, status: 'Собеседование' }
+      before { post :create, params: { event: event_params.update(will_begin_at: will_begin_at,
+                                                                  staff_relation: staff_relation.id,
+                                                                  user_id: current_user.id), format: :json } }
 
       it 'creates new Event object' do
-        json = {
+        json = JSON.parse((attributes_for :event).to_json).update(
             'name' => "#{staff_relation.status}",
-            'description' => 'Test_description',
             'vacancy_name' => "#{Event.last.staff_relation.vacancy.name}",
             'candidate_name' => "#{Event.last.staff_relation.candidate.name}",
             'update_path' => "#{edit_event_path(Event.last)}",
             'destroy_path' => "#{event_path(Event.last)}",
             'will_begin_at' => "#{will_begin_at}"
-                }
+            )
         expect(json_response).to eq json
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'when failed' do
-      let(:invalid_event_params) { { event: (attributes_for :invalid_event,
+      let (:invalid_event_params) { { event: (attributes_for :invalid_event,
                                                             user_id: current_user.id), format: :json } }
       before { post :create, params: invalid_event_params }
 
       it %q{ doesn't create new record } do
-        json = {
-            'name' => nil,
-            'description' => nil,
+        json = JSON.parse((attributes_for :event).to_json).update(
             'vacancy_name' => nil,
             'candidate_name' => nil,
             'update_path' => "#{edit_event_path(Event.last)}",
             'destroy_path' => "#{event_path(Event.last)}",
             'will_begin_at' => nil
-        }
+            )
         expect(json_response).not_to eq json
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -115,7 +111,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   context '#edit' do
-    let(:event) { current_user.events.first }
+    let (:event) { current_user.events.first }
     before { get :edit, params: { id: current_user.events.first } }
 
     it 'has HTTP 200 status' do
@@ -132,9 +128,9 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe '#update' do
-    let(:event) { current_user.events.first }
-    let(:staff_relation) { create(:staff_relation) }
-    let(:event_attrs) { { name: 'Name', description: 'Редактирование описания' } }
+    let (:event) { current_user.events.first }
+    let (:staff_relation) { create(:staff_relation) }
+    let (:event_attrs) { { name: 'Name', description: 'Редактирование описания' } }
 
     context 'when successful' do
       before do
@@ -153,7 +149,8 @@ RSpec.describe EventsController, type: :controller do
 
     context 'when failed' do
       before do
-        put :update, params: { id: event, event: (attributes_for :invalid_event), staff_relation: staff_relation.id, format: :json}
+        put :update, params: { id: event, event: (attributes_for :invalid_event),
+                               staff_relation: staff_relation.id, format: :json}
       end
 
       it 'renders "edit" template' do
@@ -163,8 +160,8 @@ RSpec.describe EventsController, type: :controller do
   end
 
   context '#destroy' do
-    let(:event) { current_user.events.first }
-    let(:id) { event.id }
+    let (:event) { current_user.events.first }
+    let (:id) { event.id }
     before do
       delete :destroy, params: { id: event }
     end
