@@ -43,10 +43,11 @@
 
 -#.dialog
 .modal.fade{id: 'exportCandidates',tabindex: "-1", role: 'dialog', 'aria-labelledby': 'exportCandidatesLabel'}
-  .modal-dialog.modal-sm.vertical-align-center{role: 'document'}
+  .modal-dialog.modal-sm{role: 'document'}
     .modal-content
       .modal-body
         %p Экспортировать кандидатов только с текущей страницы или экспортировать всех существующих кандидатов?
-        %a.btn.btn-default.btn-sm.export-current Текущее
-        %a.btn.btn-default.btn-sm.export-all Все
-        %a.btn.btn-default.btn-sm.export-cancel Отмена
+        .btn-group.btn-group-justified
+          %a.btn.btn-default.btn-sm.export-modal.export-current Текущее
+          %a.btn.btn-default.btn-sm.export-modal.export-all Все
+          %a.btn.btn-default.btn-sm.export-modal.export-cancel Отмена

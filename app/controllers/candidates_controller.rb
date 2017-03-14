@@ -6,7 +6,11 @@ class CandidatesController < ApplicationController
   before_action :set_companies, only: [:new, :edit]
 
   def index
-    @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(3)
+    if request.format != 'text/html' && !params[:page].present?
+      @candidates = Candidate.includes(:owner).order('id')
+    else
+      @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(10)
+    end
     @candidates = @candidates.where('company_id = ?', params[:company_id]) if params[:company_id]
     respond_to do |format|
       format.html
