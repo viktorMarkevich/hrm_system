@@ -138,4 +138,25 @@ RSpec.describe CandidatesController, type: :controller do
       end
     end
   end
+
+  context '#index import candidates to file' do
+    before do
+      candidate.reload
+    end
+
+    it 'has return csv' do
+      get :index, format: :csv
+      expect(response.content_type).to eq "text/csv"
+    end
+
+    it 'has return pdf' do
+      get :index, format: :pdf
+      expect(response.content_type).to eq "application/pdf"
+    end
+
+    it 'has return xlsx' do
+      get :index, format: :xlsx
+      expect(response.content_type).to eq "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    end
+  end
 end
