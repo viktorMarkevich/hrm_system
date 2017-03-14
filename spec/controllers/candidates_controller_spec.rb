@@ -4,7 +4,7 @@ RSpec.describe CandidatesController, type: :controller do
 
   let(:user) { create(:user) }
   let(:candidate) { create(:candidate) }
-  let(:candidate1) { create(:candidate, status: 'Пассивен') }
+  let(:candidate_1) { create(:candidate, status: 'Пассивен') }
 
   before { sign_in user }
 
@@ -28,7 +28,7 @@ RSpec.describe CandidatesController, type: :controller do
     end
   end
   context 'index with params status: Паcсивен' do
-    before { get :index, params: {status: candidate1.status} }
+    before { get :index, params: {status: candidate_1.status} }
     it 'has candidates list with params status: Паcсивен' do
      expect(assigns(:candidates).first.status).to eql 'Пассивен'
     end
