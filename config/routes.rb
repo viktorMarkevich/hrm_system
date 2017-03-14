@@ -22,7 +22,6 @@ Rails.application.routes.draw do
   end
 
   resources :events, except: [:show]
-  get 'events/:id', to: 'events#index'
 
   resources :staff_relations, only: [:new, :create] do
     collection do
