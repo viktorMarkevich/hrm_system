@@ -27,8 +27,8 @@ $(document).ready ->
     month = event_time.getMonth() + 1
     vacancy = if data.vacancy_name is null then '------' else data.vacancy_name
     candidate = if data.candidate_name is null then '------' else data.candidate_name
-    update_url = if data.update_path is undefined then '' else '<a class="glyphicon glyphicon-edit" data-remote="true" href="'+ data.update_path +'></a>'
-    destroy_url =  if data.destroy_path is undefined then '' else '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href="'+ data.destroy_path +'"></a>'
+    update_url = if $(data).update_path is undefined then '' else '<a class="glyphicon glyphicon-edit" data-remote="true" href="'+ $(data).update_path +'></a>'
+    destroy_url =  if $(data).destroy_path is undefined then '' else '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href="'+ $(data).destroy_path +'"></a>'
     formated_date = event_time.getDate() + '/' + month + '/' + event_time.getFullYear()
     event = '<tr><td><span class="label label-default">' + data.name + '<span></td><td>' + vacancy + '</td><td>' +
             candidate + '</td><td><span class="label label-primary">' + event_time.getHours() + ':' +
