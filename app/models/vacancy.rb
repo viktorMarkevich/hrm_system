@@ -1,6 +1,10 @@
 # coding: utf-8
 class Vacancy < ActiveRecord::Base
   acts_as_paranoid
+
+  include RegionSupporter
+  include ChangesHistory
+
   belongs_to :region
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_many :staff_relations
