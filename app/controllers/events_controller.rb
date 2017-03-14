@@ -1,23 +1,14 @@
 class EventsController < ApplicationController
 
   before_action :set_event, only: [:edit, :update, :destroy]
-  before_action :set_sr, only: [:new, :edit]
-  before_action :set_date
+  before_action :set_sr, only: [ :edit]
+  before_action :set_date, only: [:index, :edit, :update, :destroy]
   before_action :set_events_in_date_period, only: [:index, :update]
 
   def index
     respond_to do |format|
       format.html
-      format.js
-    end
-  end
-
-  def new
-    @event = Event.new
-    set_events_in_date_period
-    respond_to do |format|
-      format.html {  head :ok  }
-      format.js
+      format.json { render :index }
     end
   end
 
@@ -33,12 +24,11 @@ class EventsController < ApplicationController
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
       if @event.save
-        set_events_in_date_period
-        format.js
+        format.html { flash[:notice] = 'Event created!' }
+        format.json { render @event, status: :created }
       else
-        set_events_in_date_period
-        format.json { render json: @event.errors.full_messages,
-                             status: :unprocessable_entity }
+        format.html { flash[:danger] = @event.errors.full_messages }
+        format.json { render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity }
       end
     end
   end
@@ -93,6 +83,6 @@ class EventsController < ApplicationController
   def set_events_in_date_period
     @events = Event.events_of(current_user, @date_from, @date_to).order(will_begin_at: :asc)
     @events_month = Event.events_of(current_user, @date_from.beginning_of_month, @date_to).order(will_begin_at: :asc)
-    @events_past = Event.events_of(current_user, @date_from.beginning_of_month, Time.zone.now).order(will_begin_at: :asc)
+    @events_past = Event.events_of(current_user, @date_from.beginning_of_month, Time.zone.now.advance(minutes: -1)).order(will_begin_at: :asc)
   end
 end
