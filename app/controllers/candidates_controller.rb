@@ -6,24 +6,18 @@ class CandidatesController < ApplicationController
   before_action :set_companies, only: [:new, :edit]
 
   def index
-    @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(10)
+    @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(3)
     @candidates = @candidates.where('company_id = ?', params[:company_id]) if params[:company_id]
     respond_to do |format|
       format.html
       format.csv { send_data @candidates.to_csv, filename: "candidates-#{Date.today}.csv" }
       format.pdf do
         pdf = CandidatesPdf.new(@candidates)
-        send_data pdf.render, filename: 'candidates-#{Date.today}.pdf', type: 'application/pdf'
+        send_data pdf.render, filename: "candidates-#{Date.today}.xlsx", type: 'application/pdf'
       end
       format.xlsx do
          response.headers['Content-Disposition'] = "attachment; filename=candidates-#{Date.today}.xlsx"
       end
-      # format.xlsx do
-      #   I18n.locale = :ru
-      #   send_data @candidates.to_xlsx.to_stream.read, filename: "candidates-#{Date.today}.xlsx", type: "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet"
-      #   I18n.locale = I18n.default_locale
-      # end
-
     end
   end
 

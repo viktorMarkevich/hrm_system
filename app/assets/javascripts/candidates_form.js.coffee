@@ -6,3 +6,9 @@
 #=require jquery.ui.autocomplete
 #=require autocomplete
 #=require candidates_geo_names.js
+
+$(document).ready ->
+  $.validate (
+    form: '.candidate-form'
+    lang: 'ru'
+  )

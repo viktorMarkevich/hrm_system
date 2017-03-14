@@ -1,13 +1,12 @@
 = render partial: 'share/search'
-
+= stylesheet_link_tag 'candidates'
+= javascript_include_tag 'candidates'
 .row
   .col-lg-10.col-lg-offset-1
     .tip
       %p
         Кандидаты
-      = link_to 'csv', candidates_path(format: :csv)
-      = link_to 'xlsx', candidates_path(format: :xlsx)
-      = link_to 'pdf', candidates_path(format: :pdf)
+
     .items-list
       %table.table.table-bordered.table-hover
         %thead
@@ -31,6 +30,23 @@
               %td= candidate.created_at.strftime('%F')
               %td= candidate.status
               %td= candidate.notice
+      .pull-right.export-to-file
+        Экспортировать в:
+        = link_to 'csv', candidates_path(format: :csv), class: 'export'
+        |
+        = link_to 'xlsx', candidates_path(format: :xlsx), class: 'export'
+        |
+        = link_to 'pdf', candidates_path(format: :pdf), class: 'export'
 .row
   .col-lg-3
     = paginate @candidates
+
+-#.dialog
+.modal.fade{id: 'exportCandidates',tabindex: "-1", role: 'dialog', 'aria-labelledby': 'exportCandidatesLabel'}
+  .modal-dialog.modal-sm.vertical-align-center{role: 'document'}
+    .modal-content
+      .modal-body
+        %p Экспортировать кандидатов только с текущей страницы или экспортировать всех существующих кандидатов?
+        %a.btn.btn-default.btn-sm.export-current Текущее
+        %a.btn.btn-default.btn-sm.export-all Все
+        %a.btn.btn-default.btn-sm.export-cancel Отмена
