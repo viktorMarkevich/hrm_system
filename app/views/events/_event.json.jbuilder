@@ -1,12 +1,25 @@
 json.(event, :name, :will_begin_at, :description)
 
-json.vacancy_name event.try(:staff_relation).try(:vacancy).try(:name)
-json.candidate_name event.try(:staff_relation).try(:candidate).try(:name)
+if event&.staff_relation&.vacancy&.name.present?
+  json.vacancy_name event.staff_relation.vacancy.name
+else
+  json.vacancy_name '------'
+end
+
+if event&.staff_relation&.candidate&.name.present?
+  json.candidate_name event.staff_relation.candidate.name
+else
+  json.candidate_name '------'
+end
 
 if can? :update, event
-  json.update_path edit_event_path(event)
+  json.update_path '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{edit_event_path(event)}"'></a>'
+else
+  json.update_path ''
 end
 
 if can? :delete, event
-  json.destroy_path event_path(event)
+  json.destroy_path '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(event)}"'></a>'
+else
+  json.destroy_path ''
 end

@@ -1,6 +1,6 @@
-#= require events/calendar_event
-#= require events/table
-#= require events/event
+#= require events/templates/calendar_event
+#= require events/templates/table
+#= require events/templates/event
 
 # coding 'utf-8'
 $(document).ready ->
@@ -29,21 +29,21 @@ $(document).ready ->
 
   add_event = (data, event_time) ->
     month = event_time.getMonth() + 1
-    event = JST["events/event"]({
+    event = JST["events/templates/event"]({
               name: data.name,
-              vacancy: if data.vacancy_name is null then '------' else data.vacancy_name,
-              candidate: if data.candidate_name is null then '------' else data.candidate_name,
+              vacancy: data.vacancy_name,
+              candidate: data.candidate_name,
               hours: event_time.getHours(),
               minutes: event_time.getMinutes(),
               formated_date: event_time.getDate() + '/' + month + '/' + event_time.getFullYear(),
               description: data.description,
-              update_url: if data.update_path is undefined then '' else '<a class="glyphicon glyphicon-edit" data-remote="true" href="'+ data.update_path +'></a>',
-              destroy_url: if data.destroy_path is undefined then '' else '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href="'+ data.destroy_path +'"></a>'
+              update_url: data.update_path,
+              destroy_url: data.destroy_path
             })
     if $('.table-hover').length > 0
       $('.table-hover').append(event)
     else
-      $('.events-list.future').append(JST["events/table"]({}))
+      $('.events-list.future').append(JST["events/templates/table"]({}))
       $('.table-hover').append(event)
     event_day = event_time.getDate()
     event_day_td = $("td:not(.prev-month) span[data-day='#{event_day}']:first").parents('td')
@@ -52,7 +52,7 @@ $(document).ready ->
       count = parseInt(current_count) + 1
       event_day_td.find('a').text(count)
     else
-      event_day_td.addClass('td-primary').append(JST["events/calendar_event"]({
+      event_day_td.addClass('td-primary').append(JST["events/templates/calendar_event"]({
         calendar_event_date: event_time.getFullYear() + '-' + month + '-' + event_time.getDate()
         }))
 
