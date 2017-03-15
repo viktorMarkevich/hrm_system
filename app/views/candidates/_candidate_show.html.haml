@@ -19,11 +19,11 @@
                 %a#dropdownMenuLink.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "https://example.com"}
                   Статус ⇓
                 .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
-                  = link_to " Все", candidates_path, remote: true, class: 'dropdown-item'
+                  = link_to "Все", candidates_path, remote: true, class: "dropdown-item #{'active' unless @status }"
                   %br
-                  = link_to "Пассивен", candidates_path(status: 'Пассивен'), remote: true, class: 'dropdown-item'
+                  = link_to "Пассивен", candidates_path(status: 'Пассивен'), remote: true, class: "dropdown-item #{'active' if @status == 'Пассивен'}"
                   %br
-                  = link_to "В работе", candidates_path(status: 'В работе'), remote: true, class: 'dropdown-item'
+                  = link_to "В работе", candidates_path(status: 'В работе'), remote: true, class: "dropdown-item #{'active' if @status == 'В работе'}"
             %th Примечание
         %tbody
           - @candidates.each do |candidate|
