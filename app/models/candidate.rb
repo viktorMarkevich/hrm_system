@@ -1,5 +1,10 @@
 # encoding: utf-8
 class Candidate < ActiveRecord::Base
+  include ChangesHistory
+
+  acts_as_xlsx columns: [:name, :desired_position, :city_of_residence, :salary, :'owner.full_name',
+                         :created_at, :status, :notice], i18n: true
+
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_one :image
   has_many :staff_relations, dependent: :destroy
@@ -56,6 +61,17 @@ class Candidate < ActiveRecord::Base
     self.google_plus = content.scan(/(?<=[Gg]oogle\+:|[Gg]oogle[Pp]lus:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
     self.original_cv_data = content
     self.save!
+  end
+
+  def self.to_csv
+    column_names =  %w{Кандидат Должность Регион Зарплата Ответственный Добавлен Статус Примечание}
+    CSV.generate do |csv|
+      csv << column_names
+      all.each do |candidate|
+        csv << [candidate.name, candidate.desired_position, candidate.city_of_residence, candidate.salary, candidate.owner&.full_name,
+                candidate.created_at.strftime('%F'), candidate.status, candidate.notice]
+      end
+    end
   end
 
   private

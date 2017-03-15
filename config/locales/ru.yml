@@ -1,0 +1,16 @@
+ru:
+  activerecord:
+    models:
+      user: Кандидат
+    attributes:
+      candidates: Кандидаты
+      candidate:
+        name: Кандидат
+        desired_position: Должность
+        city_of_residence: Регион
+        salary: Зарплата
+        owner:
+          full_name: Ответственный
+        created_at: Добавлен
+        status: Статус
+        notice: Примечание

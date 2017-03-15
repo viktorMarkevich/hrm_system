@@ -25,8 +25,8 @@
                   %br
                   = link_to "В работе", candidates_path(status: 'В работе'), remote: true, class: 'dropdown-item'
             %th Примечание
-        %tbody.candidate
-          - candidates.each do |candidate|
+        %tbody
+          - @candidates.each do |candidate|
             %tr
               %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
               %td= candidate.desired_position
@@ -36,6 +36,25 @@
               %td= candidate.created_at.strftime('%F')
               %td= candidate.status
               %td= candidate.notice
+      .pull-right.export-to-file
+        Экспортировать в:
+        = link_to 'csv', candidates_path(format: :csv), class: 'export'
+        |
+        = link_to 'xlsx', candidates_path(format: :xlsx), class: 'export'
+        |
+        = link_to 'pdf', candidates_path(format: :pdf), class: 'export'
 .row
   .col-lg-3
     = paginate @candidates
+
+-#.dialog
+.modal.fade{id: 'exportCandidates',tabindex: "-1", role: 'dialog', 'aria-labelledby': 'exportCandidatesLabel'}
+  .modal-dialog.modal-sm{role: 'document'}
+    .modal-content
+      .modal-body
+        %p Экспортировать кандидатов только с текущей страницы или экспортировать всех существующих кандидатов?
+        .btn-group.btn-group-justified
+          %a.btn.btn-default.btn-sm.export-modal.export-current Текущее
+          %a.btn.btn-default.btn-sm.export-modal.export-all Все
+          %a.btn.btn-default.btn-sm.export-modal.export-cancel Отмена
+

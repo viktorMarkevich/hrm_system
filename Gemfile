@@ -32,6 +32,12 @@ gem 'yomu'
 gem 'docx', '~> 0.2.07', :require => ["docx"]
 gem 'bootstrap-sass'
 gem 'sass-rails'
+
+gem 'rubyzip', '~> 1.1.0'
+gem 'axlsx', '2.1.0.pre'
+gem 'axlsx_rails'
+gem 'acts_as_xlsx', git: "git://github.com/straydogstudio/acts_as_xlsx.git"
+gem 'prawn-rails'
 group :development do
   gem 'letter_opener'
 end

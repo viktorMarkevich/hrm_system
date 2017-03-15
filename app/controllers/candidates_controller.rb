@@ -10,13 +10,26 @@ class CandidatesController < ApplicationController
       @candidates = Candidate.where('status = ?', params[:status]).includes(:owner).order('id').page(params[:page]).per(10)
     else
       @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(10)
-      @candidates = @candidates.where('company_id = ?', params[:company_id]) if params[:company_id]
     end
+
+    if request.format != 'text/html' && !params[:page].present?
+      @candidates = @candidates.includes(:owner).order('id')
+    else
+      @candidates = @candidates.includes(:owner).order('id').page(params[:page]).per(10)
+    end
+    @candidates = @candidates.where('company_id = ?', params[:company_id]) if params[:company_id]
     respond_to do |format|
       format.html
       format.js
+      format.csv { send_data @candidates.to_csv, filename: "candidates-#{Date.today}.csv" }
+      format.pdf do
+        pdf = CandidatesPdf.new(@candidates)
+        send_data pdf.render, filename: "candidates-#{Date.today}.xlsx", type: 'application/pdf'
+      end
+      format.xlsx do
+         response.headers['Content-Disposition'] = "attachment; filename=candidates-#{Date.today}.xlsx"
+      end
     end
-
   end
 
   def new
