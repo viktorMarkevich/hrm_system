@@ -1,8 +1,9 @@
 #= require candidates/vacancies_table
 #= require candidates/vacancies_table_row
+#= require candidates/vacancies_list_row
 
 $(document).ready ->
-  $('.vacancies_list ul.dropdown-menu li a').click (event) ->
+  $('body').on('click', '.vacancies_list ul.dropdown-menu li a', (event) ->
     event.preventDefault()
     vacancy_list = $('.vacancies_list')
 
@@ -30,3 +31,22 @@ $(document).ready ->
         when "Не подходит" then "label-warning"
         when "Отказался" then "label-danger"
         else []
+    return
+  )
+
+  $('body').on('click', '.vacancies_list table a', (event) ->
+    event.preventDefault()
+    vacancy_list = $('.vacancies_list')
+    $.ajax this.href,
+      type: 'DELETE'
+      dataType: 'json'
+      success: (data) ->
+        if vacancy_list.children('table.table.table-bordered.table-hover').length == 0
+          vacancy_list.append(JST["candidates/vacancies_table"]({}))
+        $('.vacancies_list ul.dropdown-menu').append(JST["candidates/vacancies_list_row"]({
+          name: data.vacancy_name,
+          set_vacancy: "/candidates/#{data.candidate_id}/set_vacancies?vacancy_id=#{data.vacancy_id}"
+        }))
+        $(event.target).closest('tr').remove()
+    return false
+  )

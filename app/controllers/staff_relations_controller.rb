@@ -28,10 +28,13 @@ class StaffRelationsController < ApplicationController
   end
 
   def destroy
-    StaffRelation.find(params[:id]).delete
+    staff_relation = StaffRelation.find(params[:id])
+    vacancy = staff_relation.vacancy
+    candidate = staff_relation.candidate
+    staff_relation.delete
     respond_to do |format|
       format.html { redirect_to :back }
-      format.json { render json: {}, status: 204 }
+      format.json { render json: { vacancy_id: vacancy.id, vacancy_name: vacancy.name, candidate_id: candidate.id } }
     end
   end
 
