@@ -11,7 +11,7 @@ class CandidatesController < ApplicationController
     if request.format != 'text/html' && request.format != 'application/javascript' && !params[:page]
       @candidates = Candidate.where(filter_condition).order('id')
     else
-      @candidates = Candidate.where(filter_condition).order('id').page(params[:page]).per(3)
+      @candidates = Candidate.where(filter_condition).order('id').page(params[:page]).per(10)
     end
 
     respond_to do |format|

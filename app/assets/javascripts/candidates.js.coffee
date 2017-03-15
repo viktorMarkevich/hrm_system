@@ -3,11 +3,13 @@
 
 $("body").on('click','.export', (e) ->
   e.preventDefault()
-  href = $(this).attr('href') + '?page=' + $('.pagination li.active a').text()
+  current_href = $(this).attr('href') + '?page=' + $('.pagination li.active a').text()
+  all_href = $(this).attr('href')
   if $('.dropdown .active').text() != 'Все'
-    href += '&status=' + $('.dropdown .active').text()
-  $('.export-current').attr('href',href)
-  $('.export-all').attr('href', $(this).attr('href'))
+    current_href += '&status=' + $('.dropdown .active').text()
+    all_href += '?status=' + $('.dropdown .active').text()
+  $('.export-current').attr('href',current_href)
+  $('.export-all').attr('href', all_href)
   $('#exportCandidates').modal 'show'
   return false
 )
