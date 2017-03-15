@@ -32,6 +32,7 @@ gem 'yomu'
 gem 'docx', '~> 0.2.07', :require => ["docx"]
 gem 'bootstrap-sass'
 gem 'sass-rails'
+gem 'ejs'
 group :development do
   gem 'letter_opener'
 end
