@@ -1,53 +1,7 @@
 = render partial: 'share/search'
 = stylesheet_link_tag 'candidates'
 = javascript_include_tag 'candidates'
-.row
-  .col-lg-10.col-lg-offset-1
-    .tip
-      %p
-        Кандидаты
+.candidates_partial
+  = render partial: 'candidate_show', :locals => {candidates: @candidates}
 
-    .items-list
-      %table.table.table-bordered.table-hover
-        %thead
-          %tr
-            %th Кандидат
-            %th Должность
-            %th Регион
-            %th Зарплата
-            %th Ответственный
-            %th Добавлен
-            %th Статус
-            %th Примечание
-        %tbody
-          - @candidates.each do |candidate|
-            %tr
-              %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
-              %td= candidate.desired_position
-              %td= display_field_value_for(candidate.city_of_residence)
-              %td= display_field_value_for(candidate.salary)
-              %td= full_name_for(candidate.owner)
-              %td= candidate.created_at.strftime('%F')
-              %td= candidate.status
-              %td= candidate.notice
-      .pull-right.export-to-file
-        Экспортировать в:
-        = link_to 'csv', candidates_path(format: :csv), class: 'export'
-        |
-        = link_to 'xlsx', candidates_path(format: :xlsx), class: 'export'
-        |
-        = link_to 'pdf', candidates_path(format: :pdf), class: 'export'
-.row
-  .col-lg-3
-    = paginate @candidates
 
--#.dialog
-.modal.fade{id: 'exportCandidates',tabindex: "-1", role: 'dialog', 'aria-labelledby': 'exportCandidatesLabel'}
-  .modal-dialog.modal-sm{role: 'document'}
-    .modal-content
-      .modal-body
-        %p Экспортировать кандидатов только с текущей страницы или экспортировать всех существующих кандидатов?
-        .btn-group.btn-group-justified
-          %a.btn.btn-default.btn-sm.export-modal.export-current Текущее
-          %a.btn.btn-default.btn-sm.export-modal.export-all Все
-          %a.btn.btn-default.btn-sm.export-modal.export-cancel Отмена
