@@ -17,7 +17,6 @@ class VacanciesController < ApplicationController
   def show
     @sr_status = params[:sr_status] || 'Найденные'
     @vacancy_candidates = @vacancy.candidates_with_status(@sr_status)
-
     respond_to do |format|
         format.html
         format.js
