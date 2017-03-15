@@ -8,6 +8,6 @@
     return false
   )
 
-  $("body").on('click','.export-cancel', (e)->
+  $("body").on('click','.export-modal', (e)->
     $('#exportCandidates').modal 'hide'
   )
