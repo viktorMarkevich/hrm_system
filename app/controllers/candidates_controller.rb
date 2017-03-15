@@ -6,18 +6,14 @@ class CandidatesController < ApplicationController
   before_action :set_companies, only: [:new, :edit]
 
   def index
-    if params[:status]
-      @candidates = Candidate.where('status = ?', params[:status]).includes(:owner).order('id').page(params[:page]).per(10)
+    @status = params[:status]
+
+    if request.format != 'text/html' && request.format != 'application/javascript' && !params[:page]
+      @candidates = Candidate.where(filter_condition).order('id')
     else
-      @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(10)
+      @candidates = Candidate.where(filter_condition).order('id').page(params[:page]).per(10)
     end
 
-    if request.format != 'text/html' && !params[:page].present?
-      @candidates = @candidates.includes(:owner).order('id')
-    else
-      @candidates = @candidates.includes(:owner).order('id').page(params[:page]).per(10)
-    end
-    @candidates = @candidates.where('company_id = ?', params[:company_id]) if params[:company_id]
     respond_to do |format|
       format.html
       format.js
@@ -107,6 +103,10 @@ class CandidatesController < ApplicationController
 
     def find_candidate
       @candidate = Candidate.find(params[:id])
+    end
+
+    def filter_condition
+      params.permit(:company_id, :status)
     end
 
 end
