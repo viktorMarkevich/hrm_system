@@ -45,3 +45,8 @@ $(document).ready ->
       success: (data) ->
         renderVacancyCandidates(data)
     return false
+
+#  $('body').on 'click', '.staff-relation', (event) ->
+#    event.preventDefault()
+#    $('#dialog').modal('show')
+#    return false
