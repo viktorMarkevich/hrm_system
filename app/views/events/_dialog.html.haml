@@ -22,7 +22,6 @@
                                           { class: 'form-control staff_relation' }
           .form-group
             = f.label 'Дата события:'
-            =# f.datetime_select :will_begin_at, default: @date_from, class: 'form-control'
             .input-group.date#datetimepicker
               = f.text_field :will_begin_at, data: { date_format: 'YYYY/MM/DD HH:mm:ss' }
               %span.input-group-addon

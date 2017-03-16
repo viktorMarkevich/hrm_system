@@ -78,7 +78,7 @@ class EventsController < ApplicationController
 
   def event_params
     permitted_params = params.require(:event).permit(:name, :will_begin_at, :description, :user_id)
-    permitted_params.tap {|p| p[:will_begin_at] = Date.strptime(params[:event][:will_begin_at], '%Y/%m/%d %H:%M:%S') }
+    permitted_params&.tap {|p| p[:will_begin_at] = params[:event][:will_begin_at].to_datetime }
   end
 
   def set_events_in_date_period

@@ -8,7 +8,7 @@ $(document).ready ->
     $('#dialog').modal('show')
 
   $('.event_form').submit (e) ->
-    current_time = moment($('.calendar table').data('date'))
+    current_time = new Date($('.calendar table').data('date'))
     e.preventDefault()
     url = $(this).attr('action')
     form = $(this)
@@ -16,7 +16,7 @@ $(document).ready ->
       url,
       $(this).serialize(),
       (data) ->
-        event_time = moment(data.will_begin_at)
+        event_time = new Date(data.will_begin_at)
         resetForm(form)
         $('#dialog').modal('hide')
         if current_time.getFullYear() == event_time.getFullYear() and current_time.getMonth() == event_time.getMonth()
