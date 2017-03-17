@@ -2,6 +2,12 @@
 #= require vacancies/vacancies_candidate_table
 #= require vacancies/vacancies_candidate_row
 #= require vacancies/vacancies_no_candidates
+dateFormat = (date) ->
+  newDate = new Date(date)
+  month = Number(newDate.getMonth()) + 1
+  resultDate = newDate.getFullYear() + '-' + month + '-' + newDate.getDate() + ' в ' + newDate.getHours() + ':' + newDate.getMinutes()
+  return resultDate
+
 renderVacancyCandidates = (data) ->
   $('.vacancy-candidates .content').empty()
   if data.vacancy_candidates.length != 0
@@ -11,7 +17,7 @@ renderVacancyCandidates = (data) ->
         candidate_id: candidate.id,
         candidate_name: candidate.name,
         candidate_salary: candidate.salary,
-        candidate_updated_at: candidate.updated_at,
+        candidate_updated_at: dateFormat(candidate.updated_at),
         vacancy_id: data.vacancy.id,
         vacancy_user_id: data.vacancy.user_id
       }))
@@ -46,7 +52,12 @@ $(document).ready ->
         renderVacancyCandidates(data)
     return false
 
-#  $('body').on 'click', '.staff-relation', (event) ->
-#    event.preventDefault()
-#    $('#dialog').modal('show')
-#    return false
+  $('body').on 'click', '.staff-relation', (event) ->
+    event.preventDefault()
+    $('#dialog').modal('show')
+    $.ajax this.href,
+      type: 'GET'
+      dataType: 'json'
+      success: (data) ->
+        ######################
+    return false

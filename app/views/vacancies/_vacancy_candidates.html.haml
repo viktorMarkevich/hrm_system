@@ -27,7 +27,7 @@
             %td= desired_salary_for(candidate)
             %td
               %span.label.label-info
-                = candidate.updated_at.strftime('%F в %I:%M')
+                = candidate.updated_at.strftime('%F в %H:%M')
             %td
               = form_for @vacancy, remote: true, method: :put, html: { role: 'form', id: "form-#{candidate.id}" } do |f|
                 #error_explanation.bg-danger.text-danger

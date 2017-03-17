@@ -7,6 +7,9 @@ class StaffRelationsController < ApplicationController
     @all_candidates = Candidate.includes([:staff_relations, :vacancies])
     @current_candidates = @all_candidates.where(staff_relations: { vacancy_id: @vacancy.id })
     @candidates = @all_candidates - @current_candidates
+    respond_to do |format|
+      format.json
+    end
   end
 
   def create
