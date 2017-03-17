@@ -18,6 +18,12 @@
 @import 'candidates';
 @import 'stickers';
 
+#header {
+  height: 70px;
+  border-bottom: 1px solid #ccc;
+  background-color: #e2e2e2;
+}
+
 .current {
   border-bottom: 2px solid limegreen;
 }
