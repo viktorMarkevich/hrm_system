@@ -12,6 +12,11 @@ class EventsController < ApplicationController
     end
   end
 
+  def selected_day_events
+    @events = Event.where("DATE(will_begin_at) =  ?", params[:will_begin_at].to_date)
+    render json: @events, status: 200
+  end
+
   def edit
     respond_to do |format|
       format.html { head :ok }

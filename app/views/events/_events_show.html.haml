@@ -1,0 +1,22 @@
+#event-dialog.modal.fade{ 'aria-hidden' => 'true', 'aria-labelledby' => 'myModalLabel',
+                    'data-backdrop' => 'static', 'data-keyboard' => 'true',
+                    role: 'dialog', tabindex: '1' }
+  .modal-dialog.modal-lg.event-dialog
+    .modal-content
+      .modal-header
+        %button.close{ 'aria-label' => 'Close', 'data-dismiss' => 'modal', type: 'button' }
+          %span{ 'aria-hidden' => 'true' } ×
+        %h3.modal-title
+          Список событий:
+      .modal-body
+        .items-list
+          %table.table.table-bordered.table-list
+            %thead
+              %tr
+                %th Событие
+                %th На вакансию
+                %th С кем
+                %th Время события
+                %th Описание
+                %th Действия
+            %tbody

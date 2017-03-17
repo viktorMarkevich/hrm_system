@@ -1,4 +1,3 @@
-#= require events/templates/calendar_event
 #= require events/templates/table
 #= require events/templates/event
 
@@ -52,9 +51,7 @@ $(document).ready ->
       count = parseInt(current_count) + 1
       event_day_td.find('a').text(count)
     else
-      event_day_td.addClass('td-primary').append(JST["events/templates/calendar_event"]({
-        calendar_event_date: event_time.getFullYear() + '-' + month + '-' + event_time.getDate()
-        }))
+      event_day_td.addClass('td-primary').append('<a class="event-badge">1</a>')
 
   alertMessage = (data, container) ->
     alert = "<div class='alert alert-danger'>#{ data.responseJSON.errors.join('<br>') }</div>"
@@ -104,3 +101,12 @@ $(document).ready ->
                  else moment(),
     minDate: moment()
   })
+
+  bindShowEvent = (e) ->
+    e.preventDefault()
+    selected_day = moment($('.calendar table').data('date')).date($(this).parents('td').find('span').text())
+    params = new Date(selected_day)
+    $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
+      $('#event-dialog').modal('show')
+
+  $(document).on('click', "td a", bindShowEvent)
