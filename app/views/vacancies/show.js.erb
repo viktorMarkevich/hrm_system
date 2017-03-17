@@ -1,6 +1,0 @@
-$('#dialog').modal('hide');
-
-$('.vacancy-candidates').html('<%= escape_javascript(render partial: 'vacancy_candidates',
-                                                            locals: { vacancy_candidates: @vacancy_candidates,
-                                                                      vacancy: @vacancy,
-                                                                      sr_status: @sr_status }) %>')

@@ -33,8 +33,8 @@ class CandidatesController < ApplicationController
   end
 
   def show
-    @candidate_vacancies = @candidate.vacancies.includes(:staff_relations)
-    @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
+    @staff_relations = @candidate.staff_relations
+    @vacancies = Vacancy.where.not(id: @staff_relations.pluck(:vacancy_id))
   end
 
   def edit
@@ -63,13 +63,15 @@ class CandidatesController < ApplicationController
 
   def set_vacancies
     if params[:vacancy_id].present?
-      @candidate.staff_relations.create(status: 'Найденные', vacancy_id: params[:vacancy_id])
-    end
-    @candidate_vacancies = @candidate.vacancies.includes(:staff_relations)
-    @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
-
-    respond_to do |format|
-      format.js
+      @staff_relation = @candidate.staff_relations.new(status: 'Найденные', vacancy_id: params[:vacancy_id])
+      if @staff_relation.save
+        @vacancy = Vacancy.find(params[:vacancy_id])
+        respond_to { |format| format.json }
+      else
+        respond_to do |format|
+          format.json { render status: :unprocessable_entity }
+        end
+      end
     end
   end
 
@@ -108,5 +110,4 @@ class CandidatesController < ApplicationController
     def filter_condition
       params.permit(:company_id, :status)
     end
-
 end
