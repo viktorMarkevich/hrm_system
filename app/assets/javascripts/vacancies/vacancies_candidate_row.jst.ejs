@@ -1,0 +1,26 @@
+<tr>
+    <td><a id="profile-name" href="/candidates/<%= candidate_id %>"><%= candidate_name %></a></td>
+    <td><%= candidate_salary %></td>
+    <td>
+        <span class="label label-info">
+          <%= candidate_updated_at %>
+        </span>
+    </td>
+    <td>
+        <form role="form" id="form-<%= candidate_id %>" class="edit_vacancy" action="/vacancies/<%= vacancy_id %>" accept-charset="UTF-8" data-remote="true" method="post">
+            <input name="utf8" value="✓" type="hidden">
+            <input name="_method" value="put" type="hidden">
+            <div class="bg-danger text-danger" id="error_explanation"></div>
+            <input value="<%= candidate_id %>" name="vacancy[candidate_id]" id="vacancy_candidate_id" type="hidden">
+            <input value="<%= vacancy_user_id %>" name="vacancy[user_id]" id="vacancy_user_id" type="hidden">
+            <select class="vacancy_sr_status" id="<%= candidate_id %>" name="vacancy[sr_status]">
+                <option value="Нейтральный">Нейтральный</option>
+                <option value="Найденные">Найденные</option>
+                <option value="Отобранные">Отобранные</option>
+                <option value="Собеседование">Собеседование</option>
+                <option value="Утвержден">Утвержден</option>
+                <option value="Не подходит">Не подходит</option>
+                <option value="Отказался">Отказался</option></select>
+        </form>
+    </td>
+</tr>
