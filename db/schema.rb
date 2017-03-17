@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 20170303104550) do
     t.integer  "company_id"
     t.string   "notice"
     t.text     "experience"
-    t.string   "file_name"
     t.integer  "geo_name_id"
+    t.string   "file_name"
   end
 
   create_table "companies", force: :cascade do |t|
