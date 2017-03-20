@@ -107,6 +107,22 @@ $(document).ready ->
     selected_day = moment($('.calendar table').data('date')).date($(this).parents('td').find('span').text())
     params = new Date(selected_day)
     $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
+      console.log(data)
       $('#event-dialog').modal('show')
+      for events in data
+        event_time = new Date(events.will_begin_at)
+        month = event_time.getMonth() + 1
+        event = JST["events/templates/event"]({
+          name: events.name,
+          vacancy: events.vacancy_name,
+          candidate: events.candidate_name,
+          hours: event_time.getHours(),
+          minutes: event_time.getMinutes(),
+          formated_date: event_time.getDate() + '/' + month + '/' + event_time.getFullYear(),
+          description: events.description,
+          update_url: events.update_path,
+          destroy_url: events.destroy_path
+        })
+        $('.events-table').append(event)
 
   $(document).on('click', "td a", bindShowEvent)
