@@ -96,9 +96,9 @@ $(document).ready ->
     return
 
   $('#datetimepicker').datetimepicker({
-    defaultDate: if moment($('.calendar table').data('date')) > moment()
-                    moment($('.calendar table').data('date'))
-                 else moment(),
+    defaultDate: if moment($('.calendar table').data('date')).add(1, 'seconds').toDate() > moment()
+                    moment($('.calendar table').data('date')).add(1, 'seconds').toDate()
+                 else moment().add(1, 'seconds').toDate(),
     minDate: moment()
   })
 
