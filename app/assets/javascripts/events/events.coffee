@@ -7,8 +7,8 @@ $(document).ready ->
     $('#dialog').modal('show')
 
   $('.event_form').submit (e) ->
-    current_time = new Date($('.calendar table').data('date'))
     e.preventDefault()
+    current_time = new Date($('.calendar-table').data('date'))
     url = $(this).attr('action')
     form = $(this)
     $.post(
@@ -107,7 +107,6 @@ $(document).ready ->
     selected_day = moment($('.calendar table').data('date')).date($(this).parents('td').find('span').text())
     params = new Date(selected_day)
     $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
-      console.log(data)
       $('#event-dialog').modal('show')
       for events in data
         event_time = new Date(events.will_begin_at)
