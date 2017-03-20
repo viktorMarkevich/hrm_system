@@ -1,4 +1,4 @@
-= javascript_include_tag 'vacancies'
+= javascript_include_tag 'vacancies/vacancies'
 
 .col-lg-6
   .tip
@@ -29,7 +29,7 @@
     = link_to 'Вернуться', :back, class: 'btn btn-default'
     %code
       или
-    = link_to 'Добавить кандидатов к этой вакансии', new_staff_relation_path(vacancy_id: @vacancy.id, sr_status: @sr_status), remote: true, class: 'btn btn-success'
+    = link_to 'Добавить кандидатов к этой вакансии', new_staff_relation_path(vacancy_id: @vacancy.id, sr_status: @sr_status), remote: true, class: 'btn btn-success staff-relation'
   %hr
 
 .col-lg-6

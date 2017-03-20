@@ -24,11 +24,7 @@ Rails.application.routes.draw do
   resources :events, except: [:show]
   get '/selected_day_events', to: 'events#selected_day_events'
 
-  resources :staff_relations, only: [:new, :create] do
-    collection do
-      delete ':candidate_id/:vacancy_id', to: 'staff_relations#destroy', as: :destroy
-    end
-  end
+  resources :staff_relations, only: [:new, :create, :destroy]
 
   resources :geo_names, only: [:index]
 

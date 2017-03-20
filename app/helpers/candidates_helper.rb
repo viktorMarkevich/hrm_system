@@ -20,20 +20,20 @@ module CandidatesHelper
     ((100.0*current_attr_numbs)/attr_numbs).round(1)
   end
 
-  def get_sr_label_class(vacancy, candidate)
-    case sr_status(vacancy, candidate)
+  def get_sr_label_class(status)
+    case status
       when 'Найденные'
-        'btn-default'
+        'label-default'
       when 'Отобранные'
-        'btn-primary'
+        'label-primary'
       when 'Собеседование'
-        'btn-info'
+        'label-info'
       when 'Утвержден'
-        'btn-success'
+        'label-success'
       when 'Не подходит'
-        'btn-warning'
+        'label-warning'
       when 'Отказался'
-        'btn-danger'
+        'label-danger'
       else
         []
     end

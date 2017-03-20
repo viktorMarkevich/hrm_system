@@ -1,0 +1,22 @@
+.resume {
+  white-space: pre-wrap;
+}
+
+.items-list table thead #dropdownMenuLink {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+.export-to-file {
+  font-size: 10px;
+  a {
+    color: red;
+  }
+}
+
+.dropdown .active {
+  font-style: italic;
+  color: red;
+}

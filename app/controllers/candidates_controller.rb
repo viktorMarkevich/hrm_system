@@ -6,8 +6,26 @@ class CandidatesController < ApplicationController
   before_action :set_companies, only: [:new, :edit]
 
   def index
-    @candidates = Candidate.includes(:owner).order('id').page(params[:page]).per(10)
-    @candidates = @candidates.where('company_id = ?', params[:company_id]) if params[:company_id]
+    @status = params[:status]
+
+    if request.format != 'text/html' && request.format != 'application/javascript' && !params[:page]
+      @candidates = Candidate.where(filter_condition).order('id')
+    else
+      @candidates = Candidate.where(filter_condition).order('id').page(params[:page]).per(10)
+    end
+
+    respond_to do |format|
+      format.html
+      format.js
+      format.csv { send_data @candidates.to_csv, filename: "candidates-#{Date.today}.csv" }
+      format.pdf do
+        pdf = CandidatesPdf.new(@candidates)
+        send_data pdf.render, filename: "candidates-#{Date.today}.xlsx", type: 'application/pdf'
+      end
+      format.xlsx do
+         response.headers['Content-Disposition'] = "attachment; filename=candidates-#{Date.today}.xlsx"
+      end
+    end
   end
 
   def new
@@ -15,8 +33,8 @@ class CandidatesController < ApplicationController
   end
 
   def show
-    @candidate_vacancies = @candidate.vacancies.includes(:staff_relations)
-    @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
+    @staff_relations = @candidate.staff_relations
+    @vacancies = Vacancy.where.not(id: @staff_relations.pluck(:vacancy_id))
   end
 
   def edit
@@ -45,13 +63,15 @@ class CandidatesController < ApplicationController
 
   def set_vacancies
     if params[:vacancy_id].present?
-      @candidate.staff_relations.create(status: 'Найденные', vacancy_id: params[:vacancy_id])
-    end
-    @candidate_vacancies = @candidate.vacancies.includes(:staff_relations)
-    @vacancies = Vacancy.where.not(id: @candidate_vacancies.pluck(:id))
-
-    respond_to do |format|
-      format.js
+      @staff_relation = @candidate.staff_relations.new(status: 'Найденные', vacancy_id: params[:vacancy_id])
+      if @staff_relation.save
+        @vacancy = Vacancy.find(params[:vacancy_id])
+        respond_to { |format| format.json }
+      else
+        respond_to do |format|
+          format.json { render status: :unprocessable_entity }
+        end
+      end
     end
   end
 
@@ -87,4 +107,7 @@ class CandidatesController < ApplicationController
       @candidate = Candidate.find(params[:id])
     end
 
+    def filter_condition
+      params.permit(:company_id, :status)
+    end
 end

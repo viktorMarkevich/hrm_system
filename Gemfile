@@ -35,6 +35,11 @@ gem 'sass-rails'
 gem 'ejs'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
+gem 'rubyzip', '~> 1.1.0'
+gem 'axlsx', '2.1.0.pre'
+gem 'axlsx_rails'
+gem 'acts_as_xlsx', git: "git://github.com/straydogstudio/acts_as_xlsx.git"
+gem 'prawn-rails'
 
 group :development do
   gem 'letter_opener'
