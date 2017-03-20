@@ -23,7 +23,7 @@
           .form-group
             = f.label 'Дата события:'
             .input-group.date#datetimepicker
-              = f.text_field :will_begin_at, data: { date_format: 'YYYY/MM/DD HH:mm:ss' }
+              = f.text_field :will_begin_at, data: { date_format: 'YYYY/MM/DD HH:mm:ssZ' }
               %span.input-group-addon
                 %span.glyphicon.glyphicon-calendar
           .form-group
