@@ -80,6 +80,30 @@ $(document).ready ->
             $(".modal-body .candidate_#{candidate.id} .staff_relations").append(JST["vacancies/candidates_modal_candidate_status_row"]({
               staff_realation_status: candidate.status
             }))
-
         $('#dialog').modal('show')
+    return false
+
+  $('body').on 'click', '.modal-body input[type=submit]', (event) ->
+    event.preventDefault()
+    candidates = []
+    vacancy_id = $('#staff_relation_vacancy_id').val()
+    $('.new_staff_relation input:checked').each ->
+      candidates.push $(this).val()
+    params = {
+      staff_relation: {
+        vacancy_id: vacancy_id,
+        candidate_id: candidates
+      },
+      commit: 'Выполнить'
+    }
+    $.ajax $(this).closest('form').attr('action'),
+      data: params
+      type: 'POST'
+      dataType: 'json'
+      success: (data) ->
+        renderVacancyCandidates(data)
+        $('#dialog').modal('hide')
+        $('spant').text(data.vacancy.status)
+        console.log data
+        $('spant').removeClass().addClass("label #{data.vacancy.status_class}")
     return false
