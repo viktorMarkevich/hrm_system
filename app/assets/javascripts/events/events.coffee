@@ -96,15 +96,15 @@ $(document).ready ->
     return
 
   $('#datetimepicker').datetimepicker({
-    defaultDate: if moment($('.calendar table').data('date')).add(1, 'seconds').toDate() > moment()
-                    moment($('.calendar table').data('date')).add(1, 'seconds').toDate()
+    defaultDate: if moment($('.calendar-table').data('date')).add(1, 'seconds').toDate() > moment()
+                    moment($('.calendar-table').data('date')).add(1, 'seconds').toDate()
                  else moment().add(1, 'seconds').toDate(),
     minDate: moment()
   })
 
   bindShowEvent = (e) ->
     e.preventDefault()
-    selected_day = moment($('.calendar table').data('date')).date($(this).parents('td').find('span').text())
+    selected_day = moment($('.calendar-table').data('date')).date($(this).parents('td').find('span').text())
     params = new Date(selected_day)
     $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
       $('#event-dialog').modal('show')
@@ -122,6 +122,7 @@ $(document).ready ->
           update_url: events.update_path,
           destroy_url: events.destroy_path
         })
+        console.log(event)
         $('.events-table').append(event)
 
   $(document).on('click', "td a", bindShowEvent)
