@@ -1,5 +1,9 @@
 class StaffRelationsController < ApplicationController
 
+  # skip_before_filter :verify_authenticity_token
+  # before_action :authenticate_user!
+  include VacancyHelper
+
   def new
     @vacancy = Vacancy.find(params[:vacancy_id]) || Vacancy.only_deleted.where( id: params[:vacancy_id])
     @staff_relation = StaffRelation.new
@@ -20,10 +24,11 @@ class StaffRelationsController < ApplicationController
       @vacancy = Vacancy.find(st_params[:vacancy_id])
       @vacancy_candidates = @vacancy.candidates_with_status('Найденные')
       history_event = @st.history_events.create(user_id: current_user.id, old_status: 'Пасивен', new_status: 'Найденные' )
-
+      @vacancy_status_class = get_label_class(@vacancy)
       respond_to do |format|
         format.html { head :ok }
         format.js
+        format.json
       end
     rescue Exception => error
       puts "I've see this error #{error}"
