@@ -16,7 +16,7 @@ RSpec.describe StaffRelationsController, type: :controller do
 
 
     it 'updates candidates status on "В работе"' do
-      post :create, params: staff_relation_params, format: :js
+      post :create, params: staff_relation_params, format: :json
       vacancy.reload
 
       expect(assigns(:vacancy).status).to eq 'В работе'
