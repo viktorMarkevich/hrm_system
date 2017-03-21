@@ -12,6 +12,10 @@ class EventsController < ApplicationController
     end
   end
 
+  def selected_day_events
+    @events = Event.where("DATE(will_begin_at) =  ?", params[:will_begin_at].to_date)
+  end
+
   def edit
     respond_to do |format|
       format.html { head :ok }
@@ -77,7 +81,8 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:name, :will_begin_at, :description, :user_id)
+    permitted_params = params.require(:event).permit(:name, :will_begin_at, :description, :user_id)
+    permitted_params&.tap {|p| p[:will_begin_at] = params[:event][:will_begin_at].to_datetime }
   end
 
   def set_events_in_date_period

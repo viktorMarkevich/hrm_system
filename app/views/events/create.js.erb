@@ -1,9 +1,0 @@
-$('.events-list.future').html('<%= escape_javascript(render partial: 'events_list',
-                                                  locals: { events: @events, time_is: :future }) %>')
-
-$('.events-list.past').html('<%= escape_javascript(render partial: 'events_list',
-                                                  locals: { events: @events_past, time_is: :past }) %>')
-
-$('.calendar').html('<%= escape_javascript(render partial: 'calendar',
-                                                  locals: { events: @events }) %>')
-$('.modal-backdrop').remove();

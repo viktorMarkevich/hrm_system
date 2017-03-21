@@ -33,7 +33,8 @@ gem 'docx', '~> 0.2.07', :require => ["docx"]
 gem 'bootstrap-sass'
 gem 'sass-rails'
 gem 'ejs'
-
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'rubyzip', '~> 1.1.0'
 gem 'axlsx', '2.1.0.pre'
 gem 'axlsx_rails'
