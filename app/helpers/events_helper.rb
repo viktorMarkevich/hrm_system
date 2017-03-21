@@ -47,5 +47,4 @@ module EventsHelper
         'label-default'
     end
   end
-
 end
