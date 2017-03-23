@@ -17,19 +17,19 @@ class Candidate < ActiveRecord::Base
   STATUSES = %w(Пассивен В\ работе)
   # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
-  validates :name, :status, presence: true
-  validates :source, presence: true, if: 'file_name.nil?'
-  validates :source, uniqueness: true, if: 'source.present?'
-  validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
-            message: 'is invalid.' }, if: 'email.present?'
-  #validates :phone, format:  { with: /\+?\d{2}-\d{3}-\d{3}-\d{4}/,
+  # validates :name, :status, presence: true
+  # validates :source, presence: true, if: 'file_name.nil?'
+  # validates :source, uniqueness: true, if: 'source.present?'
+  # validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
+  #           message: 'is invalid.' }, if: 'email.present?'
+  # validates :phone, format:  { with: /\+?\d{2}-\d{3}-\d{3}-\d{4}/,
   #          message: 'wrong format' }, if: 'phone.present?'
-  validates :email, uniqueness: true, if: 'email.present?'
-  validates :phone, uniqueness: true, if: 'phone.present?'
-  validates :skype, uniqueness: true,
-                    length: { minimum: 6, maximum: 32 },
-                    format: { with: /(\A[a-zA-Z]+\w*(?:[-.:]\w+)*\z)/, message: 'is invalid.' },
-                    if: 'skype.present?'
+  # validates :email, uniqueness: true, if: 'email.present?'
+  # validates :phone, uniqueness: true, if: 'phone.present?'
+  # validates :skype, uniqueness: true,
+  #                   length: { minimum: 6, maximum: 32 },
+  #                   format: { with: /(\A[a-zA-Z]+\w*(?:[-.:]\w+)*\z)/, message: 'is invalid.' },
+  #                   if: 'skype.present?'
   #validates :birthday, format: { with: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/, multiline: true,
   #          message: 'wrong format' }, if: 'birthday.present?'
   before_validation :check_geo_name
