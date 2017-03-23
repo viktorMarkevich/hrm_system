@@ -58,7 +58,7 @@ namespace :deploy do
     on "#{fetch(:user)}@192.168.0.251" do
       within "#{fetch(:deploy_to)}/current" do
         # execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
-        execute :bundle, :exec, "rails s -p3001 -e #{fetch(:rails_env)}"
+        execute :bundle, :exec, "setsid rails s -p3001 -e #{fetch(:rails_env)}"
       end
     end
   end
