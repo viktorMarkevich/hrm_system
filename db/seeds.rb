@@ -55,6 +55,7 @@ for i in 1..15 do
       source: "Имяфайла#{i}.docx"
   )
 end
+
 for i in 16..30 do
   Candidate.create!(
       name: 'Тирион Ланистер' + i.to_s,

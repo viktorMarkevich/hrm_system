@@ -1,11 +1,6 @@
 # coding 'utf-8'
 #=require froala_editor.min.js
 $(document).ready ->
-  $.validate (
-    form: '.candidate-form'
-    lang: 'ru'
-  )
-
   $('body').on 'click', '.resume-edit-btn', (e) ->
     e.preventDefault()
     $('.froala-editor').froalaEditor(
