@@ -61,6 +61,11 @@ $(document).ready ->
     form.trigger('reset')
     form.find('input.btn.btn-default').removeAttr('disabled')
 
+  $('.edit-event').click ->
+    event-id = $('.edit-event').data('id')
+    console.log(event-id)
+    $('#edit-event').modal('show')
+
   $('body').on 'keyup', '#event_name', ->
     val = $(this).val()
     if val.length > 0

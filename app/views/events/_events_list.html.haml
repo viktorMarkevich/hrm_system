@@ -1,3 +1,5 @@
+= render 'edit_event_dialog'
+
 .items-list{ class: time_is.to_s }
   %table.table.table-bordered.table-list{ class: time_is == :future ? 'table-hover' : nil }
     %thead
@@ -25,6 +27,6 @@
           %td= event.description
           %td
             - if can? :update, event
-              = link_to '', edit_event_path(event), class: 'glyphicon glyphicon-edit', remote: true
+              %btn.glyphicon.glyphicon-edit.edit-event{ 'data-id': event.id }
             - if can? :destroy, event
               = link_to '', event, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
