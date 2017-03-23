@@ -9,7 +9,7 @@ class Candidate < ActiveRecord::Base
   has_one :image
   has_many :staff_relations, dependent: :destroy
   has_many :vacancies, through: :staff_relations, source: :vacancy
-  belongs_to :company
+  belongs_to :company, :counter_cache => true
   belongs_to :geo_name, counter_cache: true
 
   accepts_nested_attributes_for :image
