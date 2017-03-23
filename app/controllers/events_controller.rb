@@ -86,8 +86,8 @@ class EventsController < ApplicationController
   end
 
   def set_events_in_date_period
-    @events = Event.events_of(current_user, @date_from, @date_to).order(will_begin_at: :asc)
+    @events = Event.events_of(current_user, @date_from, @date_to).includes(:staff_relation).order(will_begin_at: :asc)
     @events_month = Event.events_of(current_user, @date_from.beginning_of_month, @date_to).order(will_begin_at: :asc)
-    @events_past = Event.events_of(current_user, @date_from.beginning_of_month, Time.zone.now.advance(minutes: -1)).order(will_begin_at: :asc)
+    @events_past = Event.events_of(current_user, @date_from.beginning_of_month, Time.zone.now.advance(minutes: -1)).includes(:staff_relation).order(will_begin_at: :asc)
   end
 end
