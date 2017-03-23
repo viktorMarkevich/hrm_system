@@ -17,6 +17,7 @@ class Candidate < ActiveRecord::Base
   STATUSES = %w(Пассивен В\ работе)
   # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
+  validates :status, presence: true
   # validates :name, :status, presence: true
   # validates :source, presence: true, if: 'file_name.nil?'
   # validates :source, uniqueness: true, if: 'source.present?'
