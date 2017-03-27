@@ -6,7 +6,8 @@
     .row
       .col-xs-12
         = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-
+          - flash.each do |key, value|
+            %div{:class => "flash #{key}"}= value
           .form-group
             = f.label :email
             %br
