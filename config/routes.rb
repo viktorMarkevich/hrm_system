@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :candidates, except: [:destroy] do
     member do
       get :set_vacancies
+      put :update_resume
     end
     collection do
       post :upload_resume
@@ -22,6 +23,7 @@ Rails.application.routes.draw do
   end
 
   resources :events, except: [:show]
+  get '/selected_day_events', to: 'events#selected_day_events'
 
   resources :staff_relations, only: [:new, :create, :destroy]
 

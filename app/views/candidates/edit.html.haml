@@ -1,4 +1,5 @@
 = stylesheet_link_tag 'candidates/candidates'
+= javascript_include_tag 'candidates/candidates_edit'
 
 .row
   .col-sm-12
@@ -14,7 +15,7 @@
 
   .col-md-5
     - if @candidate.original_cv_data
-      %button{class: 'btn btn-info', type: 'button', 'data-toggle' => 'collapse', 'data-target' => '#collapseExample', 'aria-expanded' => 'false', 'aria-controls' => 'collapseExample'}
+      %button{ class: 'btn btn-info', type: 'button', 'data-toggle' => 'collapse', 'data-target' => '#collapseExample', 'aria-expanded' => 'false', 'aria-controls' => 'collapseExample'}
         Показать резюме
-      #collapseExample.collapse
+      %code#collapseExample.collapse{ style: 'color: grey;' }
         = render partial: 'candidates/resume'

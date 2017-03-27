@@ -82,4 +82,9 @@ describe UsersController, type: :controller do
       end
     end
   end
+
+  it 'sends an email' do
+    expect { user.send_reset_password_instructions }
+        .to change { ActionMailer::Base.deliveries.count }.by(1)
+  end
 end
