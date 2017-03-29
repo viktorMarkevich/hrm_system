@@ -6,28 +6,20 @@
           %span{ 'aria-hidden' => 'true' } ×
         %h3.modal-title
           Редактировать событие
-
       .modal-body
-        = form_for event, html: { role: 'form', class: 'event_form' } do |f|
-          #error_explanation.bg-danger.text-danger
-          .form-group#event_name_group
-            - if %w(Собеседование Утвержден).include?(@event&(:name))
-              = f.label :name, class: 'label_event_name' do
-                Название события:&nbsp;
-                %span.label{ class: set_label_class(@event) }
-                  = @event&(:name)
-              = f.hidden_field :name
-            - else
-              = f.label :name, 'Название события: '
-              = f.text_field :name, class: 'form-control'
-          .form-group
-            = f.label 'Дата события:'
-            .input-group.date#datetimepicker
-              = f.text_field :will_begin_at, data: { date_format: 'YYYY/MM/DD HH:mm:ssZ' }, class: 'date-input form-control'
-              %span.input-group-addon
-                %span.glyphicon.glyphicon-calendar
-          .form-group
-            = f.label 'Описание:'
-            = f.text_area :description, rows: 3, class: 'form-control'
-          .form-group
-            = f.submit 'Сохранить', class: 'btn btn-default', 'data-eventid' => event.id
+        #error_explanation.bg-danger.text-danger
+        .form-group#event_name_group
+          %label.label_event_name Название события:
+          %input#event_name.form-control{type:"text", name: "event[name]"}
+          %input#event_id.form-control{type:"hidden", name: "event[id]"}
+        .form-group
+          %label Дата события:
+          .input-group.date#datetimepicker
+            %input#event_will_begin_at{type:"text", name: "event[will_begin_at]", data: { date_format: 'YYYY/MM/DD HH:mm:ssZ' }, class: 'date-input form-control'}
+            %span.input-group-addon
+              %span.glyphicon.glyphicon-calendar
+        .form-group
+          %label Описание:
+          %textarea#event_description.form-control{rows:"3", name:"event[description]"}
+        .form-group
+          %btn.btn.btn-default{ 'data-eventid' => 0} Сохранить

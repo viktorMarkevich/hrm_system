@@ -11,6 +11,10 @@ class EventsController < ApplicationController
       format.json { render :index }
     end
   end
+  def show
+    @event= Event.find(params[:id])
+    render json: @event
+  end
 
   def selected_day_events
     @events = Event.where("DATE(will_begin_at) =  ?", params[:will_begin_at].to_date)
@@ -36,11 +40,12 @@ class EventsController < ApplicationController
   def update
     # set_event_sr if params[:event][:staff_relation].to_i != 0
     @event= Event.find(params[:id])
-    @event.update(event_params)
-    respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Событие успешно удалено.' }
-      format.json
-    end
+    p params
+    p params['form-data']
+    p params['event']['will_begin_at']
+    p params['event']['name']
+    @event.update(description: params['event']["description"], name: params['event']["name"], will_begin_at: params['event']["will_begin_at"])
+    render json: @event
   end
 
   def destroy

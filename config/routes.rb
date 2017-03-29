@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :events, except: [:edit, :show]
+  resources :events, except: [:edit]
   get '/selected_day_events', to: 'events#selected_day_events'
   get '/edit/:id', to: 'events#edit'
 
