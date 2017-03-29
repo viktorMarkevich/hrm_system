@@ -35,27 +35,30 @@
       %table.table.table-striped.table-responsive.history
         %tbody
           - @history_events.each  do |sr|
-            -if sr.history_eventable.present?
+            - if sr.history_eventable.present?
               %tr
+                - if sr.history_eventable_type == 'Candidate'
+                  %td
+                    = "Добавлен кандидат: "
+                    = link_to sr.history_eventable.name, candidate_path(sr.history_eventable)
+
+                - elsif sr.history_eventable_type == 'StaffRelation'
+                  %td
+                    = "Изменения кандидата: "
+                    = link_to sr.history_eventable.candidate.name, candidate_path(sr.history_eventable.candidate_id)
+                    %span{ style: 'color: red' }
+                      = 'в вакансии'
+                    = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
                 %td
-                  = "Изменения кандидата: "
-                  = link_to sr.history_eventable.candidate.name, candidate_path(sr.history_eventable.candidate_id)
-                  %span{ style: 'color: red' }
-                    = 'в вакансии'
-                  = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
-                %td
-                  = "Пользователем: #{sr.user.first_name} #{sr.user.last_name}".html_safe
-                %td
-                  %strong
-                    со
-                    %span{ style: "color: blue;" }
-                      старого статуса
-                  = sr.old_status
-                  %strong
-                    на
+                  = "Пользователем: #{sr.user&.first_name} #{sr.user&.last_name}".html_safe
+                  %td
+                    - if sr.old_status.present?
+                      %span{ style: "color: blue;" }
+                        старый статус:
+                      = sr.old_status
                     %span{ style: "color: red;" }
-                      новый статус
-                  = sr.new_status
+                      новый статус:
+                    = sr.new_status
                 %td
                   .label.label-info
                     = sr.updated_at.strftime('%e %b %H:%M')

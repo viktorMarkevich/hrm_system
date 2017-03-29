@@ -63,4 +63,12 @@ RSpec.describe Candidate, type: :model do
       expect(@candidate.geo_name).to_not be_blank
     end
   end
+
+  context 'check history_event after create candidate' do
+    it 'increase history_events  count by 1' do
+      @candidate = build(:candidate)
+      expect { @candidate.save }.to change( Candidate, :count).by(1)
+    end
+
+  end
 end
