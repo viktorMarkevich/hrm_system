@@ -29,9 +29,9 @@
             = event.will_begin_at.strftime('%d/%m/%Y')
           %td.event_description= event.description
           %td
-            -#- if can? :update, event
-            %btn.glyphicon.glyphicon-edit.edit-event{'data-eventid' => event.id}
-            -#- if can? :destroy, event
-            %btn.glyphicon.glyphicon-remove.remove-event{ 'data-eventid' => event.id}
+            - if can? :update, event
+              %btn.glyphicon.glyphicon-edit.edit-event{'data-eventid' => event.id}
+            - if can? :destroy, event
+              %btn.glyphicon.glyphicon-remove.remove-event{ 'data-eventid' => event.id}
 
 
