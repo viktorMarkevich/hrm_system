@@ -2,6 +2,8 @@
 class Vacancy < ActiveRecord::Base
   acts_as_paranoid
 
+  attr_accessor :update_user
+
   include RegionSupporter
   include ChangesHistory
 
