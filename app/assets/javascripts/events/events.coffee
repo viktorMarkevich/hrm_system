@@ -6,25 +6,25 @@ $(document).ready ->
   $('.btn-dialog').click ->
     $('#dialog').modal('show')
 
-  $('.event_form').submit (e) ->
-    e.preventDefault()
-    current_time = new Date($('.calendar-table').data('date'))
-    url = $(this).attr('action')
-    form = $(this)
-    $.post(
-      url,
-      $(this).serialize(),
-      (data) ->
-        event_time = new Date(data.will_begin_at)
-        resetForm(form)
-        $('#dialog').modal('hide')
-        if current_time.getFullYear() == event_time.getFullYear() and current_time.getMonth() == event_time.getMonth()
-          add_event(data, event_time)
-    , 'JSON'
-    ).fail( (data) ->
-      resetForm(form)
-      alertMessage(data, form)
-    )
+#  $('.event_form').submit (e) ->
+#    e.preventDefault()
+#    current_time = new Date($('.calendar-table').data('date'))
+#    url = $(this).attr('action')
+#    form = $(this)
+#    $.post(
+#      url,
+#      $(this).serialize(),
+#      (data) ->
+#        event_time = new Date(data.will_begin_at)
+#        resetForm(form)
+#        $('#dialog').modal('hide')
+#        if current_time.getFullYear() == event_time.getFullYear() and current_time.getMonth() == event_time.getMonth()
+#          add_event(data, event_time)
+#    , 'JSON'
+#    ).fail( (data) ->
+#      resetForm(form)
+#      alertMessage(data, form)
+#    )
 
   add_event = (data, event_time) ->
     month = event_time.getMonth() + 1
@@ -60,11 +60,6 @@ $(document).ready ->
   resetForm = (form) ->
     form.trigger('reset')
     form.find('input.btn.btn-default').removeAttr('disabled')
-
-  $('.edit-event').click ->
-    event-id = $('.edit-event').data('id')
-    console.log(event-id)
-    $('#edit-event').modal('show')
 
   $('body').on 'keyup', '#event_name', ->
     val = $(this).val()
@@ -107,27 +102,56 @@ $(document).ready ->
     minDate: moment()
   })
 
-  bindShowEvent = (e) ->
-    e.preventDefault()
-    selected_day = moment($('.calendar-table').data('date')).date($(this).parents('td').find('span').text())
-    params = new Date(selected_day)
-    $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
-      $('#event-dialog').modal('show')
-      $('.events-table tbody').remove()
-      for events in data
-        event_time = new Date(events.will_begin_at)
-        month = event_time.getMonth() + 1
-        event = JST["events/templates/event"]({
-          name: events.name,
-          vacancy: events.vacancy_name,
-          candidate: events.candidate_name,
-          hours: event_time.getHours(),
-          minutes: event_time.getMinutes(),
-          formated_date: event_time.getDate() + '/' + month + '/' + event_time.getFullYear(),
-          description: events.description,
-          update_url: events.update_path,
-          destroy_url: events.destroy_path
-        })
-        $('.events-table').append(event)
+#  bindShowEvent = (e) ->
+#    e.preventDefault()
+#    selected_day = moment($('.calendar-table').data('date')).date($(this).parents('td').find('span').text())
+#    params = new Date(selected_day)
+#    $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
+#      $('#event-dialog').modal('show')
+#      $('.events-table tbody').remove()
+#      for events in data
+#        event_time = new Date(events.will_begin_at)
+#        month = event_time.getMonth() + 1
+#        event = JST["events/templates/event"]({
+#          name: events.name,
+#          vacancy: events.vacancy_name,
+#          candidate: events.candidate_name,
+#          hours: event_time.getHours(),
+#          minutes: event_time.getMinutes(),
+#          formated_date: event_time.getDate() + '/' + month + '/' + event_time.getFullYear(),
+#          description: events.description,
+#          update_url: events.update_path,
+#          destroy_url: events.destroy_path
+#        })
+#        $('.events-table').append(event)
+  $('.remove-event').click (e) ->
+    p = $(e.currentTarget).data('eventid')
+    url = "events/#{p}"
+    $.ajax
+      url: url
+      type: 'DELETE'
+      dataType: 'json'
+      success: (data) ->
+        $(e.currentTarget).parents('tr').remove()
 
-  $(document).on('click', "td a", bindShowEvent)
+
+
+  $('.event_form .btn-default').click (e) ->
+    p = $(e.currentTarget).data('eventid')
+    formData = new FormData()
+    formData.append('event[name]', $('#edit_event #event_name').val())
+    formData.append('event[description]', $('#edit_event #event_description').val())
+    formData.append('event[will_begin_at]', $('#edit_event #event_will_begin_at').val())
+    url = "events/#{p}"
+    $.ajax
+      url: url
+      type: 'PUT'
+      dataType: 'json'
+      data: formData
+      success: (data) ->
+        $('.modal').hide()
+        $(e.currentTarget).parents('tr').remove()
+
+
+
+#  $(document).on('click', "td a", bindShowEvent)

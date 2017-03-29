@@ -1,6 +1,4 @@
-#edit-event.modal.fade{ 'aria-hidden' => 'true', 'aria-labelledby' => 'myModalLabel',
-                    'data-backdrop' => 'static', 'data-keyboard' => 'true',
-                    role: 'dialog', tabindex: '1' }
+#editEvent.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
   .modal-dialog.modal-lg.event-dialog
     .modal-content
       .modal-header
@@ -8,8 +6,9 @@
           %span{ 'aria-hidden' => 'true' } ×
         %h3.modal-title
           Редактировать событие
+
       .modal-body
-        = form_tag '', html: { role: 'form', class: 'event_form' } do |f|
+        = form_for event, html: { role: 'form', class: 'event_form' } do |f|
           #error_explanation.bg-danger.text-danger
           .form-group#event_name_group
             - if %w(Собеседование Утвержден).include?(@event&(:name))
@@ -31,4 +30,4 @@
             = f.label 'Описание:'
             = f.text_area :description, rows: 3, class: 'form-control'
           .form-group
-            = f.submit 'Сохранить', class: 'btn btn-default'
+            = f.submit 'Сохранить', class: 'btn btn-default', 'data-eventid' => event.id

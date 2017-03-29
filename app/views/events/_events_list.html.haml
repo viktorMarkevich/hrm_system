@@ -1,4 +1,6 @@
-= render 'edit_event_dialog'
+
+
+/ Modal
 
 .items-list{ class: time_is.to_s }
   %table.table.table-bordered.table-list{ class: time_is == :future ? 'table-hover' : nil }
@@ -26,7 +28,10 @@
             = event.will_begin_at.strftime('%d/%m/%Y')
           %td= event.description
           %td
-            - if can? :update, event
-              %btn.glyphicon.glyphicon-edit.edit-event{ 'data-id': event.id }
-            - if can? :destroy, event
-              = link_to '', event, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
+            -#- if can? :update, event
+            %btn.glyphicon.glyphicon-edit.edit-event{'data-eventid' => event.id, "data-target" => "#editEvent", "data-toggle" => "modal", :type => "button" }
+            = render :partial => 'edit_event_dialog', :locals => {event: event}
+            -#- if can? :destroy, event
+            %btn.glyphicon.glyphicon-remove.remove-event{ 'data-eventid' => event.id}
+
+

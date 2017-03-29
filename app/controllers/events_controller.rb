@@ -34,14 +34,12 @@ class EventsController < ApplicationController
   end
 
   def update
-    set_event_sr if params[:event][:staff_relation].to_i != 0
+    # set_event_sr if params[:event][:staff_relation].to_i != 0
+    @event= Event.find(params[:id])
+    @event.update(event_params)
     respond_to do |format|
-      if @event.update(event_params)
-        format.js
-      else
-        format.json { render json: @event.errors.full_messages,
-                             status: :unprocessable_entity }
-      end
+      format.html { redirect_to events_url, notice: 'Событие успешно удалено.' }
+      format.json
     end
   end
 
@@ -50,7 +48,7 @@ class EventsController < ApplicationController
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Событие успешно удалено.' }
-      format.json { head :no_content }
+      format.json
     end
   end
 
