@@ -1,6 +1,6 @@
-= render partial: 'share/search'
+-#= render partial: 'share/search'
 .row
-  .col-lg-10.col-lg-offset-1
+  .col-lg-8.col-lg-offset-2{ style: 'background-color: #E2E4DF;' }
     .row
       .col-md-6
         .tip
@@ -8,13 +8,13 @@
             Вакансии
       .col-md-6
         .pull-right
-          = link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), class: 'btn btn-warning btn-block'
+          -#= link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), class: 'btn btn-warning btn-block'
     .row
       .col-md-12
     .items-list
       %table.table.table-hover.table-bordered
         %thead
-          %tr
+          %tr{ style: 'background-color: #F0721C;' }
             %th Вакансия
             %th Регион
             %th Зарплата

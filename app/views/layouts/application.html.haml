@@ -7,9 +7,9 @@
     %link{:href =>"https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css", rel: "stylesheet"}/
 
     = csrf_meta_tags
-  %body
+  %body{ style: 'background-color: #6D6C69;' }
     .container-fluid#header
-      %nav.navbar.container{}
+      %nav.navbar-inverse.container
         .navbar-header
           %button.navbar-toggle.collapsed{ 'aria-expanded' => 'false', 'data-target' => '#bs-navbar-collapse-1', 'data-toggle' => 'collapse', type: 'button' }
             %span.sr-only Toggle navigation
