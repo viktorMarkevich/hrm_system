@@ -2,6 +2,8 @@
 class Vacancy < ActiveRecord::Base
   acts_as_paranoid
 
+  attr_accessor :update_user
+
   include RegionSupporter
   include ChangesHistory
 
@@ -9,6 +11,7 @@ class Vacancy < ActiveRecord::Base
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_many :staff_relations
   has_many :candidates, through: :staff_relations, source: :candidate
+  has_many :history_events, as: :history_eventable
 
   attr_accessor :sr_status
 
@@ -17,6 +20,7 @@ class Vacancy < ActiveRecord::Base
 
   after_restore :set_default_status
   after_destroy :set_closed_status
+  after_create :create_history_event
 
   STATUSES = %w(Не\ задействована В\ работе Закрыта)
 
@@ -34,5 +38,10 @@ class Vacancy < ActiveRecord::Base
   def set_closed_status
     self.update(status: 'Закрыта')
   end
+
+  private
+    def create_history_event
+      self.history_events.create!(new_status: status, user: owner)
+    end
 end
 
