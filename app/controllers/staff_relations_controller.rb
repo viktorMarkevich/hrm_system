@@ -17,21 +17,19 @@ class StaffRelationsController < ApplicationController
   end
 
   def create
-    begin
-      st_params[:candidate_id].each do |id|
-       @st = StaffRelation.create(st_params.merge!(candidate_id: id))
-      end
-      @vacancy = Vacancy.find(st_params[:vacancy_id])
-      @vacancy_candidates = @vacancy.candidates_with_status('Найденные')
-      history_event = @st.history_events.create(user_id: current_user.id, old_status: 'Пасивен', new_status: 'Найденные' )
-      @vacancy_status_class = get_label_class(@vacancy)
-      respond_to do |format|
-        format.html { head :ok }
-        format.js
-        format.json
-      end
-    rescue Exception => error
-      puts "I've see this error #{error}"
+    # st_params[:candidate_id].each do |id|
+    #   @st = StaffRelation.create!(st_params.merge!(candidate_id: id))
+    #   @st.history_events.create(user_id: current_user.id, old_status: 'Пасивен', new_status: 'Найденные' )
+    # end
+    @vacancy = Vacancy.find(st_params[:vacancy_id])
+    @vacancy.update_user = current_user
+    @vacancy.candidates << Candidate.where(id: st_params[:candidate_id])
+    @vacancy_candidates = @vacancy.candidates_with_status('Найденные')
+    @vacancy_status_class = get_label_class(@vacancy)
+    respond_to do |format|
+      format.html { head :ok }
+      format.js
+      format.json
     end
   end
 
