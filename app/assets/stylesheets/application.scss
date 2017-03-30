@@ -28,14 +28,14 @@ body {
   background-color: #222;
 }
 
-.closed_vacancies {
+.paranoid_btn {
   color: #fff;
   font-weight: bold;
   border: 1px solid #fff;
   padding: 5px;
 }
 
-a.closed_vacancies:hover {
+a.paranoid_btn:hover {
   color: #663500 !important;
   border: 1px solid #F0721C;
   background-color: #f2f2f2;
@@ -62,6 +62,10 @@ a.closed_vacancies:hover {
     a {
       color: #fff !important;
   }
+}
+
+.table_head_color{
+  background-color: #F0721C;
 }
 
 .btn.search {

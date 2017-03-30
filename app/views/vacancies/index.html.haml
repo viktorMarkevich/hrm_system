@@ -1,4 +1,6 @@
 = render partial: 'share/search'
+%br
+%br
 .row
   .col-lg-12
     .row
@@ -8,13 +10,13 @@
             Вакансии
       .col-md-6
         .pull-right
-          = link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), class: 'closed_vacancies'
-    .row
-      .col-md-12
+          = link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), class: 'paranoid_btn'
+.row
+  .col-md-12
     .items-list
       %table.table.table-hover.table-bordered.table-striped
         %thead
-          %tr{ style: 'background-color: #F0721C; ' }
+          %tr.table_head_color
             %th Вакансия
             %th Регион
             %th Зарплата
