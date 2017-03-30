@@ -125,4 +125,61 @@ $(document).ready ->
         })
         $('.events-table').append(event)
 
+  clear_table = (e) ->
+    b= $('.table-list tbody').find('tr').length
+    if b < 1
+      $('.table-list').remove()
+      $('.tip.description_count').html('Список предстоящих событий за Март пуст')
+
+  $('.remove-event').click (e) ->
+    p = $(e.currentTarget).data('eventid')
+    url = "events/#{p}"
+    $.ajax
+      url: url
+      type: 'DELETE'
+      dataType: 'json'
+      success: (data) ->
+        $(e.currentTarget).parents('tr').remove()
+        clear_table()
+
+
+
+  $('#editEvent .btn-default').click (e) ->
+    p = $('#editEvent #event_id').val()
+    formData = new FormData()
+    formData.append('event[name]', $('#editEvent #event_name').val())
+    formData.append('event[description]', $('#editEvent #event_description').val())
+    formData.append('event[will_begin_at]', $('#editEvent #event_will_begin_at').val())
+    url = "events/#{p}"
+    $.ajax
+      url: url
+      type: 'PUT'
+      dataType: 'json'
+      processData: false
+      contentType: false
+      data: formData
+      success: (data) ->
+        event_time = new Date(data.will_begin_at)
+        month = event_time.getMonth() + 1
+        hours= event_time.getHours()
+        minutes= event_time.getMinutes()
+        formated_date= event_time.getDate() + '/' + month + '/' + event_time.getFullYear()
+        $("tr.event#{data.id}>td.event_name>span.label").html(data.name)
+        $("tr.event#{data.id}>td.event_will_begin_at").html('<span class="label label-primary">'+ "#{hours}:#{minutes }"+'</span>' + formated_date)
+        $("tr.event#{data.id}>td.event_description").html(data.description)
+        $('#editEvent').modal('hide')
+
+  $('.edit-event').click (e) ->
+    clear_table()
+    p = $(e.currentTarget).data('eventid')
+    $.ajax
+      url:"/events/#{p}"
+      type: 'get'
+      success: (data) ->
+        $('#event_name').val(data.name)
+        $('#event_description').val(data.description)
+        $('#event_will_begin_at').val(data.will_begin_at)
+        $('#event_id').val(data.id)
+        $('#editEvent').modal('show')
+
   $(document).on('click', "td a", bindShowEvent)
