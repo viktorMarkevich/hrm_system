@@ -7,7 +7,7 @@
     %link{:href =>"https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css", rel: "stylesheet"}/
 
     = csrf_meta_tags
-  %body{ style: 'background-color: #6D6C69;' }
+  %body{ style: 'background-color: #d9d9d9;' }
     .container-fluid#header
       %nav.navbar-inverse.container
         .navbar-header
@@ -64,7 +64,7 @@
                 %i.glyphicon.glyphicon-off
                 = 'Выйти'
     .row{ style: 'padding-top: 60px;' }
-    .container-fluid
-      .flash-container
-        = render 'share/flash_messages'
+    .flash-container
+      = render 'share/flash_messages'
+    .container
       = yield

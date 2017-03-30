@@ -20,16 +20,33 @@
 
 #header {
   height: 70px;
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid #fff;
   background-color: #222;
 }
 
-table.table-bordered{
-  border: 1px solid #F0721C !important;
+.container .items-list .table-bordered {
+  tbody, thead {
+    tr {
+      td, th {
+        border: 1px solid #ffffff !important;
+        color: #333;
+        a {
+          color: #333;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.btn.search {
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #fff;
 }
 
 .current {
-  border-bottom: 2px solid limegreen;
+  border-bottom: 2px solid #F0721C;
 }
 
 ul.nav.navbar-nav > li > a {

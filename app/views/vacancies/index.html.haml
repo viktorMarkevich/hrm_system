@@ -1,6 +1,6 @@
--#= render partial: 'share/search'
+= render partial: 'share/search'
 .row
-  .col-lg-8.col-lg-offset-2{ style: 'background-color: #E2E4DF;' }
+  .col-lg-12
     .row
       .col-md-6
         .tip
@@ -8,7 +8,7 @@
             Вакансии
       .col-md-6
         .pull-right
-          -#= link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), class: 'btn btn-warning btn-block'
+          = link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), style: 'color: #fff; font-weight: bold; border: 1px solid #fff; padding: 5px;'
     .row
       .col-md-12
     .items-list
