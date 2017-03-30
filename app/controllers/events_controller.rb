@@ -11,16 +11,16 @@ class EventsController < ApplicationController
       format.json { render :index }
     end
   end
+  def show
+    @event= Event.find(params[:id])
+    render json: @event
+  end
 
   def selected_day_events
     @events = Event.where("DATE(will_begin_at) =  ?", params[:will_begin_at].to_date)
   end
 
   def edit
-    respond_to do |format|
-      format.html { head :ok }
-      format.js
-    end
   end
 
   def create
@@ -39,14 +39,8 @@ class EventsController < ApplicationController
 
   def update
     set_event_sr if params[:event][:staff_relation].to_i != 0
-    respond_to do |format|
-      if @event.update(event_params)
-        format.js
-      else
-        format.json { render json: @event.errors.full_messages,
-                             status: :unprocessable_entity }
-      end
-    end
+    @event.update(event_params)
+    render json: @event
   end
 
   def destroy
@@ -54,7 +48,7 @@ class EventsController < ApplicationController
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Событие успешно удалено.' }
-      format.json { head :no_content }
+      format.json
     end
   end
 

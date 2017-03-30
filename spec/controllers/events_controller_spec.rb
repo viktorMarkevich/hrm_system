@@ -58,7 +58,7 @@ RSpec.describe EventsController, type: :controller do
         json = JSON.parse((attributes_for :event).to_json).update(
               'vacancy_name' => '------',
               'candidate_name' => '------',
-              'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{edit_event_path(Event.last)}"'></a>',
+              'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
               'destroy_path' => '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
               'will_begin_at' => "#{will_begin_at}"
               )
@@ -78,7 +78,7 @@ RSpec.describe EventsController, type: :controller do
             'name' => "#{staff_relation.status}",
             'vacancy_name' => "#{Event.last.staff_relation.vacancy.name}",
             'candidate_name' => "#{Event.last.staff_relation.candidate.name}",
-            'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{edit_event_path(Event.last)}"'></a>',
+            'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
             'destroy_path' => '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
             'will_begin_at' => "#{will_begin_at}"
             )
@@ -96,7 +96,7 @@ RSpec.describe EventsController, type: :controller do
         json = JSON.parse((attributes_for :event).to_json).update(
             'vacancy_name' => nil,
             'candidate_name' => nil,
-            'update_path' => "#{edit_event_path(Event.last)}",
+            'update_path' => "#{event_path(Event.last)}",
             'destroy_path' => "#{event_path(Event.last)}",
             'will_begin_at' => nil
             )
@@ -110,27 +110,11 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-  context '#edit' do
-    let (:event) { current_user.events.first }
-    before { get :edit, params: { id: current_user.events.first } }
-
-    it 'has HTTP 200 status' do
-      expect(response).to have_http_status(200)
-    end
-
-    it 'renders "edit" template' do
-      expect(response).not_to render_template('edit')
-    end
-
-    it 'assigns event for edit' do
-      expect(assigns(:event)).to eq(event)
-    end
-  end
-
   describe '#update' do
     let (:event) { current_user.events.first }
     let (:staff_relation) { create(:staff_relation) }
-    let (:event_attrs) { { name: 'Name', description: 'Редактирование описания' } }
+    let (:will_begin_at) { (Time.zone.now + 1.day + 12.minutes).strftime("%FT%T%:z") }
+    let (:event_attrs) { {description: "Редактирование описания", name: "Name", will_begin_at: "#{will_begin_at}"} }
 
     context 'when successful' do
       before do
@@ -140,6 +124,9 @@ RSpec.describe EventsController, type: :controller do
 
       it 'has updated name' do
         expect(event.name).to eql event_attrs[:name]
+      end
+      it 'has updated name' do
+        expect(event.description).to eql event_attrs[:description]
       end
 
       it 'redirects to events index page' do
