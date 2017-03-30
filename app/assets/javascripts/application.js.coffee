@@ -15,6 +15,7 @@
 #= require bootstrap-sprockets
 #= require moment
 #= require bootstrap-datetimepicker
+#= require delete_notice
 # require_tree .
 
 $(document).ready ->
@@ -47,3 +48,4 @@ $(document).ready ->
 
   $('.resume_upload').on 'click', ->
     $('#upload_resume_file').click()
+
