@@ -8,7 +8,7 @@
             Вакансии
       .col-md-6
         .pull-right
-          = link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), style: 'color: #fff; font-weight: bold; border: 1px solid #fff; padding: 5px;'
+          = link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), class: 'closed_vacancies'
     .row
       .col-md-12
     .items-list
@@ -30,10 +30,8 @@
               %td= full_name_for(vacancy.owner)
               %td= vacancy.status
               %td.text-center
-                - if can? :update, vacancy
-                  = link_to '', edit_vacancy_path(vacancy), class: 'glyphicon glyphicon-edit'
-                - if can? :destroy, vacancy
-                  = link_to '', vacancy, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
+                = link_to '', edit_vacancy_path(vacancy), class: 'glyphicon glyphicon-edit'
+                = link_to '', vacancy, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
 .row
   .col-lg-3
     = paginate @vacancies

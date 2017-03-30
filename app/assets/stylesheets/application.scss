@@ -18,10 +18,27 @@
 @import 'events';
 @import 'stickers';
 
+body {
+  background-color: #d9d9d9;
+}
+
 #header {
   height: 70px;
   border-bottom: 1px solid #fff;
   background-color: #222;
+}
+
+.closed_vacancies {
+  color: #fff;
+  font-weight: bold;
+  border: 1px solid #fff;
+  padding: 5px;
+}
+
+a.closed_vacancies:hover {
+  color: #663500 !important;
+  border: 1px solid #F0721C;
+  background-color: #f2f2f2;
 }
 
 .container .items-list .table-bordered {
