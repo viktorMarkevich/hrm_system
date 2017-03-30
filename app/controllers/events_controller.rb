@@ -40,11 +40,7 @@ class EventsController < ApplicationController
   def update
     # set_event_sr if params[:event][:staff_relation].to_i != 0
     @event= Event.find(params[:id])
-    p params
-    p params['form-data']
-    p params['event']['will_begin_at']
-    p params['event']['name']
-    @event.update(description: params['event']["description"], name: params['event']["name"], will_begin_at: params['event']["will_begin_at"])
+    @event.update(event_params)
     render json: @event
   end
 

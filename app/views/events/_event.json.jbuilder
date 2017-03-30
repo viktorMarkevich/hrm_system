@@ -13,7 +13,7 @@ else
 end
 
 if can? :update, event
-  json.update_path '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{edit_event_path(event)}"'></a>'
+  json.update_path '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(event)}"'></a>'
 else
   json.update_path ''
 end

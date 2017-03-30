@@ -110,27 +110,11 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-  # context '#edit' do
-  #   let (:event) { current_user.events.first }
-  #   before { get :edit, params: { id: current_user.events.first } }
-  #
-  #   it 'has HTTP 200 status' do
-  #     expect(response).to have_http_status(200)
-  #   end
-  #
-  #   it 'renders "edit" template' do
-  #     expect(response).not_to render_template('edit')
-  #   end
-  #
-  #   it 'assigns event for edit' do
-  #     expect(assigns(:event)).to eq(event)
-  #   end
-  # end
-
   describe '#update' do
     let (:event) { current_user.events.first }
     let (:staff_relation) { create(:staff_relation) }
-    let (:event_attrs) { {"event"=>{"description"=>"Редактирование описания", "name"=>"Name"}} }
+    let (:will_begin_at) { (Time.zone.now + 1.day + 12.minutes).strftime("%FT%T%:z") }
+    let (:event_attrs) { {description: "Редактирование описания", name: "Name", will_begin_at: "#{will_begin_at}"} }
 
     context 'when successful' do
       before do
@@ -140,6 +124,9 @@ RSpec.describe EventsController, type: :controller do
 
       it 'has updated name' do
         expect(event.name).to eql event_attrs[:name]
+      end
+      it 'has updated name' do
+        expect(event.description).to eql event_attrs[:description]
       end
 
       it 'redirects to events index page' do
