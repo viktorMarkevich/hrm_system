@@ -1,3 +1,8 @@
+
+
+/ Modal
+= render :partial => 'edit_event_dialog'
+
 .items-list{ class: time_is.to_s }
   %table.table.table-bordered.table-list{ class: time_is == :future ? 'table-hover' : nil }
     %thead
@@ -10,8 +15,8 @@
         %th Действия
     %tbody
       - events.each do |event|
-        %tr
-          %td
+        %tr{class: "event#{event.id}"}
+          %td.event_name
             %span.label{ class: set_label_class(event) }= event.name
           - if event.staff_relation
             %td= event.staff_relation.vacancy.name
@@ -19,12 +24,14 @@
           - else
             %td= '------'
             %td= '------'
-          %td
+          %td.event_will_begin_at
             %span.label.label-primary= event.will_begin_at.strftime('%H:%M')
             = event.will_begin_at.strftime('%d/%m/%Y')
-          %td= event.description
+          %td.event_description= event.description
           %td
             - if can? :update, event
-              = link_to '', edit_event_path(event), class: 'glyphicon glyphicon-edit', remote: true
+              %btn.glyphicon.glyphicon-edit.edit-event{'data-eventid' => event.id}
             - if can? :destroy, event
-              = link_to '', event, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
+              %btn.glyphicon.glyphicon-remove.remove-event{ 'data-eventid' => event.id}
+
+
