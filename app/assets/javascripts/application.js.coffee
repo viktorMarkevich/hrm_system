@@ -15,7 +15,7 @@
 #= require bootstrap-sprockets
 #= require moment
 #= require bootstrap-datetimepicker
-#= require delete_notice
+#= require delete_success_notice.js
 # require_tree .
 
 $(document).ready ->
