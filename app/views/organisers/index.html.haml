@@ -66,6 +66,8 @@
                 %td
                   .label.label-info
                     = sr.updated_at.strftime('%e %b %H:%M')
+      .col-xs-12
+        = paginate @history_events
     - else
       %ul.list-group
         %li.list-group-item.list-group-item-warning
