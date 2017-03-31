@@ -7,7 +7,7 @@ $(document).ready ->
     $('#dialog').modal('show')
 
 
-  show_modal = (params) ->
+  show_event_modal = (params) ->
     $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
       $('#event-dialog').modal('show')
       $('.events-table tbody').remove()
@@ -32,7 +32,7 @@ $(document).ready ->
     selected_day = moment($('.calendar-table').data('date')).date($(this).parents('td').find('span').text())
     params = new Date(selected_day)
     $('#event-dialog').data('day', params)
-    show_modal(params)
+    show_event_modal(params)
   $(document).on('click', "td a", bindShowEvent)
 
   $('.event_form').submit (e) ->
@@ -53,7 +53,8 @@ $(document).ready ->
         if $('#dialog').hasClass('show_modal')
           console.log $('#dialog').hasClass('show_modal')
           params = event_time
-          show_modal(params)
+          $('#dialog').removeClass('show_modal')
+          show_event_modal(params)
     , 'JSON'
     ).fail( (data) ->
       resetForm(form)
@@ -194,14 +195,45 @@ $(document).ready ->
         $('#event_id').val(data.id)
         $('#editEvent').modal('show')
 
+  open_modal_at_day = (data) ->
+    $('#dialog #event_will_begin_at').val(data)
+    $('#dialog').addClass('show_modal')
+    $('#dialog').modal('show')
+
   $('.add_event').click ->
     day_date = $('#event-dialog').data('day')
     hours= day_date.getHours() + 9
     minutes= day_date.getMinutes()
     month = day_date.getMonth() + 1
     formated_date= day_date.getFullYear() + '/' + month + '/' + day_date.getDate()
-    $('#dialog #event_will_begin_at').val("#{formated_date} 0#{hours}:0#{minutes}")
+    data = "#{formated_date} 0#{hours}:0#{minutes}"
     $('#event-dialog').modal('hide')
-    $('#dialog').addClass('show_modal')
-    $('#dialog').modal('show')
+    open_modal_at_day(data)
 
+  $('td.day').click ->
+    if !$(this).hasClass('td-primary')
+      console.log 'sosi'
+      console.log $(this).children('span').data()
+      select_day =  $(this).children('span').data('selectedDay')
+      console.log select_day
+      current_time =  $(this).children('span').data('currentTime')
+      console.log current_time
+
+      if current_time >= select_day
+        console.log current_time
+        day_date = new Date(current_time)
+        hours= day_date.getHours()
+        minutes= day_date.getMinutes()+1
+        month = day_date.getMonth() + 1
+        formated_date= day_date.getFullYear() + '/' + month + '/' + day_date.getDate()
+        data = "#{formated_date} #{hours}:#{minutes}"
+      else
+        console.log select_day
+        day_date = new Date(select_day)
+        console.log day_date
+        hours= day_date.getHours()
+        minutes= day_date.getMinutes()
+        month = day_date.getMonth() + 1
+        formated_date= day_date.getFullYear() + '/' + month + '/' + day_date.getDate()
+        data = "#{formated_date} #{hours}:#{minutes}"
+      open_modal_at_day(data)
