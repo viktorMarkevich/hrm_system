@@ -89,13 +89,13 @@
                    git add (название_файла) # добавит конкретный файл
 
                Название коммита не должно быть километровым, и недолжно быть длиной в одно слово.
-               Коммит должен начинаться со строк - 'add', 'remove', 'change', 'fix', 'refactor' и других слов в настоящем
+               Коммит должен начинаться со строк - 'Add', 'Remove', 'Change', 'Fix', 'Refactor' и других слов в настоящем
                времени.
 
                = Пример:
-                   git ci -am 'add column "first_name" to user table' # это норма
+                   git ci -am 'Add column "first_name" to user table' # это норма
 
-                   git ci -am 'added columns the first_name to the user table, which I have created after my super lunch' # это-
+                   git ci -am 'Added columns the first_name to the user table, which I have created after my super lunch' # это-
                        сами поимаете бред.
 
                    можно писать с заглавием и описанием.
