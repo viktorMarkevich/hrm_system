@@ -9,6 +9,7 @@ class OrganisersController < ApplicationController
                                   where(will_begin_at: Time.zone.now..Time.zone.now + 7.days).
                                   order(will_begin_at: :asc)
 
+
     @history_events = HistoryEvent.includes(:history_eventable, :user).order('updated_at DESC').limit(5)
   end
 end

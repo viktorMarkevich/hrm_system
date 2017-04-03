@@ -41,6 +41,10 @@
                   %td
                     = "Добавлен кандидат: "
                     = link_to sr.history_eventable.name, candidate_path(sr.history_eventable)
+                - elsif sr.history_eventable_type == 'Vacancy'
+                  %td
+                    = "Добавлена вакансия: "
+                    = link_to sr.history_eventable.name, vacancy_path(sr.history_eventable)
 
                 - elsif sr.history_eventable_type == 'StaffRelation'
                   %td
@@ -62,6 +66,8 @@
                 %td
                   .label.label-info
                     = sr.updated_at.strftime('%e %b %H:%M')
+      .col-xs-12
+        = paginate @history_events
     - else
       %ul.list-group
         %li.list-group-item.list-group-item-warning
