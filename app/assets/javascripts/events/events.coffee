@@ -5,6 +5,36 @@
 $(document).ready ->
   $('.btn-dialog').click ->
     $('#dialog').modal('show')
+    $('#dialog').removeClass('show_modal')
+
+
+  show_event_modal = (params) ->
+    $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
+      $('#event-dialog').modal('show')
+      $('.events-table tbody').remove()
+      for events in data
+        event_time = new Date(events.will_begin_at)
+        month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1)
+        event = JST["events/templates/event"]({
+          name: events.name,
+          vacancy: events.vacancy_name,
+          candidate: events.candidate_name,
+          hours: (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours(),
+          minutes: (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes(),
+          formated_date: ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear(),
+          description: events.description,
+          update_url: events.update_path,
+          destroy_url: events.destroy_path
+        })
+        $('.events-table').append(event)
+
+  bindShowEvent = (e) ->
+    e.preventDefault()
+    selected_day = moment($('.calendar-table').data('date')).date($(this).parents('td').find('span').text())
+    params = new Date(selected_day)
+    $('#event-dialog').data('day', params)
+    show_event_modal(params)
+  $(document).on('click', "td a", bindShowEvent)
 
   $('.event_form').submit (e) ->
     e.preventDefault()
@@ -20,6 +50,10 @@ $(document).ready ->
         $('#dialog').modal('hide')
         if current_time.getFullYear() == event_time.getFullYear() and current_time.getMonth() == event_time.getMonth()
           add_event(data, event_time)
+        if $('#dialog').hasClass('show_modal')
+          params = event_time
+          $('#dialog').removeClass('show_modal')
+          show_event_modal(params)
     , 'JSON'
     ).fail( (data) ->
       resetForm(form)
@@ -27,14 +61,14 @@ $(document).ready ->
     )
 
   add_event = (data, event_time) ->
-    month = event_time.getMonth() + 1
+    month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1);
     event = JST["events/templates/event"]({
               name: data.name,
               vacancy: data.vacancy_name,
               candidate: data.candidate_name,
-              hours: event_time.getHours(),
-              minutes: event_time.getMinutes(),
-              formated_date: event_time.getDate() + '/' + month + '/' + event_time.getFullYear(),
+              hours: (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours(),
+              minutes: (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes(),
+              formated_date: ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear(),
               description: data.description,
               update_url: data.update_path,
               destroy_url: data.destroy_path
@@ -72,13 +106,10 @@ $(document).ready ->
     val = $(this).find(':selected').data('status')
     if val != undefined
       $('#event_name').hide(200)
-
       status = $(".label_event_name").find('span.label')
       status.remove() if status.length > 0
-
       hidden = $('#hidden_event_name')
       hidden.remove() if hidden.length > 0
-
       $('.label_event_name').append(
         if val == 'Утвержден'
           "<span class='label label-success'>" + val + "</span>"
@@ -95,35 +126,13 @@ $(document).ready ->
       hidden.remove() if hidden.length > 0
     return
 
-  $('#datetimepicker').datetimepicker({
+  $('#datetimepicker2').datetimepicker({
     defaultDate: if moment($('.calendar-table').data('date')).add(1, 'seconds').toDate() > moment()
                     moment($('.calendar-table').data('date')).add(1, 'seconds').toDate()
                  else moment().add(1, 'seconds').toDate(),
     minDate: moment()
   })
 
-  bindShowEvent = (e) ->
-    e.preventDefault()
-    selected_day = moment($('.calendar-table').data('date')).date($(this).parents('td').find('span').text())
-    params = new Date(selected_day)
-    $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
-      $('#event-dialog').modal('show')
-      $('.events-table tbody').remove()
-      for events in data
-        event_time = new Date(events.will_begin_at)
-        month = event_time.getMonth() + 1
-        event = JST["events/templates/event"]({
-          name: events.name,
-          vacancy: events.vacancy_name,
-          candidate: events.candidate_name,
-          hours: event_time.getHours(),
-          minutes: event_time.getMinutes(),
-          formated_date: event_time.getDate() + '/' + month + '/' + event_time.getFullYear(),
-          description: events.description,
-          update_url: events.update_path,
-          destroy_url: events.destroy_path
-        })
-        $('.events-table').append(event)
 
   clear_table = (e) ->
     b= $('.table-list tbody').find('tr').length
@@ -160,14 +169,23 @@ $(document).ready ->
       data: formData
       success: (data) ->
         event_time = new Date(data.will_begin_at)
-        month = event_time.getMonth() + 1
-        hours= event_time.getHours()
-        minutes= event_time.getMinutes()
-        formated_date= event_time.getDate() + '/' + month + '/' + event_time.getFullYear()
+        month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1);
+        hours = (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours();
+        minutes = (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes();
+        formated_date= ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear()
         $("tr.event#{data.id}>td.event_name>span.label").html(data.name)
         $("tr.event#{data.id}>td.event_will_begin_at").html('<span class="label label-primary">'+ "#{hours}:#{minutes }"+'</span>' + formated_date)
         $("tr.event#{data.id}>td.event_description").html(data.description)
         $('#editEvent').modal('hide')
+
+  format_date = (current_time) ->
+    date = new Date(current_time)
+    hours = (date.getUTCHours() < 10 && '0' || '') + date.getUTCHours();
+    minutes = (date.getMinutes() < 10 && '0' || '') + date.getMinutes();
+    month = (date.getMonth()+1 < 10 && '0' || '') + (date.getMonth()+1);
+    day = (date.getDate() < 10 && '0' || '') + date.getDate();
+    formated_date= date.getFullYear() + '/' + month + '/' + day
+    data_day = "#{formated_date} #{hours}:#{minutes}"
 
   $('.edit-event').click (e) ->
     clear_table()
@@ -178,8 +196,32 @@ $(document).ready ->
       success: (data) ->
         $('#event_name').val(data.name)
         $('#event_description').val(data.description)
-        $('#event_will_begin_at').val(data.will_begin_at)
+        data_day = format_date(data.will_begin_at)
+        $('#event_will_begin_at').val(data_day)
         $('#event_id').val(data.id)
         $('#editEvent').modal('show')
 
-  $(document).on('click', "td a", bindShowEvent)
+  open_modal_at_day = (data) ->
+    $('#dialog #event_will_begin_at').val(data)
+    $('#dialog').addClass('show_modal')
+    $('#event-dialog').data('day', data)
+    $('#dialog').modal('show')
+
+  $('.add_event').click ->
+    $('#event-dialog').modal('hide')
+    data_day = format_date($('#event-dialog').data('day'))
+    open_modal_at_day(data_day)
+
+  $('td.day').click ->
+    if !$(this).hasClass('td-primary')
+      select_day =  $(this).children('span').data('selectedDay')
+      current_time =  $(this).children('span').data('currentTime')
+      if current_time >= select_day
+        data_day= format_date(current_time)
+        open_modal_at_day(data_day)
+      else
+        data_day= format_date(select_day)
+        open_modal_at_day(data_day)
+
+
+

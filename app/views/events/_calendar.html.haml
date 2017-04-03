@@ -1,12 +1,11 @@
 = render 'dialog'
 = render 'events_show'
-
 = month_calendar events: events, table: { class: 'table table-bordered calendar-table',
-                                 data: { date: @date_from.strftime('%Y-%m-%d') } },
+                                 data: { date: @date_from.utc.strftime('%Y-%m-%d') } },
                                  tr: { class: 'calendar-row' },
                                  td: default_td_classes(events),
                                  day_names: 'date.day_names' do |date, events|
-  %span{data: {day: date.day}}
+  %span{data: {day: date.day, selected_day: date, current_time: Time.now}}
     = date.day
   - if events.present?
     %a.event-badge

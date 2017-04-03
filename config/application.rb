@@ -22,7 +22,7 @@ module Faceit
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.assets.paths << "#{Rails}/vendor/assets/fonts"
-    config.time_zone = 'Kyiv'
+    config.time_zone = 'UTC'
     config.active_record.time_zone_aware_types = [:datetime]
 
 
