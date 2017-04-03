@@ -14,12 +14,12 @@ $(document).ready ->
       $('.events-table tbody').remove()
       for events in data
         event_time = new Date(events.will_begin_at)
-        month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1);
+        month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1)
         event = JST["events/templates/event"]({
           name: events.name,
           vacancy: events.vacancy_name,
           candidate: events.candidate_name,
-          hours: (event_time.getHours() < 10 && '0' || '') + event_time.getHours(),
+          hours: (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours(),
           minutes: (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes(),
           formated_date: ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear(),
           description: events.description,
@@ -66,7 +66,7 @@ $(document).ready ->
               name: data.name,
               vacancy: data.vacancy_name,
               candidate: data.candidate_name,
-              hours: (event_time.getHours() < 10 && '0' || '') + event_time.getHours(),
+              hours: (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours(),
               minutes: (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes(),
               formated_date: ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear(),
               description: data.description,
@@ -170,7 +170,7 @@ $(document).ready ->
       success: (data) ->
         event_time = new Date(data.will_begin_at)
         month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1);
-        hours = (event_time.getHours() < 10 && '0' || '') + event_time.getHours();
+        hours = (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours();
         minutes = (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes();
         formated_date= ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear()
         $("tr.event#{data.id}>td.event_name>span.label").html(data.name)
@@ -180,7 +180,7 @@ $(document).ready ->
 
   format_date = (current_time) ->
     date = new Date(current_time)
-    hours = (date.getHours() < 10 && '0' || '') + date.getHours();
+    hours = (date.getUTCHours() < 10 && '0' || '') + date.getUTCHours();
     minutes = (date.getMinutes() < 10 && '0' || '') + date.getMinutes();
     month = (date.getMonth()+1 < 10 && '0' || '') + (date.getMonth()+1);
     day = (date.getDate() < 10 && '0' || '') + date.getDate();
