@@ -224,4 +224,13 @@ $(document).ready ->
         open_modal_at_day(data_day)
 
 
+  $('#event_vacancy').change ->
+    vacancy_id = $(this).val()
+    console.log vacancy_id
+    $.ajax
+      url: "/v_candidates/#{vacancy_id}"
+      type: 'get'
+      success: (candidates) ->
+        console.log candidates
+        console.log candidates.count
 

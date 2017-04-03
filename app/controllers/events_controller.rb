@@ -24,6 +24,7 @@ class EventsController < ApplicationController
   end
 
   def create
+    @vacancies=Vacancy.all
     @event = current_user.events.build(event_params)
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
