@@ -40,4 +40,11 @@ RSpec.describe Vacancy, type: :model do
       end
     end
   end
+
+  context 'check history_event after create vacancy' do
+    it 'increase history_events count by 1' do
+      @candidate = build(:candidate)
+      expect { @candidate.save }.to change( Candidate, :count).by(1)
+    end
+  end
 end

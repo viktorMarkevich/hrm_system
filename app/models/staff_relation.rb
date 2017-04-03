@@ -7,6 +7,7 @@ class StaffRelation < ActiveRecord::Base
   STATUSES = %w(Нейтральный Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
   after_create :set_found_status, unless: 'event_id.present?'
+  after_create :create_history_event
 
   def set_found_status
     self.update_attributes(status: 'Найденные')
@@ -30,4 +31,9 @@ class StaffRelation < ActiveRecord::Base
   def self.get_without_event
     StaffRelation.where('status IN (?) and event_id IS NULL', ['Собеседование', 'Утвержден'])
   end
+
+  private
+    def create_history_event
+      self.history_events.create!(old_status: 'Пасивен', new_status: 'Найденные', user: vacancy.update_user)
+    end
 end

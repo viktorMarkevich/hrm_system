@@ -69,6 +69,5 @@ RSpec.describe Candidate, type: :model do
       @candidate = build(:candidate)
       expect { @candidate.save }.to change( Candidate, :count).by(1)
     end
-
   end
 end

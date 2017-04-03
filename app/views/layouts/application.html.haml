@@ -8,9 +8,8 @@
 
     = csrf_meta_tags
   %body
-    .row{ style: 'padding-top: 60px;' }
-    .container-fluid
-      %nav.navbar.navbar-inverse
+    .container-fluid#header
+      %nav.navbar-inverse.container
         .navbar-header
           %button.navbar-toggle.collapsed{ 'aria-expanded' => 'false', 'data-target' => '#bs-navbar-collapse-1', 'data-toggle' => 'collapse', type: 'button' }
             %span.sr-only Toggle navigation
@@ -65,7 +64,7 @@
                 %i.glyphicon.glyphicon-off
                 = 'Выйти'
     .row{ style: 'padding-top: 60px;' }
-    .container-fluid
-      .flash-container
-        = render 'share/flash_messages'
+    .flash-container
+      = render 'share/flash_messages'
+    .container
       = yield

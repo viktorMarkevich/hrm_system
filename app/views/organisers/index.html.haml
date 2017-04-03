@@ -3,7 +3,7 @@
 = javascript_include_tag 'charCount'
 
 .row
-  .col-lg-5
+  .col-lg-offset-1.col-lg-4{ style: 'background-color: #E2E4DF;' }
     .tip
       %p
         = 'Предстоящие события'
@@ -41,6 +41,10 @@
                   %td
                     = "Добавлен кандидат: "
                     = link_to sr.history_eventable.name, candidate_path(sr.history_eventable)
+                - elsif sr.history_eventable_type == 'Vacancy'
+                  %td
+                    = "Добавлена вакансия: "
+                    = link_to sr.history_eventable.name, vacancy_path(sr.history_eventable)
 
                 - elsif sr.history_eventable_type == 'StaffRelation'
                   %td
@@ -62,11 +66,13 @@
                 %td
                   .label.label-info
                     = sr.updated_at.strftime('%e %b %H:%M')
+      .col-xs-12
+        = paginate @history_events
     - else
       %ul.list-group
         %li.list-group-item.list-group-item-warning
           У Вас нет вакансий!
-  .col-lg-7
+  .col-lg-offset-1.col-lg-5.col-lg-offset-1{ style: 'background-color: #E2E4DF;' }
     .tip
       %p
         = 'Список стикеров'
