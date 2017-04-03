@@ -38,11 +38,8 @@ class EventsController < ApplicationController
   end
 
   def update
-    p 'aa'*100
-    p event_params
     set_event_sr if params[:event][:staff_relation].to_i != 0
     @event.update(event_params)
-    p 'd'*10
     p @event.will_begin_at
     render json: @event
   end
