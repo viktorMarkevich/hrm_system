@@ -1,39 +1,41 @@
+%br
+%br
 .row
-  .col-lg-2
-    = link_to 'Вернуться назад', vacancies_path, class: 'btn btn-default btn-block'
-  .col-lg-10
-
-- vacancies.each do |vacancy|
-  %br
-  .row
-    .col-lg-offset-2.col-lg-8.bg-info
-      .row
-        .col-lg-6
-          .tip
-            %p
-              = vacancy.name
-              = link_to restore_object_path(object_name: vacancy.class.to_s, id: vacancy), method: :delete do
-                %i.glyphicon.glyphicon-open
-          %br
-          %dl.dl-horizontal
-            %dt Зарплата:
-            %dd= get_salary(vacancy)
-            %dt Регион:
-            %dd= vacancy.region.try(:name)
-            %dt Языки:
-            %dd= display_field_value_for(vacancy.languages)
-            %dt Добавлено:
-            %dd= get_date_when_added(vacancy)
-            %dt Требования:
-            %dd= display_field_value_for(vacancy.requirements)
-            %dt Статус вакансии:
-            %dd
-              %spant.label.label-danger= vacancy.status
-            %dt Ответственный:
-            %dd= get_author_vacancy(vacancy)
-
-        .col-lg-6
-          .tip
-            %p
-              Список кандидатов
-          = render partial: 'archives/vacancy_parts/candidates_list', locals: { vacancy: vacancy }
+  .col-lg-12
+    .row
+      .col-md-6
+        .tip
+          %p
+            Удаленные Вакансии
+      .col-md-6
+        .pull-right
+          = link_to 'Вернуться назад', vacancies_path, class: 'paranoid_btn'
+.row
+  .col-md-12
+    .items-list
+      %table.table.table-hover.table-bordered.table-striped
+        %thead
+          %tr.table_head_color
+            %th Вакансия
+            %th Регион
+            %th Зарплата
+            %th Ответственный
+            %th Статус
+            %th Кандидаты
+        %tbody
+          - vacancies.each do |vacancy|
+            %tr
+              %td= link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
+              %td= vacancy.region.try(:name)
+              %td= get_salary(vacancy)
+              %td= full_name_for(vacancy.owner)
+              %td= vacancy.status
+              %td.text-center
+                - if vacancy.candidates.any?
+                  - vacancy.candidates.each do |candidate|
+                    %p= link_to candidate.name, candidate_path(candidate)
+                - else
+                  Нет
+.row
+  .col-lg-3
+    = paginate vacancies

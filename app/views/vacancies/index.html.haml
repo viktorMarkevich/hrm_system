@@ -1,6 +1,8 @@
 = render partial: 'share/search'
+%br
+%br
 .row
-  .col-lg-10.col-lg-offset-1
+  .col-lg-12
     .row
       .col-md-6
         .tip
@@ -8,13 +10,13 @@
             Вакансии
       .col-md-6
         .pull-right
-          = link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), class: 'btn btn-warning btn-block'
-    .row
-      .col-md-12
+          = link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), class: 'paranoid_btn'
+.row
+  .col-md-12
     .items-list
-      %table.table.table-hover.table-bordered
+      %table.table.table-hover.table-bordered.table-striped
         %thead
-          %tr
+          %tr.table_head_color
             %th Вакансия
             %th Регион
             %th Зарплата
@@ -30,10 +32,8 @@
               %td= full_name_for(vacancy.owner)
               %td= vacancy.status
               %td.text-center
-                - if can? :update, vacancy
-                  = link_to '', edit_vacancy_path(vacancy), class: 'glyphicon glyphicon-edit'
-                - if can? :destroy, vacancy
-                  = link_to '', vacancy, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
+                = link_to '', edit_vacancy_path(vacancy), class: 'glyphicon glyphicon-edit'
+                = link_to '', vacancy, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
 .row
   .col-lg-3
     = paginate @vacancies
