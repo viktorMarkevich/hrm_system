@@ -4,9 +4,9 @@
 = render :partial => 'edit_event_dialog'
 
 .items-list{ class: time_is.to_s }
-  %table.table.table-bordered.table-list{ class: time_is == :future ? 'table-hover' : nil }
+  %table.table.table-hover.table-bordered.table-striped{ class: time_is == :future ? 'table-hover' : nil }
     %thead
-      %tr
+      %tr.table_head_color
         %th Событие
         %th На вакансию
         %th С кем
@@ -29,9 +29,7 @@
             = event.will_begin_at.strftime('%d/%m/%Y')
           %td.event_description= event.description
           %td
-            - if can? :update, event
-              %btn.glyphicon.glyphicon-edit.edit-event{'data-eventid' => event.id}
-            - if can? :destroy, event
-              %btn.glyphicon.glyphicon-remove.remove-event{ 'data-eventid' => event.id}
+            %btn.glyphicon.glyphicon-edit.edit-event{'data-eventid' => event.id}
+            %btn.glyphicon.glyphicon-remove.remove-event{ 'data-eventid' => event.id}
 
 
