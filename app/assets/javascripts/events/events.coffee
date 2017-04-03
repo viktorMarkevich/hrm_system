@@ -49,9 +49,7 @@ $(document).ready ->
         $('#dialog').modal('hide')
         if current_time.getFullYear() == event_time.getFullYear() and current_time.getMonth() == event_time.getMonth()
           add_event(data, event_time)
-          console.log $('#dialog').hasClass('show_modal')
         if $('#dialog').hasClass('show_modal')
-          console.log $('#dialog').hasClass('show_modal')
           params = event_time
           $('#dialog').removeClass('show_modal')
           show_event_modal(params)
@@ -212,15 +210,10 @@ $(document).ready ->
 
   $('td.day').click ->
     if !$(this).hasClass('td-primary')
-      console.log 'sosi'
-      console.log $(this).children('span').data()
       select_day =  $(this).children('span').data('selectedDay')
-      console.log select_day
       current_time =  $(this).children('span').data('currentTime')
-      console.log current_time
 
       if current_time >= select_day
-        console.log current_time
         day_date = new Date(current_time)
         hours= day_date.getHours()
         minutes= day_date.getMinutes()+1
@@ -228,9 +221,7 @@ $(document).ready ->
         formated_date= day_date.getFullYear() + '/' + month + '/' + day_date.getDate()
         data = "#{formated_date} #{hours}:#{minutes}"
       else
-        console.log select_day
         day_date = new Date(select_day)
-        console.log day_date
         hours= day_date.getHours()
         minutes= day_date.getMinutes()
         month = day_date.getMonth() + 1
