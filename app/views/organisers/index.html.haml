@@ -3,69 +3,70 @@
 = javascript_include_tag 'charCount'
 
 .row
-  .col-md-12{ style: 'background-color: #E2E4DF;' }
+  .col-md-12
     .tip
       %p
         = 'Предстоящие события'
     - if @events.present?
-      %table.table.table-striped.table-responsive
-        %tbody
-          - @events.each do |event|
-            %tr
-              %td
-                %span.label{ class: set_label_class(event) }= event.name
-              - if event.staff_relation
-                %td= event.staff_relation.vacancy.name
-                %td= event.staff_relation.candidate.name
-              - else
-                %td= '------'
-                %td= '------'
-              %td
-                %span.label.label-primary= event.will_begin_at.strftime('%H:%M')
-                = event.will_begin_at.strftime('%d/%m/%Y')
+      .items-list
+        %table.table.table-hover.table-bordered.table-striped
+          %tbody
+            - @events.each do |event|
+              %tr
+                %td
+                  %span.label{ class: set_label_class(event) }= event.name
+                - if event.staff_relation
+                  %td= event.staff_relation.vacancy.name
+                  %td= event.staff_relation.candidate.name
+                - else
+                  %td= '------'
+                  %td= '------'
+                %td
+                  %span.label.label-warning
+                    = event.will_begin_at.strftime('%e %b %H:%M')
     - else
       %ul.list-group
         %li.list-group-item.list-group-item-warning
           У Вас нет ни единого события!
-    %hr
     .tip
       %p
         = 'Последние действия на сайте: '
     - if @history_events.present?
-      %table.table.table-striped.table-responsive.history
-        %tbody
-          - @history_events.each  do |sr|
-            - if sr.history_eventable.present?
-              %tr
-                - if sr.history_eventable_type == 'Candidate'
-                  %td
-                    = "Добавлен кандидат: "
-                    = link_to sr.history_eventable.name, candidate_path(sr.history_eventable)
-                - elsif sr.history_eventable_type == 'Vacancy'
-                  %td
-                    = "Добавлена вакансия: "
-                    = link_to sr.history_eventable.name, vacancy_path(sr.history_eventable)
+      .items-list
+        %table.table.table-hover.table-bordered.table-striped.history
+          %tbody
+            - @history_events.each  do |sr|
+              - if sr.history_eventable.present?
+                %tr
+                  - if sr.history_eventable_type == 'Candidate'
+                    %td
+                      %span.text-warning= "Добавлен кандидат: "
+                      = link_to sr.history_eventable.name, candidate_path(sr.history_eventable)
+                  - elsif sr.history_eventable_type == 'Vacancy'
+                    %td
+                      %span.text-warning= "Добавлена вакансия: "
+                      = link_to sr.history_eventable.name, vacancy_path(sr.history_eventable)
 
-                - elsif sr.history_eventable_type == 'StaffRelation'
+                  - elsif sr.history_eventable_type == 'StaffRelation'
+                    %td
+                      %span.text-warning= "Изменения кандидата: "
+                      = link_to sr.history_eventable.candidate.name, candidate_path(sr.history_eventable.candidate_id)
+                      %span.text-warning= 'в вакансии'
+                      = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
                   %td
-                    = "Изменения кандидата: "
-                    = link_to sr.history_eventable.candidate.name, candidate_path(sr.history_eventable.candidate_id)
-                    %span{ style: 'color: red' }
-                      = 'в вакансии'
-                    = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
-                %td
-                  = "Пользователем: #{sr.user&.first_name} #{sr.user&.last_name}".html_safe
+                    %span.text-warning= "Пользователем: "
+                    = "#{sr.user&.first_name} #{sr.user&.last_name}".html_safe
                   %td
                     - if sr.old_status.present?
-                      %span{ style: "color: blue;" }
+                      %span.text-warning
                         старый статус:
                       = sr.old_status
-                    %span{ style: "color: red;" }
+                    %span.text-warning
                       новый статус:
                     = sr.new_status
-                %td
-                  .label.label-info
-                    = sr.updated_at.strftime('%e %b %H:%M')
+                  %td
+                    .label.label-warning
+                      = sr.updated_at.strftime('%e %b %H:%M')
       .col-xs-12
         = paginate @history_events
     - else
