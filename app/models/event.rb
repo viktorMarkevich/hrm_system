@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
   has_one :staff_relation
   has_one :vacancy, through: :staff_relation
   has_one :candidate, through: :staff_relation
+  accepts_nested_attributes_for :staff_relation
 
   validates :name, :description, :user_id, presence: true
   validate :future_event?

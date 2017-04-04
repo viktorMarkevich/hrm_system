@@ -1,5 +1,6 @@
 #= require events/templates/table
 #= require events/templates/event
+#= require events/templates/candidates_list
 
 # coding 'utf-8'
 $(document).ready ->
@@ -48,10 +49,12 @@ $(document).ready ->
         event_time = new Date(data.will_begin_at)
         resetForm(form)
         $('#dialog').modal('hide')
+        $('.candidates_list tbody').empty()
+        $('.cand-list').hide()
         if current_time.getFullYear() == event_time.getFullYear() and current_time.getMonth() == event_time.getMonth()
           add_event(data, event_time)
         if $('#dialog').hasClass('show_modal')
-          params = event_time
+          params = "#{event_time.getFullYear()}-#{(event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1)}-#{(event_time.getDate() < 10 && '0' || '') + event_time.getDate()}"
           $('#dialog').removeClass('show_modal')
           show_event_modal(params)
     , 'JSON'
@@ -155,10 +158,14 @@ $(document).ready ->
 
   $('#editEvent .btn-default').click (e) ->
     p = $('#editEvent #event_id').val()
+    console.log $('#editEvent #event_staff_relation_attributes_vacancy_id').val()
+    console.log $('#editEvent #event_candidate').val()
     formData = new FormData()
     formData.append('event[name]', $('#editEvent #event_name').val())
     formData.append('event[description]', $('#editEvent #event_description').val())
     formData.append('event[will_begin_at]', $('#editEvent #event_will_begin_at').val())
+    formData.append('event[staff_relation_attributes][vacancy_id]', $('#editEvent #event_staff_relation_attributes_vacancy_id').val())
+    formData.append('event[staff_relation_attributes[candidate_id]]', $('#editEvent #event_candidate').val())
     url = "events/#{p}"
     $.ajax
       url: url
@@ -224,13 +231,21 @@ $(document).ready ->
         open_modal_at_day(data_day)
 
 
-  $('#event_vacancy').change ->
+  $('#event_staff_relation_attributes_vacancy_id').change ->
     vacancy_id = $(this).val()
-    console.log vacancy_id
-    $.ajax
-      url: "/v_candidates/#{vacancy_id}"
-      type: 'get'
-      success: (candidates) ->
-        console.log candidates
-        console.log candidates.count
+    if vacancy_id
+      $.get  "/v_candidates/#{vacancy_id}", (candidates) ->
+        $('.candidates_list tbody').empty()
+        $('.cand-list').show()
+        for candidate in candidates
+          candidat = JST["events/templates/candidates_list"]({
+            name: candidate.name,
+            phone: candidate.phone,
+            email: candidate.email
+            id: candidate.id
+          })
+          $('.candidates_list tbody').append(candidat)
+    else
+      $('.candidates_list tbody').empty()
+      $('.cand-list').hide()
 

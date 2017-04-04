@@ -18,11 +18,13 @@
         %tr{class: "event#{event.id}"}
           %td.event_name
             %span.label{ class: set_label_class(event) }= event.name
-          - if event.staff_relation
-            %td= event.staff_relation.vacancy.name
-            %td= event.staff_relation.candidate.name
+          - if event.vacancy
+            %td= event.vacancy.name
           - else
             %td= '------'
+          -if event.candidate
+            %td= event.candidate.name
+          - else
             %td= '------'
           %td.event_will_begin_at
             %span.label.label-primary= event.will_begin_at.strftime('%H:%M')

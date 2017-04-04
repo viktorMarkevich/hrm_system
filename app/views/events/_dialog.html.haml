@@ -30,6 +30,16 @@
             = f.label 'Описание:'
             = f.text_area :description, rows: 3, class: 'form-control', required: true
           .form-group
-            = f.select :vacancy, Vacancy.all.collect { |p| [ p.name, p.id ] }, include_blank: true, class: "vacancy_select"
+            =f.fields_for :staff_relation_attributes do |ff|
+              = ff.select :vacancy_id, Vacancy.all.collect { |p| [ p.name, p.id ] }, include_blank: true, class: "vacancy_select"
+          .candidates_list
+            %table.table.table-bordered.table-hover.cand-list{style: "display: none" }
+              %thead
+                %tr
+                  %th Полное Имя
+                  %th Номер телефона
+                  %th Почта
+                  %th Выбор
+              %tbody
           .form-group
             = f.submit 'Сохранить', class: 'btn btn-default'
