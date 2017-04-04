@@ -13,7 +13,7 @@
             %th Регион
             %th Зарплата
             %th Ответственный
-            %th Добавлен
+            /%th Добавлен
             %th
               .dropdown.show
                 %a#dropdownMenuLink.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "https://example.com"}
@@ -33,7 +33,7 @@
               %td= candidate.city_of_residence
               %td= candidate.salary
               %td= full_name_for(candidate.owner)
-              %td= candidate.created_at.strftime('%F')
+              -#%td= candidate.created_at.strftime('%F')
               %td= candidate.status
               %td= candidate.notice
       .pull-right.export-to-file
