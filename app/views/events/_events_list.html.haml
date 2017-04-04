@@ -17,7 +17,7 @@
       - events.each do |event|
         %tr{class: "event#{event.id}"}
           %td.event_name
-            %span.label{ class: set_label_class(event) }= event.name
+            %span.label.tooltips{ class: set_label_class(event), title: "#{event.name} - #{event.description}", data: { toggle: 'tooltip', placement: 'top' } }= event.name
           - if event.staff_relation
             %td= event.staff_relation.vacancy.name
             %td= event.staff_relation.candidate.name

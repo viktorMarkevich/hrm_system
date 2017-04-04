@@ -20,7 +20,7 @@
             - @events.each do |event|
               %tr
                 %td
-                  = link_to event.name, event
+                  = link_to event.name, event, class: 'tooltips', title: [event.name,' - ', event.description], data: { toggle: 'tooltip', placement: 'top' }
                 - if event.staff_relation
                   %td= event.staff_relation.vacancy.name
                   %td= event.staff_relation.candidate.name
