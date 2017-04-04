@@ -26,7 +26,7 @@
         %tbody
           - @vacancies.each do |vacancy|
             %tr
-              %td= link_to vacancy.name, vacancy_path(vacancy), id: 'vacancy-name'
+              %td= link_to vacancy.name, vacancy_path(vacancy)
               %td= vacancy.region.try(:name)
               %td= get_salary(vacancy)
               %td= full_name_for(vacancy.owner)

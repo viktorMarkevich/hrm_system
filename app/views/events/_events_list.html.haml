@@ -29,7 +29,7 @@
             = event.will_begin_at.strftime('%d/%m/%Y')
           %td.event_description= event.description
           %td
-            %btn.glyphicon.glyphicon-edit.edit-event{'data-eventid' => event.id}
-            %btn.glyphicon.glyphicon-remove.remove-event{ 'data-eventid' => event.id}
+            %a.glyphicon.glyphicon-edit.edit-event{'data-eventid' => event.id}
+            %a.glyphicon.glyphicon-remove.remove-event{ 'data-eventid' => event.id}
 
 
