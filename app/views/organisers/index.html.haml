@@ -10,11 +10,17 @@
     - if @events.present?
       .items-list
         %table.table.table-hover.table-bordered.table-striped
+          %thead
+            %tr.table_head_color
+              %th Событие
+              %th Имя Вакансии
+              %th Имя Кандидата
+              %th Дата
           %tbody
             - @events.each do |event|
               %tr
                 %td
-                  %span.label{ class: set_label_class(event) }= event.name
+                  = link_to event.name, event
                 - if event.staff_relation
                   %td= event.staff_relation.vacancy.name
                   %td= event.staff_relation.candidate.name
@@ -34,6 +40,12 @@
     - if @history_events.present?
       .items-list
         %table.table.table-hover.table-bordered.table-striped.history
+          %thead
+            %tr.table_head_color
+              %th Действие
+              %th Ответственный
+              %th Статус
+              %th Дата
           %tbody
             - @history_events.each  do |sr|
               - if sr.history_eventable.present?
@@ -54,7 +66,6 @@
                       %span.text-warning= 'в вакансии'
                       = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
                   %td
-                    %span.text-warning= "Пользователем: "
                     = "#{sr.user&.first_name} #{sr.user&.last_name}".html_safe
                   %td
                     - if sr.old_status.present?

@@ -28,13 +28,16 @@ body {
   background-color: #222;
 }
 
+.pagination > li > a,
 .paranoid_btn {
+  background-color: #d9d9d9;
   color: #fff;
   font-weight: bold;
   border: 1px solid #fff;
   padding: 5px;
 }
 
+.pagination > .active > a, .pagination > .active > a:hover,
 a.paranoid_btn:hover {
   color: #663500 !important;
   border: 1px solid #F0721C;
@@ -56,6 +59,7 @@ a.paranoid_btn:hover {
   }
 }
 
+.pagination > li:hover a,
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: #663500;
   color: #fff !important;
