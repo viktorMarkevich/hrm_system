@@ -13,7 +13,6 @@
             %th Регион
             %th Зарплата
             %th Ответственный
-            %th Добавлен
             %th
               .dropdown.show
                 %a#dropdownMenuLink.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "https://example.com"}
@@ -30,10 +29,9 @@
             %tr
               %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
               %td= candidate.desired_position
-              %td= display_field_value_for(candidate.city_of_residence)
-              %td= display_field_value_for(candidate.salary)
+              %td= candidate.city_of_residence
+              %td= candidate.salary
               %td= full_name_for(candidate.owner)
-              %td= candidate.created_at.strftime('%F')
               %td= candidate.status
               %td= candidate.notice
       .pull-right.export-to-file
