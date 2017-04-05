@@ -1,7 +1,6 @@
 class StaffRelation < ActiveRecord::Base
   belongs_to :vacancy
   belongs_to :candidate
-  belongs_to :event
   has_many :history_events, as: :history_eventable, dependent: :destroy
 
   STATUSES = %w(Нейтральный Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
@@ -29,7 +28,7 @@ class StaffRelation < ActiveRecord::Base
   end
 
   def self.get_without_event
-    StaffRelation.where('status IN (?) and event_id IS NULL', ['Собеседование', 'Утвержден'])
+    StaffRelation.where('status IN (?)', ['Собеседование', 'Утвержден'])
   end
 
   private
