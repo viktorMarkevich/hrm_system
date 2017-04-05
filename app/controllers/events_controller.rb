@@ -39,10 +39,12 @@ class EventsController < ApplicationController
   end
 
   def update
-    set_event_sr if params[:event][:staff_relation].to_i != 0
+    set_event_sr if params[:event][:staff_relation_attributes]
+    p "***"*10
+    p params[:event][:staff_relation]
     @event.update(event_params)
     p @event.will_begin_at
-    render json: @event
+    render json: {e: @event, v: @event.vacancy, c: @event.candidate}
   end
 
   def destroy
@@ -57,9 +59,15 @@ class EventsController < ApplicationController
   private
 
   def set_event_sr
-    sr = StaffRelation.find(params[:event][:staff_relation])
-    @event.staff_relation = sr
-    @event.name = sr.status
+    p "#"*100
+    p params[:event][:staff_relation_attributes]
+    if @event.staff_relation
+      @event.staff_relation.update(candidate_id: params[:event][:staff_relation_attributes][:candidate_id], vacancy_id: params[:event][:staff_relation_attributes][:vacancy_id] )
+    else
+      StaffRelation.create(candidate_id: params[:event][:staff_relation_attributes][:candidate_id], vacancy_id: params[:event][:staff_relation_attributes][:vacancy_id], event_id: @event )
+
+    end
+    # @event.name = sr.status
   end
 
   def set_event

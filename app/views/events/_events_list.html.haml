@@ -19,13 +19,13 @@
           %td.event_name
             %span.label{ class: set_label_class(event) }= event.name
           - if event.vacancy
-            %td= event.vacancy.name
+            %td.event_vacancy= event.vacancy.name
           - else
-            %td= '------'
+            %td.event_vacancy= '------'
           -if event.candidate
-            %td= event.candidate.name
+            %td.event_candidate= event.candidate.name
           - else
-            %td= '------'
+            %td.event_candidate= '------'
           %td.event_will_begin_at
             %span.label.label-primary= event.will_begin_at.strftime('%H:%M')
             = event.will_begin_at.strftime('%d/%m/%Y')

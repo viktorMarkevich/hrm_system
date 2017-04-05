@@ -175,14 +175,16 @@ $(document).ready ->
       contentType: false
       data: formData
       success: (data) ->
-        event_time = new Date(data.will_begin_at)
+        event_time = new Date(data.e.will_begin_at)
         month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1);
         hours = (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours();
         minutes = (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes();
         formated_date= ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear()
-        $("tr.event#{data.id}>td.event_name>span.label").html(data.name)
-        $("tr.event#{data.id}>td.event_will_begin_at").html('<span class="label label-primary">'+ "#{hours}:#{minutes }"+'</span>' + formated_date)
-        $("tr.event#{data.id}>td.event_description").html(data.description)
+        $("tr.event#{data.e.id}>td.event_name>span.label").html(data.e.name)
+        $("tr.event#{data.e.id}>td.event_will_begin_at").html('<span class="label label-primary">'+ "#{hours}:#{minutes }"+'</span>' + formated_date)
+        $("tr.event#{data.e.id}>td.event_description").html(data.e.description)
+        $("tr.event#{data.e.id}>td.event_vacancy").html(data.v.name)
+        $("tr.event#{data.e.id}>td.event_candidate").html(data.c.name)
         $('#editEvent').modal('hide')
 
   format_date = (current_time) ->
