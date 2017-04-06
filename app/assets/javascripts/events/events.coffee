@@ -1,16 +1,21 @@
 #= require events/templates/table
 #= require events/templates/event
+#= require events/templates/candidates_list
 
 # coding 'utf-8'
 $(document).ready ->
   $('.btn-dialog').click ->
     $('#dialog').modal('show')
     $('#dialog').removeClass('show_modal')
+    $('.candidates_list tbody').empty()
+    $('.cand-list').hide()
 
 
   show_event_modal = (params) ->
     $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
       $('#event-dialog').modal('show')
+      $('#event-dialog .candidates_list tbody').empty()
+      $('#event-dialog .cand-list').hide()
       $('.events-table tbody').remove()
       for events in data
         event_time = new Date(events.will_begin_at)
@@ -30,10 +35,12 @@ $(document).ready ->
 
   bindShowEvent = (e) ->
     e.preventDefault()
+
     selected_day = moment($('.calendar-table').data('date')).date($(this).parents('td').find('span').text())
     params = new Date(selected_day)
     $('#event-dialog').data('day', params)
     show_event_modal(params)
+
   $(document).on('click', "td a", bindShowEvent)
 
   $('.event_form').submit (e) ->
@@ -48,10 +55,12 @@ $(document).ready ->
         event_time = new Date(data.will_begin_at)
         resetForm(form)
         $('#dialog').modal('hide')
+        $('.candidates_list tbody').empty()
+        $('.cand-list').hide()
         if current_time.getFullYear() == event_time.getFullYear() and current_time.getMonth() == event_time.getMonth()
           add_event(data, event_time)
         if $('#dialog').hasClass('show_modal')
-          params = event_time
+          params = "#{event_time.getFullYear()}-#{(event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1)}-#{(event_time.getDate() < 10 && '0' || '') + event_time.getDate()}"
           $('#dialog').removeClass('show_modal')
           show_event_modal(params)
     , 'JSON'
@@ -155,10 +164,14 @@ $(document).ready ->
 
   $('#editEvent .btn-default').click (e) ->
     p = $('#editEvent #event_id').val()
+    console.log $('#editEvent #event_staff_relation_attributes_vacancy_id').val()
+    console.log $('#editEvent #event_candidate').val()
     formData = new FormData()
     formData.append('event[name]', $('#editEvent #event_name').val())
     formData.append('event[description]', $('#editEvent #event_description').val())
     formData.append('event[will_begin_at]', $('#editEvent #event_will_begin_at').val())
+    formData.append('event[staff_relation_attributes][vacancy_id]', $('#editEvent #event_staff_relation_attributes_vacancy_id').val())
+    formData.append('event[staff_relation_attributes[candidate_id]]', $('#editEvent #event_candidate').val())
     url = "events/#{p}"
     $.ajax
       url: url
@@ -168,14 +181,16 @@ $(document).ready ->
       contentType: false
       data: formData
       success: (data) ->
-        event_time = new Date(data.will_begin_at)
+        event_time = new Date(data.e.will_begin_at)
         month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1);
         hours = (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours();
         minutes = (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes();
         formated_date= ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear()
-        $("tr.event#{data.id}>td.event_name>span.label").html(data.name)
-        $("tr.event#{data.id}>td.event_will_begin_at").html('<span class="label label-primary">'+ "#{hours}:#{minutes }"+'</span>' + formated_date)
-        $("tr.event#{data.id}>td.event_description").html(data.description)
+        $("tr.event#{data.e.id}>td.event_name>span.label").html(data.e.name)
+        $("tr.event#{data.e.id}>td.event_will_begin_at").html('<span class="label label-primary">'+ "#{hours}:#{minutes }"+'</span>' + formated_date)
+        $("tr.event#{data.e.id}>td.event_description").html(data.e.description)
+        $("tr.event#{data.e.id}>td.event_vacancy").html(data.v.name)
+        $("tr.event#{data.e.id}>td.event_candidate").html(data.c.name)
         $('#editEvent').modal('hide')
 
   format_date = (current_time) ->
@@ -190,15 +205,27 @@ $(document).ready ->
   $('.edit-event').click (e) ->
     clear_table()
     p = $(e.currentTarget).data('eventid')
+    console.log p
     $.ajax
       url:"/events/#{p}"
       type: 'get'
       success: (data) ->
-        $('#event_name').val(data.name)
-        $('#event_description').val(data.description)
-        data_day = format_date(data.will_begin_at)
+        $('#event_name').val(data.e.name)
+        $('#event_description').val(data.e.description)
+        data_day = format_date(data.e.will_begin_at)
         $('#event_will_begin_at').val(data_day)
-        $('#event_id').val(data.id)
+        $('#event_id').val(data.e.id)
+        $('#event_staff_relation_attributes_vacancy_id').val(data.v.id)
+        if data.c.name.length > 0
+          $('.candidates_list tbody').empty()
+          $('.cand-list').show()
+          candidat = JST["events/templates/candidates_list"]({
+            name: data.c.name,
+            phone: data.c.phone,
+            email: data.c.email
+            id: data.c.id
+          })
+          $('.candidates_list tbody').append(candidat)
         $('#editEvent').modal('show')
 
   open_modal_at_day = (data) ->
@@ -224,4 +251,22 @@ $(document).ready ->
         open_modal_at_day(data_day)
 
 
-
+  $('.form-group #event_staff_relation_attributes_vacancy_id').change ->
+    vacancy_id = $(this).val()
+    console.log 'sosi'
+    console.log vacancy_id
+    if vacancy_id
+      $.get  "/v_candidates/#{vacancy_id}", (candidates) ->
+        $('.candidates_list tbody').empty()
+        $('.cand-list').show()
+        for candidate in candidates
+          candidat = JST["events/templates/candidates_list"]({
+            name: candidate.name,
+            phone: candidate.phone,
+            email: candidate.email
+            id: candidate.id
+          })
+          $('.candidates_list tbody').append(candidat)
+    else
+      $('.candidates_list tbody').empty()
+      $('.cand-list').hide()

@@ -23,6 +23,18 @@ class VacanciesController < ApplicationController
     end
   end
 
+  def vacancy_candidates
+    @vacancy = Vacancy.find(params[:id])
+    if @vacancy.candidates.count > 0
+      @vacancy_candidates = @vacancy.candidates
+    else
+        @vacancy_candidates =   Candidate.all
+    end
+    p 'q'*100
+    p @vacancy_candidates
+    render json: @vacancy_candidates
+  end
+
   def edit
     @sr_status = params[:sr_status]
   end

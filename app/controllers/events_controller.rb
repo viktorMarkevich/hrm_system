@@ -4,6 +4,7 @@ class EventsController < ApplicationController
   before_action :set_sr, only: [ :edit]
   before_action :set_date, only: [:index, :edit, :update, :destroy]
   before_action :set_events_in_date_period, only: [:index, :update]
+  before_action :authenticate_user!
 
   def index
     respond_to do |format|
@@ -13,7 +14,7 @@ class EventsController < ApplicationController
   end
   def show
     @event= Event.find(params[:id])
-    render json: @event
+    render json: {e: @event, v: @event.staff_relation.vacancy, c: @event.staff_relation.candidate}
   end
 
   def selected_day_events
@@ -24,6 +25,7 @@ class EventsController < ApplicationController
   end
 
   def create
+    @vacancies=Vacancy.all
     @event = current_user.events.build(event_params)
     set_event_sr if params[:event][:staff_relation].to_i != 0
     respond_to do |format|
@@ -38,14 +40,13 @@ class EventsController < ApplicationController
   end
 
   def update
-    set_event_sr if params[:event][:staff_relation].to_i != 0
+    set_event_sr if params[:event][:staff_relation]
     @event.update(event_params)
     p @event.will_begin_at
-    render json: @event
+    render json: {e: @event, v: @event.staff_relation.vacancy, c: @event.staff_relation.candidate}
   end
 
   def destroy
-    @event.staff_relation.update(event_id: nil) if @event.staff_relation
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Событие успешно удалено.' }
@@ -56,9 +57,9 @@ class EventsController < ApplicationController
   private
 
   def set_event_sr
-    sr = StaffRelation.find(params[:event][:staff_relation])
-    @event.staff_relation = sr
-    @event.name = sr.status
+    @staff_relation = StaffRelation.find_or_create_by(candidate_id: params[:event][:staff_relation][:candidate_id], vacancy_id: params[:event][:staff_relation][:vacancy_id] )
+    @event.update(staff_relation_id: @staff_relation.id )
+
   end
 
   def set_event
@@ -76,7 +77,7 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    permitted_params = params.require(:event).permit(:name, :will_begin_at, :description, :user_id)
+    permitted_params = params.require(:event).permit(:name, :will_begin_at, :description, :user_id, staff_relation_attributes: [:vacancy_id, :candidate_id])
     permitted_params&.tap {|p| p[:will_begin_at] = (params[:event][:will_begin_at]).to_datetime }
   end
 

@@ -22,4 +22,19 @@
           %label Описание:
           %textarea#event_description.form-control{rows:"3", name:"event[description]"}
         .form-group
+          %select{name:"event[staff_relation_attributes][vacancy_id]", id:"event_staff_relation_attributes_vacancy_id"}
+            %option{value:""}
+            -Vacancy.all.each do |vacancy|
+              %option{value: vacancy.id}
+                =vacancy.name
+          .candidates_list
+            %table.table.table-bordered.table-hover.cand-list{style: "display: none" }
+              %thead
+                %tr
+                  %th Полное Имя
+                  %th Номер телефона
+                  %th Почта
+                  %th Выбор
+              %tbody
+        .form-group
           %btn.btn.btn-default{ 'data-eventid' => 0} Сохранить
