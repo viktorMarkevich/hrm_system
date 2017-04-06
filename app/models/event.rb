@@ -3,8 +3,7 @@ class Event < ActiveRecord::Base
   extend SimpleCalendar
   has_calendar
   belongs_to :user
-  has_one :event_s_relation
-  has_one :staff_relation, through: :event_s_relation
+  belongs_to :staff_relation, dependent: :destroy
   accepts_nested_attributes_for :staff_relation
 
   validates :name, :description, :user_id, presence: true

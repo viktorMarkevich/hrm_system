@@ -2,10 +2,11 @@ class StaffRelation < ActiveRecord::Base
   belongs_to :vacancy
   belongs_to :candidate
   has_many :history_events, as: :history_eventable, dependent: :destroy
+  has_many :events
 
   STATUSES = %w(Нейтральный Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
-  after_create :set_found_status, unless: 'event_id.present?'
+  after_create :set_found_status
   after_create :create_history_event
 
   def set_found_status

@@ -24,7 +24,6 @@ class VacanciesController < ApplicationController
   end
 
   def vacancy_candidates
-
     @vacancy = Vacancy.find(params[:id])
     if @vacancy.candidates.count > 0
       @vacancy_candidates = @vacancy.candidates

@@ -22,7 +22,7 @@
             %td.event_vacancy= event.staff_relation.vacancy.name
           - else
             %td.event_vacancy= '------'
-          -if event.staff_relation
+          -if event.staff_relation.candidate
             %td.event_candidate= event.staff_relation.candidate.name
           - else
             %td.event_candidate= '------'

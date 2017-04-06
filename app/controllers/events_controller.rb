@@ -41,15 +41,12 @@ class EventsController < ApplicationController
 
   def update
     set_event_sr if params[:event][:staff_relation]
-    p "***"*10
-    p params[:event][:staff_relation]
     @event.update(event_params)
     p @event.will_begin_at
     render json: {e: @event, v: @event.staff_relation.vacancy, c: @event.staff_relation.candidate}
   end
 
   def destroy
-    @event.staff_relation.update(event_id: nil) if @event.staff_relation
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Событие успешно удалено.' }
@@ -60,16 +57,9 @@ class EventsController < ApplicationController
   private
 
   def set_event_sr
-    p "#"*100
-    p params[:event][:staff_relation]
     @staff_relation = StaffRelation.find_or_create_by(candidate_id: params[:event][:staff_relation][:candidate_id], vacancy_id: params[:event][:staff_relation][:vacancy_id] )
-    if @event.event_s_relation
-      @event.event_s_relation.update(staff_relation_id: @staff_relation.id)
-    else
-      EventSRelation.create( staff_relation_id: @staff_relation.id, event_id: @event.id )
+    @event.update(staff_relation_id: @staff_relation.id )
 
-    end
-    # @event.name = sr.status
   end
 
   def set_event
@@ -87,7 +77,7 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    permitted_params = params.require(:event).permit(:name, :will_begin_at, :description, :user_id, staff_relation: [:vacancy_id, :candidate_id])
+    permitted_params = params.require(:event).permit(:name, :will_begin_at, :description, :user_id, staff_relation_attributes: [:vacancy_id, :candidate_id])
     permitted_params&.tap {|p| p[:will_begin_at] = (params[:event][:will_begin_at]).to_datetime }
   end
 

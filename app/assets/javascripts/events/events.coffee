@@ -233,8 +233,10 @@ $(document).ready ->
         open_modal_at_day(data_day)
 
 
-  $('#event_staff_relation_attributes_vacancy_id').change ->
+  $('.form-group #event_staff_relation_attributes_vacancy_id').change ->
     vacancy_id = $(this).val()
+    console.log 'sosi'
+    console.log vacancy_id
     if vacancy_id
       $.get  "/v_candidates/#{vacancy_id}", (candidates) ->
         $('.candidates_list tbody').empty()
@@ -250,4 +252,3 @@ $(document).ready ->
     else
       $('.candidates_list tbody').empty()
       $('.cand-list').hide()
-
