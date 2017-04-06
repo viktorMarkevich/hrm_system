@@ -14,7 +14,7 @@ class EventsController < ApplicationController
   end
   def show
     @event= Event.find(params[:id])
-    render json: @event
+    render json: {e: @event, v: @event.staff_relation.vacancy, c: @event.staff_relation.candidate}
   end
 
   def selected_day_events

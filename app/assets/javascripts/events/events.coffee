@@ -7,11 +7,15 @@ $(document).ready ->
   $('.btn-dialog').click ->
     $('#dialog').modal('show')
     $('#dialog').removeClass('show_modal')
+    $('.candidates_list tbody').empty()
+    $('.cand-list').hide()
 
 
   show_event_modal = (params) ->
     $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
       $('#event-dialog').modal('show')
+      $('#event-dialog .candidates_list tbody').empty()
+      $('#event-dialog .cand-list').hide()
       $('.events-table tbody').remove()
       for events in data
         event_time = new Date(events.will_begin_at)
@@ -31,10 +35,12 @@ $(document).ready ->
 
   bindShowEvent = (e) ->
     e.preventDefault()
+
     selected_day = moment($('.calendar-table').data('date')).date($(this).parents('td').find('span').text())
     params = new Date(selected_day)
     $('#event-dialog').data('day', params)
     show_event_modal(params)
+
   $(document).on('click', "td a", bindShowEvent)
 
   $('.event_form').submit (e) ->
@@ -199,15 +205,27 @@ $(document).ready ->
   $('.edit-event').click (e) ->
     clear_table()
     p = $(e.currentTarget).data('eventid')
+    console.log p
     $.ajax
       url:"/events/#{p}"
       type: 'get'
       success: (data) ->
-        $('#event_name').val(data.name)
-        $('#event_description').val(data.description)
-        data_day = format_date(data.will_begin_at)
+        $('#event_name').val(data.e.name)
+        $('#event_description').val(data.e.description)
+        data_day = format_date(data.e.will_begin_at)
         $('#event_will_begin_at').val(data_day)
-        $('#event_id').val(data.id)
+        $('#event_id').val(data.e.id)
+        $('#event_staff_relation_attributes_vacancy_id').val(data.v.id)
+        if data.c.name.length > 0
+          $('.candidates_list tbody').empty()
+          $('.cand-list').show()
+          candidat = JST["events/templates/candidates_list"]({
+            name: data.c.name,
+            phone: data.c.phone,
+            email: data.c.email
+            id: data.c.id
+          })
+          $('.candidates_list tbody').append(candidat)
         $('#editEvent').modal('show')
 
   open_modal_at_day = (data) ->
