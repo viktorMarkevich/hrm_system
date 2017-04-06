@@ -21,10 +21,7 @@
             - if @events_past.present?
               = render partial: 'events_list', locals: { events: @events_past }
     .col-md-5
-      .tip
-        %p
-          Календарь событий
-      %button.btn.btn-success.btn-dialog.pull-right
-        Создать новое событие
+      %button.pull-right.paranoid_btn{style: 'font-weight: bold;' }
+        +
       .calendar#events_calendar
         = render partial: 'calendar', locals: { events: @events_month }
