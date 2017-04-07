@@ -5,18 +5,17 @@
 # coding 'utf-8'
 $(document).ready ->
   $('.btn-dialog').click ->
-    $('#dialog').modal('show')
-    $('#dialog').removeClass('show_modal')
     $('.candidates_list tbody').empty()
     $('.cand-list').hide()
+    $('.all_candidat').hide()
+    $('#dialog').modal('show')
+    $('#dialog').removeClass('show_modal')
+
 
 
   show_event_modal = (params) ->
     $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
       $('#event-dialog').modal('show')
-      $('#event-dialog .candidates_list tbody').empty()
-      $('#event-dialog .cand-list').hide()
-      $('.events-table tbody').remove()
       for events in data
         event_time = new Date(events.will_begin_at)
         month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1)
@@ -35,7 +34,6 @@ $(document).ready ->
 
   bindShowEvent = (e) ->
     e.preventDefault()
-
     selected_day = moment($('.calendar-table').data('date')).date($(this).parents('td').find('span').text())
     params = new Date(selected_day)
     $('#event-dialog').data('day', params)
@@ -57,6 +55,7 @@ $(document).ready ->
         $('#dialog').modal('hide')
         $('.candidates_list tbody').empty()
         $('.cand-list').hide()
+        $('.all_candidat').hide()
         if current_time.getFullYear() == event_time.getFullYear() and current_time.getMonth() == event_time.getMonth()
           add_event(data, event_time)
         if $('#dialog').hasClass('show_modal')
@@ -164,8 +163,6 @@ $(document).ready ->
 
   $('#editEvent .btn-default').click (e) ->
     p = $('#editEvent #event_id').val()
-    console.log $('#editEvent #event_staff_relation_attributes_vacancy_id').val()
-    console.log $('#editEvent #event_candidate').val()
     formData = new FormData()
     formData.append('event[name]', $('#editEvent #event_name').val())
     formData.append('event[description]', $('#editEvent #event_description').val())
@@ -193,6 +190,7 @@ $(document).ready ->
         $("tr.event#{data.e.id}>td.event_candidate").html(data.c.name)
         $('#editEvent').modal('hide')
 
+
   format_date = (current_time) ->
     date = new Date(current_time)
     hours = (date.getUTCHours() < 10 && '0' || '') + date.getUTCHours();
@@ -205,7 +203,6 @@ $(document).ready ->
   $('.edit-event').click (e) ->
     clear_table()
     p = $(e.currentTarget).data('eventid')
-    console.log p
     $.ajax
       url:"/events/#{p}"
       type: 'get'
@@ -215,10 +212,11 @@ $(document).ready ->
         data_day = format_date(data.e.will_begin_at)
         $('#event_will_begin_at').val(data_day)
         $('#event_id').val(data.e.id)
+        $('.candidates_list tbody').empty()
+        $('.cand-list').show()
+        $('.all_candidat').show()
         $('#event_staff_relation_attributes_vacancy_id').val(data.v.id)
         if data.c.name.length > 0
-          $('.candidates_list tbody').empty()
-          $('.cand-list').show()
           candidat = JST["events/templates/candidates_list"]({
             name: data.c.name,
             phone: data.c.phone,
@@ -229,6 +227,9 @@ $(document).ready ->
         $('#editEvent').modal('show')
 
   open_modal_at_day = (data) ->
+    $('.candidates_list tbody').empty()
+    $('.cand-list').hide()
+    $('.all_candidat').hide()
     $('#dialog #event_will_begin_at').val(data)
     $('#dialog').addClass('show_modal')
     $('#event-dialog').data('day', data)
@@ -250,15 +251,40 @@ $(document).ready ->
         data_day= format_date(select_day)
         open_modal_at_day(data_day)
 
+  add_candidate_to_table = (vacancy_id) ->
+    $.get  "/v_candidates/#{vacancy_id}", (data) ->
+      $('.candidates_list tbody').empty()
+      $('.cand-list').show()
+      for candidate in data.candidates
+        candidat = JST["events/templates/candidates_list"]({
+          name: candidate.name,
+          phone: candidate.phone,
+          email: candidate.email
+          id: candidate.id
+        })
+        $('.candidates_list tbody').append(candidat)
+
+      tr_count = $('.candidates_list tbody tr').length
+      if data.cand_count > tr_count
+        $('.all_candidat').show()
+      else
+        $('.all_candidat').hide()
 
   $('.form-group #event_staff_relation_attributes_vacancy_id').change ->
     vacancy_id = $(this).val()
-    console.log 'sosi'
-    console.log vacancy_id
     if vacancy_id
-      $.get  "/v_candidates/#{vacancy_id}", (candidates) ->
-        $('.candidates_list tbody').empty()
-        $('.cand-list').show()
+      add_candidate_to_table(vacancy_id)
+    else
+      $('.candidates_list tbody').empty()
+      $('.cand-list').hide()
+      $('.all_candidat').hide()
+
+
+  $('p.all_candidat').click ->
+    vacancy_id = $('#editEvent #event_staff_relation_attributes_vacancy_id').val() > 0 && $('#editEvent #event_staff_relation_attributes_vacancy_id').val() || $('.event-form #event_staff_relation_attributes_vacancy_id').val()
+    alert("#{$('#editEvent #event_staff_relation_attributes_vacancy_id').val()}, #{$('.event-form #event_staff_relation_attributes_vacancy_id').val()}")
+    if vacancy_id
+      $.get  "/all_candidates/#{vacancy_id}", (candidates) ->
         for candidate in candidates
           candidat = JST["events/templates/candidates_list"]({
             name: candidate.name,
@@ -267,6 +293,4 @@ $(document).ready ->
             id: candidate.id
           })
           $('.candidates_list tbody').append(candidat)
-    else
-      $('.candidates_list tbody').empty()
-      $('.cand-list').hide()
+

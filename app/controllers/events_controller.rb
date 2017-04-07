@@ -40,9 +40,8 @@ class EventsController < ApplicationController
   end
 
   def update
-    set_event_sr if params[:event][:staff_relation]
+    set_event_sr if params[:event][:staff_relation].to_i != 0
     @event.update(event_params)
-    p @event.will_begin_at
     render json: {e: @event, v: @event.staff_relation.vacancy, c: @event.staff_relation.candidate}
   end
 
