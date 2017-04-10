@@ -37,6 +37,11 @@ body {
   padding: 5px;
 }
 
+.btn-dialog {
+  min-width: 60px;
+  text-align: center;
+}
+
 .pagination > .active > a, .pagination > .active > a:hover,
 a.paranoid_btn:hover {
   color: #663500 !important;
