@@ -1,14 +1,16 @@
 = stylesheet_link_tag 'events'
 = javascript_include_tag 'events/events'
 
+= render 'dialog'
+= render 'events_show'
+
 .container-fluid
   .row
     .col-md-5.col-md-offset-1
       .row
         .col-md-12
           .tip.description_count
-            %p
-              = set_events_list_title(@events, @date_from)
+            = set_events_list_title(@events, @date_from)
           .events-list.future
             - if @events.present?
               = render partial: 'events_list', locals: { events: @events }
@@ -21,7 +23,7 @@
             - if @events_past.present?
               = render partial: 'events_list', locals: { events: @events_past }
     .col-md-5
-      %button.pull-right.paranoid_btn{style: 'font-weight: bold;' }
-        +
+      %a.pull-right.paranoid_btn.btn-dialog{style: 'font-weight: bold;' }
+        %i.glyphicon.glyphicon-plus
       .calendar#events_calendar
         = render partial: 'calendar', locals: { events: @events_month }
