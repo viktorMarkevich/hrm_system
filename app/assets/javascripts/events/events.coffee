@@ -7,7 +7,6 @@ $(document).ready ->
   $('.btn-dialog').click ->
     $('.candidates_list tbody').empty()
     $('.cand-list').hide()
-    $('.all_candidat').hide()
     $('#dialog').modal('show')
     $('#dialog').removeClass('show_modal')
 
@@ -15,7 +14,6 @@ $(document).ready ->
 
   show_event_modal = (params) ->
     $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
-      console.log data
       $('#event-dialog').modal('show')
       for events in data
         event_time = new Date(events.will_begin_at)
@@ -57,7 +55,6 @@ $(document).ready ->
         $('#dialog').modal('hide')
         $('.candidates_list tbody').empty()
         $('.cand-list').hide()
-        $('.all_candidat').hide()
         if current_time.getFullYear() == event_time.getFullYear() and current_time.getMonth() == event_time.getMonth()
           add_event(data, event_time)
         if $('#dialog').hasClass('show_modal')
@@ -192,7 +189,7 @@ $(document).ready ->
 
   format_date = (current_time) ->
     date = new Date(current_time)
-    hours = (date.getUTCHours() < 10 && '0' || '') + date.getUTCHours();
+    hours = (date.getHours() < 10 && '0' || '') + date.getHours();
     minutes = (date.getMinutes() < 10 && '0' || '') + date.getMinutes();
     month = (date.getMonth()+1 < 10 && '0' || '') + (date.getMonth()+1);
     day = (date.getDate() < 10 && '0' || '') + date.getDate();
@@ -213,7 +210,6 @@ $(document).ready ->
         $('#event_id').val(data.e.id)
         $('.candidates_list tbody').empty()
         $('.cand-list').show()
-        $('.all_candidat').show()
         $('#event_staff_relation_attributes_vacancy_id').val(data.v.id)
         if data.c.name.length > 0
           candidat = JST["events/templates/candidates_list"]({
@@ -228,7 +224,6 @@ $(document).ready ->
   open_modal_at_day = (data) ->
     $('.candidates_list tbody').empty()
     $('.cand-list').hide()
-    $('.all_candidat').hide()
     $('#dialog #event_will_begin_at').val(data)
     $('#dialog').addClass('show_modal')
     $('#event-dialog').data('day', data)
@@ -240,11 +235,13 @@ $(document).ready ->
     open_modal_at_day(data_day)
 
   $('td.day').click ->
-    if !$(this).hasClass('td-primary')
+
+    if !$(this).hasClass('has-events') and  !$(this).hasClass('past')
       select_day =  $(this).children('span').data('selectedDay')
       current_time =  $(this).children('span').data('currentTime')
-      if current_time >= select_day
-        console.log current_time
+      select  = new Date(select_day)
+      current  = new Date(current_time)
+      if current.getDay() >= select.getDay() and current.getMonth() >= select.getMonth() and current.getFullYear()>= select.getFullYear()
         data_day= format_date(current_time)
         open_modal_at_day(data_day)
       else
@@ -265,10 +262,7 @@ $(document).ready ->
         $('.candidates_list tbody').append(candidat)
 
       tr_count = $('.candidates_list tbody tr').length
-      if data.cand_count > tr_count
-        $('.all_candidat').show()
-      else
-        $('.all_candidat').hide()
+
 
   $('.form-group #event_staff_relation_attributes_vacancy_id').change ->
     vacancy_id = $(this).val()
@@ -277,20 +271,5 @@ $(document).ready ->
     else
       $('.candidates_list tbody').empty()
       $('.cand-list').hide()
-      $('.all_candidat').hide()
 
-
-  $('p.all_candidat').click ->
-    vacancy_id = $('#editEvent #event_staff_relation_attributes_vacancy_id').val() > 0 && $('#editEvent #event_staff_relation_attributes_vacancy_id').val() || $('.event-form #event_staff_relation_attributes_vacancy_id').val()
-    alert("#{$('#editEvent #event_staff_relation_attributes_vacancy_id').val()}, #{$('.event-form #event_staff_relation_attributes_vacancy_id').val()}")
-    if vacancy_id
-      $.get  "/all_candidates/#{vacancy_id}", (candidates) ->
-        for candidate in candidates
-          candidat = JST["events/templates/candidates_list"]({
-            name: candidate.name,
-            phone: candidate.phone,
-            email: candidate.email
-            id: candidate.id
-          })
-          $('.candidates_list tbody').append(candidat)
 

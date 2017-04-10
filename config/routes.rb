@@ -26,7 +26,6 @@ Rails.application.routes.draw do
   get '/selected_day_events', to: 'events#selected_day_events'
   get '/edit/:id', to: 'events#edit'
   get '/v_candidates/:id', to: 'vacancies#vacancy_candidates'
-  get '/all_candidates/:id', to: 'vacancies#all_candidates'
 
   resources :staff_relations, only: [:new, :create, :destroy]
 
