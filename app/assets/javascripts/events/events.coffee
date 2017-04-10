@@ -78,7 +78,6 @@ $(document).ready ->
               hours: (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours(),
               minutes: (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes(),
               formated_date: ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear(),
-              description: data.description,
               update_url: data.update_path,
               destroy_url: data.destroy_path
             })

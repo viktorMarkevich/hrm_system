@@ -1,7 +1,5 @@
 class Event < ActiveRecord::Base
 
-  extend SimpleCalendar
-  has_calendar
   belongs_to :user
   belongs_to :staff_relation, dependent: :destroy
   accepts_nested_attributes_for :staff_relation
@@ -24,7 +22,7 @@ class Event < ActiveRecord::Base
     user.events.where(will_begin_at: from..to).order(will_begin_at: :asc)
   end
 
-  def starts_at
+  def start_time
     self.will_begin_at
   end
 end
