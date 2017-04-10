@@ -15,6 +15,7 @@ $(document).ready ->
 
   show_event_modal = (params) ->
     $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
+      console.log data
       $('#event-dialog').modal('show')
       for events in data
         event_time = new Date(events.will_begin_at)
@@ -37,9 +38,10 @@ $(document).ready ->
     selected_day = moment($('.calendar-table').data('date')).date($(this).parents('td').find('span').text())
     params = new Date(selected_day)
     $('#event-dialog').data('day', params)
+    $('.events-table .events-body').empty()
     show_event_modal(params)
 
-  $(document).on('click', "td a", bindShowEvent)
+  $(document).on('click', "td a.event-badge", bindShowEvent)
 
   $('.event_form').submit (e) ->
     e.preventDefault()
@@ -126,10 +128,8 @@ $(document).ready ->
       )
     else
       $('#event_name').show(200)
-
       status = $(".label_event_name").find('span.label')
       status.remove() if status.length > 0
-
       hidden = $('#hidden_event_name')
       hidden.remove() if hidden.length > 0
     return
@@ -245,6 +245,7 @@ $(document).ready ->
       select_day =  $(this).children('span').data('selectedDay')
       current_time =  $(this).children('span').data('currentTime')
       if current_time >= select_day
+        console.log current_time
         data_day= format_date(current_time)
         open_modal_at_day(data_day)
       else
