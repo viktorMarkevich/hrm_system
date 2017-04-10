@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  
+
   belongs_to :user
   belongs_to :staff_relation, dependent: :destroy
   accepts_nested_attributes_for :staff_relation
