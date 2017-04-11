@@ -41,9 +41,39 @@ $(document).ready ->
 
   $(document).on('click', "td a.event-badge", bindShowEvent)
 
+  resetForm = (form) ->
+    form.trigger('reset')
+    form.find('input.btn.btn-default').removeAttr('disabled')
+
+  add_event = (data, event_time) ->
+    month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1);
+    event = JST["events/templates/event"]({
+      name: data.name,
+      vacancy: data.vacancy_name,
+      candidate: data.candidate_name,
+      hours: (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours(),
+      minutes: (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes(),
+      formated_date: ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear(),
+      update_url: data.update_path,
+      destroy_url: data.destroy_path
+    })
+    if $('.table-hover').length > 0
+      $('.items-list .table-hover tbody').append(event)
+    else
+      $('.events-list.future').append(JST["events/templates/table"]({}))
+      $('.table-hover').append(event)
+    event_day = event_time.getDate()
+    event_day_td = $("td:not(.prev-month) span[data-day='#{event_day}']:first").parents('td')
+    if event_day_td.hasClass('has-events')
+      current_count = event_day_td.find('a').text()
+      count = parseInt(current_count) + 1
+      event_day_td.find('a').text(count)
+    else
+      event_day_td.addClass('has-events').append('<a class="event-badge">1</a>')
+
   $('.event_form').submit (e) ->
     e.preventDefault()
-    current_time = new Date($('.calendar-table').data('date'))
+    current_time = new Date($('#events_calendar').data('date'))
     url = $(this).attr('action')
     form = $(this)
     $.post(
@@ -55,51 +85,27 @@ $(document).ready ->
         $('#dialog').modal('hide')
         $('.candidates_list tbody').empty()
         $('.cand-list').hide()
+        console.log current_time
+        console.log event_time
         if current_time.getFullYear() == event_time.getFullYear() and current_time.getMonth() == event_time.getMonth()
+          console.log 'jopa'
           add_event(data, event_time)
-        if $('#dialog').hasClass('show_modal')
-          params = "#{event_time.getFullYear()}-#{(event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1)}-#{(event_time.getDate() < 10 && '0' || '') + event_time.getDate()}"
-          $('#dialog').removeClass('show_modal')
-          show_event_modal(params)
+          if $('#dialog').hasClass('show_modal')
+            params = "#{event_time.getFullYear()}-#{(event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1)}-#{(event_time.getDate() < 10 && '0' || '') + event_time.getDate()}"
+            show_event_modal(params)
+            $('#dialog').removeClass('show_modal')
     , 'JSON'
     ).fail( (data) ->
       resetForm(form)
       alertMessage(data, form)
     )
 
-  add_event = (data, event_time) ->
-    month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1);
-    event = JST["events/templates/event"]({
-              name: data.name,
-              vacancy: data.vacancy_name,
-              candidate: data.candidate_name,
-              hours: (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours(),
-              minutes: (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes(),
-              formated_date: ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear(),
-              update_url: data.update_path,
-              destroy_url: data.destroy_path
-            })
-    if $('.table-hover').length > 0
-      $('.table-hover').append(event)
-    else
-      $('.events-list.future').append(JST["events/templates/table"]({}))
-      $('.table-hover').append(event)
-    event_day = event_time.getDate()
-    event_day_td = $("td:not(.prev-month) span[data-day='#{event_day}']:first").parents('td')
-    if event_day_td.hasClass('td-primary')
-      current_count = event_day_td.find('a').text()
-      count = parseInt(current_count) + 1
-      event_day_td.find('a').text(count)
-    else
-      event_day_td.addClass('td-primary').append('<a class="event-badge">1</a>')
 
   alertMessage = (data, container) ->
     alert = "<div class='alert alert-danger'>#{ data.responseJSON.errors.join('<br>') }</div>"
     $(alert).insertBefore(container)
 
-  resetForm = (form) ->
-    form.trigger('reset')
-    form.find('input.btn.btn-default').removeAttr('disabled')
+
 
   $('body').on 'keyup', '#event_name', ->
     val = $(this).val()

@@ -25,5 +25,5 @@
     .col-md-5
       %a.pull-right.paranoid_btn.btn-dialog{style: 'font-weight: bold;' }
         %i.glyphicon.glyphicon-plus
-      .calendar#events_calendar
+      .calendar#events_calendar{ data: {date: @date_from.utc.strftime('%Y-%m-%d')}}
         = render partial: 'calendar', locals: { events: @events_month }
