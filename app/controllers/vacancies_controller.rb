@@ -30,9 +30,7 @@ class VacanciesController < ApplicationController
     else
         @vacancy_candidates =   Candidate.all
     end
-    p 'q'*100
-    p @vacancy_candidates
-    render json: @vacancy_candidates
+    render json: {candidates: @vacancy_candidates, cand_count: Candidate.all.count }
   end
 
   def edit
