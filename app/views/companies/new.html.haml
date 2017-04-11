@@ -1,7 +1,7 @@
-.col-lg-offset-3.col-lg-6
-  .panel.add-shadows
-    .panel-heading
-      .panel-title.tip
-        Добавить новую компанию
-    .panel-body
+.container
+  .row
+    .col-lg-10.col-lg-offset-1{ style: "border-bottom: 1px solid #FFF;" }
+      .tip
+        %p
+          Добавить новаю компанию
       = render partial: 'companies/form'
