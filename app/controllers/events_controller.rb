@@ -29,7 +29,10 @@ class EventsController < ApplicationController
   def create
     @vacancies=Vacancy.all
     @event = current_user.events.build(event_params)
-    if !event_params[:staff_relation_attributes][:vacancy_id].nil? || !event_params[:staff_relation_attributes][:candidate_id].nil?
+    p !event_params[:staff_relation_attributes][:vacancy_id].nil?
+    p event_params[:staff_relation_attributes][:vacancy_id]
+    p event_params[:staff_relation_attributes][:candidate_id]
+    if !event_params[:staff_relation_attributes][:vacancy_id].nil? && event_params[:staff_relation_attributes][:vacancy_id]!='' || !event_params[:staff_relation_attributes][:candidate_id].nil?
       event_params[:staff_relation_attributes].merge(status: 'Собеседование')
       @event.staff_relation = StaffRelation.find_or_initialize_by(event_params[:staff_relation_attributes])
     else
@@ -48,7 +51,10 @@ class EventsController < ApplicationController
 
   def update
     @event.assign_attributes(event_params)
+
+
     if !event_params[:staff_relation_attributes][:vacancy_id].nil? && !event_params[:staff_relation_attributes][:candidate_id].nil? && !event_params[:staff_relation_attributes][:candidate_id].equal?('undefined')
+
       event_params[:staff_relation_attributes].merge(status: 'Собеседование')
       @event.staff_relation = StaffRelation.find_or_initialize_by(event_params[:staff_relation_attributes])
     else

@@ -15,6 +15,7 @@ $(document).ready ->
   show_event_modal = (params) ->
     $.get "/selected_day_events?will_begin_at=#{params}", (data) ->
       $('#event-dialog').modal('show')
+      $('.events-table .events-body').empty()
       for events in data
         event_time = new Date(events.will_begin_at)
         month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1)
@@ -85,10 +86,7 @@ $(document).ready ->
         $('#dialog').modal('hide')
         $('.candidates_list tbody').empty()
         $('.cand-list').hide()
-        console.log current_time
-        console.log event_time
         if current_time.getFullYear() == event_time.getFullYear() and current_time.getMonth() == event_time.getMonth()
-          console.log 'jopa'
           add_event(data, event_time)
           if $('#dialog').hasClass('show_modal')
             params = "#{event_time.getFullYear()}-#{(event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1)}-#{(event_time.getDate() < 10 && '0' || '') + event_time.getDate()}"
@@ -172,7 +170,6 @@ $(document).ready ->
     formData.append('event[staff_relation_attributes][vacancy_id]', $('#editEvent #event_staff_relation_attributes_vacancy_id').val())
     formData.append('event[staff_relation_attributes[candidate_id]]', $('#editEvent #event_candidate').val())
     url = "events/#{p}"
-    console.log url
     $.ajax
       url: url
       type: 'PUT'
@@ -186,8 +183,6 @@ $(document).ready ->
         hours = (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours();
         minutes = (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes();
         formated_date= ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear()
-        console.log data
-        console.log 'data.e.description'
         $("tr.event#{data.e.id}>td.event_name>span.label").html(data.e.name)
         $("tr.event#{data.e.id}>td.event_will_begin_at").html('<span class="label label-primary">'+ "#{hours}:#{minutes }"+'</span>' + formated_date)
         $("tr.event#{data.e.id}>td.event_description").html(data.e.description)
@@ -228,8 +223,6 @@ $(document).ready ->
             id: data.c.id
           })
           $('.candidates_list tbody').append(candidat)
-          $('#event_candidate').prop('checked', true)
-          console.log $('#event_candidate').attr('checked')
         $('#editEvent').modal('show')
 
   open_modal_at_day = (data) ->
