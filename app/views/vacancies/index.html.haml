@@ -4,14 +4,8 @@
 .container
   .row
     .col-lg-12
-      .row
-        .col-md-6
-          .tip
-            %p
-              Вакансии
-        .col-md-6
-          .pull-right
-            = link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), class: 'paranoid_btn'
+      .pull-right.button_paranoid
+        = link_to 'Закрытые вакансии', archives_path(object_name: 'vacancies'), class: 'paranoid_btn'
   .row
     .col-md-12
       .items-list

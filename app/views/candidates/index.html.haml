@@ -2,8 +2,9 @@
 = stylesheet_link_tag 'candidates/candidates'
 = javascript_include_tag 'candidates/candidates'
 
-.container
-  .candidates_partial
-    = render partial: 'candidate_show', :locals => { candidates: @candidates, status: @status }
+%br
+%br
+.container.candidates_partial
+  = render partial: 'candidate_show', :locals => { candidates: @candidates, status: @status }
 
 
