@@ -64,7 +64,7 @@
                         %span.text-warning= "Добавлена вакансия: "
                         = link_to sr.history_eventable.name, vacancy_path(sr.history_eventable)
 
-                    - elsif sr.history_eventable_type == 'StaffRelation'
+                    - elsif sr.history_eventable_type == 'StaffRelation' && (sr.history_eventable.candidate && sr.history_eventable.vacancy)
                       %td
                         %span.text-warning= "Изменения кандидата: "
                         = link_to sr.history_eventable.candidate.name, candidate_path(sr.history_eventable.candidate_id)
