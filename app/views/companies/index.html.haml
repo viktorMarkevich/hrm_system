@@ -1,30 +1,29 @@
 = render partial: 'share/search'
+%br
+%br
+.container
+  .row
+    .col-lg-12
+      .items-list
+        %table.table.table-hover.table-bordered.table-striped
+          %thead
+            %tr.table_head_color
+              %th Имя
+              %th Страница
+              %th Кандидаты
+              %th Регион
+              %th Дата регистрации
+              %th Краткое описание
 
-.row
-  .col-lg-10.col-lg-offset-1
-    .tip
-      %p
-        Компании
-    .items-list
-      %table.table.table-bordered.table-hover
-        %thead
-          %tr
-            %th Имя
-            %th Страница
-            %th Кандидаты
-            %th Регион
-            %th Дата регистрации
-            %th Краткое описание
-
-        %tbody
-          - @companies.each do |company|
-            %tr
-              %td= link_to company.name, company_path(company), id: 'company-name'
-              %td= company.url
-              %td= company.candidates.size != 0 ? (link_to company.candidates.size, candidates_path(company_id: company.id)) : '0'
-              %td= company.region.try(:name)
-              %td= company.created_at.strftime('%F')
-              %td= truncate(company.description, length: 50)
-.row
-  .col-lg-3
-    = paginate @companies
+          %tbody
+            - @companies.each do |company|
+              %tr
+                %td= link_to company.name, company_path(company), id: 'company-name'
+                %td= company.url
+                %td= company.candidates.size != 0 ? (link_to company.candidates.size, candidates_path(company_id: company.id)) : '0'
+                %td= company.region.try(:name)
+                %td= company.created_at.strftime('%F')
+                %td= truncate(company.description, length: 50)
+  .row
+    .col-lg-3
+      = paginate @companies
