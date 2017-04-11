@@ -142,7 +142,7 @@ $(document).ready ->
     b= $('.table-list tbody').find('tr').length
     if b < 1
       $('.table-list').remove()
-      $('.tip.description_count').html('Список предстоящих событий за Март пуст')
+      $('.tip.description_count').html('Список предстоящих событий пуст')
 
   $('.remove-event').click (e) ->
     p = $(e.currentTarget).data('eventid')
@@ -166,6 +166,7 @@ $(document).ready ->
     formData.append('event[staff_relation_attributes][vacancy_id]', $('#editEvent #event_staff_relation_attributes_vacancy_id').val())
     formData.append('event[staff_relation_attributes[candidate_id]]', $('#editEvent #event_candidate').val())
     url = "events/#{p}"
+    console.log url
     $.ajax
       url: url
       type: 'PUT'
@@ -179,11 +180,13 @@ $(document).ready ->
         hours = (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours();
         minutes = (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes();
         formated_date= ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear()
+        console.log data
+        console.log 'data.e.description'
         $("tr.event#{data.e.id}>td.event_name>span.label").html(data.e.name)
         $("tr.event#{data.e.id}>td.event_will_begin_at").html('<span class="label label-primary">'+ "#{hours}:#{minutes }"+'</span>' + formated_date)
         $("tr.event#{data.e.id}>td.event_description").html(data.e.description)
-        $("tr.event#{data.e.id}>td.event_vacancy").html(data.v.name)
-        $("tr.event#{data.e.id}>td.event_candidate").html(data.c.name)
+        $("tr.event#{data.e.id}>td.event_vacancy").html(data.v.name if data.v == null)
+        $("tr.event#{data.e.id}>td.event_candidate").html(data.c.name if data.c != null)
         $('#editEvent').modal('hide')
 
 
@@ -203,15 +206,15 @@ $(document).ready ->
       url:"/events/#{p}"
       type: 'get'
       success: (data) ->
-        $('#event_name').val(data.e.name)
-        $('#event_description').val(data.e.description)
+        $('#editEvent #event_name').val(data.e.name)
+        $('#editEvent #event_description').val(data.e.description)
         data_day = format_date(data.e.will_begin_at)
-        $('#event_will_begin_at').val(data_day)
-        $('#event_id').val(data.e.id)
-        $('.candidates_list tbody').empty()
-        $('.cand-list').show()
-        $('#event_staff_relation_attributes_vacancy_id').val(data.v.id)
-        if data.c.name.length > 0
+        $('#editEvent #event_will_begin_at').val(data_day)
+        $('#editEvent #event_id').val(data.e.id)
+        $('#editEvent .candidates_list tbody').empty()
+        $('.cand-list').show() if data.c != null
+        $('#editEvent #event_staff_relation_attributes_vacancy_id').val(data.v.id) if data.v != null
+        if !data.c == null
           candidat = JST["events/templates/candidates_list"]({
             name: data.c.name,
             phone: data.c.phone,
@@ -219,6 +222,8 @@ $(document).ready ->
             id: data.c.id
           })
           $('.candidates_list tbody').append(candidat)
+          $('#event_candidate').prop('checked', true)
+          console.log $('#event_candidate').attr('checked')
         $('#editEvent').modal('show')
 
   open_modal_at_day = (data) ->

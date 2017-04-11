@@ -3,7 +3,7 @@ class StaffRelation < ActiveRecord::Base
   belongs_to :candidate
   has_many :history_events, as: :history_eventable, dependent: :destroy
   has_many :events
-  validates :vacancy_id,  uniqueness: { scope: :candidate_id }
+  validates :vacancy_id,  uniqueness: { scope: :candidate_id }, presence: true
   STATUSES = %w(Нейтральный Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
   after_create :set_found_status
