@@ -41,7 +41,6 @@ gem 'axlsx_rails'
 gem 'acts_as_xlsx', git: "git://github.com/straydogstudio/acts_as_xlsx.git"
 gem 'prawn-rails'
 gem 'wysiwyg-rails'
-
 group :development do
   gem 'letter_opener'
 end

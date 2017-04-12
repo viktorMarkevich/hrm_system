@@ -1,5 +1,6 @@
-scheduler = Rufus::Scheduler.new
-
-scheduler.cron '00 00 * * *' do
+require 'rufus-scheduler'
+s = Rufus::Scheduler.singleton
+s.every '10s' do
+  Rails.logger.info "Helo #{Time.now}"
   Event.events_soon_mailer
 end
