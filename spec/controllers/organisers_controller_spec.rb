@@ -7,10 +7,10 @@ RSpec.describe OrganisersController, type: :controller do
                                           user_id: user.id)
                       o_e.save(validate: false)
                       o_e }
-    let(:sticker) { create(:sticker) }
-    let!(:candidate) { create(:candidate) }
-    let(:vacancy) { create(:vacancy) }
-    let(:sr) { create(:staff_relation )}
+    let(:sticker) { create :sticker }
+    let!(:candidate) { create :candidate }
+    let(:vacancy) { create :vacancy }
+    let(:sr) { create :staff_relation, vacancy_id: vacancy.id, candidate_id: candidate.id }
     # let!(:history_event) { create(:history_event)}
 
     before { sign_in user }
@@ -39,7 +39,7 @@ RSpec.describe OrganisersController, type: :controller do
       end
 
       it 'to get change_history' do
-        expect(assigns(:history_events)).to eq(HistoryEvent.order('updated_at DESC').limit(5))
+        expect(assigns(:history_events)).to eq([HistoryEvent.last])
       end
 
     end
