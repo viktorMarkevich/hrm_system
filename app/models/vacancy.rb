@@ -42,7 +42,8 @@ class Vacancy < ActiveRecord::Base
   private
 
     def create_history_event
-      History.create_with_attrs({ new_status: "Добавлена вакансия: #{name}", responsible: { full_name: owner.full_name, id: user_id } })
+      # History.create_with_attrs({ new_status: "Добавлена вакансия: #{name}", responsible: { full_name: owner.full_name, id: user_id } })
+      History.create_with_attrs({ new_status: 'Не задействована', responsible: { full_name: owner.full_name, id: user_id } })
     end
 end
 
