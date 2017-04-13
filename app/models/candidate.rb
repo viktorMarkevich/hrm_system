@@ -84,7 +84,10 @@ class Candidate < ActiveRecord::Base
     end
 
     def create_history_event
-      History.create_with_attrs(new_status: 'Пассивен', responsible: { full_name: owner.full_name, id: user_id })
-      # History.create_with_attrs(new_status: "Добавлен кандидат: #{name}", responsible: { full_name: owner.full_name, id: user_id })
+      History.create_with_attrs(new_status: 'Пассивен',
+                                responsible: {
+                                    full_name: owner.full_name,
+                                    id: user_id },
+                                action: "В систему добавлен кандидат: #{candidate.name}")
     end
 end
