@@ -40,7 +40,7 @@
   .label-default {
     background-color: #777777;
   }
-
+%h3 Здравствуйте
 %h3 На заватра запланированно:
 %table.table.table-bordered
   %thead
@@ -50,11 +50,11 @@
       %th С кем
       %th Назначено на
   %tbody
-    - @events_soon.each do |event|
-      %tr
-        %td
-          %span.label.label-default= event.name
-        %td= link_to event.staff_relation.vacancy.name, vacancy_url(event.staff_relation.vacancy)
-        %td= link_to event.staff_relation.candidate.name, vacancy_url(event.staff_relation.candidate)
-        %td
-          %span.label.label-primary= event.will_begin_at.strftime('%H:%M')
+    -#- @events_soon.each do |event|
+    %tr
+      %td
+        %span.label.label-default= @event.name
+      %td= link_to @event.staff_relation.vacancy.name, vacancy_url(@event.staff_relation.vacancy)
+      %td= link_to @event.staff_relation.candidate.name, vacancy_url(@event.staff_relation.candidate)
+      %td
+        %span.label.label-primary= @event.will_begin_at.strftime('%H:%M')

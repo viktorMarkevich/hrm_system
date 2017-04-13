@@ -13,11 +13,6 @@ class Event < ActiveRecord::Base
     errors.add(:will_begin_at, 'Дата должна быть предстоящей!') unless will_begin_at.future?
   end
 
-  def self.events_soon_mailer
-    @events_soon = where(will_begin_at: (Time.zone.now+1.day)..(Time.zone.now + 2.day))
-    NoticeMailer.event_soon(@events_soon).deliver_now if @events_soon.present?
-  end
-
   def self.events_of(user, from, to)
     user.events.where(will_begin_at: from..to).order(will_begin_at: :asc)
   end
