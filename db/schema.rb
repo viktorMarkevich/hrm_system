@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413093003) do
+ActiveRecord::Schema.define(version: 20170413104010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -136,10 +137,12 @@ ActiveRecord::Schema.define(version: 20170413093003) do
   end
 
   create_table "histories", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "old_status"
     t.string   "new_status"
+    t.hstore   "responsible"
+    t.index ["responsible"], name: "index_histories_on_responsible", using: :gin
   end
 
   create_table "images", force: :cascade do |t|
