@@ -3,13 +3,14 @@ require 'rails_helper'
 RSpec.describe OrganisersController, type: :controller do
   describe '#index' do
     let!(:user) { create :user_with_events }
+    let!(:candidate_user) { create :user }
     let(:old_event) { o_e = build :event, will_begin_at: user.events.first.will_begin_at - 10.days,
                                           user_id: user.id
                       o_e.save(validate: false)
                       o_e }
     let(:sticker) { create :sticker }
-    let!(:candidate) { create :candidate }
-    let!(:vacancy) { create :vacancy }
+    let!(:candidate) { create :candidate, user_id: candidate_user.id }
+    let!(:vacancy) { create :vacancy, user_id: user.id }
     let!(:sr) { create :staff_relation, vacancy_id: vacancy.id, candidate_id: candidate.id }
 
     before { sign_in user }
@@ -39,7 +40,10 @@ RSpec.describe OrganisersController, type: :controller do
 
       it 'to get change_history' do
         expect(assigns(:histories).count).to eq 3
-        expect(assigns(:histories).map(&:new_status)).to eq [ 'Найденные', "Добавлена вакансия: #{vacancy.name}", "Добавлен кандидат: #{candidate.name}" ]
+        expect(assigns(:histories).pluck(:new_status)).to eq [ 'Найденные', "Добавлена вакансия: #{vacancy.name}", "Добавлен кандидат: #{candidate.name}" ]
+        expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
+                                                                { 'id' => user.id.to_s, 'full_name' => user.full_name },
+                                                                { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name } ]
       end
 
     end

@@ -36,6 +36,6 @@ class StaffRelation < ActiveRecord::Base
   private
 
     def create_history_event
-      History.create_with_attrs(old_status: 'Пасивен', new_status: 'Найденные', responsible: { full_name: vacancy.user.full_name, id: vacancy.user.id })
+      History.create_with_attrs(old_status: 'Пасивен', new_status: 'Найденные', responsible: { full_name: vacancy.owner.full_name, id: vacancy.user_id })
     end
 end
