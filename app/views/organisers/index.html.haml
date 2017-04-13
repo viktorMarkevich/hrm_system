@@ -42,7 +42,7 @@
       .tip
         %p
           = 'Последние действия на сайте: '
-      - if @history_events.present?
+      - if @histories.present?
         .items-list
           %table.table.table-hover.table-bordered.table-striped.history
             %thead
@@ -52,7 +52,7 @@
                 %th Статус
                 %th Дата
             %tbody
-              - @history_events.each  do |sr|
+              - @histories.each  do |sr|
                 - if sr.history_eventable.present?
                   %tr
                     %td
@@ -82,7 +82,7 @@
                       .label.label-warning
                         = sr.updated_at.strftime('%e %b %H:%M')
         .col-xs-12
-          = paginate @history_events
+          = paginate @histories
       - else
         %ul.list-group
           %li.list-group-item.list-group-item-warning

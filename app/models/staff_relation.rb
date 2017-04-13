@@ -24,7 +24,7 @@ class StaffRelation < ActiveRecord::Base
       staff_relation.delete
     else
       staff_relation.update_attributes(status: options[:vacancy][:sr_status])
-      staff_relation.history_events.create( old_status: status, new_status: options[:vacancy][:sr_status], user_id: options[:vacancy][:user_id] )
+      staff_relation.histories.create( old_status: status, new_status: options[:vacancy][:sr_status], user_id: options[:vacancy][:user_id] )
     end
     status
   end
@@ -37,7 +37,6 @@ class StaffRelation < ActiveRecord::Base
 
     def create_history_event
       # responsible
-      # history_events.create(old_status: 'Пасивен', new_status: 'Найденные')
-      HistoryEvent.create(old_status: 'Пасивен', new_status: 'Найденные')
+      History.create(old_status: 'Пасивен', new_status: 'Найденные')
     end
 end

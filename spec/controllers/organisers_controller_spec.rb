@@ -38,8 +38,8 @@ RSpec.describe OrganisersController, type: :controller do
       end
 
       it 'to get change_history' do
-        expect(assigns(:history_events).count).to eq 3
-        expect(assigns(:history_events).map(&:new_status)).to eq [ 'Найденные', "Добавлена вакансия: #{vacancy.name}", "Добавлен кандидат: #{candidate.name}" ]
+        expect(assigns(:histories).count).to eq 3
+        expect(assigns(:histories).map(&:new_status)).to eq [ 'Найденные', "Добавлена вакансия: #{vacancy.name}", "Добавлен кандидат: #{candidate.name}" ]
       end
 
     end
