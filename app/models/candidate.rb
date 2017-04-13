@@ -11,7 +11,6 @@ class Candidate < ActiveRecord::Base
   has_many :vacancies, through: :staff_relations, source: :vacancy
   belongs_to :company, :counter_cache => true
   belongs_to :geo_name, counter_cache: true
-  has_many :history_events, as: :history_eventable
 
   accepts_nested_attributes_for :image
   scope :with_status, -> (status) { where(status: "#{status}") }
@@ -85,6 +84,6 @@ class Candidate < ActiveRecord::Base
     end
 
     def create_history_event
-      history_events.create(new_status: "Добавлен кандидат: #{name}")
+      HistoryEvent.create(new_status: "Добавлен кандидат: #{name}")
     end
 end

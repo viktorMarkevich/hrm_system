@@ -9,9 +9,9 @@ class Vacancy < ActiveRecord::Base
 
   belongs_to :region
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
+
   has_many :staff_relations
   has_many :candidates, through: :staff_relations, source: :candidate
-  has_many :history_events, as: :history_eventable
 
   attr_accessor :sr_status
 
@@ -41,7 +41,7 @@ class Vacancy < ActiveRecord::Base
 
   private
     def create_history_event
-      history_events.create(new_status: "Добавлена вакансия: #{name}")
+      HistoryEvent.create(new_status: "Добавлена вакансия: #{name}")
     end
 end
 

@@ -1,8 +1,9 @@
 class StaffRelation < ActiveRecord::Base
+
   belongs_to :vacancy
   belongs_to :candidate
-  has_many :history_events, as: :history_eventable, dependent: :destroy
   has_many :events
+
   validates :vacancy_id,  uniqueness: { scope: :candidate_id }, presence: true
   STATUSES = %w(Нейтральный Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
@@ -37,6 +38,6 @@ class StaffRelation < ActiveRecord::Base
     def create_history_event
       # responsible
       # history_events.create(old_status: 'Пасивен', new_status: 'Найденные')
-      history_events.create(old_status: 'Пасивен', new_status: 'Найденные')
+      HistoryEvent.create(old_status: 'Пасивен', new_status: 'Найденные')
     end
 end
