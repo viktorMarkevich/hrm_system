@@ -56,18 +56,18 @@
                 - if sr.history_eventable.present?
                   %tr
                     %td
-                    - if sr.history_eventable_type == 'Candidate'
-                      %span.text-warning= "Добавлен кандидат: "
-                      = link_to sr.history_eventable.name, candidate_path(sr.history_eventable)
-                    - elsif sr.history_eventable_type == 'Vacancy'
-                      %span.text-warning= "Добавлена вакансия: "
-                      = link_to sr.history_eventable.name, vacancy_path(sr.history_eventable)
+                      - if sr.history_eventable_type == 'Candidate'
+                        %span.text-warning= "Добавлен кандидат: "
+                        = link_to sr.history_eventable.name, candidate_path(sr.history_eventable)
+                      - elsif sr.history_eventable_type == 'Vacancy'
+                        %span.text-warning= "Добавлена вакансия: "
+                        = link_to sr.history_eventable.name, vacancy_path(sr.history_eventable)
 
-                    - elsif sr.history_eventable_type == 'StaffRelation' && (sr.history_eventable.candidate && sr.history_eventable.vacancy)
-                      %span.text-warning= "Изменения кандидата: "
-                      = link_to sr.history_eventable.candidate.name, candidate_path(sr.history_eventable.candidate_id)
-                      %span.text-warning= 'в вакансии'
-                      = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
+                      - elsif sr.history_eventable_type == 'StaffRelation' && (sr.history_eventable.candidate && sr.history_eventable.vacancy)
+                        %span.text-warning= "Изменения кандидата: "
+                        = link_to sr.history_eventable.candidate.name, candidate_path(sr.history_eventable.candidate_id)
+                        %span.text-warning= 'в вакансии'
+                        = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
                     %td
                       = "#{sr.user&.first_name} #{sr.user&.last_name}".html_safe
                     %td

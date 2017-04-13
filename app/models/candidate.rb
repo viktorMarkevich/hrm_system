@@ -85,6 +85,6 @@ class Candidate < ActiveRecord::Base
     end
 
     def create_history_event
-      self.history_events.create!(new_status: status, user: owner)
+      history_events.create(new_status: "Добавлен кандидат: #{name}")
     end
 end

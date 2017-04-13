@@ -2,16 +2,15 @@ require 'rails_helper'
 
 RSpec.describe OrganisersController, type: :controller do
   describe '#index' do
-    let!(:user) { create(:user_with_events) }
-    let(:old_event) { o_e = build(:event, will_begin_at: user.events.first.will_begin_at - 10.days,
-                                          user_id: user.id)
+    let!(:user) { create :user_with_events }
+    let(:old_event) { o_e = build :event, will_begin_at: user.events.first.will_begin_at - 10.days,
+                                          user_id: user.id
                       o_e.save(validate: false)
                       o_e }
     let(:sticker) { create :sticker }
     let!(:candidate) { create :candidate }
-    let(:vacancy) { create :vacancy }
-    let(:sr) { create :staff_relation, vacancy_id: vacancy.id, candidate_id: candidate.id }
-    # let!(:history_event) { create(:history_event)}
+    let!(:vacancy) { create :vacancy }
+    let!(:sr) { create :staff_relation, vacancy_id: vacancy.id, candidate_id: candidate.id }
 
     before { sign_in user }
 
@@ -39,7 +38,8 @@ RSpec.describe OrganisersController, type: :controller do
       end
 
       it 'to get change_history' do
-        expect(assigns(:history_events)).to eq([HistoryEvent.last])
+        expect(assigns(:history_events).count).to eq 3
+        expect(assigns(:history_events).map(&:new_status)).to eq [ 'Найденные', "Добавлена вакансия: #{vacancy.name}", "Добавлен кандидат: #{candidate.name}" ]
       end
 
     end

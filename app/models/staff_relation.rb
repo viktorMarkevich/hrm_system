@@ -33,7 +33,10 @@ class StaffRelation < ActiveRecord::Base
   end
 
   private
+
     def create_history_event
-      self.history_events.create!(old_status: 'Пасивен', new_status: 'Найденные', user: vacancy.update_user)
+      # responsible
+      # history_events.create(old_status: 'Пасивен', new_status: 'Найденные')
+      history_events.create(old_status: 'Пасивен', new_status: 'Найденные')
     end
 end

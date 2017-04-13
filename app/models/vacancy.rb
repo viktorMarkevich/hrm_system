@@ -41,7 +41,7 @@ class Vacancy < ActiveRecord::Base
 
   private
     def create_history_event
-      self.history_events.create!(new_status: status, user: owner)
+      history_events.create(new_status: "Добавлена вакансия: #{name}")
     end
 end
 
