@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413104010) do
+ActiveRecord::Schema.define(version: 20170413142230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(version: 20170413104010) do
     t.string   "old_status"
     t.string   "new_status"
     t.hstore   "responsible"
+    t.string   "action"
     t.index ["responsible"], name: "index_histories_on_responsible", using: :gin
   end
 

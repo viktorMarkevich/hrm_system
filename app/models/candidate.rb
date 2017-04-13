@@ -88,6 +88,6 @@ class Candidate < ActiveRecord::Base
                                 responsible: {
                                     full_name: owner.full_name,
                                     id: user_id },
-                                action: "В систему добавлен кандидат: #{candidate.name}")
+                                action: "В систему добавлен кандидат: #{name}")
     end
 end

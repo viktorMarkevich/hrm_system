@@ -46,7 +46,7 @@ class Vacancy < ActiveRecord::Base
                                 responsible: {
                                     full_name: owner.full_name,
                                     id: user_id },
-                                action: "В систему добавлена вакансия: #{vacancy.name}")
+                                action: "В систему добавлена вакансия: #{name}")
     end
 end
 
