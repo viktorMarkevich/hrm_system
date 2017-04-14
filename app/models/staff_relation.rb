@@ -5,22 +5,15 @@ class StaffRelation < ActiveRecord::Base
   has_many :events
 
   validates :vacancy_id,  uniqueness: { scope: :candidate_id }, presence: true
-  STATUSES = %w(Нейтральный Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
+  STATUSES = %w(Убрать Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
-  after_create :set_found_status
   after_create :create_history_event
-
-  def set_found_status
-    self.update_attributes(status: 'Найденные')
-    unless vacancy.status == Vacancy::STATUSES[1]
-      vacancy.update_attributes(status: Vacancy::STATUSES[1])
-    end
-  end
+  after_update :update_history_event
 
   def self.return_status(options)
     staff_relation = where(candidate_id: options[:vacancy][:candidate_id], vacancy_id: options[:id]).first
     status = staff_relation.status
-    if options[:vacancy][:sr_status] == 'Нейтральный'
+    if options[:vacancy][:sr_status] == 'Убрать'
       staff_relation.delete
     else
       staff_relation.update_attributes(status: options[:vacancy][:sr_status])
@@ -41,5 +34,15 @@ class StaffRelation < ActiveRecord::Base
                                 responsible: { full_name: vacancy.owner.full_name,
                                                id: vacancy.user_id },
                                 action: "В вакансию #{vacancy.name} добавили нового кандидата #{candidate.name}")
+    end
+
+    def update_history_event
+      unless self.status_was == status
+        History.create_with_attrs(old_status: self.status_was,
+                                  new_status: status,
+                                  responsible: { full_name: vacancy.owner.full_name,
+                                                 id: vacancy.user_id },
+                                  action: "В вакансии #{vacancy.name} для кандидата #{candidate.name} произошли изменения")
+      end
     end
 end
