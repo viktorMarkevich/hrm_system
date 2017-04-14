@@ -7,4 +7,10 @@ class NoticeMailer < ActionMailer::Base
     @user = user
     mail(to: user.email, from: event.staff_relation.candidate.owner.email, subject: 'Event soon')
   end
+  def event_soon_candidate(event, user)
+    @event = event
+    @user = user
+    @ceo = User.where(post: 'Директор').first
+    mail(to: user.email, from: event.staff_relation.candidate.owner.email, subject: 'Event soon')
+  end
 end

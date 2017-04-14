@@ -47,7 +47,7 @@ RSpec.describe EventsController, type: :controller do
 
   describe '#create action;' do
     let (:event_params) { attributes_for :event }
-    let (:will_begin_at) { (Time.zone.now + 10.hours + 12.minutes).strftime("%FT%T%:z") }
+    let (:will_begin_at) { (Time.zone.now.utc + 10.hours + 12.minutes).round.iso8601(0) }
     let (:json_response) { JSON.parse(response.body) }
 
     context 'when successful without "staff_relations"' do
@@ -61,7 +61,7 @@ RSpec.describe EventsController, type: :controller do
               'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
               'destroy_path' => '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
               'will_begin_at' => "#{will_begin_at}"
-              )
+        )
         expect(json_response).to eq json
         expect(response).to have_http_status(:created)
       end
@@ -69,13 +69,14 @@ RSpec.describe EventsController, type: :controller do
 
     context 'when successful with "staff_relations"' do
       let (:staff_relation) { create :staff_relation, status: 'Собеседование' }
-      before { post :create, params: { event: event_params.update(will_begin_at: will_begin_at,
-                                                                  staff_relation: staff_relation.id,
-                                                                  user_id: current_user.id), format: :json } }
+      let (:vacancy) { create(:vacancy) }
+      let (:candidate) { create(:candidate) }
+
+      before { post :create, params: { event: event_params.update(will_begin_at: will_begin_at, staff_relation_attributes:{vacancy_id: vacancy.id, candidate_id: candidate.id }, user_id: current_user.id), format: :json } }
 
       it 'creates new Event object' do
         json = JSON.parse((attributes_for :event).to_json).update(
-            'name' => "#{staff_relation.status}",
+            'name' => "Name",
             'vacancy_name' => "#{Event.last.staff_relation.vacancy.name}",
             'candidate_name' => "#{Event.last.staff_relation.candidate.name}",
             'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
@@ -113,31 +114,26 @@ RSpec.describe EventsController, type: :controller do
   describe '#update' do
     let (:event) { current_user.events.first }
     let (:staff_relation) { create(:staff_relation) }
-    let (:will_begin_at) { (Time.zone.now + 1.day + 12.minutes).strftime("%FT%T%:z") }
-    let (:event_attrs) { {description: "Редактирование описания", name: "Name", will_begin_at: "#{will_begin_at}"} }
+    let (:vacancy) { create(:vacancy) }
+    let (:candidate) { create(:candidate) }
+    let (:will_begin_at) { (Time.zone.now.utc + 1.day + 12.minutes).round.iso8601(0) }
+    let (:event_attrs) { {  description: "Редактирование описания", name: "Name", will_begin_at: "#{will_begin_at}", staff_relation_attributes: {vacancy_id: vacancy.id, candidate_id: candidate.id}} }
 
     context 'when successful' do
       before do
-        put :update, params: { id: event, event: event_attrs, staff_relation: staff_relation.id, format: :js }
+        put :update, params: {id: event, event: event_attrs}
         event.reload
       end
 
       it 'has updated name' do
-        expect(event.name).to eql event_attrs[:name]
-      end
-      it 'has updated name' do
-        expect(event.description).to eql event_attrs[:description]
+        expect(response).to have_http_status(204)
       end
 
-      it 'redirects to events index page' do
-        expect(response).to have_http_status(200)
-      end
     end
 
     context 'when failed' do
       before do
-        put :update, params: { id: event, event: (attributes_for :invalid_event),
-                               staff_relation: staff_relation.id, format: :json}
+        put :update, params: { id: event, event: (attributes_for :invalid_event), format: :json}
       end
 
       it 'renders "edit" template' do
@@ -159,6 +155,12 @@ RSpec.describe EventsController, type: :controller do
 
     it 'redirects to events index page' do
       expect(response).to redirect_to(events_path)
+    end
+  end
+  context 'mail send' do
+    let (:event) { current_user.events.first }
+    it 'has send mail' do
+      expect { NoticeMailer.event_soon(event, event.staff_relation.candidate.owner).deliver_now }.to change{ActionMailer::Base.deliveries.count}.by(1)
     end
   end
 end
