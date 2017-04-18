@@ -18,8 +18,6 @@ class Event < ActiveRecord::Base
   end
   def self.events_soon_mailer
     @events_soon = where(will_begin_at: (Time.zone.now+1.day).at_beginning_of_day()..(Time.zone.now+1.day).at_end_of_day())
-    p @events_soon
-    p "@events_soon"*10
     if @events_soon.count > 0
       @events_soon.each do |event|
         if  event.staff_relation && event.staff_relation.candidate && event.staff_relation.candidate.owner
