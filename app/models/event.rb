@@ -16,6 +16,7 @@ class Event < ActiveRecord::Base
   def self.events_of(user, from, to)
     user.events.where(will_begin_at: from..to).order(will_begin_at: :asc)
   end
+
   def self.events_soon_mailer
     @events_soon = where(will_begin_at: (Time.zone.now+1.day).at_beginning_of_day()..(Time.zone.now+1.day).at_end_of_day())
     if @events_soon.count > 0

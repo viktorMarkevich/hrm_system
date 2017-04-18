@@ -117,11 +117,11 @@ RSpec.describe EventsController, type: :controller do
     let (:vacancy) { create(:vacancy) }
     let (:candidate) { create(:candidate) }
     let (:will_begin_at) { (Time.zone.now.utc + 1.day + 12.minutes).round.iso8601(0) }
-    let (:event_attrs) { {  description: "Редактирование описания", name: "Name", will_begin_at: "#{will_begin_at}", staff_relation_attributes: {vacancy_id: vacancy.id, candidate_id: candidate.id}} }
+    let (:event_attrs) { {  description: "Редактирование описания", name: "Name", will_begin_at: "#{ will_begin_at }", staff_relation_attributes: {vacancy_id: vacancy.id, candidate_id: candidate.id } } }
 
     context 'when successful' do
       before do
-        put :update, params: {id: event, event: event_attrs}
+        put :update, params: { id: event, event: event_attrs }
         event.reload
       end
 
@@ -160,7 +160,7 @@ RSpec.describe EventsController, type: :controller do
   context 'mail send' do
     let (:event) { current_user.events.first }
     it 'has send mail' do
-      expect { NoticeMailer.event_soon(event, event.staff_relation.candidate.owner).deliver_now }.to change{ActionMailer::Base.deliveries.count}.by(1)
+      expect { NoticeMailer.event_soon(event, event.staff_relation.candidate.owner).deliver_now }.to change{ ActionMailer::Base.deliveries.count }.by(1)
     end
   end
 end
