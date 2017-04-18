@@ -22,6 +22,7 @@ class Vacancy < ActiveRecord::Base
   after_destroy :set_closed_status
   after_create :add_history_event_after_create
   after_destroy :add_history_event_after_destroy
+  after_restore :add_history_event_after_restore
 
   STATUSES = %w(Не\ задействована В\ работе Закрыта)
 
@@ -56,6 +57,14 @@ class Vacancy < ActiveRecord::Base
                                   full_name: owner.full_name,
                                   id: user_id },
                               action: "Вакансия #{name} перемещена в архив")
-    end  
+    end
+
+    def add_history_event_after_restore
+      History.create_with_attrs(new_status: 'Восстановлена',
+                                responsible: {
+                                    full_name: owner.full_name,
+                                    id: user_id },
+                                action: "Вакансия #{name} восстановлена из архива")
+    end
 end
 

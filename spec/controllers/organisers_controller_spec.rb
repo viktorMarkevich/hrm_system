@@ -79,7 +79,7 @@ RSpec.describe OrganisersController, type: :controller do
       end
     end
 
-    context 'when UPDATE occurs' do
+    context 'when DESTROY occurs' do
       let(:vacancy_name) { vacancy.name }
       let(:candidate_name) { candidate.name }
 
@@ -102,6 +102,32 @@ RSpec.describe OrganisersController, type: :controller do
                                                            "В вакансию #{vacancy.name} добавили нового кандидата #{candidate.name}",
                                                            "В систему добавлена вакансия: #{vacancy.name}",
                                                            "В систему добавлен кандидат: #{candidate.name}" ]
+      end
+    end
+
+    context 'when RESTORE occurs' do
+      let(:candidate_restore) { create :candidate, user_id: candidate_user.id, deleted_at: DateTime.now }
+      let(:vacancy_restore) { create :vacancy, user_id: user.id, deleted_at: DateTime.now }
+
+      before do
+        candidate_restore.restore
+        vacancy_restore.restore
+      end
+
+      it 'should return histories with target data' do
+        get :index
+        expect(assigns(:histories).count).to eq 5
+        expect(assigns(:histories).pluck(:new_status)).to eq [ 'Восстановлена', 'Не задействована', 'Восстановлен', 'Пассивен', 'Найденные' ]
+        expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
+                                                                { 'id' => user.id.to_s, 'full_name' => user.full_name },
+                                                                { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name },
+                                                                { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name },
+                                                                { 'id' => user.id.to_s, 'full_name' => user.full_name } ]
+            expect(assigns(:histories).pluck(:action)).to eq [ "Вакансия #{vacancy_restore.name} восстановлена из архива",
+                                                               "В систему добавлена вакансия: #{vacancy_restore.name}",
+                                                           "Кандидат #{candidate_restore.name} восстановлен из архива",
+                                                           "В систему добавлен кандидат: #{candidate_restore.name}",
+                                                           "В вакансию #{vacancy.name} добавили нового кандидата #{candidate.name}" ]
       end
     end
   end

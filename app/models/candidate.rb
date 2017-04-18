@@ -39,6 +39,7 @@ class Candidate < ActiveRecord::Base
   before_validation :check_geo_name
   after_create :add_history_event_after_create
   after_destroy :add_history_event_after_destroy
+  after_restore :add_history_event_after_restore
 
   def status_for_vacancy(vacancy)
     StaffRelation.find_by_candidate_id_and_vacancy_id(self.id, vacancy.id).status
@@ -102,4 +103,12 @@ class Candidate < ActiveRecord::Base
                                     id: user_id },
                                 action: "Кандидат #{name} перемещен в архив")
     end
-end
+
+    def add_history_event_after_restore
+      History.create_with_attrs(new_status: 'Восстановлен',
+                                responsible: {
+                                    full_name: owner.full_name,
+                                    id: user_id },
+                                action: "Кандидат #{name} восстановлен из архива")
+    end
+  end
