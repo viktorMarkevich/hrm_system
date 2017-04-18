@@ -20,7 +20,8 @@ class Vacancy < ActiveRecord::Base
 
   after_restore :set_default_status
   after_destroy :set_closed_status
-  after_create :create_history_event
+  after_create :add_history_event_after_create
+  after_destroy :add_history_event_after_destroy
 
   STATUSES = %w(Не\ задействована В\ работе Закрыта)
 
@@ -41,12 +42,20 @@ class Vacancy < ActiveRecord::Base
 
   private
 
-    def create_history_event
+    def add_history_event_after_create
       History.create_with_attrs(new_status: 'Не задействована',
                                 responsible: {
                                     full_name: owner.full_name,
                                     id: user_id },
                                 action: "В систему добавлена вакансия: #{name}")
     end
+    
+    def add_history_event_after_destroy
+      History.create_with_attrs(new_status: 'В архиве',
+                              responsible: {
+                                  full_name: owner.full_name,
+                                  id: user_id },
+                              action: "Вакансия #{name} перемещена в архив")
+    end  
 end
 

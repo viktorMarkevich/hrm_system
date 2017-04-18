@@ -35,8 +35,10 @@ class Candidate < ActiveRecord::Base
   #                   if: 'skype.present?'
   #validates :birthday, format: { with: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/, multiline: true,
   #          message: 'wrong format' }, if: 'birthday.present?'
+
   before_validation :check_geo_name
-  after_create :create_history_event
+  after_create :add_history_event_after_create
+  after_destroy :add_history_event_after_destroy
 
   def status_for_vacancy(vacancy)
     StaffRelation.find_by_candidate_id_and_vacancy_id(self.id, vacancy.id).status
@@ -85,11 +87,19 @@ class Candidate < ActiveRecord::Base
                       end || nil
     end
 
-    def create_history_event
+    def add_history_event_after_create
       History.create_with_attrs(new_status: 'Пассивен',
                                 responsible: {
                                     full_name: owner.full_name,
                                     id: user_id },
                                 action: "В систему добавлен кандидат: #{name}")
+    end
+
+    def add_history_event_after_destroy
+      History.create_with_attrs(new_status: 'В архиве',
+                                responsible: {
+                                    full_name: owner.full_name,
+                                    id: user_id },
+                                action: "Кандидат #{name} перемещен в архив")
     end
 end

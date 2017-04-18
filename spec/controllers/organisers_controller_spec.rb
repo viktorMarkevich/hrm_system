@@ -80,19 +80,25 @@ RSpec.describe OrganisersController, type: :controller do
     end
 
     context 'when UPDATE occurs' do
+      let(:vacancy_name) { vacancy.name }
+      let(:candidate_name) { candidate.name }
+
       before do
-        sr.update_attributes(status: 'Собеседование')
+        candidate.destroy
+        vacancy.destroy
       end
 
       it 'should return histories with target data' do
         get :index
-        expect(assigns(:histories).count).to eq 4
-        expect(assigns(:histories).pluck(:new_status)).to eq [ 'Собеседование', 'Найденные', 'Не задействована', 'Пассивен' ]
+        expect(assigns(:histories).count).to eq 5
+        expect(assigns(:histories).pluck(:new_status)).to eq [ 'В архиве', 'В архиве', 'Найденные', 'Не задействована', 'Пассивен' ]
         expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
+                                                                { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name },
                                                                 { 'id' => user.id.to_s, 'full_name' => user.full_name },
                                                                 { 'id' => user.id.to_s, 'full_name' => user.full_name },
                                                                 { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name } ]
-        expect(assigns(:histories).pluck(:action)).to eq [ "В вакансии #{vacancy.name} для кандидата #{candidate.name} произошли изменения",
+        expect(assigns(:histories).pluck(:action)).to eq [ "Вакансия #{vacancy_name} перемещена в архив",
+                                                           "Кандидат #{candidate_name} перемещен в архив",
                                                            "В вакансию #{vacancy.name} добавили нового кандидата #{candidate.name}",
                                                            "В систему добавлена вакансия: #{vacancy.name}",
                                                            "В систему добавлен кандидат: #{candidate.name}" ]
