@@ -29,10 +29,7 @@ class EventsController < ApplicationController
   def create
     @vacancies=Vacancy.all
     @event = current_user.events.build(event_params)
-    p !event_params[:staff_relation_attributes][:vacancy_id].nil?
-    p event_params[:staff_relation_attributes][:vacancy_id]
-    p event_params[:staff_relation_attributes][:candidate_id]
-    if !event_params[:staff_relation_attributes][:vacancy_id].nil? && event_params[:staff_relation_attributes][:vacancy_id]!='' || !event_params[:staff_relation_attributes][:candidate_id].nil?
+    if  !event_params[:staff_relation_attributes].nil? && !event_params[:staff_relation_attributes][:vacancy_id].nil? && event_params[:staff_relation_attributes][:vacancy_id]!='' ||  !event_params[:staff_relation_attributes].nil? && !event_params[:staff_relation_attributes][:candidate_id].nil?
       event_params[:staff_relation_attributes].merge(status: 'Собеседование')
       @event.staff_relation = StaffRelation.find_or_initialize_by(event_params[:staff_relation_attributes])
     else
@@ -51,10 +48,7 @@ class EventsController < ApplicationController
 
   def update
     @event.assign_attributes(event_params)
-
-
-    if !event_params[:staff_relation_attributes][:vacancy_id].nil? && !event_params[:staff_relation_attributes][:candidate_id].nil? && !event_params[:staff_relation_attributes][:candidate_id].equal?('undefined')
-
+    if !event_params[:staff_relation_attributes].nil? && !event_params[:staff_relation_attributes][:vacancy_id].nil? && !event_params[:staff_relation_attributes][:candidate_id].nil? && !event_params[:staff_relation_attributes][:candidate_id].equal?('undefined')
       event_params[:staff_relation_attributes].merge(status: 'Собеседование')
       @event.staff_relation = StaffRelation.find_or_initialize_by(event_params[:staff_relation_attributes])
     else
@@ -64,8 +58,8 @@ class EventsController < ApplicationController
       if @event.save
         !@event.staff_relation.nil? && !@event.staff_relation.vacancy.nil? ? v = @event.staff_relation.vacancy : v = nil
         !@event.staff_relation.nil? && !@event.staff_relation.candidate.nil? ? c = @event.staff_relation.candidate : c = nil
-        format.html { flash[:notice] = 'Event created!' }
-        format.json {render json: {e: @event, v: v , c: c}}
+        format.html { flash[:notice] = 'Event updated!' }
+        format.json {render @event, v , c, status: :updated}
       else
         format.html { flash[:danger] = @event.errors.full_messages }
         format.json { render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity }

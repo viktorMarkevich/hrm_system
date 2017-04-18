@@ -4,6 +4,7 @@ FactoryGirl.define do
     will_begin_at { rand(Time.zone.now..Time.zone.now + 7.days) }
     description 'описание события'
     user
+    staff_relation
   end
 
   factory :invalid_event, parent: :event do
