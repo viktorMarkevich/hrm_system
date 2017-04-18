@@ -40,20 +40,24 @@
   .label-default {
     background-color: #777777;
   }
-%h3 Здравствуйте
-%h3 На заватра запланированно:
-%table.table.table-bordered
-  %thead
-    %tr
-      %th Событие
-      %th На вакансию
-      %th С кем
-      %th Назначено на
-  %tbody
-    %tr
-      %td
-        %span.label.label-default= @event.name
-      %td= link_to @event.staff_relation.vacancy.name, vacancy_url(@event.staff_relation.vacancy)
-      %td= link_to @event.staff_relation.candidate.name, vacancy_url(@event.staff_relation.candidate)
-      %td
-        %span.label.label-primary= @event.will_begin_at.strftime('%H:%M')
+%h3
+  Здравствуйте
+  =@user.name
+%p
+  Завтра состоиться собеседование на фирме FaceIT на должность
+  = link_to @event.staff_relation.vacancy.name, vacancy_url(@event.staff_relation.vacancy)
+  Время собеседования
+  %span.label.label-primary= @event.will_begin_at.strftime('%H:%M')
+  = @event.will_begin_at
+%p
+  Если в вашем графике что-то поменялось и вы не сможете прийти, будьте добры сообщите нам об этом по одному из нижеуказаных телефонов.
+%p
+  Телефон менеджера
+  = @user.owner.first_name
+  = @user.owner.last_name
+  = @user.owner.phone
+  %br
+  Телефон директора
+  =@ceo.first_name
+  =@ceo.last_name
+  = @ceo.phone

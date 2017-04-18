@@ -28,7 +28,7 @@ class VacanciesController < ApplicationController
     if @vacancy.candidates.count > 0
       @vacancy_candidates = @vacancy.candidates
     else
-        @vacancy_candidates =   Candidate.all
+      @vacancy_candidates = Candidate.all
     end
     render json: {candidates: @vacancy_candidates, cand_count: Candidate.all.count }
   end

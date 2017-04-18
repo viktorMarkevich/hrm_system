@@ -183,7 +183,7 @@ $(document).ready ->
         hours = (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours();
         minutes = (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes();
         formated_date= ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear()
-        $("tr.event#{data.e.id}>td.event_name>span.label").html(data.e.name)
+        $("tr.event#{data.e.id}>td.event_name").html(data.e.name)
         $("tr.event#{data.e.id}>td.event_will_begin_at").html('<span class="label label-primary">'+ "#{hours}:#{minutes }"+'</span>' + formated_date)
         $("tr.event#{data.e.id}>td.event_description").html(data.e.description)
         $("tr.event#{data.e.id}>td.event_vacancy").html(data.v.name if data.v == null)
@@ -215,7 +215,7 @@ $(document).ready ->
         $('#editEvent .candidates_list tbody').empty()
         $('.cand-list').show() if data.c != null
         $('#editEvent #event_staff_relation_attributes_vacancy_id').val(data.v.id) if data.v != null
-        if !data.c == null
+        if data.c != null
           candidat = JST["events/templates/candidates_list"]({
             name: data.c.name,
             phone: data.c.phone,
