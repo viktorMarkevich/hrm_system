@@ -17,10 +17,6 @@ class StaffRelationsController < ApplicationController
   end
 
   def create
-    # st_params[:candidate_id].each do |id|
-    #   @st = StaffRelation.create!(st_params.merge!(candidate_id: id))
-    #   @st.history_events.create(user_id: current_user.id, old_status: 'Пасивен', new_status: 'Найденные' )
-    # end
     @vacancy = Vacancy.find(st_params[:vacancy_id])
     @vacancy.update_user = current_user
     @vacancy.candidates << Candidate.where(id: st_params[:candidate_id])

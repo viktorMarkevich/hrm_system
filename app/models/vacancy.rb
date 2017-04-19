@@ -9,9 +9,9 @@ class Vacancy < ActiveRecord::Base
 
   belongs_to :region
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
+
   has_many :staff_relations
   has_many :candidates, through: :staff_relations, source: :candidate
-  has_many :history_events, as: :history_eventable
 
   attr_accessor :sr_status
 
@@ -20,7 +20,9 @@ class Vacancy < ActiveRecord::Base
 
   after_restore :set_default_status
   after_destroy :set_closed_status
-  after_create :create_history_event
+  after_create :add_history_event_after_create
+  after_destroy :add_history_event_after_destroy
+  after_restore :add_history_event_after_restore
 
   STATUSES = %w(Не\ задействована В\ работе Закрыта)
 
@@ -40,8 +42,29 @@ class Vacancy < ActiveRecord::Base
   end
 
   private
-    def create_history_event
-      self.history_events.create!(new_status: status, user: owner)
+
+    def add_history_event_after_create
+      History.create_with_attrs(new_status: 'Не задействована',
+                                responsible: {
+                                    full_name: owner.full_name,
+                                    id: user_id },
+                                action: "В систему добавлена вакансия: #{name}")
+    end
+    
+    def add_history_event_after_destroy
+      History.create_with_attrs(new_status: 'В архиве',
+                              responsible: {
+                                  full_name: owner.full_name,
+                                  id: user_id },
+                              action: "Вакансия #{name} перемещена в архив")
+    end
+
+    def add_history_event_after_restore
+      History.create_with_attrs(new_status: 'Восстановлена',
+                                responsible: {
+                                    full_name: owner.full_name,
+                                    id: user_id },
+                                action: "Вакансия #{name} восстановлена из архива")
     end
 end
 
