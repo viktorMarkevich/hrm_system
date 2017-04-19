@@ -63,62 +63,62 @@
                   %td
                     %span.label.label-warning
                       = event.will_begin_at.strftime('%e %b %H:%M')
-      - else
-        %ul.list-group
-          %li.list-group-item.list-group-item-warning
-            У Вас нет ни единого события!
-      .row
-        .col-md-12{ style: 'min-height: 5px; background-color: #222; border: 1px solid #fff;' }
-      .tip
-        %p
-          = 'Последние действия на сайте: '
-      - if @history_events.present?
-        .items-list
-          %table.table.table-hover.table-bordered.table-striped.history
-            %thead
-              %tr.table_head_color
-                %th Действие
-                %th Ответственный
-                %th Статус
-                %th Дата
-            %tbody
-              - @history_events.each  do |sr|
-                - if sr.history_eventable.present?
-                  %tr
-                    - if sr.history_eventable_type == 'Candidate'
-                      %td
-                        %span.text-warning= "Добавлен кандидат: "
-                        = link_to sr.history_eventable.name, candidate_path(sr.history_eventable)
-                    - elsif sr.history_eventable_type == 'Vacancy'
-                      %td
-                        %span.text-warning= "Добавлена вакансия: "
-                        = link_to sr.history_eventable.name, vacancy_path(sr.history_eventable)
+    - else
+      %ul.list-group
+        %li.list-group-item.list-group-item-warning
+          У Вас нет ни единого события!
+    .row
+      .col-md-12{ style: 'min-height: 5px; background-color: #222; border: 1px solid #fff;' }
+        .tip
+          %p
+            = 'Последние действия на сайте: '
+        - if @history_events.present?
+          .items-list
+            %table.table.table-hover.table-bordered.table-striped.history
+              %thead
+                %tr.table_head_color
+                  %th Действие
+                  %th Ответственный
+                  %th Статус
+                  %th Дата
+              %tbody
+                - @history_events.each  do |sr|
+                  - if sr.history_eventable.present?
+                    %tr
+                      - if sr.history_eventable_type == 'Candidate'
+                        %td
+                          %span.text-warning= "Добавлен кандидат: "
+                          = link_to sr.history_eventable.name, candidate_path(sr.history_eventable)
+                      - elsif sr.history_eventable_type == 'Vacancy'
+                        %td
+                          %span.text-warning= "Добавлена вакансия: "
+                          = link_to sr.history_eventable.name, vacancy_path(sr.history_eventable)
 
-                    - elsif sr.history_eventable_type == 'StaffRelation' && (sr.history_eventable.candidate && sr.history_eventable.vacancy)
+                      - elsif sr.history_eventable_type == 'StaffRelation' && (sr.history_eventable.candidate && sr.history_eventable.vacancy)
+                        %td
+                          %span.text-warning= "Изменения кандидата: "
+                          = link_to sr.history_eventable.candidate.name, candidate_path(sr.history_eventable.candidate_id)
+                          %span.text-warning= 'в вакансии'
+                          = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
                       %td
-                        %span.text-warning= "Изменения кандидата: "
-                        = link_to sr.history_eventable.candidate.name, candidate_path(sr.history_eventable.candidate_id)
-                        %span.text-warning= 'в вакансии'
-                        = link_to sr.history_eventable.vacancy.name, vacancy_path(sr.history_eventable.vacancy_id)
-                    %td
-                      = "#{sr.user&.first_name} #{sr.user&.last_name}".html_safe
-                    %td
-                      - if sr.old_status.present?
+                        = "#{sr.user&.first_name} #{sr.user&.last_name}".html_safe
+                      %td
+                        - if sr.old_status.present?
+                          %span.text-warning
+                            старый статус:
+                          = sr.old_status
                         %span.text-warning
-                          старый статус:
-                        = sr.old_status
-                      %span.text-warning
-                        новый статус:
-                      = sr.new_status
-                    %td
-                      .label.label-warning
-                        = sr.updated_at.strftime('%e %b %H:%M')
-        .col-xs-12
-          = paginate @history_events
-      - else
-        %ul.list-group
-          %li.list-group-item.list-group-item-warning
-            У Вас нет вакансий!
+                          новый статус:
+                        = sr.new_status
+                      %td
+                        .label.label-warning
+                          = sr.updated_at.strftime('%e %b %H:%M')
+          .col-xs-12
+            = paginate @history_events
+        - else
+          %ul.list-group
+            %li.list-group-item.list-group-item-warning
+              У Вас нет вакансий!
   -#.col-lg-offset-1.col-lg-5.col-lg-offset-1{ style: 'background-color: #E2E4DF;' }
     .tip
       %p
