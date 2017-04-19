@@ -145,6 +145,7 @@ RSpec.describe EventsController, type: :controller do
   context '#destroy' do
     let (:event) { current_user.events.first }
     let (:id) { event.id }
+
     before do
       delete :destroy, params: { id: event }
     end
@@ -158,8 +159,16 @@ RSpec.describe EventsController, type: :controller do
     end
   end
   context 'mail send' do
-    let (:event) { current_user.events.first }
-    
+    let(:candidate) { create :candidate }
+    let(:vacancy) { create :vacancy }
+    let(:staff_relation) { create :staff_relation, candidate_id: candidate.id, vacancy_id: vacancy.id }
+    let(:event) { current_user.events.first }
+
+    before :each do
+      event.update_attributes(staff_relation_id: staff_relation.id)
+      event.reload
+    end
+
     it 'has send mail' do
       expect { NoticeMailer.event_soon(event, event.staff_relation.candidate.owner).deliver_now }.to change{ ActionMailer::Base.deliveries.count }.by(1)
     end
