@@ -16,7 +16,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        create_list(:event, evaluator.events_count, user: user)
+        create_list(:event, evaluator.events_count, user: user, staff_relation_id: 1)
       end
     end
   end

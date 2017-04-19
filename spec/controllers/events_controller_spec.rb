@@ -159,6 +159,7 @@ RSpec.describe EventsController, type: :controller do
   end
   context 'mail send' do
     let (:event) { current_user.events.first }
+    
     it 'has send mail' do
       expect { NoticeMailer.event_soon(event, event.staff_relation.candidate.owner).deliver_now }.to change{ ActionMailer::Base.deliveries.count }.by(1)
     end
