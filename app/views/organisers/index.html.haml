@@ -2,23 +2,53 @@
 = javascript_include_tag 'stickers'
 = javascript_include_tag 'charCount'
 
-.container
-  .row
-    .col-md-12
-      .tip
-        %p
-          = 'Предстоящие события'
-      - if @events.present?
-        .items-list
-          %table.table.table-hover.table-bordered.table-striped
-            %thead
-              %tr.table_head_color
-                %th Событие
-                %th Имя Вакансии
-                %th Имя Кандидата
-                %th Дата
-            %tbody
-              - @events.each do |event|
+.row
+  .col-md-12
+    .tip
+      %p
+        = 'Предстоящие события'
+    - if @events.present?
+      .items-list
+        %table.table.table-hover.table-bordered.table-striped
+          %thead
+            %tr.table_head_color
+              %th Событие
+              %th Имя Вакансии
+              %th Имя Кандидата
+              %th Дата
+          %tbody
+            - @events.each do |event|
+              %tr
+                %td
+                  = link_to event.name, event, class: 'tooltips', title: [event.name,' - ', event.description], data: { toggle: 'tooltip', placement: 'top' }
+                - if event.staff_relation
+                  %td= event.staff_relation.vacancy.name
+                  %td= event.staff_relation.candidate.name
+                - else
+                  %td= '------'
+                  %td= '------'
+                %td
+                  %span.label.label-warning
+                    = event.will_begin_at.strftime('%e %b %H:%M')
+    - else
+      %ul.list-group
+        %li.list-group-item.list-group-item-warning
+          У Вас нет ни единого события!
+    .tip
+      %p
+        = 'Последние действия на сайте: '
+    - if @history_events.present?
+      .items-list
+        %table.table.table-hover.table-bordered.table-striped.history
+          %thead
+            %tr.table_head_color
+              %th Действие
+              %th Ответственный
+              %th Статус
+              %th Дата
+          %tbody
+            - @history_events.each  do |sr|
+              - if sr.history_eventable.present?
                 %tr
                   %td
                     = link_to event.name, event
