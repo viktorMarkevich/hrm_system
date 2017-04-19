@@ -1,8 +1,7 @@
-.row
-  .col-lg-12
-    .tip
-      %p
-        Добавить новую вакансию
-.row
-  .col-lg-6.col-lg-offset-3
-    = render partial: 'vacancies/form'
+.container
+  .row
+    .col-lg-10.col-lg-offset-1{ style: "border-bottom: 1px solid #FFF;" }
+      .tip
+        %p
+          Добавить новую вакансию
+      = render partial: 'vacancies/form'

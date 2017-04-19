@@ -156,9 +156,8 @@
     .col-sm-9
       = f.text_field :notice, class: 'form-control'
 
-  %hr
-
   .form-group
+    %hr
     .col-sm-12
-      = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-success'
-      = link_to 'Назад', :back, class: 'btn btn-default'
+      = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn paranoid_btn'
+      = link_to 'Назад', :back, class: 'btn paranoid_btn'

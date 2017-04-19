@@ -19,7 +19,7 @@ gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'paranoia', '~> 2.0'
 gem 'kaminari'
 gem 'cancancan', '~> 1.10'
-gem 'simple_calendar', '~> 1.1.0'
+gem 'simple_calendar', '~> 2.0'
 gem 'rufus-scheduler', '~> 3.1.3' #awesome scheduler gem!!!
 gem 'coffee-rails', '~> 4.1.0'
 
@@ -41,7 +41,6 @@ gem 'axlsx_rails'
 gem 'acts_as_xlsx', git: "git://github.com/straydogstudio/acts_as_xlsx.git"
 gem 'prawn-rails'
 gem 'wysiwyg-rails'
-
 group :development do
   gem 'letter_opener'
 end

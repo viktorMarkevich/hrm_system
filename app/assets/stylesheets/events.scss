@@ -1,3 +1,5 @@
+@import 'calendar';
+
 .calendar {
   header {font-size: 30px};
   thead {background-color: lightblue;};
@@ -48,4 +50,16 @@
     font-size: 40px;
     cursor: pointer;
   }
+}
+.cand-list tbody td{
+  text-align: center;
+  height: auto;
+
+}
+.all_candidat{
+  cursor: pointer;
+  color: #0e80e5;
+}
+.fade{
+  overflow: auto !important;
 }

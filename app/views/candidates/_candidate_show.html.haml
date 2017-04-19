@@ -1,23 +1,19 @@
 .row
-  .col-lg-10.col-lg-offset-1
-    .tip
-      %p
-        Кандидаты
-
+  .col-md-12
     .items-list
-      %table.table.table-bordered.table-hover
+      %table.table.table-hover.table-bordered.table-striped
         %thead
-          %tr
+          %tr.table_head_color
             %th Кандидат
             %th Должность
             %th Регион
             %th Зарплата
             %th Ответственный
-            %th Добавлен
             %th
               .dropdown.show
-                %a#dropdownMenuLink.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "https://example.com"}
-                  Статус ⇓
+                %a#dropdownMenuLink.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#"}
+                  Статус
+                  %i.glyphicon.glyphicon-arrow-down
                 .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
                   = link_to "Все", candidates_path, remote: true, class: "dropdown-item #{'active' unless @status }"
                   %br
@@ -30,10 +26,9 @@
             %tr
               %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
               %td= candidate.desired_position
-              %td= display_field_value_for(candidate.city_of_residence)
-              %td= display_field_value_for(candidate.salary)
+              %td= candidate.city_of_residence
+              %td= candidate.salary
               %td= full_name_for(candidate.owner)
-              %td= candidate.created_at.strftime('%F')
               %td= candidate.status
               %td= candidate.notice
       .pull-right.export-to-file

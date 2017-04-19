@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170303104550) do
+ActiveRecord::Schema.define(version: 20170406075021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,10 +97,11 @@ ActiveRecord::Schema.define(version: 20170303104550) do
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.datetime "will_begin_at"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.text     "description"
     t.integer  "user_id"
+    t.integer  "staff_relation_id"
   end
 
   create_table "geo_alternate_names", force: :cascade do |t|
@@ -162,12 +163,10 @@ ActiveRecord::Schema.define(version: 20170303104550) do
 
   create_table "staff_relations", force: :cascade do |t|
     t.string   "status",       default: "Найденные"
-    t.text     "notice"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.integer  "vacancy_id"
     t.integer  "candidate_id"
-    t.integer  "event_id"
   end
 
   create_table "stickers", force: :cascade do |t|

@@ -52,7 +52,8 @@ for i in 1..15 do
       email: "user#{i}@mail.com",
       phone: "081111111#{i+1}",
       skype: "usertes#{i}",
-      source: "Имяфайла#{i}.docx"
+      source: "Имяфайла#{i}.docx",
+      user_id: 2
   )
 end
 

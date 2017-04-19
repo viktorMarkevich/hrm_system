@@ -4,6 +4,7 @@ class EventsController < ApplicationController
   before_action :set_sr, only: [ :edit]
   before_action :set_date, only: [:index, :edit, :update, :destroy]
   before_action :set_events_in_date_period, only: [:index, :update]
+  before_action :authenticate_user!
 
   def index
     respond_to do |format|
@@ -13,7 +14,9 @@ class EventsController < ApplicationController
   end
   def show
     @event= Event.find(params[:id])
-    render json: @event
+    !@event.staff_relation.nil? && !@event.staff_relation.vacancy.nil? ? v = @event.staff_relation.vacancy : v = nil
+    !@event.staff_relation.nil? && !@event.staff_relation.candidate.nil? ? c = @event.staff_relation.candidate : c = nil
+    render json: {e: @event, v: v, c: c}
   end
 
   def selected_day_events
@@ -24,8 +27,14 @@ class EventsController < ApplicationController
   end
 
   def create
+    @vacancies=Vacancy.all
     @event = current_user.events.build(event_params)
-    set_event_sr if params[:event][:staff_relation].to_i != 0
+    if  !event_params[:staff_relation_attributes].nil? && !event_params[:staff_relation_attributes][:vacancy_id].nil? && event_params[:staff_relation_attributes][:vacancy_id]!='' ||  !event_params[:staff_relation_attributes].nil? && !event_params[:staff_relation_attributes][:candidate_id].nil?
+      event_params[:staff_relation_attributes].merge(status: 'Собеседование')
+      @event.staff_relation = StaffRelation.find_or_initialize_by(event_params[:staff_relation_attributes])
+    else
+      @event.staff_relation = nil
+    end
     respond_to do |format|
       if @event.save
         format.html { flash[:notice] = 'Event created!' }
@@ -38,14 +47,27 @@ class EventsController < ApplicationController
   end
 
   def update
-    set_event_sr if params[:event][:staff_relation].to_i != 0
-    @event.update(event_params)
-    p @event.will_begin_at
-    render json: @event
+    @event.assign_attributes(event_params)
+    if !event_params[:staff_relation_attributes].nil? && !event_params[:staff_relation_attributes][:vacancy_id].nil? && !event_params[:staff_relation_attributes][:candidate_id].nil? && !event_params[:staff_relation_attributes][:candidate_id].equal?('undefined')
+      event_params[:staff_relation_attributes].merge(status: 'Собеседование')
+      @event.staff_relation = StaffRelation.find_or_initialize_by(event_params[:staff_relation_attributes])
+    else
+      @event.staff_relation = nil
+    end
+    respond_to do |format|
+      if @event.save
+        !@event.staff_relation.nil? && !@event.staff_relation.vacancy.nil? ? v = @event.staff_relation.vacancy : v = nil
+        !@event.staff_relation.nil? && !@event.staff_relation.candidate.nil? ? c = @event.staff_relation.candidate : c = nil
+        format.html { flash[:notice] = 'Event updated!' }
+        format.json {render @event, v , c, status: :updated}
+      else
+        format.html { flash[:danger] = @event.errors.full_messages }
+        format.json { render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
-    @event.staff_relation.update(event_id: nil) if @event.staff_relation
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Событие успешно удалено.' }
@@ -54,12 +76,6 @@ class EventsController < ApplicationController
   end
 
   private
-
-  def set_event_sr
-    sr = StaffRelation.find(params[:event][:staff_relation])
-    @event.staff_relation = sr
-    @event.name = sr.status
-  end
 
   def set_event
     @event = Event.find(params[:id])
@@ -76,7 +92,7 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    permitted_params = params.require(:event).permit(:name, :will_begin_at, :description, :user_id)
+    permitted_params = params.require(:event).permit(:name, :will_begin_at, :description, :user_id, staff_relation_attributes: [:vacancy_id, :candidate_id])
     permitted_params&.tap {|p| p[:will_begin_at] = (params[:event][:will_begin_at]).to_datetime }
   end
 

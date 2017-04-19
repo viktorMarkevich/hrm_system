@@ -1,28 +1,29 @@
 = stylesheet_link_tag 'events'
 = javascript_include_tag 'events/events'
 
-.col-md-6
+= render 'dialog'
+= render 'events_show'
+
+.container-fluid
   .row
-    .col-md-12
-      .tip.description_count
-        %p
-          = set_events_list_title(@events, @date_from)
-      .events-list.future
-        - if @events.present?
-          = render partial: 'events_list', locals: { events: @events, time_is: :future }
-  .row
-    .col-md-12
-      .tip
-        %p
-          = 'Прошедшие события'
-      .events-list.past
-        - if @events_past.present?
-          = render partial: 'events_list', locals: { events: @events_past, time_is: :past }
-.col-md-6
-  .tip
-    %p
-      Календарь событий
-  %button.btn.btn-success.btn-dialog.pull-right
-    Создать новое событие
-  .calendar#events_calendar
-    = render partial: 'calendar', locals: { events: @events_month }
+    .col-md-5.col-md-offset-1
+      .row
+        .col-md-12
+          .tip.description_count
+            = set_events_list_title(@events, @date_from)
+          .events-list.future
+            - if @events.present?
+              = render partial: 'events_list', locals: { events: @events }
+      .row
+        .col-md-12
+          .tip
+            %p
+              = 'Прошедшие события'
+          .events-list.past
+            - if @events_past.present?
+              = render partial: 'events_list', locals: { events: @events_past }
+    .col-md-5
+      %a.pull-right.paranoid_btn.btn-dialog
+        %i.glyphicon.glyphicon-plus
+      .calendar#events_calendar{ data: {date: @date_from.utc.strftime('%Y-%m-%d')}}
+        = render partial: 'calendar', locals: { events: @events_month }
