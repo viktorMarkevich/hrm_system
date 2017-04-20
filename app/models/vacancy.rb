@@ -12,6 +12,7 @@ class Vacancy < ActiveRecord::Base
 
   has_many :staff_relations
   has_many :candidates, through: :staff_relations, source: :candidate
+  has_many :histories, as: :historyable
 
   attr_accessor :sr_status
 
@@ -44,11 +45,11 @@ class Vacancy < ActiveRecord::Base
   private
 
     def add_history_event_after_create
-      History.create_with_attrs(new_status: 'Не задействована',
+      histories.create_with_attrs(new_status: 'Не задействована',
                                 responsible: {
                                     full_name: owner.full_name,
                                     id: user_id },
-                                action: "В систему добавлена вакансия: #{name}")
+                                action: "В систему добавлена вакансия: <strong>#{name}</strong>")
     end
     
     def add_history_event_after_destroy
@@ -56,7 +57,7 @@ class Vacancy < ActiveRecord::Base
                               responsible: {
                                   full_name: owner.full_name,
                                   id: user_id },
-                              action: "Вакансия #{name} перемещена в архив")
+                              action: "Вакансия <strong>#{name}</strong> перемещена в архив")
     end
 
     def add_history_event_after_restore
@@ -64,7 +65,7 @@ class Vacancy < ActiveRecord::Base
                                 responsible: {
                                     full_name: owner.full_name,
                                     id: user_id },
-                                action: "Вакансия #{name} восстановлена из архива")
+                                action: "Вакансия <strong>#{name}</strong> восстановлена из архива")
     end
 end
 

@@ -52,87 +52,107 @@ RSpec.describe OrganisersController, type: :controller do
       end
 
       it 'should return histories with target data' do
-        expect(assigns(:histories).count).to eq 3
+        expect(assigns(:histories).count).to eq 1
         expect(assigns(:histories).pluck(:new_status)).to eq [ 'Найденные', 'Не задействована', 'Пассивен' ]
         expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
                                                                 { 'id' => user.id.to_s, 'full_name' => user.full_name },
                                                                 { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name } ]
-        expect(assigns(:histories).pluck(:action)).to eq [ "В вакансию #{vacancy.name} добавили нового кандидата #{candidate.name}",
-                                                           "В систему добавлена вакансия: #{vacancy.name}",
-                                                           "В систему добавлен кандидат: #{candidate.name}" ]
+        expect(assigns(:histories).pluck(:action)).to eq [ "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>",
+                                                           "В систему добавлена вакансия: <strong>#{vacancy.name}</strong>",
+                                                           "В систему добавлен кандидат: <strong>#{candidate.name}</strong>" ]
       end
     end
 
-    context 'when UPDATE occurs' do
-      before do
-        sr.update_attributes(status: 'Собеседование')
-      end
-
-      it 'should return histories with target data' do
-        get :index
-        expect(assigns(:histories).count).to eq 4
-        expect(assigns(:histories).pluck(:new_status)).to eq [ 'Собеседование', 'Найденные', 'Не задействована', 'Пассивен' ]
-        expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name } ]
-        expect(assigns(:histories).pluck(:action)).to eq [ "В вакансии #{vacancy.name} для кандидата #{candidate.name} произошли изменения",
-                                                           "В вакансию #{vacancy.name} добавили нового кандидата #{candidate.name}",
-                                                           "В систему добавлена вакансия: #{vacancy.name}",
-                                                           "В систему добавлен кандидат: #{candidate.name}" ]
-      end
-    end
-
-    context 'when DESTROY occurs' do
-      let(:vacancy_name) { vacancy.name }
-      let(:candidate_name) { candidate.name }
-
-      before do
-        candidate.destroy
-        vacancy.destroy
-      end
-
-      it 'should return histories with target data' do
-        get :index
-        expect(assigns(:histories).count).to eq 5
-        expect(assigns(:histories).pluck(:new_status)).to eq [ 'В архиве', 'В архиве', 'Найденные', 'Не задействована', 'Пассивен' ]
-        expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name } ]
-        expect(assigns(:histories).pluck(:action)).to eq [ "Вакансия #{vacancy_name} перемещена в архив",
-                                                           "Кандидат #{candidate_name} перемещен в архив",
-                                                           "В вакансию #{vacancy.name} добавили нового кандидата #{candidate.name}",
-                                                           "В систему добавлена вакансия: #{vacancy.name}",
-                                                           "В систему добавлен кандидат: #{candidate.name}" ]
-      end
-    end
-
-    context 'when RESTORE occurs' do
-      let(:candidate_restore) { create :candidate, user_id: candidate_user.id, deleted_at: DateTime.now }
-      let(:vacancy_restore) { create :vacancy, user_id: user.id, deleted_at: DateTime.now }
-
-      before do
-        candidate_restore.restore
-        vacancy_restore.restore
-      end
-
-      it 'should return histories with target data' do
-        get :index
-        expect(assigns(:histories).count).to eq 5
-        expect(assigns(:histories).pluck(:new_status)).to eq [ 'Восстановлена', 'Не задействована', 'Восстановлен', 'Пассивен', 'Найденные' ]
-        expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => user.id.to_s, 'full_name' => user.full_name } ]
-            expect(assigns(:histories).pluck(:action)).to eq [ "Вакансия #{vacancy_restore.name} восстановлена из архива",
-                                                               "В систему добавлена вакансия: #{vacancy_restore.name}",
-                                                           "Кандидат #{candidate_restore.name} восстановлен из архива",
-                                                           "В систему добавлен кандидат: #{candidate_restore.name}",
-                                                           "В вакансию #{vacancy.name} добавили нового кандидата #{candidate.name}" ]
-      end
-    end
+    # context 'when in staff_relation UPDATE occurs' do
+    #   before do
+    #     sr.update_attributes(status: 'Собеседование')
+    #   end
+    #
+    #   it 'should return histories with target data' do
+    #     get :index
+    #     expect(assigns(:histories).count).to eq 4
+    #     expect(assigns(:histories).pluck(:new_status)).to eq [ 'Собеседование', 'Найденные', 'Не задействована', 'Пассивен' ]
+    #     expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name } ]
+    #     expect(assigns(:histories).pluck(:action)).to eq [ "В вакансии <strong>#{vacancy.name}</strong> для кандидата <strong>#{candidate.name}</strong> произошли изменения",
+    #                                                        "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>",
+    #                                                        "В систему добавлена вакансия: <strong>#{vacancy.name}</strong>",
+    #                                                        "В систему добавлен кандидат: <strong>#{candidate.name}</strong>" ]
+    #   end
+    # end
+    #
+    # context 'when in vacancy UPDATE occurs' do
+    #   before do
+    #     vacancy.update_attributes(name: 'Vacancy name')
+    #   end
+    #
+    #   it 'should return histories with target data' do
+    #     get :index
+    #     expect(assigns(:histories).count).to eq 5
+    #     expect(assigns(:histories).pluck(:new_status)).to eq [ 'Собеседование', 'Найденные', 'Не задействована', 'Пассивен' ]
+    #     expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name } ]
+    #     expect(assigns(:histories).pluck(:action)).to eq [ "В вакансии <strong>#{vacancy.name}</strong> для кандидата <strong>#{candidate.name}</strong> произошли изменения",
+    #                                                        "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>",
+    #                                                        "В систему добавлена вакансия: <strong>#{vacancy.name}</strong>",
+    #                                                        "В систему добавлен кандидат: <strong>#{candidate.name}</strong>" ]
+    #   end
+    # end
+    #
+    # context 'when DESTROY occurs' do
+    #   let(:vacancy_name) { vacancy.name }
+    #   let(:candidate_name) { candidate.name }
+    #
+    #   before do
+    #     candidate.destroy
+    #     vacancy.destroy
+    #   end
+    #
+    #   it 'should return histories with target data' do
+    #     get :index
+    #     expect(assigns(:histories).count).to eq 5
+    #     expect(assigns(:histories).pluck(:new_status)).to eq [ 'В архиве', 'В архиве', 'Найденные', 'Не задействована', 'Пассивен' ]
+    #     expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name } ]
+    #     expect(assigns(:histories).pluck(:action)).to eq [ "Вакансия <strong>#{vacancy_name}</strong> перемещена в архив",
+    #                                                        "Кандидат <strong>#{candidate_name}</strong> перемещен в архив",
+    #                                                        "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>",
+    #                                                        "В систему добавлена вакансия: <strong>#{vacancy.name}</strong>",
+    #                                                        "В систему добавлен кандидат: <strong>#{candidate.name}</strong>" ]
+    #   end
+    # end
+    #
+    # context 'when RESTORE occurs' do
+    #   let(:candidate_restore) { create :candidate, user_id: candidate_user.id, deleted_at: DateTime.now }
+    #   let(:vacancy_restore) { create :vacancy, user_id: user.id, deleted_at: DateTime.now }
+    #
+    #   before do
+    #     candidate_restore.restore
+    #     vacancy_restore.restore
+    #   end
+    #
+    #   it 'should return histories with target data' do
+    #     get :index
+    #     expect(assigns(:histories).count).to eq 5
+    #     expect(assigns(:histories).pluck(:new_status)).to eq [ 'Восстановлена', 'Не задействована', 'Восстановлен', 'Пассивен', 'Найденные' ]
+    #     expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name },
+    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name } ]
+    #         expect(assigns(:histories).pluck(:action)).to eq [ "Вакансия <strong>#{vacancy_restore.name}</strong> восстановлена из архива",
+    #                                                            "В систему добавлена вакансия: <strong>#{vacancy_restore.name}</strong>",
+    #                                                        "Кандидат <strong>#{candidate_restore.name}</strong> восстановлен из архива",
+    #                                                        "В систему добавлен кандидат: <strong>#{candidate_restore.name}</strong>",
+    #                                                        "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>" ]
+    #   end
+    # end
   end
 end

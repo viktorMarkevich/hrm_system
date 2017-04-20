@@ -37,9 +37,9 @@ class Candidate < ActiveRecord::Base
   #          message: 'wrong format' }, if: 'birthday.present?'
 
   before_validation :check_geo_name
-  after_create :add_history_event_after_create
-  after_destroy :add_history_event_after_destroy
-  after_restore :add_history_event_after_restore
+  # after_create :add_history_event_after_create
+  # after_destroy :add_history_event_after_destroy
+  # after_restore :add_history_event_after_restore
 
   def status_for_vacancy(vacancy)
     StaffRelation.find_by_candidate_id_and_vacancy_id(self.id, vacancy.id).status
@@ -93,7 +93,7 @@ class Candidate < ActiveRecord::Base
                                 responsible: {
                                     full_name: owner.full_name,
                                     id: user_id },
-                                action: "В систему добавлен кандидат: #{name}")
+                                action: "В систему добавлен кандидат: <strong>#{name}</strong>")
     end
 
     def add_history_event_after_destroy
@@ -101,7 +101,7 @@ class Candidate < ActiveRecord::Base
                                 responsible: {
                                     full_name: owner.full_name,
                                     id: user_id },
-                                action: "Кандидат #{name} перемещен в архив")
+                                action: "Кандидат <strong>#{name}</strong> перемещен в архив")
     end
 
     def add_history_event_after_restore
@@ -109,6 +109,6 @@ class Candidate < ActiveRecord::Base
                                 responsible: {
                                     full_name: owner.full_name,
                                     id: user_id },
-                                action: "Кандидат #{name} восстановлен из архива")
+                                action: "Кандидат <strong>#{name}</strong> восстановлен из архива")
     end
   end

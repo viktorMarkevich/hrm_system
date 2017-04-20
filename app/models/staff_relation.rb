@@ -7,8 +7,8 @@ class StaffRelation < ActiveRecord::Base
   validates :vacancy_id,  uniqueness: { scope: :candidate_id }, presence: true
   STATUSES = %w(Убрать Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
-  after_create :create_history_event
-  after_update :update_history_event
+  # after_create :create_history_event
+  # after_update :update_history_event
 
   def self.return_status(options)
     staff_relation = where(candidate_id: options[:vacancy][:candidate_id], vacancy_id: options[:id]).first
@@ -33,7 +33,7 @@ class StaffRelation < ActiveRecord::Base
                                 new_status: 'Найденные',
                                 responsible: { full_name: vacancy.owner.full_name,
                                                id: vacancy.user_id },
-                                action: "В вакансию #{vacancy.name} добавили нового кандидата #{candidate.name}")
+                                action: "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>")
     end
 
     def update_history_event
@@ -42,7 +42,7 @@ class StaffRelation < ActiveRecord::Base
                                   new_status: status,
                                   responsible: { full_name: vacancy.owner.full_name,
                                                  id: vacancy.user_id },
-                                  action: "В вакансии #{vacancy.name} для кандидата #{candidate.name} произошли изменения")
+                                  action: "В вакансии <strong>#{vacancy.name}</strong> для кандидата <strong>#{candidate.name}</strong> произошли изменения")
       end
     end
 end

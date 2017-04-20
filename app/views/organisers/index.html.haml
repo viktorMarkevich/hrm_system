@@ -59,7 +59,7 @@
                   %td
                     = link_to history.responsible['full_name'], user_path(history.responsible['id'])
                   %td
-                    = "Изменился на #{history.new_status}"
+                    = "Изменился на <strong>#{history.new_status}</strong>".html_safe
                     - if history.old_status
                       = " со старого #{history.new_status}"
                   %td

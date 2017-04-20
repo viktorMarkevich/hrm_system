@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418073449) do
+ActiveRecord::Schema.define(version: 20170420064729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,12 +139,16 @@ ActiveRecord::Schema.define(version: 20170418073449) do
   end
 
   create_table "histories", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "old_status"
     t.string   "new_status"
     t.hstore   "responsible"
     t.string   "action"
+    t.string   "historyable_type"
+    t.integer  "historyable_id"
+    t.index ["historyable_id"], name: "index_histories_on_historyable_id", using: :btree
+    t.index ["historyable_type"], name: "index_histories_on_historyable_type", using: :btree
     t.index ["responsible"], name: "index_histories_on_responsible", using: :gin
   end
 
