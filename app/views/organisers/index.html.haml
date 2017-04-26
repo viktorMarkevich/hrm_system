@@ -55,7 +55,7 @@
               - @histories.each  do |history|
                 %tr
                   %td
-                    = history.action
+                    = set_action_for(history)
                   %td
                     = link_to history.responsible['full_name'], user_path(history.responsible['id'])
                   %td

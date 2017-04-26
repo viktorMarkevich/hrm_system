@@ -4,9 +4,9 @@ RSpec.describe OrganisersController, type: :controller do
 
   let(:user) { create :user_with_events }
   let(:candidate_user) { create :user }
-  let(:candidate_0) { create :candidate, user_id: candidate_user.id }
-  let(:vacancy_0) { create :vacancy, user_id: user.id }
-  let(:sr_0) { create :staff_relation, vacancy_id: vacancy_0.id, candidate_id: candidate_0.id }
+  let!(:candidate_0) { create :candidate, user_id: candidate_user.id }
+  let!(:vacancy_0) { create :vacancy, user_id: user.id }
+  let!(:sr_0) { create :staff_relation, vacancy_id: vacancy_0.id, candidate_id: candidate_0.id }
 
   let(:old_event) { o_e = build :event, will_begin_at: user.events.first.will_begin_at - 10.days,
                                 user_id: user.id, staff_relation_id: sr_0.id
@@ -23,7 +23,10 @@ RSpec.describe OrganisersController, type: :controller do
 
   describe '#index' do
     context 'to check the stickers, the events and the vacancies' do
-      before { get :index }
+
+      before :each do
+        get :index
+      end
 
       it 'has HTTP 200 status' do
         expect(response).to have_http_status(200)
@@ -47,19 +50,16 @@ RSpec.describe OrganisersController, type: :controller do
     end
 
     context 'when create occurs' do
-      before do
+      before :each do
         get :index
       end
 
       it 'should return histories with target data' do
-        expect(assigns(:histories).count).to eq 1
-        expect(assigns(:histories).pluck(:new_status)).to eq [ 'Найденные', 'Не задействована', 'Пассивен' ]
-        expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => user.id.to_s, 'full_name' => user.full_name },
-                                                                { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name } ]
-        expect(assigns(:histories).pluck(:action)).to eq [ "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>",
-                                                           "В систему добавлена вакансия: <strong>#{vacancy.name}</strong>",
-                                                           "В систему добавлен кандидат: <strong>#{candidate.name}</strong>" ]
+        expect(assigns(:histories).count).to eq 2
+        expect(assigns(:histories).pluck(:new_status)).to eq [ 'Не задействована', 'Не задействована' ]
+        expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => candidate_user.id.to_s, 'full_name' => candidate_user.full_name },
+                                                                { 'id' => user.id.to_s, 'full_name' => user.full_name } ]
+        expect(assigns(:histories).pluck(:action)).to eq [ 'create', 'create' ]
       end
     end
 

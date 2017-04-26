@@ -22,8 +22,8 @@ class Vacancy < ActiveRecord::Base
   after_restore :set_default_status
   after_destroy :set_closed_status
   after_create :add_history_event_after_create
-  after_destroy :add_history_event_after_destroy
-  after_restore :add_history_event_after_restore
+  # after_destroy :add_history_event_after_destroy
+  # after_restore :add_history_event_after_restore
 
   STATUSES = %w(Не\ задействована В\ работе Закрыта)
 
@@ -45,27 +45,27 @@ class Vacancy < ActiveRecord::Base
   private
 
     def add_history_event_after_create
-      histories.create_with_attrs(new_status: 'Не задействована',
-                                responsible: {
-                                    full_name: owner.full_name,
-                                    id: user_id },
-                                action: "В систему добавлена вакансия: <strong>#{name}</strong>")
+      histories.create_with_attrs(new_status: status,
+                                  responsible: {
+                                      full_name: owner.full_name,
+                                      id: user_id },
+                                  action: 'create')
     end
     
-    def add_history_event_after_destroy
-      History.create_with_attrs(new_status: 'В архиве',
-                              responsible: {
-                                  full_name: owner.full_name,
-                                  id: user_id },
-                              action: "Вакансия <strong>#{name}</strong> перемещена в архив")
-    end
-
-    def add_history_event_after_restore
-      History.create_with_attrs(new_status: 'Восстановлена',
-                                responsible: {
-                                    full_name: owner.full_name,
-                                    id: user_id },
-                                action: "Вакансия <strong>#{name}</strong> восстановлена из архива")
-    end
+    # def add_history_event_after_destroy   # TODO  old status
+    #   History.create_with_attrs(new_status: 'В архиве',
+    #                           responsible: {
+    #                               full_name: owner.full_name,
+    #                               id: user_id },
+    #                           action: "Вакансия <strong>#{name}</strong> перемещена в архив")
+    # end
+    #
+    # def add_history_event_after_restore # TODO  old status
+    #   History.create_with_attrs(new_status: 'Восстановлена',
+    #                             responsible: {
+    #                                 full_name: owner.full_name,
+    #                                 id: user_id },
+    #                             action: "Вакансия <strong>#{name}</strong> восстановлена из архива")
+    # end
 end
 
