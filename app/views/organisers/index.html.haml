@@ -59,7 +59,7 @@
                   %td
                     = link_to history.historyable.owner.full_name, user_path(history.historyable.owner)
                   %td
-                    = "Изменился на <strong>_status</strong>".html_safe
+                    = set_status_for(history)
                     -#= " со старого history.new_status}"
                   %td
                     %span.label.label-warning

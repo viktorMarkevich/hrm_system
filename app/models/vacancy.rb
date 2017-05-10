@@ -45,8 +45,7 @@ class Vacancy < ActiveRecord::Base
   private
 
     def add_history_event_after_create
-      histories.create_with_attrs(was_changed: { 'status' => status },
-                                  action: 'create')
+      histories.create_with_attrs(was_changed: { 'status' => status }, action: 'create')
     end
     
     # def add_history_event_after_destroy   # TODO  old status

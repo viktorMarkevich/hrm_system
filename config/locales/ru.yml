@@ -17,13 +17,16 @@ ru:
 
   history:
     vacancy:
-      create: "В систему добавлена новая вакансия: <b>%{object_name}!</b>"
+      create:
+        notice: "В систему добавлена новая вакансия: <b>%{object_name}</b>"
+        status: "<b>%{object_status}</b>"
       update:
       destroy:
       restore:
 
     candidate:
       create: "В систему добавлена новый кандидат: <b>%{object_name}!</b>"
+      create_status: "<b>%{object_status}</b>"
       update:
       destroy:
       restore:
