@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170420064729) do
+ActiveRecord::Schema.define(version: 20170510094620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,15 +141,13 @@ ActiveRecord::Schema.define(version: 20170420064729) do
   create_table "histories", force: :cascade do |t|
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.string   "old_status"
-    t.string   "new_status"
-    t.hstore   "responsible"
     t.string   "action"
     t.string   "historyable_type"
     t.integer  "historyable_id"
+    t.hstore   "was_changed"
     t.index ["historyable_id"], name: "index_histories_on_historyable_id", using: :btree
     t.index ["historyable_type"], name: "index_histories_on_historyable_type", using: :btree
-    t.index ["responsible"], name: "index_histories_on_responsible", using: :gin
+    t.index ["was_changed"], name: "index_histories_on_was_changed", using: :gin
   end
 
   create_table "images", force: :cascade do |t|
@@ -184,6 +182,31 @@ ActiveRecord::Schema.define(version: 20170420064729) do
     t.datetime "deleted_at"
     t.string   "bg_color"
     t.index ["deleted_at"], name: "index_stickers_on_deleted_at", using: :btree
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.string   "taggable_type"
+    t.integer  "taggable_id"
+    t.string   "tagger_type"
+    t.integer  "tagger_id"
+    t.string   "context",       limit: 128
+    t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context", using: :btree
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+    t.index ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy", using: :btree
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id", using: :btree
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type", using: :btree
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type", using: :btree
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id", using: :btree
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string  "name"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true, using: :btree
   end
 
   create_table "users", force: :cascade do |t|

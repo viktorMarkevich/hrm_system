@@ -45,10 +45,7 @@ class Vacancy < ActiveRecord::Base
   private
 
     def add_history_event_after_create
-      histories.create_with_attrs(new_status: status,
-                                  responsible: {
-                                      full_name: owner.full_name,
-                                      id: user_id },
+      histories.create_with_attrs(was_changed: { 'status' => status },
                                   action: 'create')
     end
     

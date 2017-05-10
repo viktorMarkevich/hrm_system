@@ -16,27 +16,26 @@ ru:
         notice: Примечание
 
   history:
-    action:
-      vacancy:
-        create: "В систему добавлена новая вакансия: <b>%{object_name}!</b>"
-        update:
-        destroy:
-        restore:
+    vacancy:
+      create: "В систему добавлена новая вакансия: <b>%{object_name}!</b>"
+      update:
+      destroy:
+      restore:
 
-      candidate:
-        create: "В систему добавлена новый кандидат: <b>%{object_name}!</b>"
-        update:
-        destroy:
-        restore:
+    candidate:
+      create: "В систему добавлена новый кандидат: <b>%{object_name}!</b>"
+      update:
+      destroy:
+      restore:
 
-      staff_relation:
-        create:
-        update:
-        destroy:
-        restore:
+    staff_relation:
+      create:
+      update:
+      destroy:
+      restore:
 
-      event:
-        create: "В систему добавлен новый ивент: <b>%{object_name}!</b>"
-        update:
-        destroy:
-        restore:
+    event:
+      create: "В систему добавлен новый ивент: <b>%{object_name}!</b>"
+      update:
+      destroy:
+      restore:

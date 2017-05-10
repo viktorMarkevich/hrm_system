@@ -57,11 +57,10 @@
                   %td
                     = set_action_for(history)
                   %td
-                    = link_to history.responsible['full_name'], user_path(history.responsible['id'])
+                    = link_to history.historyable.owner.full_name, user_path(history.historyable.owner)
                   %td
-                    = "Изменился на <strong>#{history.new_status}</strong>".html_safe
-                    - if history.old_status
-                      = " со старого #{history.new_status}"
+                    = "Изменился на <strong>_status</strong>".html_safe
+                    -#= " со старого history.new_status}"
                   %td
                     %span.label.label-warning
                       = history.created_at.strftime('%e %b %H:%M')
