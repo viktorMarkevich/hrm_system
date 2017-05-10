@@ -55,10 +55,19 @@ RSpec.describe OrganisersController, type: :controller do
       end
 
       it 'should return histories with target data' do
-        expect(assigns(:histories).count).to eq 2
-        expect(assigns(:histories).pluck(:historyable_id, :historyable_type)).to eq [[vacancy.id, 'Vacancy'], [vacancy_0.id, 'Vacancy']]
-        expect(assigns(:histories).pluck(:was_changed)).to eq [ { 'status' => 'Не задействована' }, { 'status' => 'Не задействована' } ]
-        expect(assigns(:histories).pluck(:action)).to eq [ 'create', 'create' ]
+        expect(assigns(:histories).count).to eq 4
+        expect(assigns(:histories).pluck(:historyable_id, :historyable_type)).to eq [[vacancy.id, 'Vacancy'],
+                                                                                     [candidate.id, 'Candidate'],
+                                                                                     [vacancy_0.id, 'Vacancy'],
+                                                                                     [candidate_0.id, 'Candidate']]
+        expect(assigns(:histories).pluck(:was_changed)).to eq [ { 'status' => 'Не задействована' },
+                                                                { 'status' => 'Пассивен' },
+                                                                { 'status' => 'Не задействована' },
+                                                                { 'status' => 'Пассивен' } ]
+        expect(assigns(:histories).pluck(:action)).to eq [ 'create',
+                                                           'create',
+                                                           'create',
+                                                           'create']
       end
     end
 
