@@ -4,8 +4,9 @@ RSpec.describe OrganisersController, type: :controller do
 
   let(:user) { create :user_with_events }
   let(:candidate_user) { create :user }
+  let(:region) { create :region }
   let!(:candidate_0) { create :candidate, user_id: candidate_user.id }
-  let!(:vacancy_0) { create :vacancy, user_id: user.id }
+  let!(:vacancy_0) { create :vacancy, user_id: user.id, region_id: region.id }
   let!(:sr_0) { create :staff_relation, vacancy_id: vacancy_0.id, candidate_id: candidate_0.id }
 
   let(:old_event) { o_e = build :event, will_begin_at: user.events.first.will_begin_at - 10.days,
@@ -14,7 +15,7 @@ RSpec.describe OrganisersController, type: :controller do
   o_e }
   let(:sticker) { create :sticker }
   let!(:candidate) { create :candidate, user_id: candidate_user.id }
-  let!(:vacancy) { create :vacancy, user_id: user.id }
+  let!(:vacancy) { create :vacancy, user_id: user.id, region_id: region.id }
   let!(:sr) { create :staff_relation, vacancy_id: vacancy.id, candidate_id: candidate.id }
 
   before :each do
@@ -50,6 +51,7 @@ RSpec.describe OrganisersController, type: :controller do
     end
 
     context 'when create occurs' do
+
       before :each do
         get :index
       end
@@ -60,18 +62,74 @@ RSpec.describe OrganisersController, type: :controller do
                                                                                      [candidate.id, 'Candidate'],
                                                                                      [vacancy_0.id, 'Vacancy'],
                                                                                      [candidate_0.id, 'Candidate']]
-        expect(assigns(:histories).pluck(:was_changed)).to eq [ { 'status' => 'Не задействована' },
-                                                                { 'status' => 'Пассивен' },
-                                                                { 'status' => 'Не задействована' },
-                                                                { 'status' => 'Пассивен' } ]
+        expect(assigns(:histories).pluck(:was_changed)).to eq [
+                                                                  {"name"=>"[nil, \"#{vacancy.name}\"]",
+                                                                   "salary"=>"[nil, \"550\"]",
+                                                                   "user_id"=>"[nil, #{vacancy.user_id}]",
+                                                                   "languages"=>"[nil, \"Английский, Русский\"]",
+                                                                   "region_id"=>"[nil, #{vacancy.region_id}]",
+                                                                   "requirements"=>"[nil, \"Ответственный\"]",
+                                                                   "salary_format"=>"[nil, \"usd\"]",
+                                                                   "status"=>"Пассивен"},
+
+                                                                  {"name"=>"[nil, \"test_user10\"]",
+                                                                   +  "email"=>"[nil, \"10email@mail.ru\"]",
+                                                                   +  "phone"=>"[nil, \"+38-050-000-0010\"]",
+                                                                   +  "skype"=>"[nil, \"skype_login10\"]",
+                                                                   +  "salary"=>"[nil, \"300-500 USD\"]",
+                                                                   +  "source"=>"[nil, \"CV_ENG10.docx\"]",
+                                                                   +  "status"=>"[\"Пассивен\", \"В работе\"]",
+                                                                   +  "user_id"=>"[nil, 25]",
+                                                                   +  "birthday"=>"[nil, \"06-12-2015\"]",
+                                                                   +  "facebook"=>"[nil, \"http://www.facebook.com/test.user\"]",
+                                                                   +  "linkedin"=>"[nil, \"https://ua.linkedin.com/pub/test-user/9a/29/644\"]",
+                                                                   +  "education"=>"[nil, \"Oxford\"]",
+                                                                   +  "languages"=>"[nil, \"Английский, Русский\"]",
+                                                                   +  "vkontakte"=>"[nil, \"http://vk.com/test_man\"]",
+                                                                   +  "google_plus"=>"[nil, \"https://plus.google.com/u/0/109854654\"]",
+                                                                   +  "desired_position"=>"[nil, \"Программист, язык руби\"]",
+                                                                   +  "city_of_residence"=>"[nil, \"Киев\"]",
+                                                                   +  "ready_to_relocate"=>"[nil, \"yes\"]"},
+
+
+                                                                  {"name"=>"[nil, \"#{vacancy_0.name}\"]",
+                                                                   "salary"=>"[nil, \"550\"]",
+                                                                   "user_id"=>"[nil, #{vacancy_0.user_id}]",
+                                                                   "languages"=>"[nil, \"Английский, Русский\"]",
+                                                                   "region_id"=>"[nil, #{vacancy.region_id}]",
+                                                                   "requirements"=>"[nil, \"Ответственный\"]",
+                                                                   "salary_format"=>"[nil, \"usd\"]"}
+                                                              ]
+
         expect(assigns(:histories).pluck(:action)).to eq [ 'create',
                                                            'create',
                                                            'create',
-                                                           'create']
+                                                           'create' ]
       end
     end
 
+    # context 'when in vacancy UPDATE occurs' do
+    #
+    #   before do
+    #     vacancy.update_attributes(salary: '100', salary_format: 'задейство', languages: 'задейство', status: "Не вана", requirements: 'nil')
+    #   end
+    #
+    #   it 'should return histories with target data' do
+    #     get :index
+    #     expect(assigns(:histories).count).to eq 4
+    #     expect(assigns(:histories).pluck(:was_changed)).to eq [ { 'status' => 'Не задействована' },
+    #                                                             { 'status' => 'Пассивен' },
+    #                                                             { 'status' => 'Не задействована' },
+    #                                                             { 'status' => 'Пассивен' } ]
+    #     expect(assigns(:histories).pluck(:action)).to eq [ 'create',
+    #                                                        'create',
+    #                                                        'create',
+    #                                                        'create' ]
+    #   end
+    # end
+
     # context 'when in staff_relation UPDATE occurs' do
+    #
     #   before do
     #     sr.update_attributes(status: 'Собеседование')
     #   end
@@ -79,15 +137,14 @@ RSpec.describe OrganisersController, type: :controller do
     #   it 'should return histories with target data' do
     #     get :index
     #     expect(assigns(:histories).count).to eq 4
-    #     expect(assigns(:histories).pluck(:new_status)).to eq [ 'Собеседование', 'Найденные', 'Не задействована', 'Пассивен' ]
-    #     expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name } ]
-    #     expect(assigns(:histories).pluck(:action)).to eq [ "В вакансии <strong>#{vacancy.name}</strong> для кандидата <strong>#{candidate.name}</strong> произошли изменения",
-    #                                                        "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>",
-    #                                                        "В систему добавлена вакансия: <strong>#{vacancy.name}</strong>",
-    #                                                        "В систему добавлен кандидат: <strong>#{candidate.name}</strong>" ]
+    #     expect(assigns(:histories).pluck(:was_changed)).to eq [ { 'status' => 'Не задействована' },
+    #                                                             { 'status' => 'Пассивен' },
+    #                                                             { 'status' => 'Не задействована' },
+    #                                                             { 'status' => 'Пассивен' } ]
+    #     expect(assigns(:histories).pluck(:action)).to eq [ 'create',
+    #                                                        'create',
+    #                                                        'create',
+    #                                                        'create' ]
     #   end
     # end
     #

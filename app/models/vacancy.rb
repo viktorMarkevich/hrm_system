@@ -22,6 +22,7 @@ class Vacancy < ActiveRecord::Base
   after_restore :set_default_status
   after_destroy :set_closed_status
   after_create :add_history_event_after_create
+  after_update :add_history_event_after_update
   # after_destroy :add_history_event_after_destroy
   # after_restore :add_history_event_after_restore
 
@@ -45,7 +46,18 @@ class Vacancy < ActiveRecord::Base
   private
 
     def add_history_event_after_create
-      histories.create_with_attrs(was_changed: { 'status' => status }, action: 'create')
+      changes = self.changes
+      changes.delete('created_at')
+      changes.delete('updated_at')
+      changes.delete('id')
+      histories.create_with_attrs(was_changed: changes, action: 'create')
+    end
+
+    def add_history_event_after_update
+      # histories.create_with_attrs(was_changed: { status: 'Пассивен' }, action: 'create')
+      # p '*'*100
+      # p self.changes
+      # p '*'*100
     end
     
     # def add_history_event_after_destroy   # TODO  old status
