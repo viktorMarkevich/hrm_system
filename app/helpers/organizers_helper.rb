@@ -5,7 +5,14 @@ module OrganizersHelper
   end
 
   def set_status_for(history)
-    t(set_locales_path(history) + '.status', object_status: history.was_changed['status']).html_safe
+    case history.action
+      when 'create'
+        t(set_locales_path(history) + '.changes', object_status: history.was_changed['status']).html_safe
+      when 'update'
+        t(set_locales_path(history) + '.changes', object_changes: set_changes(history.was_changed)).html_safe
+      else
+        []
+    end
   end
 
   def set_locales_path(history)

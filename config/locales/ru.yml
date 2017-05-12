@@ -19,8 +19,10 @@ ru:
     vacancy:
       create:
         notice: "В систему добавлена новая вакансия: <b>%{object_name}</b>"
-        status: "<b>%{object_status}</b>"
+        changes: "Статус: <b>%{object_status}</b>"
       update:
+        notice: "Вакансия <b>%{object_name}, была изменена</b>"
+        changes: "Произошли следующие изменения: <b>%{object_changes}</b>"
       destroy:
       restore:
 

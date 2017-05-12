@@ -125,25 +125,82 @@ RSpec.describe OrganisersController, type: :controller do
       end
     end
 
-    # context 'when in vacancy UPDATE occurs' do
-    #
-    #   before do
-    #     vacancy.update_attributes(salary: '100', salary_format: 'задейство', languages: 'задейство', status: "Не вана", requirements: 'nil')
-    #   end
-    #
-    #   it 'should return histories with target data' do
-    #     get :index
-    #     expect(assigns(:histories).count).to eq 4
-    #     expect(assigns(:histories).pluck(:was_changed)).to eq [ { 'status' => 'Не задействована' },
-    #                                                             { 'status' => 'Пассивен' },
-    #                                                             { 'status' => 'Не задействована' },
-    #                                                             { 'status' => 'Пассивен' } ]
-    #     expect(assigns(:histories).pluck(:action)).to eq [ 'create',
-    #                                                        'create',
-    #                                                        'create',
-    #                                                        'create' ]
-    #   end
-    # end
+    context 'when in vacancy UPDATE occurs' do
+
+      before do
+        vacancy.update_attributes(salary: '100', salary_format: 'задейство', languages: 'задейство', status: "Не вана", requirements: 'nil')
+      end
+
+      it 'should return histories with target data' do
+        get :index
+        expect(assigns(:histories).count).to eq 5
+        expect(assigns(:histories).pluck(:was_changed)).to eq [ {"salary"=>"[\"550\", \"100\"]",
+                                                                 "status"=>"[\"Не задействована\", \"Не вана\"]",
+                                                                 "languages"=>"[\"Английский, Русский\", \"задейство\"]",
+                                                                 "requirements"=>"[\"Ответственный\", \"nil\"]",
+                                                                 "salary_format"=>"[\"usd\", \"задейство\"]"},
+
+                                                                {"name"=>"[nil, \"#{vacancy.name}\"]",
+                                                                 "salary"=>"[nil, \"550\"]",
+                                                                 "user_id"=>"[nil, #{vacancy.user_id}]",
+                                                                 "languages"=>"[nil, \"Английский, Русский\"]",
+                                                                 "region_id"=>"[nil, #{vacancy.region_id}]",
+                                                                 "requirements"=>"[nil, \"Ответственный\"]",
+                                                                 "salary_format"=>"[nil, \"usd\"]"},
+
+                                                                {"name"=>"[nil, \"#{candidate.name}\"]",
+                                                                 "email"=>"[nil, \"#{candidate.email}\"]",
+                                                                 "phone"=>"[nil, \"#{candidate.phone}\"]",
+                                                                 "skype"=>"[nil, \"#{candidate.skype}\"]",
+                                                                 "salary"=>"[nil, \"300-500 USD\"]",
+                                                                 "source"=>"[nil, \"#{candidate.source}\"]",
+                                                                 "status"=>"[\"Пассивен\", \"В работе\"]",
+                                                                 "user_id"=>"[nil, #{candidate.user_id}]",
+                                                                 "birthday"=>"[nil, \"06-12-2015\"]",
+                                                                 "facebook"=>"[nil, \"http://www.facebook.com/test.user\"]",
+                                                                 "linkedin"=>"[nil, \"https://ua.linkedin.com/pub/test-user/9a/29/644\"]",
+                                                                 "education"=>"[nil, \"Oxford\"]",
+                                                                 "languages"=>"[nil, \"Английский, Русский\"]",
+                                                                 "vkontakte"=>"[nil, \"http://vk.com/test_man\"]",
+                                                                 "google_plus"=>"[nil, \"https://plus.google.com/u/0/109854654\"]",
+                                                                 "desired_position"=>"[nil, \"Программист, язык руби\"]",
+                                                                 "city_of_residence"=>"[nil, \"Киев\"]",
+                                                                 "ready_to_relocate"=>"[nil, \"yes\"]"},
+
+                                                                {"name"=>"[nil, \"#{vacancy_0.name}\"]",
+                                                                 "salary"=>"[nil, \"550\"]",
+                                                                 "user_id"=>"[nil, #{vacancy_0.user_id}]",
+                                                                 "languages"=>"[nil, \"Английский, Русский\"]",
+                                                                 "region_id"=>"[nil, #{vacancy.region_id}]",
+                                                                 "requirements"=>"[nil, \"Ответственный\"]",
+                                                                 "salary_format"=>"[nil, \"usd\"]"},
+
+                                                                {"name"=>"[nil, \"#{candidate_0.name}\"]",
+                                                                 "email"=>"[nil, \"#{candidate_0.email}\"]",
+                                                                 "phone"=>"[nil, \"#{candidate_0.phone}\"]",
+                                                                 "skype"=>"[nil, \"#{candidate_0.skype}\"]",
+                                                                 "salary"=>"[nil, \"300-500 USD\"]",
+                                                                 "source"=>"[nil, \"#{candidate_0.source}\"]",
+                                                                 "status"=>"[\"Пассивен\", \"В работе\"]",
+                                                                 "user_id"=>"[nil, #{candidate_0.user_id}]",
+                                                                 "birthday"=>"[nil, \"06-12-2015\"]",
+                                                                 "facebook"=>"[nil, \"http://www.facebook.com/test.user\"]",
+                                                                 "linkedin"=>"[nil, \"https://ua.linkedin.com/pub/test-user/9a/29/644\"]",
+                                                                 "education"=>"[nil, \"Oxford\"]",
+                                                                 "languages"=>"[nil, \"Английский, Русский\"]",
+                                                                 "vkontakte"=>"[nil, \"http://vk.com/test_man\"]",
+                                                                 "google_plus"=>"[nil, \"https://plus.google.com/u/0/109854654\"]",
+                                                                 "desired_position"=>"[nil, \"Программист, язык руби\"]",
+                                                                 "city_of_residence"=>"[nil, \"Киев\"]",
+                                                                 "ready_to_relocate"=>"[nil, \"yes\"]"}
+                                                              ]
+        expect(assigns(:histories).pluck(:action)).to eq [ 'update',
+                                                           'create',
+                                                           'create',
+                                                           'create',
+                                                           'create' ]
+      end
+    end
 
     # context 'when in staff_relation UPDATE occurs' do
     #
