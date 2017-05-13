@@ -18,16 +18,16 @@ ru:
   history:
     vacancy:
       create:
-        notice: "В систему добавлена новая вакансия: <b>%{object_name}</b>"
-        changes: "Статус: <b>%{object_status}</b>"
+        notice: "В систему добавлена новая вакансия: <b>Не задействованна</b>"
+        changes: "Статус: <b>%{object_changes}</b>"
       update:
-        notice: "Вакансия <b>%{object_name}, была изменена</b>"
+        notice: "Вакансия <b>%{object_name}</b>, была изменена"
         changes: "Произошли следующие изменения: <b>%{object_changes}</b>"
       destroy:
       restore:
 
     candidate:
-      create: "В систему добавлена новый кандидат: <b>%{object_name}!</b>"
+      create: "В систему добавлен новый кандидат: <b>%{object_name}!</b>"
       create_status: "<b>%{object_status}</b>"
       update:
       destroy:
@@ -40,7 +40,7 @@ ru:
       restore:
 
     event:
-      create: "В систему добавлен новый ивент: <b>%{object_name}!</b>"
+      create: "В систему добавлено новое событие: <b>%{object_name}!</b>"
       update:
       destroy:
       restore:
