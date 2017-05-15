@@ -2,7 +2,20 @@ ru:
   activerecord:
     models:
       user: Кандидат
+      vacancy: Вакансия
     attributes:
+      vacancy:
+        name: Колонка "Имя"
+        salary: Колонка "Зарплата"
+        salary_format: Колонка "Формат денежных едениц"
+        languages: Колонка "Языки программирования"
+        status: Колонка "Статус"
+        requirements: Колонка "Требования"
+        updated_at: Колонка "Обновлено"
+        region_id: Колонка "Регион"
+        user_id: Колонка "Ответственный"
+        deleted_at: Колонка "В архиве"
+
       candidates: Кандидаты
       candidate:
         name: Кандидат
@@ -19,7 +32,7 @@ ru:
     vacancy:
       create:
         notice: "В систему добавлена новая вакансия: <b>%{object_name}</b>"
-        changes: "Статус: <b>%{object_status}</b>"
+        changes: "%{object_status}"
       update:
         notice: "Вакансия <b>%{object_name}, была изменена</b>"
         changes: "Произошли следующие изменения: <b>%{object_changes}</b>"
