@@ -11,7 +11,6 @@ ru:
         languages: Колонка "Языки программирования"
         status: Колонка "Статус"
         requirements: Колонка "Требования"
-        updated_at: Колонка "Обновлено"
         region_id: Колонка "Регион"
         user_id: Колонка "Ответственный"
         deleted_at: Колонка "В архиве"
@@ -31,8 +30,8 @@ ru:
   history:
     vacancy:
       create:
-        notice: "В систему добавлена новая вакансия: <b>Не задействованна</b>"
-        changes: "%{object_status}"
+        notice: "В систему добавлена новая вакансия: <b>%{object_name}</b>"
+        changes: "Статус: <b>Не задействованна</b>"
       update:
         notice: "Вакансия <b>%{object_name}</b>, была изменена"
         changes: "Произошли следующие изменения: <b>%{object_changes}</b>"
@@ -40,8 +39,9 @@ ru:
       restore:
 
     candidate:
-      create: "В систему добавлен новый кандидат: <b>%{object_name}!</b>"
-      create_status: "<b>%{object_status}</b>"
+      create:
+        notice: "В систему добавлен новый кандидат: <b>%{object_name}!</b>"
+        changes: "<b>%{object_status}</b>"
       update:
       destroy:
       restore:

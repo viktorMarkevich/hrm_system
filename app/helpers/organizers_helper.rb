@@ -1,7 +1,7 @@
 module OrganizersHelper
 
   def set_action_for(history)
-    t(set_locales_path(history) + '.notice', object_name: history.historyable.name).html_safe
+    t(set_locales_path(history) + '.notice', object_name: (link_to history.historyable.name, polymorphic_url(history.historyable))).html_safe
   end
 
   def set_status_for(history)
@@ -21,7 +21,14 @@ module OrganizersHelper
 
   def set_changes(was_changed)
     was_changed.each do |k, v|
-
+      p '*'*100
+      p v
+      p '*'*100
+      # if v.first == nil
+      #   p 'first'
+      # else
+      #   p 'second'
+      # end
     end
   end
 

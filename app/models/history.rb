@@ -1,5 +1,5 @@
 class History < ActiveRecord::Base
-  store_accessor :was_changed
+  # store_accessor :was_changed, Array
 
   belongs_to :historyable, polymorphic: true
 

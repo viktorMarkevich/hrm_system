@@ -2,6 +2,7 @@
 class Vacancy < ActiveRecord::Base
   acts_as_paranoid
 
+  # serialize :was_changed, Array
   attr_accessor :update_user
 
   include RegionSupporter
@@ -55,9 +56,12 @@ class Vacancy < ActiveRecord::Base
 
     def set_changes
       changes = self.changes
-      changes.delete('created_at')
-      changes.delete('updated_at')
-      changes.delete('id')
+      p '#'*100
+      p changes
+      p '#'*100
+      # changes.delete('created_at')
+      # changes.delete('updated_at')
+      # changes.delete('id')
       changes
     end
     
