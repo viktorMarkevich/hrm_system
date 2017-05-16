@@ -51,17 +51,14 @@ class Vacancy < ActiveRecord::Base
     end
 
     def add_history_event_after_update
-      histories.create_with_attrs(was_changed: set_changes, action: 'update')
+      History.create_with_attrs(was_changed: set_changes, action: 'update', historyable_type: 'Vacancy', historyable_id: id)
     end
 
     def set_changes
       changes = self.changes
-      p '#'*100
-      p changes
-      p '#'*100
-      # changes.delete('created_at')
-      # changes.delete('updated_at')
-      # changes.delete('id')
+      changes.delete('created_at')
+      changes.delete('updated_at')
+      changes.delete('id')
       changes
     end
     

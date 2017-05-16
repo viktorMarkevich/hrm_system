@@ -9,7 +9,7 @@ module OrganizersHelper
       when 'create'
         t(set_locales_path(history) + '.changes').html_safe
       when 'update'
-        t(set_locales_path(history) + '.changes', object_changes: set_changes(history.was_changed)).html_safe
+        t(set_locales_path(history) + '.changes', object_changes: set_changes(history)).html_safe
       else
         []
     end
@@ -19,17 +19,21 @@ module OrganizersHelper
     "history.#{history.historyable_type.downcase}.#{history.action}"
   end
 
-  def set_changes(was_changed)
-    was_changed.each do |k, v|
-      p '*'*100
-      p v
-      p '*'*100
+  def set_changes(history)
+    history.was_changed.map do |k, v|
+      # p '*'*100
+      values = v.gsub(/["\[\],]/, '').split(' ')
+      if "#{values[1]}" != ''
+        t("activerecord.attributes.vacancy.#{k}") + ' изменилась с ' + "<span style='color: red;'>#{values[0]}</span>" + ' на ' + "<span style='color: red;'>#{values[1]}</span>"
+      end
+
+      # p '*'*100
       # if v.first == nil
       #   p 'first'
       # else
       #   p 'second'
       # end
-    end
+    end.join('; ')
   end
 
 end

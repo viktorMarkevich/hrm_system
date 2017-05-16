@@ -52,7 +52,7 @@ class VacanciesController < ApplicationController
     @sr_status = get_staff_relation_status
     @vacancy_candidates = @vacancy.candidates_with_status(@sr_status)
     respond_to do |format|
-      if !vacancy_params.nil? && @vacancy.update_attributes(vacancy_params)
+      if @vacancy.update(vacancy_params)
         format.html { redirect_to vacancy_path(@vacancy), notice: 'Вакансия успешно обновлена.' }
         format.json
       else

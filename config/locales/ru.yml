@@ -8,7 +8,7 @@ ru:
         name: Колонка "Имя"
         salary: Колонка "Зарплата"
         salary_format: Колонка "Формат денежных едениц"
-        languages: Колонка "Языки программирования"
+        languages: "Колонка <span style='color: red;'>'Языки'</span>"
         status: Колонка "Статус"
         requirements: Колонка "Требования"
         region_id: Колонка "Регион"
@@ -40,8 +40,8 @@ ru:
 
     candidate:
       create:
-        notice: "В систему добавлен новый кандидат: <b>%{object_name}!</b>"
-        changes: "<b>%{object_status}</b>"
+        notice: "В систему добавлен новый кандидат: <b>%{object_name}</b>"
+        changes: "Статус: <b>Пассивен</b>"
       update:
       destroy:
       restore:
