@@ -2,13 +2,8 @@
 class Vacancy < ActiveRecord::Base
   acts_as_paranoid
 
-  # serialize :was_changed, Array
   attr_accessor :update_user
 
-  include RegionSupporter
-  include ChangesHistory
-
-  belongs_to :region
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
 
   has_many :staff_relations
@@ -17,7 +12,7 @@ class Vacancy < ActiveRecord::Base
 
   attr_accessor :sr_status
 
-  validates :name, :region_id, :status, :user_id, presence: true
+  validates :name, :region, :status, :user_id, presence: true
   validates :salary, numericality: { only_integer: true, greater_than: 0 }, unless: 'salary_format == "По договоренности"'
 
   after_restore :set_default_status

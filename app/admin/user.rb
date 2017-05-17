@@ -1,6 +1,4 @@
 ActiveAdmin.register User do
-  include RegionSupporter
-
   permit_params :first_name, :last_name, :email, :post, :region_id
 
   actions :all

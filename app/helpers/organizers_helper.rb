@@ -21,18 +21,10 @@ module OrganizersHelper
 
   def set_changes(history)
     history.was_changed.map do |k, v|
-      # p '*'*100
       values = v.gsub(/["\[\],]/, '').split(' ')
       if "#{values[1]}" != ''
         t("activerecord.attributes.vacancy.#{k}") + ' изменилась с ' + "<span style='color: red;'>#{values[0]}</span>" + ' на ' + "<span style='color: red;'>#{values[1]}</span>"
       end
-
-      # p '*'*100
-      # if v.first == nil
-      #   p 'first'
-      # else
-      #   p 'second'
-      # end
     end.join('; ')
   end
 
