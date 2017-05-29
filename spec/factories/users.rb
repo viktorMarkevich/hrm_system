@@ -8,7 +8,7 @@ FactoryGirl.define do
     last_name 'Marly'
     post 'Директор'
     sequence(:phone) { |n| "+38-050-000-000#{n}" }
-    region
+    region Region::REGIONS.sample
 
     factory :user_with_events do
       transient do

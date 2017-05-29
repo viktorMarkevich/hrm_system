@@ -5,7 +5,7 @@ class CompaniesController < ApplicationController
 
 
   def index
-    @companies = Company.includes([:candidates, :owner, :region ]).order('id').page(params[:page]).per(10)
+    @companies = Company.includes([:candidates, :owner ]).order('id').page(params[:page]).per(10)
   end
 
   def new
@@ -20,7 +20,6 @@ class CompaniesController < ApplicationController
 
   def create
     @company = current_user.companies.build(company_params)
-    @company.associate_with_region(params[:region])
     if @company.save
       flash[:notice] = 'Компания была успешно создана.'
       redirect_to companies_path
@@ -30,7 +29,6 @@ class CompaniesController < ApplicationController
   end
 
   def update
-    @company.associate_with_region(params[:region])
     if @company.update_attributes(company_params)
       flash[:notice] = 'Компания успешно обновлена.'
       redirect_to company_path(@company)
@@ -46,7 +44,7 @@ class CompaniesController < ApplicationController
   end
 
   def company_params
-    params.require(:company).permit(:name, :region_id, :url, :description)
+    params.require(:company).permit(:name, :region, :url, :description)
   end
 
 end
