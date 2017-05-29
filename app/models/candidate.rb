@@ -2,8 +2,6 @@
 class Candidate < ActiveRecord::Base
   acts_as_paranoid
 
-  include ChangesHistory
-
   acts_as_xlsx columns: [:name, :desired_position, :city_of_residence, :salary, :'owner.full_name',
                          :created_at, :status, :notice], i18n: true
 

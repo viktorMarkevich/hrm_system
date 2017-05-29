@@ -11,7 +11,7 @@ ru:
         languages: "Колонка <span style='color: red;'>'Языки'</span>"
         status: Колонка "Статус"
         requirements: Колонка "Требования"
-        region_id: Колонка "Регион"
+        region: "Колонка <span style='color: red;'>'Регион'</span>"
         user_id: Колонка "Ответственный"
         deleted_at: Колонка "В архиве"
 

@@ -33,7 +33,7 @@
     .col-sm-2.control-label
       = f.label :region, 'Регион:'
     .col-sm-8
-      = f.select(:region, options_for_select(Region::REGIONS, @vacancy.region), {class: 'form-control'})
+      = f.select(:region, options_for_select(Region::REGIONS, @vacancy.region), {}, { class: 'form-control' })
   .form-group
     .col-sm-2.control-label
       = f.label :laguages, 'Языки:'
