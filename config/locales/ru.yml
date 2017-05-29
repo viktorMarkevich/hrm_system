@@ -26,6 +26,18 @@ ru:
         created_at: Добавлен
         status: Статус
         notice: Примечание
+    errors:
+      models:
+        event:
+          attributes:
+            name:
+              blank: не может быть пустым
+            description:
+              blank: не может быть пустым
+            will_begin_at:
+              blank: должна быть предстоящей
+      messages:
+        record_invalid: Запись не валидна
 
   history:
     vacancy:

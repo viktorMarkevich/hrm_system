@@ -10,7 +10,7 @@ class Event < ActiveRecord::Base
   MONTHS = %w(Январь Февраль Март Апрель Май Июнь Июль Август Сентябрь Октябрь Ноябрь Декабрь)
 
   def future_event?
-    errors.add(:will_begin_at, 'Дата должна быть предстоящей!') unless will_begin_at.future?
+    errors.add(:will_begin_at, 'должна быть предстоящей') unless will_begin_at.future?
   end
 
   def self.events_of(user, from, to)

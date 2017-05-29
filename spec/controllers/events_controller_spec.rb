@@ -22,7 +22,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   def err_messages
-    ["Name can't be blank", "Description can't be blank", "Will begin at Дата должна быть предстоящей!"]
+    ['Name не может быть пустым', 'Description не может быть пустым', 'Will begin at должна быть предстоящей']
   end
 
   context '#index' do
