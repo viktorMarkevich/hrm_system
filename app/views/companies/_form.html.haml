@@ -23,7 +23,7 @@
       .col-sm-4.control-label
         = f.label :region_id, 'Регион:'
       .col-sm-6
-        = select_tag(:region, options_for_select(Region::REGIONS, @company.region_name), class: 'form-control')
+        = select_tag(:region, options_for_select(Region::REGIONS, @company.region), class: 'form-control')
   .form-group
     .row
       .col-sm-4.control-label

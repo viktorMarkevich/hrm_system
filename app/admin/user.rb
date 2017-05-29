@@ -25,7 +25,7 @@ ActiveAdmin.register User do
     column :skype
     column :phone
     column :post
-    column :region_id do |user| user.region_name end
+    column :region
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
@@ -38,7 +38,7 @@ ActiveAdmin.register User do
       f.input :first_name
       f.input :last_name
       f.input :post, as: :select, collection: User::POST
-      f.input :region, as: :select, collection: Region::REGIONS, selected: resource.region_name, input_html: { name: 'region' }
+      f.input :region, as: :select, collection: Region::REGIONS, selected: resource.region, input_html: { name: 'region' }
     end
     f.actions
   end

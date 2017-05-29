@@ -35,7 +35,7 @@ RSpec.feature 'Sign In', :type => :feature do
     end
 
     it "tells user on page 'Invalid Email or password'" do
-      expect(page).to have_text("Invalid Email or password.")
+      expect(page).to have_text("Log in Не валидный Email или пароль. Email Password Remember me Забыли пароль?")
     end
   end
 
