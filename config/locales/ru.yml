@@ -5,15 +5,15 @@ ru:
       vacancy: Вакансия
     attributes:
       vacancy:
-        name: Колонка "Имя"
-        salary: Колонка "Зарплата"
-        salary_format: Колонка "Формат денежных едениц"
-        languages: "Колонка <span style='color: red;'>'Языки'</span>"
-        status: Колонка "Статус"
-        requirements: Колонка "Требования"
-        region: "Колонка <span style='color: red;'>'Регион'</span>"
-        user_id: Колонка "Ответственный"
-        deleted_at: Колонка "В архиве"
+        name: Имя
+        salary: Зарплата
+        salary_format: Формат денежных едениц
+        languages: "<span style='color: red;'>Языки</span>"
+        status: Статус
+        requirements: Требования
+        region: "<span style='color: red;'>Регион</span>"
+        user_id: Ответственный
+        deleted_at: В архиве
 
       candidates: Кандидаты
       candidate:
@@ -36,6 +36,11 @@ ru:
               blank: не может быть пустым
             will_begin_at:
               blank: должна быть предстоящей
+        vacancy:
+          attributes:
+            name:
+              blank: не может быть пустым
+
       messages:
         record_invalid: Запись не валидна
 
