@@ -4,9 +4,9 @@ RSpec.describe OrganisersController, type: :controller do
 
   let(:user) { create :user_with_events }
   let(:candidate_user) { create :user }
-  let(:region) { create :region }
+  let(:region) { 'Region' }
   let!(:candidate_0) { create :candidate, user_id: candidate_user.id }
-  let!(:vacancy_0) { create :vacancy, user_id: user.id, region_id: region.id }
+  let!(:vacancy_0) { create :vacancy, user_id: user.id, region: region }
   let!(:sr_0) { create :staff_relation, vacancy_id: vacancy_0.id, candidate_id: candidate_0.id }
 
   let(:old_event) { o_e = build :event, will_begin_at: user.events.first.will_begin_at - 10.days,
@@ -15,7 +15,7 @@ RSpec.describe OrganisersController, type: :controller do
   o_e }
   let(:sticker) { create :sticker }
   let!(:candidate) { create :candidate, user_id: candidate_user.id }
-  let!(:vacancy) { create :vacancy, user_id: user.id, region_id: region.id }
+  let!(:vacancy) { create :vacancy, user_id: user.id, region: region }
   let!(:sr) { create :staff_relation, vacancy_id: vacancy.id, candidate_id: candidate.id }
 
   before :each do
@@ -67,7 +67,7 @@ RSpec.describe OrganisersController, type: :controller do
                                                                    "salary"=>"[nil, \"550\"]",
                                                                    "user_id"=>"[nil, #{vacancy.user_id}]",
                                                                    "languages"=>"[nil, \"Английский, Русский\"]",
-                                                                   "region_id"=>"[nil, #{vacancy.region_id}]",
+                                                                   "region"=>"[nil, \"#{vacancy.region}\"]",
                                                                    "requirements"=>"[nil, \"Ответственный\"]",
                                                                    "salary_format"=>"[nil, \"usd\"]"},
 
@@ -94,7 +94,7 @@ RSpec.describe OrganisersController, type: :controller do
                                                                    "salary"=>"[nil, \"550\"]",
                                                                    "user_id"=>"[nil, #{vacancy_0.user_id}]",
                                                                    "languages"=>"[nil, \"Английский, Русский\"]",
-                                                                   "region_id"=>"[nil, #{vacancy.region_id}]",
+                                                                   "region"=>"[nil, \"#{vacancy.region}\"]",
                                                                    "requirements"=>"[nil, \"Ответственный\"]",
                                                                    "salary_format"=>"[nil, \"usd\"]"},
 
@@ -144,7 +144,7 @@ RSpec.describe OrganisersController, type: :controller do
                                                                  "salary"=>"[nil, \"550\"]",
                                                                  "user_id"=>"[nil, #{vacancy.user_id}]",
                                                                  "languages"=>"[nil, \"Английский, Русский\"]",
-                                                                 "region_id"=>"[nil, #{vacancy.region_id}]",
+                                                                 "region"=>"[nil, \"#{vacancy.region}\"]",
                                                                  "requirements"=>"[nil, \"Ответственный\"]",
                                                                  "salary_format"=>"[nil, \"usd\"]"},
 
@@ -171,7 +171,7 @@ RSpec.describe OrganisersController, type: :controller do
                                                                  "salary"=>"[nil, \"550\"]",
                                                                  "user_id"=>"[nil, #{vacancy_0.user_id}]",
                                                                  "languages"=>"[nil, \"Английский, Русский\"]",
-                                                                 "region_id"=>"[nil, #{vacancy.region_id}]",
+                                                                 "region"=>"[nil, \"#{vacancy.region}\"]",
                                                                  "requirements"=>"[nil, \"Ответственный\"]",
                                                                  "salary_format"=>"[nil, \"usd\"]"},
 

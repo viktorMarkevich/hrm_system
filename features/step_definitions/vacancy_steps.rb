@@ -6,7 +6,7 @@ Given(/^I have logged in user$/) do
       email: 'user@mail.com',
       password: 'password',
       first_name: 'Vasya',
-      region_id: 1,
+      region: 'Region',
       last_name: 'Pro',
       post: 'tester'
   )

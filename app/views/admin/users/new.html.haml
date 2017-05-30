@@ -14,7 +14,7 @@
       %td= f.label :post
       %td= f.select(:post, options_for_select(User::POST))
     %tr
-      %td= f.label :region_id
+      %td= f.label :region
       %td= select_tag(:region,  options_for_select(Region::REGIONS, @user.region))
 
   = f.submit  'Send an Invitation'
