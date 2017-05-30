@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :first_name, :last_name, :email, :post, :region_id
+  permit_params :first_name, :last_name, :email, :post, :region
 
   actions :all
 
@@ -9,7 +9,6 @@ ActiveAdmin.register User do
       redirect_to new_admin_user_path
     else
       @user = User.invite!(permitted_params[:user])
-      @user.associate_with_region(params[:region])
 
       flash[:notice] = 'Пользователь успешно приглашен.'
       redirect_to admin_users_path
@@ -54,7 +53,6 @@ ActiveAdmin.register User do
 
     def update
       @user = User.find(params[:id])
-      @user.associate_with_region(params[:region])
       if @user.update_attributes(permitted_params[:user])
         flash[:notice] = 'Пользователь успешно обновлен.'
         redirect_to admin_user_path(@user)

@@ -5,7 +5,6 @@ RSpec.describe Admin::UsersController, type: :controller do
 
   let(:admin_user) { create(:admin_user) }
   let(:user) { create(:user) }
-  let(:region) { create(:region, name: 'Запорожье') }
 
   before { sign_in admin_user }
 
@@ -17,7 +16,7 @@ RSpec.describe Admin::UsersController, type: :controller do
   end
 
   context '#new' do
-    let(:user_attrs) {{ user:{params: {email: 'aaa@aaa.aaa', first_name: 'Roman', last_name: 'Liskov', post: 'Директор', region_id: '27'} }} }
+    let(:user_attrs) { { user: { params: { email: 'aaa@aaa.aaa', first_name: 'Roman', last_name: 'Liskov', post: 'Директор', region: 'region' } } } }
 
     context 'when successful' do
       it 'redirects to admin user page' do
@@ -36,10 +35,10 @@ RSpec.describe Admin::UsersController, type: :controller do
   end
 
   context '#update' do
-    let(:user_attrs) { attributes_for :user}
+    let(:user_attrs) { { email: 'aaa@aaa.aaa', first_name: 'Roman', last_name: 'Liskov', post: 'Директор', region: 'region' } }
 
     before do
-      put :update, params: {id: user, user: user_attrs, region: region.name}
+      put :update, params: { id: user, user: user_attrs }
       user.reload
     end
 
@@ -53,7 +52,7 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
 
       it 'has updated region' do
-        expect(user.region.name).to eql region.name
+        expect(user.region).to eql 'region'
       end
 
       it 'has HTTP 200 status' do
