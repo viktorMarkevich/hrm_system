@@ -4,7 +4,6 @@ RSpec.describe VacanciesController, type: :controller do
 
   let(:user) { create(:user) }
   let(:vacancy) { create(:vacancy) }
-  let(:region) { create(:region) }
 
   before { sign_in user }
 
@@ -31,7 +30,7 @@ RSpec.describe VacanciesController, type: :controller do
   describe '#create' do
     context 'when successful' do
 
-      let(:vacancy_attrs) { { params: {vacancy: attributes_for(:vacancy), region: region.name} } }
+      let(:vacancy_attrs) { { params: { vacancy: attributes_for(:vacancy) } } }
 
       before do
         post :create, vacancy_attrs
