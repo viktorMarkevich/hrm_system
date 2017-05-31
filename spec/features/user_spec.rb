@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'user process', type: :feature do
   let(:user) { create(:user) }
 
-  before { sign_in_as(user, nil) }
+  before { sign_in_as(user,'user', nil) }
 
   scenario %q{ page has user's full name } do
     click_link user.email

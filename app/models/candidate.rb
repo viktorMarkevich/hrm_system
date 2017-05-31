@@ -99,9 +99,9 @@ class Candidate < ActiveRecord::Base
 
     def add_history_event_after_update
       # histories.create_with_attrs(was_changed: { status: 'Пассивен' }, action: 'create')
-      p '*'*100
-      p self.changes
-      p '*'*100
+      # p '*'*100
+      # p self.changes
+      # p '*'*100
     end
 
     def add_history_event_after_destroy

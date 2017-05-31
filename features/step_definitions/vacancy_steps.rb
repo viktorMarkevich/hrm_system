@@ -13,8 +13,8 @@ Given(/^I have logged in user$/) do
 
   visit new_user_session_path
   within('#new_user') do
-    fill_in 'Email', with: 'user@mail.com'
-    fill_in 'Password', with: 'password'
+    fill_in 'user[email]', with: 'user@mail.com'
+    fill_in 'user[password]', with: 'password'
   end
   click_button 'Log in'
 end
@@ -28,7 +28,6 @@ Given(/^I am on the vacancies list page$/) do
 end
 
 When(/^I click add vacancy sign$/) do
-  Region.create(name: 'Запорожье')
   find('#add-vacancy').click
 end
 
@@ -37,7 +36,7 @@ When(/^I fill in vacancy form$/) do
     fill_in('vacancy_name', with: 'Тестер')
     fill_in('vacancy_salary', with: '450')
     choose('vacancy_salary_format_usd')
-    select('Запорожье', from: 'region')
+    select('Запорожье', from: 'vacancy_region')
     fill_in('vacancy_languages', with: 'Английский, Русский')
     fill_in('vacancy_requirements', with: 'Ответственный')
   end
@@ -61,13 +60,12 @@ Given(/^I have valid vacancy$/) do
       name: 'Программист руби',
       salary: '500',
       salary_format: 'USD',
-      region_id: 1,
+      region: 'Region',
       user_id: 1
   )
 end
 
 Given(/^I am on the vacancy edit page$/) do
-  Region.create(name: 'Киев')
   visit "/vacancies/#{@vacancy.id}/edit"
 end
 
@@ -75,7 +73,7 @@ When(/^I change region in edit form$/) do
   # within('name="region"') do
   #   select('Киев', from: 'region')
   # end
-  select 'Киев', from: 'region'
+  select 'Киев', from: 'vacancy_region'
 end
 
 Then(/^I should see successfull message$/) do
@@ -92,7 +90,7 @@ When(/^I fill form with invalid salary value$/) do
     fill_in('vacancy_name', with: 'Тестер')
     fill_in('vacancy_salary', with: 'incorrect value')
     choose('vacancy_salary_format_usd')
-    select('Запорожье', from: 'region')
+    select('Запорожье', from: 'vacancy_region')
     select('Открыта', from: 'Статус')
     fill_in('vacancy_languages', with: 'Английский, Русский')
     fill_in('vacancy_requirements', with: 'Ответственный')

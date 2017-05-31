@@ -37,7 +37,8 @@ ActiveAdmin.register User do
       f.input :first_name
       f.input :last_name
       f.input :post, as: :select, collection: User::POST
-      f.input :region, as: :select, collection: Region::REGIONS, selected: resource.region, input_html: { name: 'region' }
+      # f.input :region, as: :select, collection: Region::REGIONS, selected: resource.region, input_html: { name: 'region' }
+      f.input :region, :label => 'Регион', :as => :select, :collection => Region::REGIONS
     end
     f.actions
   end

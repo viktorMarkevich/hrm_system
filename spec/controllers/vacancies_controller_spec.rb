@@ -8,7 +8,7 @@ RSpec.describe VacanciesController, type: :controller do
   before { sign_in user }
 
   def err_messages
-    ["Name не может быть пустым"]
+    ["Имя не может быть пустым"]
   end
 
   context '#index' do

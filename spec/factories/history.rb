@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :history do
-    user
     association :history, factory: :staff_relation
   end
   factory :invalid_history_event, parent: :history do
