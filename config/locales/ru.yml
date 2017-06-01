@@ -30,6 +30,7 @@ ru:
         notice: Примечание
       company:
         region: Регион
+
     errors:
       models:
         event:
@@ -44,6 +45,8 @@ ru:
           attributes:
             name:
               blank: не может быть пустым
+            salary:
+              not_a_number: не может быть пустой и должна содержать только цифры
         admin_user:
           attributes:
             password:

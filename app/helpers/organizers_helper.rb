@@ -20,10 +20,10 @@ module OrganizersHelper
   end
 
   def set_changes(history)
-    history.was_changed.map do |k, v|
+    history.was_changed.map do |attribute, v|
       values = v.gsub(/["\[\],]/, '').split(' ')
       if "#{values[1]}" != ''
-        t("activerecord.attributes.vacancy.#{k}") + ' изменилась с ' + "<span style='color: red;'>#{values[0] == 'nil' ? 'Пусто' : values[0]}</span>" + ' на ' + "<span style='color: red;'>#{values[1]}</span>"
+        t("activerecord.attributes.vacancy.#{attribute}") + ' изменилась с ' + "<span style='color: red;'>#{values[0] == 'nil' ? 'Пусто' : values[0]}</span>" + ' на ' + "<span style='color: red;'>#{values[1]}</span>"
       end
     end.join('; ')
   end
