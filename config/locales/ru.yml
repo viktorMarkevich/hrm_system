@@ -89,7 +89,9 @@ ru:
 
     staff_relation:
       create:
+        notice: "Для кандидата <b>%{candidate_name}</b> получен статус в вакансии <b>%{vacancy_name}</b>"
       update:
+        notice: "Для кандидата <b>%{candidate_name}</b> изменен статус в вакансии <b>%{vacancy_name}</b>"
       destroy:
       restore:
 

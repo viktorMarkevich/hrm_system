@@ -8,7 +8,7 @@ class StaffRelation < ActiveRecord::Base
   STATUSES = %w(Убрать Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
   # after_create :create_history_event
-  # after_update :update_history_event
+  after_update :update_history_event
 
   def self.return_status(options)
     staff_relation = where(candidate_id: options[:vacancy][:candidate_id], vacancy_id: options[:id]).first
@@ -38,11 +38,15 @@ class StaffRelation < ActiveRecord::Base
 
     def update_history_event
       unless self.status_was == status
-        History.create_with_attrs(old_status: self.status_was,
-                                  new_status: status,
-                                  responsible: { full_name: vacancy.owner.full_name,
-                                                 id: vacancy.user_id },
-                                  action: "В вакансии <strong>#{vacancy.name}</strong> для кандидата <strong>#{candidate.name}</strong> произошли изменения")
+        History.create_with_attrs(was_changed: set_changes, action: 'update', historyable_type: self.class.name, historyable_id: id)
       end
+    end
+
+    def set_changes
+      changes = self.changes
+      changes.delete('created_at')
+      changes.delete('updated_at')
+      changes.delete('id')
+      changes
     end
 end

@@ -57,10 +57,9 @@
                   %td
                     = set_action_for(history)
                   %td
-                    = link_to history.historyable.owner.full_name, user_path(history.historyable.owner)
+                    = set_owner_for_historyable(history)
                   %td
                     = set_status_for(history)
-                    -#= " со старого history.new_status}"
                   %td
                     %span.label.label-warning
                       = history.created_at.strftime('%e %b %H:%M')
