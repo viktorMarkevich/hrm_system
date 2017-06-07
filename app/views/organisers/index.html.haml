@@ -31,6 +31,9 @@
                   %td
                     %span.label.label-warning
                       = event.will_begin_at.strftime('%e %b %H:%M')
+        .row
+          .col-lg-3
+            = paginate @events
       - else
         %ul.list-group
           %li.list-group-item.list-group-item-warning
@@ -63,6 +66,9 @@
                   %td
                     %span.label.label-warning
                       = history.created_at.strftime('%e %b %H:%M')
+        .row
+          .col-lg-3
+            = paginate @histories
       - else
         %ul.list-group
           %li.list-group-item.list-group-item-warning

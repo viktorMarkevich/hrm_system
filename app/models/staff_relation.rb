@@ -1,14 +1,21 @@
 class StaffRelation < ActiveRecord::Base
 
+  include Support
+
   belongs_to :vacancy
   belongs_to :candidate
   has_many :events
+  # has_many :histories, as: :historyable
 
   validates :vacancy_id,  uniqueness: { scope: :candidate_id }, presence: true
   STATUSES = %w(Убрать Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
   # after_create :create_history_event
   after_update :update_history_event
+
+  def set_owner
+    vacancy.owner
+  end
 
   def self.return_status(options)
     staff_relation = where(candidate_id: options[:vacancy][:candidate_id], vacancy_id: options[:id]).first

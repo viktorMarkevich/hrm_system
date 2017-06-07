@@ -1,6 +1,7 @@
 # encoding: utf-8
 class Candidate < ActiveRecord::Base
   acts_as_paranoid
+  include Support
 
   acts_as_xlsx columns: [:name, :desired_position, :city_of_residence, :salary, :'owner.full_name',
                          :created_at, :status, :notice], i18n: true
@@ -90,11 +91,7 @@ class Candidate < ActiveRecord::Base
     end
 
     def add_history_event_after_create
-      changes = self.changes
-      changes.delete('created_at')
-      changes.delete('updated_at')
-      changes.delete('id')
-      histories.create_with_attrs(was_changed: changes, action: 'create')
+      histories.create_with_attrs(was_changed: set_changes, action: 'create')
     end
 
     def add_history_event_after_update

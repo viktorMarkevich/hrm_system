@@ -1,6 +1,7 @@
 # coding: utf-8
 class Vacancy < ActiveRecord::Base
   acts_as_paranoid
+  include Support
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
 
@@ -47,13 +48,6 @@ class Vacancy < ActiveRecord::Base
       History.create_with_attrs(was_changed: set_changes, action: 'update', historyable_type: 'Vacancy', historyable_id: id)
     end
 
-    def set_changes
-      changes = self.changes
-      changes.delete('created_at')
-      changes.delete('updated_at')
-      changes.delete('id')
-      changes
-    end
     
     # def add_history_event_after_destroy   # TODO  old status
     #   History.create_with_attrs(new_status: 'В архиве',

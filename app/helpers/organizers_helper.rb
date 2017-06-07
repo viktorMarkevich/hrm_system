@@ -1,12 +1,8 @@
 module OrganizersHelper
 
   def set_owner_for_historyable(history)
-    if history.historyable_type != 'StaffRelation'
-      link_to history.historyable.owner.full_name, user_path(history.historyable.owner)
-    else
-      owner = history.historyable.vacancy.owner
-      link_to owner.full_name, user_path(owner)
-    end
+    owner = history.historyable.set_owner
+    link_to owner.full_name, user_path(owner)
   end
 
   def set_action_for(history)
@@ -24,7 +20,7 @@ module OrganizersHelper
     history.was_changed.map do |attribute, v|
       values = v.gsub(/["\[\]]/, '').split(', ')
       if "#{values[1]}" != ''
-        (t("activerecord.attributes.#{set_model_name(history)}.#{attribute}") + t(set_locales_path(history) + '.changes', val_from: (values[0] == 'nil' ? nil : values[0]),
+        (t("activerecord.attributes.#{set_model_name(history)}.#{attribute}") + t(set_locales_path(history) + '.changes', val_from: (values[0] == 'nil' || values[0] == '' ? '"Пусто"' : values[0]),
                                                                                                                         val_to: (values[1] == 'nil' ? nil : values[1])))
       end
     end.compact.join('; ').html_safe
