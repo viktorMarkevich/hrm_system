@@ -10,10 +10,10 @@ ru:
         name: Имя
         salary: Зарплата
         salary_format: Формат денежных едениц
-        languages: "<span style='color: red;'>Языки</span>"
+        languages: Языки
         status: Статус
         requirements: Требования
-        region: "<span style='color: red;'>Регион</span>"
+        region: Регион
         user_id: Ответственный
         deleted_at: В архиве
 
@@ -30,6 +30,8 @@ ru:
         notice: Примечание
       company:
         region: Регион
+      staff_relation:
+        status: Статус
 
     errors:
       models:
@@ -72,26 +74,29 @@ ru:
     vacancy:
       create:
         notice: "В систему добавлена новая вакансия: <b>%{object_name}</b>"
-        changes: "Статус: <b>Не задействованна</b>"
+        changes: "<b>%{val_to}</b>"
       update:
         notice: "Вакансия <b>%{object_name}</b>, была изменена"
-        changes: "Произошли следующие изменения: <b>%{object_changes}</b>"
+        changes: "<b>%{val_from}</b> <b>%{val_to}</b>"
       destroy:
       restore:
 
     candidate:
       create:
         notice: "В систему добавлен новый кандидат: <b>%{object_name}</b>"
-        changes: "Статус: <b>Пассивен</b>"
+        changes: "<b>%{val_to}</b>"
       update:
+        changes: "<b>%{val_from}</b> <b>%{val_to}</b>"
       destroy:
       restore:
 
     staff_relation:
       create:
         notice: "Для кандидата <b>%{candidate_name}</b> получен статус в вакансии <b>%{vacancy_name}</b>"
+        changes: "<b>%{val_to}</b>"
       update:
         notice: "Для кандидата <b>%{candidate_name}</b> изменен статус в вакансии <b>%{vacancy_name}</b>"
+        changes: "<b>%{val_from}</b> <b>%{val_to}</b>"
       destroy:
       restore:
 

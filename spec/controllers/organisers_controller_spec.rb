@@ -226,7 +226,7 @@ RSpec.describe OrganisersController, type: :controller do
                                                                    "salary"=>"[nil, \"300-500 USD\"]",
                                                                    "source"=>"[nil, \"#{candidate.source}\"]",
                                                                    "status"=>"[\"Пассивен\", \"В работе\"]",
-                                                                   "user_id"=>"[nil, 1]",
+                                                                   "user_id"=>"[nil, #{candidate.user_id}]",
                                                                    "birthday"=>"[nil, \"06-12-2015\"]",
                                                                    "facebook"=>"[nil, \"http://www.facebook.com/test.user\"]",
                                                                    "linkedin"=>"[nil, \"https://ua.linkedin.com/pub/test-user/9a/29/644\"]",

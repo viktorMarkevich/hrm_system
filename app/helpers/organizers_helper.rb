@@ -21,26 +21,20 @@ module OrganizersHelper
   end
 
   def set_status_for(history)
-    case history.action
-      when 'create'
-        t(set_locales_path(history) + '.changes').html_safe
-      when 'update'
-        t(set_locales_path(history) + '.changes', object_changes: set_changes(history)).html_safe
-      else
-        'Уведомление отсутствует'
-    end
+    history.was_changed.map do |attribute, v|
+      values = v.gsub(/["\[\]]/, '').split(', ')
+      if "#{values[1]}" != ''
+        (t("activerecord.attributes.#{set_model_name(history)}.#{attribute}") + t(set_locales_path(history) + '.changes', val_from: (values[0] == 'nil' ? nil : values[0]),
+                                                                                                                        val_to: (values[1] == 'nil' ? nil : values[1])))
+      end
+    end.compact.join('; ').html_safe
   end
 
   def set_locales_path(history)
-    "history.#{history.historyable_type.downcase}.#{history.action}"
-  end
-  def set_changes(history)
-    history.was_changed.map do |attribute, v|
-      values = v.gsub(/["\[\],]/, '').split(' ')
-      if "#{values[1]}" != ''
-        t("activerecord.attributes.vacancy.#{attribute}") + ' изменилась с ' + "<span style='color: red;'>#{values[0] == 'nil' ? 'Пусто' : values[0]}</span>" + ' на ' + "<span style='color: red;'>#{values[1]}</span>"
-      end
-    end.join('; ')
+    "history.#{set_model_name(history)}.#{history.action}"
   end
 
+  def set_model_name(history)
+    history.historyable_type.gsub(/([a-z])([A-Z])/, '\1_\2').downcase
+  end
 end
