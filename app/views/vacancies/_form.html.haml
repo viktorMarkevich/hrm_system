@@ -31,9 +31,9 @@
       = f.label :salary_format, 'По договоренности'
   .form-group
     .col-sm-2.control-label
-      = f.label :region_id, 'Регион:'
+      = f.label :region, 'Регион:'
     .col-sm-8
-      = select_tag(:region,  options_for_select(Region::REGIONS, @vacancy.region_name), class: 'form-control')
+      = f.select(:region, options_for_select(Region::REGIONS, @vacancy.region), {}, { class: 'form-control' })
   .form-group
     .col-sm-2.control-label
       = f.label :laguages, 'Языки:'

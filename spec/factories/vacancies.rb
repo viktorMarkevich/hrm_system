@@ -8,7 +8,7 @@ FactoryGirl.define do
     status 'Не задействована'
     languages 'Английский, Русский'
     requirements 'Ответственный'
-    region
+    region Region::REGIONS.sample
     association :owner, factory: :user
   end
 

@@ -1,18 +1,19 @@
 # encoding: utf-8
 class Candidate < ActiveRecord::Base
   acts_as_paranoid
-
-  include ChangesHistory
+  include Support
 
   acts_as_xlsx columns: [:name, :desired_position, :city_of_residence, :salary, :'owner.full_name',
                          :created_at, :status, :notice], i18n: true
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :company, :counter_cache => true
+  belongs_to :geo_name, counter_cache: true
+
   has_one :image
   has_many :staff_relations, dependent: :destroy
   has_many :vacancies, through: :staff_relations, source: :vacancy
-  belongs_to :company, :counter_cache => true
-  belongs_to :geo_name, counter_cache: true
+  has_many :histories, as: :historyable
 
   accepts_nested_attributes_for :image
   scope :with_status, -> (status) { where(status: "#{status}") }
@@ -38,8 +39,9 @@ class Candidate < ActiveRecord::Base
 
   before_validation :check_geo_name
   after_create :add_history_event_after_create
-  after_destroy :add_history_event_after_destroy
-  after_restore :add_history_event_after_restore
+  after_update :add_history_event_after_update
+  # after_destroy :add_history_event_after_destroy
+  # after_restore :add_history_event_after_restore
 
   def status_for_vacancy(vacancy)
     StaffRelation.find_by_candidate_id_and_vacancy_id(self.id, vacancy.id).status
@@ -89,11 +91,14 @@ class Candidate < ActiveRecord::Base
     end
 
     def add_history_event_after_create
-      History.create_with_attrs(new_status: 'Пассивен',
-                                responsible: {
-                                    full_name: owner.full_name,
-                                    id: user_id },
-                                action: "В систему добавлен кандидат: #{name}")
+      histories.create_with_attrs(was_changed: set_changes, action: 'create')
+    end
+
+    def add_history_event_after_update
+      # histories.create_with_attrs(was_changed: { status: 'Пассивен' }, action: 'create')
+      # p '*'*100
+      # p self.changes
+      # p '*'*100
     end
 
     def add_history_event_after_destroy
@@ -101,7 +106,7 @@ class Candidate < ActiveRecord::Base
                                 responsible: {
                                     full_name: owner.full_name,
                                     id: user_id },
-                                action: "Кандидат #{name} перемещен в архив")
+                                action: "Кандидат <strong>#{name}</strong> перемещен в архив")
     end
 
     def add_history_event_after_restore
@@ -109,6 +114,6 @@ class Candidate < ActiveRecord::Base
                                 responsible: {
                                     full_name: owner.full_name,
                                     id: user_id },
-                                action: "Кандидат #{name} восстановлен из архива")
+                                action: "Кандидат <strong>#{name}</strong> восстановлен из архива")
     end
   end

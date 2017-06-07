@@ -49,7 +49,6 @@ describe UsersController, type: :controller do
 
   context '#update' do
     let(:user_attrs) { attributes_for :user }
-    let(:region) { create :region }
 
     context 'when successful' do
       context 'updates the same attributes' do
@@ -68,10 +67,11 @@ describe UsersController, type: :controller do
         end
       end
 
-      it 'has updated region_id' do
-        put :update, params: {id: user, user: { region_id: region.id }}
+      it 'has updated region' do
+        region = Region::REGIONS.sample
+        put :update, params: { id: user, user: { region: region } }
         user.reload
-        expect(assigns(:user).region_id).to eq(region.id)
+        expect(assigns(:user).region).to eq(region)
       end
     end
 

@@ -8,7 +8,7 @@ describe 'Managing companies', type: :feature do
 
   before do
     company
-    sign_in_as(user, nil)
+    sign_in_as(user, 'user', nil)
   end
 
   scenario 'creates new company' do
@@ -17,7 +17,7 @@ describe 'Managing companies', type: :feature do
     within '#new_company' do
       fill_in 'company_name', with: 'Company 777'
       fill_in 'company_url', with: 'http://www.facebook.com/'
-      select 'Запорожье', from: 'region'
+      select 'Запорожье', from: 'company[region]'
       fill_in 'company_description', with: 'Descriptive text'
       click_button 'Создать'
     end

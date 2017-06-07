@@ -17,7 +17,7 @@ renderVacancyCandidates = (data) ->
         candidate_id: candidate.id,
         candidate_name: candidate.name,
         candidate_salary: candidate.salary,
-        candidate_updated_at: updated_at.toLocaleFormat('%F %H:%M'),
+        candidate_updated_at: updated_at.toISOString().slice(0, 10),
         vacancy_id: data.vacancy.id,
         vacancy_user_id: data.vacancy.user_id
       }))

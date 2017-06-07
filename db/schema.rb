@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418073449) do
+ActiveRecord::Schema.define(version: 20170517142855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(version: 20170418073449) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "region_id"
     t.integer  "user_id"
+    t.string   "region"
   end
 
   create_table "cv_sources", force: :cascade do |t|
@@ -139,13 +139,15 @@ ActiveRecord::Schema.define(version: 20170418073449) do
   end
 
   create_table "histories", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "old_status"
-    t.string   "new_status"
-    t.hstore   "responsible"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "action"
-    t.index ["responsible"], name: "index_histories_on_responsible", using: :gin
+    t.string   "historyable_type"
+    t.integer  "historyable_id"
+    t.hstore   "was_changed"
+    t.index ["historyable_id"], name: "index_histories_on_historyable_id", using: :btree
+    t.index ["historyable_type"], name: "index_histories_on_historyable_type", using: :btree
+    t.index ["was_changed"], name: "index_histories_on_was_changed", using: :gin
   end
 
   create_table "images", force: :cascade do |t|
@@ -156,12 +158,6 @@ ActiveRecord::Schema.define(version: 20170418073449) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-  end
-
-  create_table "regions", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "staff_relations", force: :cascade do |t|
@@ -204,7 +200,6 @@ ActiveRecord::Schema.define(version: 20170418073449) do
     t.string   "phone"
     t.string   "skype"
     t.string   "post"
-    t.integer  "region_id"
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
@@ -213,6 +208,7 @@ ActiveRecord::Schema.define(version: 20170418073449) do
     t.string   "invited_by_type"
     t.integer  "invited_by_id"
     t.integer  "invitations_count",      default: 0
+    t.string   "region"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
     t.index ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
@@ -229,9 +225,9 @@ ActiveRecord::Schema.define(version: 20170418073449) do
     t.text     "requirements"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
-    t.integer  "region_id"
     t.integer  "user_id"
     t.time     "deleted_at"
+    t.string   "region"
   end
 
 end

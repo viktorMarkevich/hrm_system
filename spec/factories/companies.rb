@@ -3,6 +3,6 @@ FactoryGirl.define do
     sequence(:name) { |n| "Компания#{n}" }
     url 'http://www.mycompany.com.ua'
     description 'В процессе'
-    region
+    region Region::REGIONS.sample
   end
 end

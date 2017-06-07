@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'user process', type: :feature do
   let(:user) { create(:user) }
 
-  before { sign_in_as(user, nil) }
+  before { sign_in_as(user,'user', nil) }
 
   scenario %q{ page has user's full name } do
     click_link user.email
@@ -35,7 +35,7 @@ RSpec.feature 'Sign In', :type => :feature do
     end
 
     it "tells user on page 'Invalid Email or password'" do
-      expect(page).to have_text("Invalid Email or password.")
+      expect(page).to have_text("Log in Не валидный Email или пароль. Email Password Remember me Забыли пароль?")
     end
   end
 

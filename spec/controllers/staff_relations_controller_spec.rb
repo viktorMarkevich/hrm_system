@@ -14,12 +14,12 @@ RSpec.describe StaffRelationsController, type: :controller do
       sign_in user
     end
 
-
     it 'updates candidates status on "В работе"' do
       post :create, params: staff_relation_params, format: :json
       vacancy.reload
 
       expect(assigns(:vacancy).status).to eq 'В работе'
+      expect(StaffRelation.count).to eq(2)
     end
   end
 end

@@ -4,12 +4,11 @@ RSpec.describe VacanciesController, type: :controller do
 
   let(:user) { create(:user) }
   let(:vacancy) { create(:vacancy) }
-  let(:region) { create(:region) }
 
   before { sign_in user }
 
   def err_messages
-    ["Name can't be blank"]
+    ["Имя не может быть пустым"]
   end
 
   context '#index' do
@@ -31,7 +30,7 @@ RSpec.describe VacanciesController, type: :controller do
   describe '#create' do
     context 'when successful' do
 
-      let(:vacancy_attrs) { { params: {vacancy: attributes_for(:vacancy), region: region.name} } }
+      let(:vacancy_attrs) { { params: { vacancy: attributes_for(:vacancy) } } }
 
       before do
         post :create, vacancy_attrs
@@ -46,7 +45,6 @@ RSpec.describe VacanciesController, type: :controller do
       end
 
       it 'has assigned region and owner' do
-        expect(assigns(:vacancy).region.name).to eq(region.name)
         expect(assigns(:vacancy).owner.last_name).to eq(user.last_name)
       end
     end
@@ -111,10 +109,11 @@ RSpec.describe VacanciesController, type: :controller do
   end
 
   describe '#update' do
-    let(:vacancy_attrs) { { name: 'Менеджер', salary: '400' } }
+    let(:region) { Region::REGIONS.sample }
+    let(:vacancy_attrs) { { name: 'Менеджер', salary: '400', region: region } }
 
     before do
-      put :update, params: {id: vacancy, vacancy: vacancy_attrs, region: region.name}
+      put :update, params: {id: vacancy, vacancy: vacancy_attrs }
       vacancy.reload
     end
 
@@ -122,6 +121,7 @@ RSpec.describe VacanciesController, type: :controller do
       it 'has updated name, salary and status' do
         expect(vacancy.name).to eql vacancy_attrs[:name]
         expect(vacancy.salary).to eql vacancy_attrs[:salary]
+        expect(vacancy.region).to eql region
       end
 
       it 'redirect to vacancies index page' do

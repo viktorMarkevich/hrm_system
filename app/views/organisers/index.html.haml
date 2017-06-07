@@ -31,6 +31,9 @@
                   %td
                     %span.label.label-warning
                       = event.will_begin_at.strftime('%e %b %H:%M')
+        .row
+          .col-lg-3
+            = paginate @events
       - else
         %ul.list-group
           %li.list-group-item.list-group-item-warning
@@ -49,22 +52,23 @@
               %tr.table_head_color
                 %th Действие
                 %th Ответственный
-                %th Статус
+                %th Изменения
                 %th Дата
             %tbody
               - @histories.each  do |history|
                 %tr
                   %td
-                    = history.action
+                    = set_action_for(history)
                   %td
-                    = link_to history.responsible['full_name'], user_path(history.responsible['id'])
+                    = set_owner_for_historyable(history)
                   %td
-                    = "Изменился на #{history.new_status}"
-                    - if history.old_status
-                      = " со старого #{history.new_status}"
+                    = set_status_for(history)
                   %td
                     %span.label.label-warning
                       = history.created_at.strftime('%e %b %H:%M')
+        .row
+          .col-lg-3
+            = paginate @histories
       - else
         %ul.list-group
           %li.list-group-item.list-group-item-warning

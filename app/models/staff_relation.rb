@@ -1,14 +1,21 @@
 class StaffRelation < ActiveRecord::Base
 
+  include Support
+
   belongs_to :vacancy
   belongs_to :candidate
   has_many :events
+  # has_many :histories, as: :historyable
 
   validates :vacancy_id,  uniqueness: { scope: :candidate_id }, presence: true
   STATUSES = %w(Убрать Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
-  after_create :create_history_event
+  # after_create :create_history_event
   after_update :update_history_event
+
+  def set_owner
+    vacancy.owner
+  end
 
   def self.return_status(options)
     staff_relation = where(candidate_id: options[:vacancy][:candidate_id], vacancy_id: options[:id]).first
@@ -33,16 +40,20 @@ class StaffRelation < ActiveRecord::Base
                                 new_status: 'Найденные',
                                 responsible: { full_name: vacancy.owner.full_name,
                                                id: vacancy.user_id },
-                                action: "В вакансию #{vacancy.name} добавили нового кандидата #{candidate.name}")
+                                action: "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>")
     end
 
     def update_history_event
       unless self.status_was == status
-        History.create_with_attrs(old_status: self.status_was,
-                                  new_status: status,
-                                  responsible: { full_name: vacancy.owner.full_name,
-                                                 id: vacancy.user_id },
-                                  action: "В вакансии #{vacancy.name} для кандидата #{candidate.name} произошли изменения")
+        History.create_with_attrs(was_changed: set_changes, action: 'update', historyable_type: self.class.name, historyable_id: id)
       end
+    end
+
+    def set_changes
+      changes = self.changes
+      changes.delete('created_at')
+      changes.delete('updated_at')
+      changes.delete('id')
+      changes
     end
 end

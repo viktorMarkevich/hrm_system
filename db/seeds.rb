@@ -12,6 +12,7 @@ Region.delete_all
 StaffRelation.delete_all
 Event.delete_all
 User.delete_all
+History.delete_all
 
 Region.create(name: Region::REGIONS[0])
 
@@ -53,7 +54,7 @@ for i in 1..15 do
       phone: "081111111#{i+1}",
       skype: "usertes#{i}",
       source: "Имяфайла#{i}.docx",
-      user_id: 2
+      user_id: User.first.id
   )
 end
 
@@ -67,7 +68,8 @@ for i in 16..30 do
       email: "user#{i+1}@mail.com",
       phone: "081111111#{i+1}",
       skype: "usertes#{i}",
-      source: "Имяфайла#{i}.docx"
+      source: "Имяфайла#{i}.docx",
+      user_id: User.first.id
   )
 end
 
