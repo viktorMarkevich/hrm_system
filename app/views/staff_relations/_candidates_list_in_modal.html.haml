@@ -11,8 +11,7 @@
         - @candidates.each do |candidate|
           %tr
             %td
-              = f.check_box :candidate_id, { :multiple => true }, candidate.id, nil
-
+              = f.check_box :candidate_id, { multiple: true }, candidate.id, nil
               = candidate.name
             %td= candidate.salary
             %td
@@ -23,7 +22,7 @@
                   = candidate.status
               - else
                 - candidate.staff_relations.each do |sr|
-                  %p{style: 'font-size: 14px'}
+                  %p{ style: 'font-size: 14px' }
                     Имеет статус
                     &nbsp;
                     %span{ class: "label label-#{return_status_label(sr)}" }
@@ -37,5 +36,5 @@
                       %span.label.label-danger
                         = @vacancy.name
                       (Удалена)
-  %button.btn.btn-default{ type: 'button', "data-dismiss" => "modal" } Отменить
+  %button.btn.btn-default{ type: 'button', data: { dismiss: 'modal' } } Отменить
   = f.submit 'Выполнить', class: 'btn btn-primary'

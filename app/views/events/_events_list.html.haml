@@ -1,8 +1,5 @@
-
-
 / Modal
-= render :partial => 'edit_event_dialog'
-
+= render partial: 'edit_event_dialog'
 .items-list
   %table.table.table-hover.table-bordered.table-striped
     %thead
@@ -29,7 +26,5 @@
             %span.label.label-warning
               = event.will_begin_at.strftime('%e %b %H:%M')
           %td
-            %a.glyphicon.glyphicon-edit.edit-event{'data-eventid' => event.id}
-            %a.glyphicon.glyphicon-remove.remove-event{ 'data-eventid' => event.id}
-
-
+            %a.glyphicon.glyphicon-edit.edit-event{ data: { eventid: event.id } }
+            %a.glyphicon.glyphicon-remove.remove-event{ data: { eventid: event.id } }

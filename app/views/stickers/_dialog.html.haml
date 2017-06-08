@@ -1,10 +1,10 @@
-#dialog.modal.fade{ 'aria-hidden' => 'true', 'aria-labelledby' => 'myModalLabel',
-                    'data-backdrop' => 'static',
+#dialog.modal.fade{ aria: { hidden: 'true', labelledby: 'myModalLabel' },
+                    data: { backdrop: 'static' },
                     role: 'dialog', tabindex: '-1' }
   .modal-dialog
     .modal-content
       .modal-header
-        %button.close{ 'aria-label' => 'Close', 'data-dismiss' => 'modal', type: 'button' }
-          %span{ 'aria-hidden' => 'true' } ×
+        %button.close{ aria: { label: 'Close' }, data: { dismiss: 'modal' }, type: 'button' }
+          %span{ aria: { hidden: 'true' } } ×
         %h3.modal-title
       .modal-body

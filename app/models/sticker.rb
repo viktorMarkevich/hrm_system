@@ -1,4 +1,5 @@
 class Sticker < ActiveRecord::Base
+
   acts_as_paranoid
 
   BG_COLOR = %w(#FF8533 #FF66FF #9797FF #00CCFF #00CC66 #009900

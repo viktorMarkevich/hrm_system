@@ -1,8 +1,8 @@
 class Ability
+
   include CanCan::Ability
 
   def initialize(user)
-
     user ||= User.new # guest user
     # alias_action :create, :read, :update, :destroy, to: :crud
 
@@ -16,6 +16,6 @@ class Ability
       can [:destroy, :update], [Event, Vacancy, Company, Candidate], user_id: user.id
       can [:read, :create], [Event, Vacancy, Company, Candidate]
     end || []
-
   end
+
 end

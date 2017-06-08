@@ -10,4 +10,5 @@ class GeoNamesController < ApplicationController
       format.json { render json: geo_alternate_name_list }
     end
   end
+
 end

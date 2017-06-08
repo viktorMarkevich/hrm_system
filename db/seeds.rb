@@ -8,13 +8,10 @@
 Vacancy.delete_all
 Candidate.delete_all
 Company.delete_all
-Region.delete_all
 StaffRelation.delete_all
 Event.delete_all
 User.delete_all
 History.delete_all
-
-Region.create(name: Region::REGIONS[0])
 
 User.create!([
     {
@@ -25,7 +22,7 @@ User.create!([
         skype: 'usertest',
         password: '123456',
         post: 'test',
-        region_id: Region.first.id,
+        region: Region::REGIONS.first,
         reset_password_token: nil,
         reset_password_sent_at: nil,
         remember_created_at: nil,
@@ -38,7 +35,7 @@ for i in 1..10 do
     salary: '500',
     salary_format: 'USD',
     status: 'Не задействована',
-    region_id: Region.first.id,
+    region: Region::REGIONS.first,
     user_id: User.first.id
   )
 end
@@ -76,7 +73,7 @@ end
 for i in  1..15 do
   Company.create(
       name: 'veloonline' + i.to_s,
-      region_id: Region.first.id,
+      region: Region::REGIONS.first,
       url: 'http://www.veloonline.com/view.shtml?id=8933',
       description: 'Купить Шатуны Shimano FC-M361 ACERA 48/38/28 по хорошей цене в интернет-магазине VeloOnline.com, мы предлагаем широкий ассортимент Shimano и привлекательные цены на Шатуны для велосипеда.'
   )

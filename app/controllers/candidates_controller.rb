@@ -2,8 +2,8 @@
 class CandidatesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :find_candidate, only: [:show, :edit, :update, :set_vacancies, :update_resume]
-  before_action :set_companies, only: [:new, :edit]
+  before_action :find_candidate, only: [ :show, :edit, :update, :set_vacancies, :update_resume ]
+  before_action :set_companies, only: [ :new, :edit ]
 
   def index
     @status = params[:status]
@@ -99,26 +99,24 @@ class CandidatesController < ApplicationController
   end
 
   private
+  def set_companies
+    @companies = Company.get_company_name
+  end
 
-    def set_companies
-      @companies = Company.get_company_name
-    end
+  def candidate_params
+    params.require(:candidate).permit(:name, :birthday, :salary, :salary_format, :notice,
+                                      :education, :languages, :city_of_residence, :company_id,
+                                      :ready_to_relocate, :desired_position, :status, :source,
+                                      :description, :email, :phone, :linkedin, :facebook,
+                                      :vkontakte, :google_plus, :full_info, :skype, :home_page, :file_name)
+  end
 
-    def candidate_params
-      params.require(:candidate).permit(
-          :name, :birthday, :salary, :salary_format, :notice,
-          :education, :languages, :city_of_residence, :company_id,
-          :ready_to_relocate, :desired_position, :status, :source,
-          :description, :email, :phone, :linkedin, :facebook,
-          :vkontakte, :google_plus, :full_info, :skype, :home_page, :file_name
-      )
-    end
+  def find_candidate
+    @candidate = Candidate.find(params[:id])
+  end
 
-    def find_candidate
-      @candidate = Candidate.find(params[:id])
-    end
+  def filter_condition
+    params.permit(:company_id, :status)
+  end
 
-    def filter_condition
-      params.permit(:company_id, :status)
-    end
 end

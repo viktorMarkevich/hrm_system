@@ -8,7 +8,7 @@ RSpec.describe VacanciesController, type: :controller do
   before { sign_in user }
 
   def err_messages
-    ["Имя не может быть пустым"]
+    ['Имя не может быть пустым']
   end
 
   context '#index' do
@@ -84,7 +84,7 @@ RSpec.describe VacanciesController, type: :controller do
 
   context '#edit' do
     before do
-      get :edit, params: {id: vacancy}
+      get :edit, params: { id: vacancy}
     end
 
     it 'has HTTP 200 status' do
@@ -113,7 +113,7 @@ RSpec.describe VacanciesController, type: :controller do
     let(:vacancy_attrs) { { name: 'Менеджер', salary: '400', region: region } }
 
     before do
-      put :update, params: {id: vacancy, vacancy: vacancy_attrs }
+      put :update, params: { id: vacancy, vacancy: vacancy_attrs }
       vacancy.reload
     end
 
@@ -131,7 +131,7 @@ RSpec.describe VacanciesController, type: :controller do
 
     context 'when failed' do
       before do
-        put :update, params: {id: vacancy, vacancy: { name: nil }}
+        put :update, params: { id: vacancy, vacancy: { name: nil } }
       end
 
       it 'renders "edit" template without name' do

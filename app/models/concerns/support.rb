@@ -1,4 +1,5 @@
 module Support
+
   extend ActiveSupport::Concern
 
   def set_owner
@@ -13,4 +14,5 @@ module Support
     changes.delete('id')
     changes
   end
+
 end
