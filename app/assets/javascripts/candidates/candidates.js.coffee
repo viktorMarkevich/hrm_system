@@ -2,7 +2,7 @@
 #=require jquery.ui.dialog
 
 $(document).ready ->
-  $("body").on('click','.export', (e) ->
+  $('body').on('click','.export', (e) ->
     e.preventDefault()
     current_href = $(this).attr('href') + '?page=' + $('.pagination li.active a').text()
     all_href = $(this).attr('href')
@@ -15,6 +15,6 @@ $(document).ready ->
     return false
   )
 
-  $("body").on('click','.export-modal', (e)->
+  $('body').on('click','.export-modal', (e)->
     $('#exportCandidates').modal 'hide'
   )

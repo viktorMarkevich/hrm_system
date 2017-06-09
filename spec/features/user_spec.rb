@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'user process', type: :feature do
+
   let(:user) { create(:user) }
 
   before { sign_in_as(user,'user', nil) }
@@ -21,21 +22,22 @@ describe 'user process', type: :feature do
     expect(page).to have_content('Созданных вакансий')
   end
 end
+
 RSpec.feature 'Sign In', :type => :feature do
 
-  describe "correct error message w/ wrong password" do
+  describe 'correct error message w/ wrong password' do
     before :each do
       @user = create(:user)
       @user.confirmed_at
 
       visit new_user_session_path
-      fill_in "user_email", with: @user.email
-      fill_in "user_password", with: "wrongpassword"
-      click_button "Log in"
+      fill_in 'user_email', with: @user.email
+      fill_in 'user_password', with: 'wrongpassword'
+      click_button 'Log in'
     end
 
     it "tells user on page 'Invalid Email or password'" do
-      expect(page).to have_text("Log in Не валидный Email или пароль. Email Password Remember me Забыли пароль?")
+      expect(page).to have_text('Log in Не валидный Email или пароль. Email Password Remember me Забыли пароль?')
     end
   end
 

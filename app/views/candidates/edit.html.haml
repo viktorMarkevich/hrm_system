@@ -3,20 +3,18 @@
 
 .container-fluid
   .row
-    .col-lg-10.col-lg-offset-1{ style: "border-bottom: 1px solid #FFF;" }
+    .col-lg-10.col-lg-offset-1{ style: 'border-bottom: 1px solid #FFF;' }
       .tip
         %p
           Редактирование кандидата
       .row
         .col-md-2
           = image_tag 'missing_medium.png', class: 'img-responsive'
-
         .col-md-5
           = render partial: 'candidates/form'
-
         .col-md-5
           - if @candidate.original_cv_data
-            %button{ class: 'btn btn-info', type: 'button', 'data-toggle' => 'collapse', 'data-target' => '#collapseExample', 'aria-expanded' => 'false', 'aria-controls' => 'collapseExample'}
+            %button{ class: 'btn btn-info', type: 'button', data: { toggle: 'collapse', target: '#collapseExample' }, aria: { expanded: 'false', controls: 'collapseExample' } }
               Показать резюме
             %code#collapseExample.collapse{ style: 'color: grey;' }
               = render partial: 'candidates/resume'

@@ -1,4 +1,5 @@
 module EventsHelper
+
   def default_td_classes(events)
     ->(start_date, current_calendar_date) {
       today = Time.zone.now.to_date
@@ -36,4 +37,5 @@ module EventsHelper
   def get_sr_name(sr)
     "#{sr.vacancy.try(:name) + ' | Кандидат: ' + sr.candidate.name + ' | ' + sr.status}"
   end
+
 end

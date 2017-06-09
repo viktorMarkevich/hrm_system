@@ -1,5 +1,4 @@
 # coding: utf-8
-
 class VacanciesController < ApplicationController
 
   before_action :authenticate_user!
@@ -29,7 +28,7 @@ class VacanciesController < ApplicationController
     else
       @vacancy_candidates = Candidate.all
     end
-    render json: {candidates: @vacancy_candidates, cand_count: Candidate.all.count }
+    render json: { candidates: @vacancy_candidates, cand_count: Candidate.all.count }
   end
 
   def edit
@@ -55,8 +54,7 @@ class VacanciesController < ApplicationController
         format.json
       else
         format.html { render action: 'edit' }
-        format.json { render json: @vacancy.errors.full_messages,
-                             status: :unprocessable_entity }
+        format.json { render json: @vacancy.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end
@@ -70,31 +68,28 @@ class VacanciesController < ApplicationController
   end
 
   private
-
-    def get_staff_relation_status
-      if params_present?
-        StaffRelation.return_status(params)
-      else
-        params[:sr_status]
-      end
+  def get_staff_relation_status
+    if params_present?
+      StaffRelation.return_status(params)
+    else
+      params[:sr_status]
     end
+  end
 
-    def params_present?
-      params[:vacancy][:candidate_id].present? &&
-          params[:vacancy][:sr_status].present? &&
-          params[:id].present?
-    end
+  def params_present?
+    params[:vacancy][:candidate_id].present? && params[:vacancy][:sr_status].present? && params[:id].present?
+  end
 
-    def vacancy_params
-      params.require(:vacancy).permit(:name, :salary, :salary_format, :languages,
-                                      :requirements, :region, :sr_status, :user_id)
-    end
+  def vacancy_params
+    params.require(:vacancy).permit(:name, :salary, :salary_format, :languages, :requirements, :region, :sr_status, :user_id)
+  end
 
-    def set_vacancy
-      if Vacancy.where(:id => params[:id]).present?
-        @vacancy = Vacancy.find(params[:id])
-      else
-        redirect_to vacancies_url
-      end
+  def set_vacancy
+    if Vacancy.where(:id => params[:id]).present?
+      @vacancy = Vacancy.find(params[:id])
+    else
+      redirect_to vacancies_url
     end
+  end
+
 end

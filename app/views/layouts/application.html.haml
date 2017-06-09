@@ -4,14 +4,14 @@
     %title Faceit-hrm
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
-    %link{:href =>"https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css", rel: "stylesheet"}/
+    %link{ href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', rel: 'stylesheet' }/
 
     = csrf_meta_tags
   %body
     .container-fluid#header
       %nav.navbar-inverse.container
         .navbar-header
-          %button.navbar-toggle.collapsed{ 'aria-expanded' => 'false', 'data-target' => '#bs-navbar-collapse-1', 'data-toggle' => 'collapse', type: 'button' }
+          %button.navbar-toggle.collapsed{ aria: { expanded: 'false' }, data: { target: '#bs-navbar-collapse-1', toggle: 'collapse' }, type: 'button' }
             %span.sr-only Toggle navigation
             %span.icon-bar
             %span.icon-bar
@@ -30,8 +30,8 @@
                 %i.glyphicon.glyphicon-plus
             %li
               = link_to 'Кандидаты', candidates_path
-              = link_to '#', class: 'dropdown-toggle', 'aria-expanded' => 'false', 'aria-haspopup' => 'false',
-                             'data-toggle' => 'dropdown', role: 'button', style: 'color:#ddd;', id: 'add-candidate' do
+              = link_to '#', class: 'dropdown-toggle', aria: { expanded: 'false', haspopup: 'false' },
+                             data: { toggle: 'dropdown' }, role: 'button', style: 'color:#ddd;', id: 'add-candidate' do
                 %i.glyphicon.glyphicon-th-list
                 %span.caret
                 %ul.dropdown-menu
@@ -46,7 +46,6 @@
                     = form_for :upload_resume, html: { hidden: true }, method: 'POST', url: upload_resume_candidates_path do |f|
                       = f.file_field :file
                       = f.submit 'save'
-
             %li
               = link_to 'Компании', companies_path
               = link_to new_company_path, id: 'add-company' do

@@ -1,5 +1,6 @@
 
 FactoryGirl.define do
+
   factory :candidate do
     sequence(:name) { |n| "test_user#{n}" }
     birthday '06-12-2015'

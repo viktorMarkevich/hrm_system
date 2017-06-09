@@ -5,7 +5,7 @@ class CompaniesController < ApplicationController
 
 
   def index
-    @companies = Company.includes([:candidates, :owner ]).order('id').page(params[:page]).per(10)
+    @companies = Company.includes([ :candidates, :owner ]).order('id').page(params[:page]).per(10)
   end
 
   def new
@@ -38,7 +38,6 @@ class CompaniesController < ApplicationController
   end
 
   private
-
   def find_company
     @company = Company.find(params[:id])
   end

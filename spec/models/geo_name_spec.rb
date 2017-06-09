@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe GeoName, type: :model do
+
   context 'check validations' do
-    context "check uniqueness" do
+    context 'check uniqueness' do
       it 'has valid factory' do
         expect(build(:geo_name)).to be_valid
       end
@@ -29,4 +30,5 @@ RSpec.describe GeoName, type: :model do
       expect(GeoName.find(geo_name_id).candidates_count).to be_equal(0)
     end
   end
+
 end

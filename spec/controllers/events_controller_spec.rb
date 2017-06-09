@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe EventsController, type: :controller do
+
   render_views
+
   let! (:current_user) { create :user_with_events }
   let! (:user) { create :user_with_events, events_count: 2 }
 
@@ -22,7 +24,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   def err_messages
-    ['Name не может быть пустым', 'Description не может быть пустым', 'Will begin at должна быть предстоящей']
+    [ 'Name не может быть пустым', 'Description не может быть пустым', 'Will begin at должна быть предстоящей' ]
   end
 
   context '#index' do
@@ -56,12 +58,11 @@ RSpec.describe EventsController, type: :controller do
 
       it 'creates new Event object' do
         json = JSON.parse((attributes_for :event).to_json).update(
-              'vacancy_name' => '------',
-              'candidate_name' => '------',
-              'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
-              'destroy_path' => '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
-              'will_begin_at' => "#{will_begin_at}"
-        )
+              vacancy_name: '------',
+              candidate_name: '------',
+              update_path: '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
+              destroy_path: '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
+              will_begin_at: "#{will_begin_at}" )
         expect(json_response).to eq json
         expect(response).to have_http_status(:created)
       end
@@ -72,35 +73,33 @@ RSpec.describe EventsController, type: :controller do
       let (:vacancy) { create(:vacancy) }
       let (:candidate) { create(:candidate) }
 
-      before { post :create, params: { event: event_params.update(will_begin_at: will_begin_at, staff_relation_attributes:{vacancy_id: vacancy.id, candidate_id: candidate.id }, user_id: current_user.id), format: :json } }
+      before { post :create, params: { event: event_params.update(will_begin_at: will_begin_at,
+                                                                  staff_relation_attributes: { vacancy_id: vacancy.id, candidate_id: candidate.id },
+                                                                  user_id: current_user.id), format: :json } }
 
       it 'creates new Event object' do
         json = JSON.parse((attributes_for :event).to_json).update(
-            'name' => "Name",
-            'vacancy_name' => "#{Event.last.staff_relation.vacancy.name}",
-            'candidate_name' => "#{Event.last.staff_relation.candidate.name}",
-            'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
-            'destroy_path' => '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
-            'will_begin_at' => "#{will_begin_at}"
-            )
+            name: 'Name',
+            vacancy_name: "#{Event.last.staff_relation.vacancy.name}",
+            candidate_name: "#{Event.last.staff_relation.candidate.name}",
+            update_path: '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
+            destroy_path: '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
+            will_begin_at: "#{will_begin_at}" )
         expect(json_response).to eq json
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'when failed' do
-      let (:invalid_event_params) { { event: (attributes_for :invalid_event,
-                                                            user_id: current_user.id), format: :json } }
+      let (:invalid_event_params) { { event: (attributes_for :invalid_event, user_id: current_user.id), format: :json } }
       before { post :create, params: invalid_event_params }
 
       it %q{ doesn't create new record } do
-        json = JSON.parse((attributes_for :event).to_json).update(
-            'vacancy_name' => nil,
-            'candidate_name' => nil,
-            'update_path' => "#{event_path(Event.last)}",
-            'destroy_path' => "#{event_path(Event.last)}",
-            'will_begin_at' => nil
-            )
+        json = JSON.parse((attributes_for :event).to_json).update( vacancy_name: nil,
+                                                                   candidate_name: nil,
+                                                                   update_path: "#{event_path(Event.last)}",
+                                                                   destroy_path: "#{event_path(Event.last)}",
+                                                                   will_begin_at: nil )
         expect(json_response).not_to eq json
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -117,7 +116,8 @@ RSpec.describe EventsController, type: :controller do
     let (:vacancy) { create(:vacancy) }
     let (:candidate) { create(:candidate) }
     let (:will_begin_at) { (Time.zone.now.utc + 1.day + 12.minutes).round.iso8601(0) }
-    let (:event_attrs) { {  description: "Редактирование описания", name: "Name", will_begin_at: "#{ will_begin_at }", staff_relation_attributes: {vacancy_id: vacancy.id, candidate_id: candidate.id } } }
+    let (:event_attrs) { {  description: 'Редактирование описания', name: 'Name', will_begin_at: "#{ will_begin_at }",
+                            staff_relation_attributes: {vacancy_id: vacancy.id, candidate_id: candidate.id } } }
 
     context 'when successful' do
       before do
@@ -158,6 +158,7 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to redirect_to(events_path)
     end
   end
+
   context 'mail send' do
     let(:candidate) { create :candidate }
     let(:vacancy) { create :vacancy }
@@ -173,5 +174,5 @@ RSpec.describe EventsController, type: :controller do
       expect { NoticeMailer.event_soon(event, event.staff_relation.candidate.owner).deliver_now }.to change{ ActionMailer::Base.deliveries.count }.by(1)
     end
   end
-end
 
+end

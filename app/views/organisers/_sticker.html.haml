@@ -1,7 +1,6 @@
 .pull-left{ style: 'padding-right: 15px;' }
   .panel.add-shadows{ style: "background-color: #{sticker.bg_color}; min-height: 125px; width: 223px;",
-                      id: "sticker_#{sticker.id}",
-                      onmouseover: 'mOver(this)', onmouseout: 'mOut(this)' }
+                      id: "sticker_#{sticker.id}", onmouseover: 'mOver(this)', onmouseout: 'mOut(this)' }
     .panel-heading{ style: 'min-height: 44px;'}
       .row
         .col-xs-8
@@ -18,7 +17,6 @@
           = sticker.description
 
 :javascript
-
   function mOver(obj){
     $(obj).find('#actions.panel-title').removeClass('hide');
   };
@@ -26,5 +24,3 @@
   function mOut(obj){
     $(obj).find('#actions.panel-title').addClass('hide');
   };
-
-

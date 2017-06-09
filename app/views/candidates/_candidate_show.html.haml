@@ -11,15 +11,15 @@
             %th Ответственный
             %th
               .dropdown.show
-                %a#dropdownMenuLink.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#"}
+                %a#dropdownMenuLink.dropdown-toggle{ aria: { expanded: 'false', haspopup: 'true'}, data: { toggle: 'dropdown' }, href: '#' }
                   Статус
                   %i.glyphicon.glyphicon-arrow-down
-                .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
-                  = link_to "Все", candidates_path, remote: true, class: "dropdown-item #{'active' unless @status }"
+                .dropdown-menu{ aria: { labelledby: 'dropdownMenuLink' } }
+                  = link_to 'Все', candidates_path, remote: true, class: "dropdown-item #{'active' unless @status}"
                   %br
-                  = link_to "Пассивен", candidates_path(status: 'Пассивен'), remote: true, class: "dropdown-item #{'active' if @status == 'Пассивен'}"
+                  = link_to 'Пассивен', candidates_path(status: 'Пассивен'), remote: true, class: "dropdown-item #{'active' if @status == 'Пассивен'}"
                   %br
-                  = link_to "В работе", candidates_path(status: 'В работе'), remote: true, class: "dropdown-item #{'active' if @status == 'В работе'}"
+                  = link_to 'В работе', candidates_path(status: 'В работе'), remote: true, class: "dropdown-item #{'active' if @status == 'В работе'}"
             %th Примечание
         %tbody
           - @candidates.each do |candidate|
@@ -43,8 +43,8 @@
     = paginate @candidates
 
 -#.dialog
-.modal.fade{id: 'exportCandidates',tabindex: "-1", role: 'dialog', 'aria-labelledby': 'exportCandidatesLabel'}
-  .modal-dialog.modal-sm{role: 'document'}
+.modal.fade{ id: 'exportCandidates',tabindex: '-1', role: 'dialog', aria: { labelledby: 'exportCandidatesLabel' } }
+  .modal-dialog.modal-sm{ role: 'document' }
     .modal-content
       .modal-body
         %p Экспортировать кандидатов только с текущей страницы или экспортировать всех существующих кандидатов?
@@ -52,4 +52,3 @@
           %a.btn.btn-default.btn-sm.export-modal.export-current Текущее
           %a.btn.btn-default.btn-sm.export-modal.export-all Все
           %a.btn.btn-default.btn-sm.export-modal.export-cancel Отмена
-

@@ -17,18 +17,13 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-
   def configure_devise_permitted_parameters
-    registration_params = [:post, :last_name, :first_name, :email, :region, :password, :password_confirmation]
+    registration_params = [ :post, :last_name, :first_name, :email, :region, :password, :password_confirmation ]
 
     if params[:action] == 'update'
-      devise_parameter_sanitizer.permit(:account_update) {
-          |u| u.permit(registration_params << :current_password)
-      }
+      devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(registration_params << :current_password) }
     elsif params[:action] == 'create'
-      devise_parameter_sanitizer.permit(:sign_up) {
-          |u| u.permit(registration_params)
-      }
+      devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(registration_params) }
     end
   end
 
