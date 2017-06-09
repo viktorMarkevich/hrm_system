@@ -50,7 +50,7 @@ RSpec.describe VacanciesController, type: :controller do
     end
 
     context 'when failed' do
-      let(:invalid_vacancy_attrs) { { vacancy: attributes_for(:invalid_vacancy)} }
+      let(:invalid_vacancy_attrs) { { vacancy: attributes_for(:invalid_vacancy) } }
 
       before do
         post :create, params: invalid_vacancy_attrs
@@ -97,7 +97,7 @@ RSpec.describe VacanciesController, type: :controller do
   end
 
   context '#show' do
-    before { get :show, params: {id: vacancy} }
+    before { get :show, params: { id: vacancy } }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -147,7 +147,7 @@ RSpec.describe VacanciesController, type: :controller do
   describe '#destroy' do
 
     before do
-      delete :destroy, params: {id: vacancy}
+      delete :destroy, params: { id: vacancy }
     end
 
     it 'destroys vacancy' do
@@ -158,4 +158,5 @@ RSpec.describe VacanciesController, type: :controller do
       expect(response).to redirect_to(vacancies_path)
     end
   end
+
 end

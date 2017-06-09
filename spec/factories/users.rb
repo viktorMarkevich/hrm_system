@@ -1,4 +1,5 @@
 FactoryGirl.define do
+
   factory :user do
     sequence(:email) { |n| "email#{n}@ukr.net" }
     sequence(:skype) { |n| "faceit_skype#{n}" }
@@ -14,7 +15,6 @@ FactoryGirl.define do
       transient do
         events_count 5
       end
-
       after(:create) do |user, evaluator|
         create_list(:event, evaluator.events_count, user: user, staff_relation_id: 1)
       end
@@ -24,4 +24,5 @@ FactoryGirl.define do
   factory :invalid_user, parent: :user do
     email nil
   end
+
 end

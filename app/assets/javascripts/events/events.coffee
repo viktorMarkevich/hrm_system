@@ -19,7 +19,7 @@ $(document).ready ->
       for events in data
         event_time = new Date(events.will_begin_at)
         month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1)
-        event = JST["events/templates/event"]({
+        event = JST['events/templates/event']({
           name: events.name,
           vacancy: events.vacancy_name,
           candidate: events.candidate_name,
@@ -40,7 +40,7 @@ $(document).ready ->
     $('.events-table .events-body').empty()
     show_event_modal(params)
 
-  $(document).on('click', "td a.event-badge", bindShowEvent)
+  $(document).on('click', 'td a.event-badge', bindShowEvent)
 
   resetForm = (form) ->
     form.trigger('reset')
@@ -48,7 +48,7 @@ $(document).ready ->
 
   add_event = (data, event_time) ->
     month = (event_time.getMonth()+1 < 10 && '0' || '') + (event_time.getMonth()+1);
-    event = JST["events/templates/event"]({
+    event = JST['events/templates/event']({
       name: data.name,
       vacancy: data.vacancy_name,
       candidate: data.candidate_name,
@@ -61,7 +61,7 @@ $(document).ready ->
     if $('.table-hover').length > 0
       $('.items-list .table-hover tbody').append(event)
     else
-      $('.events-list.future').append(JST["events/templates/table"]({}))
+      $('.events-list.future').append(JST['events/templates/table']({}))
       $('.table-hover').append(event)
     event_day = event_time.getDate()
     event_day_td = $("td:not(.prev-month) span[data-day='#{event_day}']:first").parents('td')
@@ -216,7 +216,7 @@ $(document).ready ->
         $('.cand-list').show() if data.c != null
         $('#editEvent #event_staff_relation_attributes_vacancy_id').val(data.v.id) if data.v != null
         if data.c != null
-          candidat = JST["events/templates/candidates_list"]({
+          candidat = JST['events/templates/candidates_list']({
             name: data.c.name,
             phone: data.c.phone,
             email: data.c.email
@@ -257,7 +257,7 @@ $(document).ready ->
       $('.candidates_list tbody').empty()
       $('.cand-list').show()
       for candidate in data.candidates
-        candidat = JST["events/templates/candidates_list"]({
+        candidat = JST['events/templates/candidates_list']({
           name: candidate.name,
           phone: candidate.phone,
           email: candidate.email
@@ -275,5 +275,3 @@ $(document).ready ->
     else
       $('.candidates_list tbody').empty()
       $('.cand-list').hide()
-
-

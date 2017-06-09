@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'the sign_in process', type: :feature do
+
   let(:user) { create(:user) }
 
   scenario 'visit stickers#index page when signed in' do
@@ -18,4 +19,5 @@ describe 'the sign_in process', type: :feature do
     click_button 'Log in'
     expect(page).to have_content 'Log in'
   end
+
 end

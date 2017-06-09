@@ -10,10 +10,10 @@
 renderVacancyCandidates = (data) ->
   $('.vacancy-candidates .content').empty()
   if data.vacancy_candidates.length != 0
-    $('.vacancy-candidates .content').append(JST["vacancies/vacancies_candidate_table"])
+    $('.vacancy-candidates .content').append(JST['vacancies/vacancies_candidate_table'])
     $.each data.vacancy_candidates, (i, candidate ) ->
       updated_at = new Date(candidate.updated_at)
-      $('.vacancy-candidates .content tbody').append(JST["vacancies/vacancies_candidate_row"]({
+      $('.vacancy-candidates .content tbody').append(JST['vacancies/vacancies_candidate_row']({
         candidate_id: candidate.id,
         candidate_name: candidate.name,
         candidate_salary: candidate.salary,
@@ -23,7 +23,7 @@ renderVacancyCandidates = (data) ->
       }))
       return
   else
-    $('.vacancy-candidates .content').append(JST["vacancies/vacancies_no_candidates"])
+    $('.vacancy-candidates .content').append(JST['vacancies/vacancies_no_candidates'])
 
 $(document).ready ->
   $('body').on 'change', '.vacancy_sr_status', ->
@@ -59,25 +59,25 @@ $(document).ready ->
       dataType: 'json'
       success: (data) ->
         $('.modal-body').empty()
-        $('.modal-body').append(JST["vacancies/candidates_modal_form"]({
+        $('.modal-body').append(JST['vacancies/candidates_modal_form']({
           vacancy_id: data.id,
         }))
         $.each data.candidates, (i, candidate ) ->
-          $('.modal-body tbody').append(JST["vacancies/candidates_modal_row"]({
+          $('.modal-body tbody').append(JST['vacancies/candidates_modal_row']({
             candidate_id: candidate.id,
             candidate_name: candidate.name,
             candidate_salary: candidate.salary
           }))
           if candidate.staff_relations.length != 0
             $.each candidate.staff_relations, (i, staff_relation ) ->
-              $(".modal-body .candidate_#{candidate.id} .staff_relations").append(JST["vacancies/candidates_modal_staff_relation_row"]({
+              $(".modal-body .candidate_#{candidate.id} .staff_relations").append(JST['vacancies/candidates_modal_staff_relation_row']({
                 staff_realation_status: staff_relation.status,
                 staff_realation_vacancy_name: staff_relation.vacancy_name
               }))
               return
             return
           else
-            $(".modal-body .candidate_#{candidate.id} .staff_relations").append(JST["vacancies/candidates_modal_candidate_status_row"]({
+            $(".modal-body .candidate_#{candidate.id} .staff_relations").append(JST['vacancies/candidates_modal_candidate_status_row']({
               staff_realation_status: candidate.status
             }))
         $('#dialog').modal('show')

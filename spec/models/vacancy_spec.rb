@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Vacancy, type: :model do
+  
   context 'check validations' do
     context 'when valid' do
       it 'has valid factory' do
@@ -47,4 +48,5 @@ RSpec.describe Vacancy, type: :model do
       expect { @candidate.save }.to change( Candidate, :count).by(1)
     end
   end
+  
 end

@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AdminUser, type: :model do
+
   let(:admin_user) { create(:admin_user) }
 
   describe 'instantiation' do
@@ -42,4 +43,5 @@ RSpec.describe AdminUser, type: :model do
       end
     end
   end
+  
 end
