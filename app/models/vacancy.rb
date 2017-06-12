@@ -25,9 +25,8 @@ class Vacancy < ActiveRecord::Base
   # after_restore :add_history_event_after_restore
 
   def candidates_with_status(status)
-    Candidate.select(%{ "candidates".* }).joins(:staff_relations)
-             .where(%{ "staff_relations"."vacancy_id" = #{self.id}
-                    AND "staff_relations"."status" = '#{status}' })
+    Candidate.select(%{ 'candidates'.* }).joins(:staff_relations)
+             .where(%{ "staff_relations"."vacancy_id" = #{self.id} AND "staff_relations"."status" = '#{status}' })
   end
 
   def set_default_status

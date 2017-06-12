@@ -8,11 +8,11 @@ Rails.application.routes.draw do
   root 'organisers#index'
 
   resources :organisers, only: :index
-  resources :stickers, except: [:show, :index]
-  resources :users, only: [:update, :edit, :show, :index]
+  resources :stickers, except: [ :show, :index ]
+  resources :users, only: [ :update, :edit, :show, :index ]
   resources :vacancies
   resources :companies
-  resources :candidates, except: [:destroy] do
+  resources :candidates, except: [ :destroy ] do
     member do
       get :set_vacancies
       put :update_resume
@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   get '/edit/:id', to: 'events#edit'
   get '/v_candidates/:id', to: 'vacancies#vacancy_candidates'
 
-  resources :staff_relations, only: [:new, :create, :destroy]
+  resources :staff_relations, only: [ :new, :create, :destroy ]
 
   resources :geo_names, only: [:index]
 

@@ -1,6 +1,9 @@
 # encoding: utf-8
 class Candidate < ActiveRecord::Base
 
+  # acts_as_taggable
+  # acts_as_taggable_on :vacancies
+
   acts_as_paranoid
   include Support
 
@@ -92,7 +95,7 @@ class Candidate < ActiveRecord::Base
   def check_geo_name
     self.geo_name_id = if city_of_residence.present?
                          GeoName.joins(:geo_alternate_names).find_by(fclass: 'P', geo_alternate_names: { name: self.city_of_residence })&.id
-                    end || nil
+                       end || nil
   end
 
   def add_history_event_after_create
