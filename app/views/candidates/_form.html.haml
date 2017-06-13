@@ -29,7 +29,6 @@
     .col-sm-3.control-label
       = f.label :desired_position, 'Желаемая должность:'
     .col-sm-9
-      -#= f.text_field :vacancy_list, value: f.object.vacancy_list.to_s, class: 'form-control'
       = f.text_field :desired_position, class: 'form-control'
   .form-group
     .col-sm-3.control-label
@@ -64,6 +63,11 @@
     .col-md-12
       .tip
         %p Инфо:
+  .form-group
+    .col-sm-3.control-label
+      = f.label :skills, 'Навыки'
+    .col-sm-9
+      = f.text_field :skills, value: @candidate.skill_list.to_s, class: 'form-control'
   .form-group
     .col-sm-3.control-label
       = f.label :education, 'Образование'

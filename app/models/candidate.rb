@@ -1,14 +1,13 @@
 # encoding: utf-8
 class Candidate < ActiveRecord::Base
 
-  # acts_as_taggable
-  # acts_as_taggable_on :vacancies
+  acts_as_taggable_on :skills
 
   acts_as_paranoid
   include Support
 
-  acts_as_xlsx columns: [:name, :desired_position, :city_of_residence, :salary, :'owner.full_name',
-  :created_at, :status, :notice], i18n: true
+  acts_as_xlsx columns: [ :name, :desired_position, :city_of_residence, :salary, :'owner.full_name', :created_at,
+                          :status, :notice ], i18n: true
 
   scope :with_status, -> (status) { where(status: "#{status}") }
 
@@ -16,7 +15,7 @@ class Candidate < ActiveRecord::Base
   # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
-  belongs_to :company, :counter_cache => true
+  belongs_to :company, counter_cache: true
   belongs_to :geo_name, counter_cache: true
 
   has_one :image
