@@ -10,6 +10,8 @@ class CandidatesController < ApplicationController
 
     if request.format != 'text/html' && request.format != 'application/javascript' && !params[:page]
       @candidates = Candidate.where(filter_condition).order('id')
+    elsif params[:tag]
+      @candidates = Candidate.tagged_with(params[:tag])
     else
       @candidates = Candidate.where(filter_condition).order('id').page(params[:page]).per(10)
     end
@@ -44,6 +46,7 @@ class CandidatesController < ApplicationController
     CvSource.find_or_create_by(name: candidate_params[:source])
     @candidate = current_user.candidates.build(candidate_params)
     if @candidate.save!
+      @candidate.reload
       flash[:success] = 'Кандидат был успешно добавлен.'
       redirect_to candidates_path
     else
@@ -107,7 +110,7 @@ class CandidatesController < ApplicationController
     params.require(:candidate).permit(:name, :birthday, :salary, :salary_format, :notice, :education, :languages,
                                       :city_of_residence, :company_id, :ready_to_relocate, :desired_position, :status,
                                       :source, :description, :email, :phone, :linkedin, :facebook, :vkontakte, :google_plus,
-                                      :full_info, :skype, :home_page, :file_name, :skill_list)
+                                      :full_info, :skype, :home_page, :file_name, { tag_list: [] } )
   end
 
   def find_candidate

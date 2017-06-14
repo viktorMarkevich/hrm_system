@@ -65,9 +65,9 @@
         %p Инфо:
   .form-group
     .col-sm-3.control-label
-      = f.label :skills, 'Навыки'
+      = f.label :tag_list, 'Навыки (разделенные запятыми)'
     .col-sm-9
-      = f.text_field :skills, value: @candidate.skill_list.to_s, class: 'form-control'
+      = f.text_field :tag_list, class: 'form-control'
   .form-group
     .col-sm-3.control-label
       = f.label :education, 'Образование'

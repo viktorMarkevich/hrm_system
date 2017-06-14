@@ -1,7 +1,7 @@
 # encoding: utf-8
 class Candidate < ActiveRecord::Base
 
-  acts_as_taggable_on :skills
+  acts_as_taggable_on :tags
 
   acts_as_paranoid
   include Support
@@ -26,7 +26,7 @@ class Candidate < ActiveRecord::Base
 
   accepts_nested_attributes_for :image
 
-  validates :status, presence: true
+  # validates :status, presence: true
   # validates :name, :status, presence: true
   # validates :source, presence: true, if: 'file_name.nil?'
   # validates :source, uniqueness: true, if: 'source.present?'
@@ -80,12 +80,12 @@ class Candidate < ActiveRecord::Base
   end
 
   def self.to_csv
-    column_names =  %w{Кандидат Должность Регион Зарплата Ответственный Добавлен Статус Примечание}
+    column_names =  %w{ Кандидат Должность Регион Зарплата Ответственный Добавлен Статус Примечание }
     CSV.generate do |csv|
       csv << column_names
       all.each do |candidate|
-        csv << [candidate.name, candidate.desired_position, candidate.city_of_residence, candidate.salary,
-                candidate.owner&.full_name, candidate.created_at.strftime('%F'), candidate.status, candidate.notice]
+        csv << [ candidate.name, candidate.desired_position, candidate.city_of_residence, candidate.salary,
+                candidate.owner&.full_name, candidate.created_at.strftime('%F'), candidate.status, candidate.notice ]
       end
     end
   end

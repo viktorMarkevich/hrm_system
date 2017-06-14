@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     end
     collection do
       post :upload_resume
+      get :tags, as: :tags
     end
   end
 
