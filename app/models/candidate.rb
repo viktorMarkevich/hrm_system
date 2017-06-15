@@ -26,7 +26,7 @@ class Candidate < ActiveRecord::Base
 
   accepts_nested_attributes_for :image
 
-  # validates :status, presence: true
+  validates :status, presence: true
   # validates :name, :status, presence: true
   # validates :source, presence: true, if: 'file_name.nil?'
   # validates :source, uniqueness: true, if: 'source.present?'

@@ -14,7 +14,8 @@
           = render partial: 'candidates/form'
         .col-md-5
           - if @candidate.original_cv_data
-            %button{ class: 'btn btn-info', type: 'button', data: { toggle: 'collapse', target: '#collapseExample' }, aria: { expanded: 'false', controls: 'collapseExample' } }
+            %button{ class: 'btn btn-info', type: 'button', data: { toggle: 'collapse', target: '#collapseExample' },
+                                                            aria: { expanded: 'false', controls: 'collapseExample' } }
               Показать резюме
             %code#collapseExample.collapse{ style: 'color: grey;' }
               = render partial: 'candidates/resume'

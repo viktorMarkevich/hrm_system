@@ -18,3 +18,8 @@ $(document).ready ->
   $('body').on('click','.export-modal', (e)->
     $('#exportCandidates').modal 'hide'
   )
+
+  $('#candidate_tag_list').autocomplete({
+    source: $('#candidate_tag_list').data('autocomplete-source')
+
+  });
