@@ -2,6 +2,7 @@
 #=require jquery.ui.dialog
 
 $(document).ready ->
+
   $('body').on('click','.export', (e) ->
     e.preventDefault()
     current_href = $(this).attr('href') + '?page=' + $('.pagination li.active a').text()
@@ -19,7 +20,38 @@ $(document).ready ->
     $('#exportCandidates').modal 'hide'
   )
 
-  $('#candidate_tag_list').autocomplete({
-    source: $('#candidate_tag_list').data('autocomplete-source')
+#  return $('#candidate_tag_list').autocomplete({
+#  source: $('#candidate_tag_list').data('autocomplete-source')
+#  });
 
-  });
+  availableTags = $('#candidate_tag_list').data('autocomplete-source')
+
+  split = (val) ->
+    val.split /,\s*/
+
+  extractLast = (term) ->
+    split(term).pop()
+
+  $('#candidate_tag_list').on('keydown', (event) ->
+    if event.keyCode == $.ui.keyCode.TAB and $(this).autocomplete('instance').menu.active
+      event.preventDefault()
+    return
+  ).autocomplete
+    minLength: 0
+    source: (request, response) ->
+      response $.ui.autocomplete.filter(availableTags, extractLast(request.term))
+      return
+    focus: ->
+
+      false
+    select: (event, ui) ->
+      terms = split(@value)
+
+      terms.pop()
+
+      terms.push ui.item.value
+
+      terms.push ''
+      @value = terms.join(', ')
+      false
+  return

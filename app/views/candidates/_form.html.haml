@@ -67,7 +67,8 @@
     .col-sm-3.control-label
       = f.label :tag_list, 'Навыки:'
     .col-sm-9
-      = f.text_field :tag_list, required: 'true', class: 'form-control', data: { autocomplete_source: candidates_path }
+      = f.text_field :tag_list, required: 'true', class: 'form-control', data: { autocomplete_source: searches_path }
+      -#ActsAsTaggableOn::Tag.order(:name).map(&:name)
   .form-group
     .col-sm-3.control-label
       = f.label :education, 'Образование'
