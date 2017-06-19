@@ -10,8 +10,6 @@ class CandidatesController < ApplicationController
 
     if request.format != 'text/html' && request.format != 'application/javascript' && !params[:page]
       @candidates = Candidate.where(filter_condition).order('id')
-    elsif params[:tag].present?
-      @candidates = Candidate.tagged_with(params[:tag])
     else
       @candidates = Candidate.where(filter_condition).order('id').page(params[:page]).per(10)
     end
