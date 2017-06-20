@@ -20,6 +20,8 @@ $(document).ready ->
     $('#exportCandidates').modal 'hide'
   )
 
+$(document).ready ->
+
   split = (val) ->
     val.split /,\s*/
   extractLast = (term) ->
@@ -27,6 +29,7 @@ $(document).ready ->
 
   $('#candidate_tag_list').autocomplete
     minLength: 0
+    delay: 0
     source: (request, response) ->
       $.ajax
         url: '/searches'
@@ -35,7 +38,6 @@ $(document).ready ->
         type: 'GET'
         success: (data) ->
           response data
-
       return
     focus: ->
       false
@@ -43,6 +45,8 @@ $(document).ready ->
       terms = split(@value)
       terms.pop()
       terms.push ui.item.value
+      jQuery.uniqueSort(terms)
+      console.log(ui.item.value)
       terms.push ''
       @value = terms.join(', ')
       false

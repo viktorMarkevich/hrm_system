@@ -21,7 +21,6 @@ FactoryGirl.define do
     association :owner, factory: :user
     sequence(:source) { |n| "CV_ENG#{n}.docx" }
     city_of_residence 'Киев'
-    sequence(:tag_list) { |n| "ruby_#{n}" }
   end
 
 end
