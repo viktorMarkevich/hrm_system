@@ -10,10 +10,11 @@ namespace :candidates do
     end
     puts
   end
+end
 
+namespace :history do
   desc 'remove histories'
-  task remove_history: :environment do
+  task delete_all: :environment do
     History.delete_all
   end
-
 end
