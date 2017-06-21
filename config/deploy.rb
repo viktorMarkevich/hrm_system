@@ -18,8 +18,9 @@ set :format, :pretty
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', '.ruby-version', '.ruby-gemset', 'config/unicorn.rb')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
-# set :unicorn_conf, -> { "#{fetch(:deploy_to)}/current/config/unicorn.rb" }
-# set :unicorn_pid, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/unicorn.pid" }
+set :unicorn_conf, -> { "#{fetch(:deploy_to)}/current/config/unicorn.rb" }
+set :unicorn_pid, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/unicorn.pid" }
+set :unicorn_sockets, -> { "#{fetch(:deploy_to)}/shared/tmp/sockets/unicorn.sock" }
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
