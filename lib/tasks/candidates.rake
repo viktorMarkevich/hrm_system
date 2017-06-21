@@ -11,11 +11,9 @@ namespace :candidates do
     puts
   end
 
-  desc 'Set status "Пассивен" as default to all candidates'
-  task set_passive_status: :environment do
-    Candidate.all.each do |candidate|
-      candidate.update(status: 'Пассивен')
-    end
+  desc 'remove histories'
+  task remove_history: :environment do
+    History.delete_all
   end
 
 end
