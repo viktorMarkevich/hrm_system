@@ -24,7 +24,7 @@ ru:
         city_of_residence: 'Регион'
         salary: 'Зарплата'
         source: 'Источник'
-        ready_to_relocate: 'Готов(а) к переезду'
+        ready_to_relocate: 'Готов(а) к переезду:'
         company_id: 'Компания'
         owner:
           full_name: 'Ответственный'
