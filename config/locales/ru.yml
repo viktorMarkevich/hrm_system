@@ -7,31 +7,31 @@ ru:
       vacancy: Вакансия
     attributes:
       vacancy:
-        name: 'Имя - '
-        salary: 'Зарплата - '
-        salary_format: 'Формат денежных едениц - '
-        languages: 'Языки - '
-        status: 'Статус - '
-        requirements: 'Требования - '
-        region: 'Регион - '
-        user_id: 'Ответственный - '
-        deleted_at: 'В архиве - '
+        name: 'Имя'
+        salary: 'Зарплата'
+        salary_format: 'Формат денежных едениц'
+        languages: 'Языки'
+        status: 'Статус'
+        requirements: 'Требования'
+        region: 'Регион'
+        user_id: 'Ответственный'
+        deleted_at: 'В архиве'
 
-      candidates: 'Кандидаты - '
+      candidates: 'Кандидаты'
       candidate:
-        name: 'Кандидат - '
-        desired_position: 'Должность - '
-        city_of_residence: 'Регион - '
-        salary: 'Зарплата - '
+        name: 'Кандидат'
+        desired_position: 'Должность'
+        city_of_residence: 'Регион'
+        salary: 'Зарплата'
         owner:
-          full_name: 'Ответственный - '
+          full_name: 'Ответственный'
         created_at: Добавлен
-        status: 'Статус - '
-        notice: 'Примечание - '
+        status: 'Статус'
+        notice: 'Примечание'
       company:
-        region: 'Регион - '
+        region: 'Регион'
       staff_relation:
-        status: 'Статус - '
+        status: 'Статус'
 
     errors:
       models:
