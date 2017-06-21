@@ -56,7 +56,7 @@
     .col-sm-3.control-label
       = f.label :ready_to_relocate, 'Готов к переезду:'
     .col-sm-9
-      = f.check_box :ready_to_relocate
+      = f.check_box :ready_to_relocate, { checked: false }, 'Да', 'Нет'
   %hr
 
   .row

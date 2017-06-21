@@ -40,9 +40,9 @@ RSpec.describe OrganisersController, type: :controller do
         expect(assigns(:events)).to_not include(old_event)
       end
 
-      it 'to get the stickers, vacancies' do
-        expect(assigns(:stickers)).to eq(user.stickers)
-      end
+      # it 'to get the stickers, vacancies' do
+      #   expect(assigns(:stickers)).to eq(user.stickers)
+      # end
 
       it 'vacancy should have status "Найденные"' do
         expect(sr.status).to eq 'Найденные'
@@ -64,7 +64,6 @@ RSpec.describe OrganisersController, type: :controller do
         expect(assigns(:histories).pluck(:was_changed)).to eq [
                                                                   {"name"=>"[nil, \"#{vacancy.name}\"]",
                                                                    "salary"=>"[nil, \"550\"]",
-                                                                   "user_id"=>"[nil, #{vacancy.user_id}]",
                                                                    "languages"=>"[nil, \"Английский, Русский\"]",
                                                                    "region"=>"[nil, \"#{vacancy.region}\"]",
                                                                    "requirements"=>"[nil, \"Ответственный\"]",
@@ -77,7 +76,6 @@ RSpec.describe OrganisersController, type: :controller do
                                                                    "salary"=>"[nil, \"300-500 USD\"]",
                                                                    "source"=>"[nil, \"#{candidate.source}\"]",
                                                                    "status"=>"[\"Пассивен\", \"В работе\"]",
-                                                                   "user_id"=>"[nil, #{candidate.user_id}]",
                                                                    "birthday"=>"[nil, \"06-12-2015\"]",
                                                                    "facebook"=>"[nil, \"http://www.facebook.com/test.user\"]",
                                                                    "linkedin"=>"[nil, \"https://ua.linkedin.com/pub/test-user/9a/29/644\"]",
@@ -91,7 +89,6 @@ RSpec.describe OrganisersController, type: :controller do
 
                                                                   {"name"=>"[nil, \"#{vacancy_0.name}\"]",
                                                                    "salary"=>"[nil, \"550\"]",
-                                                                   "user_id"=>"[nil, #{vacancy_0.user_id}]",
                                                                    "languages"=>"[nil, \"Английский, Русский\"]",
                                                                    "region"=>"[nil, \"#{vacancy.region}\"]",
                                                                    "requirements"=>"[nil, \"Ответственный\"]",
@@ -104,7 +101,6 @@ RSpec.describe OrganisersController, type: :controller do
                                                                    "salary"=>"[nil, \"300-500 USD\"]",
                                                                    "source"=>"[nil, \"#{candidate_0.source}\"]",
                                                                    "status"=>"[\"Пассивен\", \"В работе\"]",
-                                                                   "user_id"=>"[nil, #{candidate_0.user_id}]",
                                                                    "birthday"=>"[nil, \"06-12-2015\"]",
                                                                    "facebook"=>"[nil, \"http://www.facebook.com/test.user\"]",
                                                                    "linkedin"=>"[nil, \"https://ua.linkedin.com/pub/test-user/9a/29/644\"]",
@@ -141,7 +137,6 @@ RSpec.describe OrganisersController, type: :controller do
 
                                                                 {"name"=>"[nil, \"#{vacancy.name}\"]",
                                                                  "salary"=>"[nil, \"550\"]",
-                                                                 "user_id"=>"[nil, #{vacancy.user_id}]",
                                                                  "languages"=>"[nil, \"Английский, Русский\"]",
                                                                  "region"=>"[nil, \"#{vacancy.region}\"]",
                                                                  "requirements"=>"[nil, \"Ответственный\"]",
@@ -154,7 +149,6 @@ RSpec.describe OrganisersController, type: :controller do
                                                                  "salary"=>"[nil, \"300-500 USD\"]",
                                                                  "source"=>"[nil, \"#{candidate.source}\"]",
                                                                  "status"=>"[\"Пассивен\", \"В работе\"]",
-                                                                 "user_id"=>"[nil, #{candidate.user_id}]",
                                                                  "birthday"=>"[nil, \"06-12-2015\"]",
                                                                  "facebook"=>"[nil, \"http://www.facebook.com/test.user\"]",
                                                                  "linkedin"=>"[nil, \"https://ua.linkedin.com/pub/test-user/9a/29/644\"]",
@@ -168,7 +162,6 @@ RSpec.describe OrganisersController, type: :controller do
 
                                                                 {"name"=>"[nil, \"#{vacancy_0.name}\"]",
                                                                  "salary"=>"[nil, \"550\"]",
-                                                                 "user_id"=>"[nil, #{vacancy_0.user_id}]",
                                                                  "languages"=>"[nil, \"Английский, Русский\"]",
                                                                  "region"=>"[nil, \"#{vacancy.region}\"]",
                                                                  "requirements"=>"[nil, \"Ответственный\"]",
@@ -181,7 +174,6 @@ RSpec.describe OrganisersController, type: :controller do
                                                                  "salary"=>"[nil, \"300-500 USD\"]",
                                                                  "source"=>"[nil, \"#{candidate_0.source}\"]",
                                                                  "status"=>"[\"Пассивен\", \"В работе\"]",
-                                                                 "user_id"=>"[nil, #{candidate_0.user_id}]",
                                                                  "birthday"=>"[nil, \"06-12-2015\"]",
                                                                  "facebook"=>"[nil, \"http://www.facebook.com/test.user\"]",
                                                                  "linkedin"=>"[nil, \"https://ua.linkedin.com/pub/test-user/9a/29/644\"]",
@@ -214,7 +206,6 @@ RSpec.describe OrganisersController, type: :controller do
                                                                 { "name"=>"[nil, \"#{vacancy.name}\"]",
                                                                    "region"=>"[nil, \"Region\"]",
                                                                    "salary"=>"[nil, \"550\"]",
-                                                                   "user_id"=>"[nil, #{vacancy.user_id}]",
                                                                    "languages"=>"[nil, \"Английский, Русский\"]",
                                                                    "requirements"=>"[nil, \"Ответственный\"]",
                                                                    "salary_format"=>"[nil, \"usd\"]" },
@@ -225,7 +216,6 @@ RSpec.describe OrganisersController, type: :controller do
                                                                    "salary"=>"[nil, \"300-500 USD\"]",
                                                                    "source"=>"[nil, \"#{candidate.source}\"]",
                                                                    "status"=>"[\"Пассивен\", \"В работе\"]",
-                                                                   "user_id"=>"[nil, #{candidate.user_id}]",
                                                                    "birthday"=>"[nil, \"06-12-2015\"]",
                                                                    "facebook"=>"[nil, \"http://www.facebook.com/test.user\"]",
                                                                    "linkedin"=>"[nil, \"https://ua.linkedin.com/pub/test-user/9a/29/644\"]",
@@ -239,7 +229,6 @@ RSpec.describe OrganisersController, type: :controller do
                                                                 { "name"=>"[nil, \"#{vacancy_0.name}\"]",
                                                                    "region"=>"[nil, \"Region\"]",
                                                                    "salary"=>"[nil, \"550\"]",
-                                                                   "user_id"=>"[nil, #{vacancy_0.user_id}]",
                                                                    "languages"=>"[nil, \"Английский, Русский\"]",
                                                                    "requirements"=>"[nil, \"Ответственный\"]",
                                                                    "salary_format"=>"[nil, \"usd\"]" },
@@ -250,7 +239,6 @@ RSpec.describe OrganisersController, type: :controller do
                                                                    "salary"=>"[nil, \"300-500 USD\"]",
                                                                    "source"=>"[nil, \"#{candidate_0.source}\"]",
                                                                    "status"=>"[\"Пассивен\", \"В работе\"]",
-                                                                   "user_id"=>"[nil, #{candidate_0.user_id}]",
                                                                    "birthday"=>"[nil, \"06-12-2015\"]",
                                                                    "facebook"=>"[nil, \"http://www.facebook.com/test.user\"]",
                                                                    "linkedin"=>"[nil, \"https://ua.linkedin.com/pub/test-user/9a/29/644\"]",
