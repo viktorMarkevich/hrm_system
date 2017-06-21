@@ -1,4 +1,5 @@
 FactoryGirl.define do
+
   factory :sticker do
     description 'Default description'
     association :owner, factory: :user
@@ -11,4 +12,5 @@ FactoryGirl.define do
   factory :deleted_sticker, parent: :sticker do
     deleted_at Time.now
   end
+
 end

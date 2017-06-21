@@ -11,11 +11,8 @@
       .col-md-6
         = link_to edit_candidate_path(@candidate) do
           .progress
-            .progress-bar.progress-bar-danger.progress-bar-striped.active{ 'aria-valuemax' => '100',
-                                                                           'aria-valuemin' => '0',
-                                                                           'aria-valuenow' => "#{perc}",
-                                                                           role: 'progressbar',
-                                                                           style: "width: #{perc}%;" }
+            .progress-bar.progress-bar-danger.progress-bar-striped.active{ aria: { valuemax: 100, valuemin: 0, valuenow: "#{perc}" },
+                                                                                   role: 'progressbar', style: "width: #{perc}%;" }
               = "#{perc}%"
       .col-md-2
         .pull-right
@@ -33,21 +30,21 @@
         = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-primary'
         = link_to 'Назад', :back, class: 'btn btn-default'
         - if @candidate.original_cv_data
-          %button{type: 'button', class: 'btn btn-info', 'data-toggle' => 'modal', 'data-target' => '#ResumeModalWindow'}
+          %button{ type: 'button', class: 'btn btn-info', data: { toggle: 'modal', target: '#ResumeModalWindow' } }
             Посмотреть резюме
-          %div{class: 'modal fade bs-example-modal-lg', id: 'ResumeModalWindow', tabindex: '-1', role: 'dialog', 'aria-labelledby' => 'ResumeModalWindowLabel'}
-            %div{class: 'modal-dialog modal-lg', role: 'document'}
+          %div{ class: 'modal fade bs-example-modal-lg', id: 'ResumeModalWindow', tabindex: '-1', role: 'dialog', aria: { labelledby: 'ResumeModalWindowLabel' } }
+            %div{ class: 'modal-dialog modal-lg', role: 'document' }
               .modal-content
                 .modal-header
-                  %button{type: 'button', class: 'close', 'data-dismiss' => 'modal', 'aria-label' => 'Close'}
-                    %span{'aria-hidden' => 'true'}
+                  %button{ type: 'button', class: 'close', data: { dismiss: 'modal' }, aria: { label: 'Close ' } }
+                    %span{ aria: { hidden: 'true' } }
                       &times;
                   %h4#myModalLabel.modal-title.text-left
                     Оригинальное резюме кандидата
                 .modal-body.text-left
                   = render partial: 'candidates/resume'
                 .modal-footer
-                  %button{type: 'button', class: 'btn btn-default', 'data-dismiss' => 'modal'}
+                  %button{ type: 'button', class: 'btn btn-default', data: { dismiss: 'modal' } }
                     Закрыть
 
     %hr
@@ -84,7 +81,5 @@
     .tip
       %p Потенциальные вакансии:
     .vacancies_list
-      = render partial: 'vacancies_list', locals: { candidate: @candidate,
-                                                    vacancies: @vacancies,
-                                                    staff_relations: @staff_relations }
+      = render partial: 'vacancies_list', locals: { candidate: @candidate, vacancies: @vacancies, staff_relations: @staff_relations }
   .col-lg-offset-1

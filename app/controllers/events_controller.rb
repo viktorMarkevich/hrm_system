@@ -1,9 +1,9 @@
 class EventsController < ApplicationController
 
-  before_action :set_event, only: [:edit, :update, :destroy]
-  before_action :set_sr, only: [ :edit]
-  before_action :set_date, only: [:index, :edit, :update, :destroy]
-  before_action :set_events_in_date_period, only: [:index, :update]
+  before_action :set_event, only: [ :edit, :update, :destroy ]
+  before_action :set_sr, only: [ :edit ]
+  before_action :set_date, only: [ :index, :edit, :update, :destroy ]
+  before_action :set_events_in_date_period, only: [ :index, :update ]
   before_action :authenticate_user!
 
   def index
@@ -12,15 +12,16 @@ class EventsController < ApplicationController
       format.json { render :index }
     end
   end
+
   def show
     @event= Event.find(params[:id])
     !@event.staff_relation.nil? && !@event.staff_relation.vacancy.nil? ? v = @event.staff_relation.vacancy : v = nil
     !@event.staff_relation.nil? && !@event.staff_relation.candidate.nil? ? c = @event.staff_relation.candidate : c = nil
-    render json: {e: @event, v: v, c: c}
+    render json: { e: @event, v: v, c: c }
   end
 
   def selected_day_events
-    @events = Event.where("DATE(will_begin_at) =  ?", params[:will_begin_at].to_date)
+    @events = Event.where('DATE(will_begin_at) =  ?', params[:will_begin_at].to_date)
   end
 
   def edit
@@ -29,7 +30,10 @@ class EventsController < ApplicationController
   def create
     @vacancies=Vacancy.all
     @event = current_user.events.build(event_params)
-    if  !event_params[:staff_relation_attributes].nil? && !event_params[:staff_relation_attributes][:vacancy_id].nil? && event_params[:staff_relation_attributes][:vacancy_id]!='' ||  !event_params[:staff_relation_attributes].nil? && !event_params[:staff_relation_attributes][:candidate_id].nil?
+    if  !event_params[:staff_relation_attributes].nil? &&
+        !event_params[:staff_relation_attributes][:vacancy_id].nil? &&
+        event_params[:staff_relation_attributes][:vacancy_id]!='' ||  !event_params[:staff_relation_attributes].nil? &&
+        !event_params[:staff_relation_attributes][:candidate_id].nil?
       event_params[:staff_relation_attributes].merge(status: 'Собеседование')
       @event.staff_relation = StaffRelation.find_or_initialize_by(event_params[:staff_relation_attributes])
     else
@@ -48,7 +52,10 @@ class EventsController < ApplicationController
 
   def update
     @event.assign_attributes(event_params)
-    if !event_params[:staff_relation_attributes].nil? && !event_params[:staff_relation_attributes][:vacancy_id].nil? && !event_params[:staff_relation_attributes][:candidate_id].nil? && !event_params[:staff_relation_attributes][:candidate_id].equal?('undefined')
+    if !event_params[:staff_relation_attributes].nil? &&
+       !event_params[:staff_relation_attributes][:vacancy_id].nil? &&
+       !event_params[:staff_relation_attributes][:candidate_id].nil? &&
+       !event_params[:staff_relation_attributes][:candidate_id].equal?('undefined')
       event_params[:staff_relation_attributes].merge(status: 'Собеседование')
       @event.staff_relation = StaffRelation.find_or_initialize_by(event_params[:staff_relation_attributes])
     else
@@ -76,7 +83,6 @@ class EventsController < ApplicationController
   end
 
   private
-
   def set_event
     @event = Event.find(params[:id])
   end
@@ -92,13 +98,16 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    permitted_params = params.require(:event).permit(:name, :will_begin_at, :description, :user_id, staff_relation_attributes: [:vacancy_id, :candidate_id])
+    permitted_params = params.require(:event).permit(:name, :will_begin_at, :description, :user_id,
+                                                     staff_relation_attributes: [ :vacancy_id, :candidate_id ])
     permitted_params&.tap {|p| p[:will_begin_at] = (params[:event][:will_begin_at]).to_datetime }
   end
 
   def set_events_in_date_period
     @events = Event.events_of(current_user, @date_from, @date_to).includes(:staff_relation).order(will_begin_at: :asc)
     @events_month = Event.events_of(current_user, @date_from.beginning_of_month, @date_to).order(will_begin_at: :asc)
-    @events_past = Event.events_of(current_user, @date_from.beginning_of_month, Time.zone.now.advance(minutes: -1)).includes(:staff_relation).order(will_begin_at: :asc)
+    @events_past = Event.events_of(current_user, @date_from.beginning_of_month,
+                   Time.zone.now.advance(minutes: -1)).includes(:staff_relation).order(will_begin_at: :asc)
   end
+
 end

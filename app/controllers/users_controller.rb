@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :find_user, only: [:edit, :update, :show]
+  before_action :find_user, only: [ :edit, :update, :show ]
 
   def index
     @users = User.order('id').page(params[:page]).per(10)
@@ -23,7 +23,6 @@ class UsersController < ApplicationController
   end
 
   private
-
   def find_user
     @user = User.find(params[:id])
   end

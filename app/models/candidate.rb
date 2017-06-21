@@ -1,24 +1,28 @@
 # encoding: utf-8
 class Candidate < ActiveRecord::Base
+
   acts_as_paranoid
   include Support
 
   acts_as_xlsx columns: [:name, :desired_position, :city_of_residence, :salary, :'owner.full_name',
-                         :created_at, :status, :notice], i18n: true
+  :created_at, :status, :notice], i18n: true
+
+  scope :with_status, -> (status) { where(status: "#{status}") }
+
+  STATUSES = %w(Пассивен В\ работе)
+  # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   belongs_to :company, :counter_cache => true
   belongs_to :geo_name, counter_cache: true
 
   has_one :image
+
   has_many :staff_relations, dependent: :destroy
   has_many :vacancies, through: :staff_relations, source: :vacancy
   has_many :histories, as: :historyable
 
   accepts_nested_attributes_for :image
-  scope :with_status, -> (status) { where(status: "#{status}") }
-  STATUSES = %w(Пассивен В\ работе)
-  # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
   validates :status, presence: true
   # validates :name, :status, presence: true
@@ -38,6 +42,7 @@ class Candidate < ActiveRecord::Base
   #          message: 'wrong format' }, if: 'birthday.present?'
 
   before_validation :check_geo_name
+
   after_create :add_history_event_after_create
   after_update :add_history_event_after_update
   # after_destroy :add_history_event_after_destroy
@@ -77,43 +82,40 @@ class Candidate < ActiveRecord::Base
     CSV.generate do |csv|
       csv << column_names
       all.each do |candidate|
-        csv << [candidate.name, candidate.desired_position, candidate.city_of_residence, candidate.salary, candidate.owner&.full_name,
-                candidate.created_at.strftime('%F'), candidate.status, candidate.notice]
+        csv << [candidate.name, candidate.desired_position, candidate.city_of_residence, candidate.salary,
+                candidate.owner&.full_name, candidate.created_at.strftime('%F'), candidate.status, candidate.notice]
       end
     end
   end
 
   private
-    def check_geo_name
-      self.geo_name_id = if city_of_residence.present?
-                           GeoName.joins(:geo_alternate_names).find_by(fclass: 'P', geo_alternate_names: { name: self.city_of_residence })&.id
-                      end || nil
-    end
-
-    def add_history_event_after_create
-      histories.create_with_attrs(was_changed: set_changes, action: 'create')
-    end
-
-    def add_history_event_after_update
-      # histories.create_with_attrs(was_changed: { status: 'Пассивен' }, action: 'create')
-      # p '*'*100
-      # p self.changes
-      # p '*'*100
-    end
-
-    def add_history_event_after_destroy
-      History.create_with_attrs(new_status: 'В архиве',
-                                responsible: {
-                                    full_name: owner.full_name,
-                                    id: user_id },
-                                action: "Кандидат <strong>#{name}</strong> перемещен в архив")
-    end
-
-    def add_history_event_after_restore
-      History.create_with_attrs(new_status: 'Восстановлен',
-                                responsible: {
-                                    full_name: owner.full_name,
-                                    id: user_id },
-                                action: "Кандидат <strong>#{name}</strong> восстановлен из архива")
-    end
+  def check_geo_name
+    self.geo_name_id = if city_of_residence.present?
+                         GeoName.joins(:geo_alternate_names).find_by(fclass: 'P', geo_alternate_names: { name: self.city_of_residence })&.id
+                    end || nil
   end
+
+  def add_history_event_after_create
+    histories.create_with_attrs(was_changed: set_changes, action: 'create')
+  end
+
+  def add_history_event_after_update
+    # histories.create_with_attrs(was_changed: { status: 'Пассивен' }, action: 'create')
+    # p '*'*100
+    # p self.changes
+    # p '*'*100
+  end
+
+  def add_history_event_after_destroy
+    History.create_with_attrs(new_status: 'В архиве',
+                              responsible: { full_name: owner.full_name, id: user_id },
+                              action: "Кандидат <strong>#{name}</strong> перемещен в архив")
+  end
+
+  def add_history_event_after_restore
+    History.create_with_attrs(new_status: 'Восстановлен',
+                              responsible: { full_name: owner.full_name, id: user_id },
+                              action: "Кандидат <strong>#{name}</strong> восстановлен из архива")
+  end
+
+end

@@ -12,4 +12,3 @@ json.candidates(@candidates) do |candidate|
     json.vacancy_name staff_relation.vacancy&.name||'(Удалена)'
   end
 end
-

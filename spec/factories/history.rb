@@ -1,4 +1,5 @@
 FactoryGirl.define do
+
   factory :history do
     association :history, factory: :staff_relation
   end
@@ -6,4 +7,5 @@ FactoryGirl.define do
     historyable_type nil
     historyable_id nil
   end
+
 end

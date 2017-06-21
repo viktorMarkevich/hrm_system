@@ -3,7 +3,6 @@
 
 = render 'dialog'
 = render 'events_show'
-
 .container-fluid
   .row
     .col-md-5.col-md-offset-1
@@ -25,5 +24,5 @@
     .col-md-5
       %a.pull-right.paranoid_btn.btn-dialog
         %i.glyphicon.glyphicon-plus
-      .calendar#events_calendar{ data: {date: @date_from.utc.strftime('%Y-%m-%d')}}
+      .calendar#events_calendar{ data: { date: @date_from.utc.strftime('%Y-%m-%d') } }
         = render partial: 'calendar', locals: { events: @events_month }

@@ -1,11 +1,11 @@
-#dialog.modal.fade{ 'aria-hidden' => 'true', 'aria-labelledby' => 'myModalLabel',
-                    'data-backdrop' => 'static', 'data-keyboard' => 'true',
+#dialog.modal.fade{ aria: { hidden: 'true', labelledby: 'myModalLabel' },
+                    data: { backdrop: 'static', keyboard: 'true' },
                     role: 'dialog', tabindex: '1' }
   .modal-dialog.modal-lg.event-dialog
     .modal-content
       .modal-header
-        %button.close{ 'aria-label' => 'Close', 'data-dismiss' => 'modal', type: 'button' }
-          %span{ 'aria-hidden' => 'true' } ×
+        %button.close{ aria: { label: 'Close' }, data: { dismiss: 'modal' }, type: 'button' }
+          %span{ aria: { hidden: 'true' } } ×
         %h3.modal-title
           Добавить событие
       .modal-body
@@ -17,7 +17,7 @@
           - if @staff_relations.present?
             .form-group#staff_relation
               = f.label 'На вакансию:'
-              = f.select :staff_relation, @staff_relations.collect{ |sr| [get_sr_name(sr), sr.id, { data: { status: sr.status } } ]},
+              = f.select :staff_relation, @staff_relations.collect{ |sr| [get_sr_name(sr), sr.id, { data: { status: sr.status } } ] },
                                           { include_blank: true, prompt: 'Выберете одну из позиций', selected: (@event.staff_relation.id if @event.staff_relation ) },
                                           { class: 'form-control staff_relation' }
           .form-group
@@ -31,9 +31,9 @@
             = f.text_area :description, rows: 3, class: 'form-control', required: true
           .form-group
             =f.fields_for :staff_relation_attributes do |ff|
-              = ff.select :vacancy_id, Vacancy.all.collect { |p| [ p.name, p.id ] }, include_blank: true, id: 'staff_relation_attributes_vacancy', class: "vacancy_select"
+              = ff.select :vacancy_id, Vacancy.all.collect { |p| [ p.name, p.id ] }, include_blank: true, id: 'staff_relation_attributes_vacancy', class: 'vacancy_select'
           .candidates_list
-            %table.table.table-bordered.table-hover.cand-list{style: "display: none" }
+            %table.table.table-bordered.table-hover.cand-list{ style: 'display: none' }
               %thead
                 %tr
                   %th Полное Имя

@@ -2,13 +2,15 @@ class StaffRelation < ActiveRecord::Base
 
   include Support
 
+  STATUSES = %w(Убрать Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
+
   belongs_to :vacancy
   belongs_to :candidate
+
   has_many :events
   # has_many :histories, as: :historyable
 
   validates :vacancy_id,  uniqueness: { scope: :candidate_id }, presence: true
-  STATUSES = %w(Убрать Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
   # after_create :create_history_event
   after_update :update_history_event
@@ -30,30 +32,30 @@ class StaffRelation < ActiveRecord::Base
   end
 
   def self.get_without_event
-    StaffRelation.where('status IN (?)', ['Собеседование', 'Утвержден'])
+    StaffRelation.where('status IN (?)', [ 'Собеседование', 'Утвержден' ])
   end
 
   private
+  def create_history_event
+    History.create_with_attrs(old_status: 'Пасивен',
+                              new_status: 'Найденные',
+                              responsible: { full_name: vacancy.owner.full_name,
+                                             id: vacancy.user_id },
+                              action: "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>")
+  end
 
-    def create_history_event
-      History.create_with_attrs(old_status: 'Пасивен',
-                                new_status: 'Найденные',
-                                responsible: { full_name: vacancy.owner.full_name,
-                                               id: vacancy.user_id },
-                                action: "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>")
+  def update_history_event
+    unless self.status_was == status
+      History.create_with_attrs(was_changed: set_changes, action: 'update', historyable_type: self.class.name, historyable_id: id)
     end
+  end
 
-    def update_history_event
-      unless self.status_was == status
-        History.create_with_attrs(was_changed: set_changes, action: 'update', historyable_type: self.class.name, historyable_id: id)
-      end
-    end
+  def set_changes
+    changes = self.changes
+    changes.delete('created_at')
+    changes.delete('updated_at')
+    changes.delete('id')
+    changes
+  end
 
-    def set_changes
-      changes = self.changes
-      changes.delete('created_at')
-      changes.delete('updated_at')
-      changes.delete('id')
-      changes
-    end
 end

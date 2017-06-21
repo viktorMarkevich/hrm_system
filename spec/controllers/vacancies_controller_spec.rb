@@ -8,7 +8,7 @@ RSpec.describe VacanciesController, type: :controller do
   before { sign_in user }
 
   def err_messages
-    ["Имя не может быть пустым"]
+    ['Имя не может быть пустым']
   end
 
   context '#index' do
@@ -50,7 +50,7 @@ RSpec.describe VacanciesController, type: :controller do
     end
 
     context 'when failed' do
-      let(:invalid_vacancy_attrs) { { vacancy: attributes_for(:invalid_vacancy)} }
+      let(:invalid_vacancy_attrs) { { vacancy: attributes_for(:invalid_vacancy) } }
 
       before do
         post :create, params: invalid_vacancy_attrs
@@ -84,7 +84,7 @@ RSpec.describe VacanciesController, type: :controller do
 
   context '#edit' do
     before do
-      get :edit, params: {id: vacancy}
+      get :edit, params: { id: vacancy}
     end
 
     it 'has HTTP 200 status' do
@@ -97,7 +97,7 @@ RSpec.describe VacanciesController, type: :controller do
   end
 
   context '#show' do
-    before { get :show, params: {id: vacancy} }
+    before { get :show, params: { id: vacancy } }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -113,7 +113,7 @@ RSpec.describe VacanciesController, type: :controller do
     let(:vacancy_attrs) { { name: 'Менеджер', salary: '400', region: region } }
 
     before do
-      put :update, params: {id: vacancy, vacancy: vacancy_attrs }
+      put :update, params: { id: vacancy, vacancy: vacancy_attrs }
       vacancy.reload
     end
 
@@ -131,7 +131,7 @@ RSpec.describe VacanciesController, type: :controller do
 
     context 'when failed' do
       before do
-        put :update, params: {id: vacancy, vacancy: { name: nil }}
+        put :update, params: { id: vacancy, vacancy: { name: nil } }
       end
 
       it 'renders "edit" template without name' do
@@ -147,7 +147,7 @@ RSpec.describe VacanciesController, type: :controller do
   describe '#destroy' do
 
     before do
-      delete :destroy, params: {id: vacancy}
+      delete :destroy, params: { id: vacancy }
     end
 
     it 'destroys vacancy' do
@@ -158,4 +158,5 @@ RSpec.describe VacanciesController, type: :controller do
       expect(response).to redirect_to(vacancies_path)
     end
   end
+
 end

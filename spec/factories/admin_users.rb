@@ -1,4 +1,5 @@
 FactoryGirl.define do
+
   factory :admin_user do
     sequence(:email) { |n| "email#{n}@ukr.net" }
     password 'password'
@@ -8,4 +9,5 @@ FactoryGirl.define do
   factory :invalid_admin_user, parent: :user do |f|
     f.email nil
   end
+
 end

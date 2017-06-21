@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Sticker, type: :model do
+
   context 'check validations' do
     context 'when valid'do
       it 'has valid factory' do
@@ -26,4 +27,5 @@ RSpec.describe Sticker, type: :model do
       end
     end
   end
+
 end

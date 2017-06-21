@@ -1,15 +1,13 @@
 # coding: utf-8
 
 Given(/^I have logged in user$/) do
-  User.create(
-      id: 1,
-      email: 'user@mail.com',
-      password: 'password',
-      first_name: 'Vasya',
-      region: 'Region',
-      last_name: 'Pro',
-      post: 'tester'
-  )
+  User.create( id: 1,
+               email: 'user@mail.com',
+               password: 'password',
+               first_name: 'Vasya',
+               region: 'Region',
+               last_name: 'Pro',
+               post: 'tester' )
 
   visit new_user_session_path
   within('#new_user') do
@@ -56,13 +54,11 @@ Then(/^new vacancy should be created$/) do
 end
 
 Given(/^I have valid vacancy$/) do
-  @vacancy = Vacancy.create(
-      name: 'Программист руби',
-      salary: '500',
-      salary_format: 'USD',
-      region: 'Region',
-      user_id: 1
-  )
+  @vacancy = Vacancy.create( name: 'Программист руби',
+                             salary: '500',
+                             salary_format: 'USD',
+                             region: 'Region',
+                             user_id: 1 )
 end
 
 Given(/^I am on the vacancy edit page$/) do

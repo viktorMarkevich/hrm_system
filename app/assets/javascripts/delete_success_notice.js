@@ -2,7 +2,6 @@
 $(document).on('ready turbolinks:load ajaxSuccess', function() {
 	$('.alert.alert-info.fade.in').fadeOut(2000);
 });
-
 //deleting success alert after candidat creation
 $(document).on('ready turbolinks:load ajaxSuccess', function() {
 	$('.alert.alert-success.fade.in').fadeOut(2000);

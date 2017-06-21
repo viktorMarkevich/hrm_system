@@ -1,4 +1,5 @@
 class NoticeMailer < ActionMailer::Base
+
   add_template_helper(ApplicationHelper)
   add_template_helper(UsersHelper)
 
@@ -14,4 +15,5 @@ class NoticeMailer < ActionMailer::Base
     @ceo = User.where(post: 'Директор').first
     mail(to: user.email, from: event.staff_relation.candidate.owner.email, subject: 'Event soon')
   end
+
 end

@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe StaffRelationsController, type: :controller do
+
   describe 'should to mark a candidate as found' do
     let(:candidates_list) { create_list(:candidate, 2) }
     let(:vacancy) { create :vacancy }
@@ -22,4 +23,5 @@ RSpec.describe StaffRelationsController, type: :controller do
       expect(StaffRelation.count).to eq(2)
     end
   end
+
 end
