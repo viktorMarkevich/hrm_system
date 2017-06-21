@@ -10,6 +10,5 @@ class OrganisersController < ApplicationController
                                   order(will_begin_at: :asc).page(params[:page]).per(5)
 
     @histories = History.preload(:historyable).order('updated_at DESC').page(params[:page]).per(5)
-    # @histories = History.preload([historyable: :owner]).order('updated_at DESC').page(params[:page]).per(5)
   end
 end

@@ -19,10 +19,13 @@ ru:
 
       candidates: 'Кандидаты'
       candidate:
-        name: 'Кандидат'
+        name: 'Имя'
         desired_position: 'Должность'
         city_of_residence: 'Регион'
         salary: 'Зарплата'
+        source: 'Источник'
+        ready_to_relocate: 'Готов(а) к переезду'
+        company_id: 'Компания'
         owner:
           full_name: 'Ответственный'
         created_at: Добавлен
@@ -30,6 +33,7 @@ ru:
         notice: 'Примечание'
       company:
         region: 'Регион'
+        name: 'Имя'
       staff_relation:
         status: 'Статус'
 
@@ -84,7 +88,7 @@ ru:
     candidate:
       create:
         notice: "В систему добавлен новый кандидат: <b>%{object_name}</b>"
-        changes: "<b>%{val_to}</b>"
+        changes: " <b>%{val_to}</b>"
       update:
         changes: " изменен с <b>%{val_from}</b> на <b>%{val_to}</b>"
       destroy:
