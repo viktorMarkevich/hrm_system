@@ -9,6 +9,9 @@ set :user, 'stagin'
 
 set :deploy_to,  "/home/#{fetch(:user)}/#{fetch(:rails_env)}/#{fetch(:application)}"
 
+set :unicorn_conf, "#{deploy_to}/current/config/unicorn.rb"
+set :unicorn_pid, "#{deploy_to}/shared/pids/unicorn.pid"
+
 # Defaults to 'db'
 # set :migration_role, 'migrator'
 
