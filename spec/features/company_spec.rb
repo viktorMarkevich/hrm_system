@@ -1,8 +1,8 @@
 # coding: utf-8
-
 require 'rails_helper'
 
 describe 'Managing companies', type: :feature do
+
   let(:user) { create(:user) }
   let(:company) { create(:company) }
 
@@ -61,4 +61,5 @@ describe 'Managing companies', type: :feature do
     end
     expect(page).to have_content('Компания успешно обновлена.')
   end
+
 end

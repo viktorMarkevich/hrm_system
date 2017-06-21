@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'Managing events', type: :feature do
+
   let(:user) { create(:user) }
   let(:event) { create(:event, user_id: user.id) }
   let(:staff_relation) { create(:staff_relation) }

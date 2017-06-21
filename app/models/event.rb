@@ -1,13 +1,14 @@
 class Event < ActiveRecord::Base
 
+  MONTHS = %w(Январь Февраль Март Апрель Май Июнь Июль Август Сентябрь Октябрь Ноябрь Декабрь)
+
   belongs_to :user
   belongs_to :staff_relation, dependent: :destroy
+
   accepts_nested_attributes_for :staff_relation
 
   validates :name, :description, :user_id, presence: true
   validate :future_event?
-
-  MONTHS = %w(Январь Февраль Март Апрель Май Июнь Июль Август Сентябрь Октябрь Ноябрь Декабрь)
 
   def future_event?
     errors.add(:will_begin_at, 'должна быть предстоящей') unless will_begin_at.future?
@@ -41,4 +42,5 @@ class Event < ActiveRecord::Base
   def start_time
     self.will_begin_at
   end
+
 end

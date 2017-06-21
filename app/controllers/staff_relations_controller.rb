@@ -5,7 +5,7 @@ class StaffRelationsController < ApplicationController
   include VacancyHelper
 
   def new
-    @vacancy = Vacancy.find(params[:vacancy_id]) || Vacancy.only_deleted.where( id: params[:vacancy_id])
+    @vacancy = Vacancy.find(params[:vacancy_id]) || Vacancy.only_deleted.where(id: params[:vacancy_id])
     @staff_relation = StaffRelation.new
 
     @all_candidates = Candidate.includes([:staff_relations, :vacancies])
@@ -41,8 +41,8 @@ class StaffRelationsController < ApplicationController
   end
 
   private
-
   def st_params
-    params.require(:staff_relation).permit(:status, :notice, :vacancy_id, candidate_id: [] )
+    params.require(:staff_relation).permit(:status, :notice, :vacancy_id, candidate_id: [])
   end
+
 end

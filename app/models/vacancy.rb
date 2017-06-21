@@ -1,7 +1,10 @@
 # coding: utf-8
 class Vacancy < ActiveRecord::Base
+
   acts_as_paranoid
   include Support
+
+  STATUSES = %w(Не\ задействована В\ работе Закрыта)
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
 
@@ -21,11 +24,8 @@ class Vacancy < ActiveRecord::Base
   # after_destroy :add_history_event_after_destroy
   # after_restore :add_history_event_after_restore
 
-  STATUSES = %w(Не\ задействована В\ работе Закрыта)
-
   def candidates_with_status(status)
-    Candidate.select(%{ "candidates".* })
-             .joins(:staff_relations)
+    Candidate.select(%{ "candidates".* }).joins(:staff_relations)
              .where(%{ "staff_relations"."vacancy_id" = #{self.id}
                     AND "staff_relations"."status" = '#{status}' })
   end
@@ -39,30 +39,29 @@ class Vacancy < ActiveRecord::Base
   end
 
   private
+  def add_history_event_after_create
+    histories.create_with_attrs(was_changed: set_changes, action: 'create')
+  end
 
-    def add_history_event_after_create
-      histories.create_with_attrs(was_changed: set_changes, action: 'create')
-    end
+  def add_history_event_after_update
+    History.create_with_attrs(was_changed: set_changes, action: 'update', historyable_type: 'Vacancy', historyable_id: id)
+  end
 
-    def add_history_event_after_update
-      History.create_with_attrs(was_changed: set_changes, action: 'update', historyable_type: 'Vacancy', historyable_id: id)
-    end
+  # def add_history_event_after_destroy   # TODO  old status
+  #   History.create_with_attrs(new_status: 'В архиве',
+  #                           responsible: {
+  #                               full_name: owner.full_name,
+  #                               id: user_id },
+  #                           action: "Вакансия <strong>#{name}</strong> перемещена в архив")
+  # end
+  #
+  # def add_history_event_after_restore # TODO  old status
+  #   History.create_with_attrs(new_status: 'Восстановлена',
+  #                             responsible: {
+  #                                 full_name: owner.full_name,
+  #                                 id: user_id },
+  #                             action: "Вакансия <strong>#{name}</strong> восстановлена из архива")
+  # end
 
-    
-    # def add_history_event_after_destroy   # TODO  old status
-    #   History.create_with_attrs(new_status: 'В архиве',
-    #                           responsible: {
-    #                               full_name: owner.full_name,
-    #                               id: user_id },
-    #                           action: "Вакансия <strong>#{name}</strong> перемещена в архив")
-    # end
-    #
-    # def add_history_event_after_restore # TODO  old status
-    #   History.create_with_attrs(new_status: 'Восстановлена',
-    #                             responsible: {
-    #                                 full_name: owner.full_name,
-    #                                 id: user_id },
-    #                             action: "Вакансия <strong>#{name}</strong> восстановлена из архива")
-    # end
 end
 

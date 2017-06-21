@@ -25,7 +25,7 @@ RSpec.describe CompaniesController, type: :controller do
 
   context '#create' do
     context 'when successful' do
-      let(:company_attrs) { { params: { company: attributes_for(:company)} } }
+      let(:company_attrs) { { params: { company: attributes_for(:company) } } }
 
       before { post :create, company_attrs }
 
@@ -124,4 +124,5 @@ RSpec.describe CompaniesController, type: :controller do
       end
     end
   end
+
 end

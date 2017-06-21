@@ -48,4 +48,3 @@ $(document).ready ->
 
   $('.resume_upload').on 'click', ->
     $('#upload_resume_file').click()
-

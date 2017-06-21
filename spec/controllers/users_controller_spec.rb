@@ -24,7 +24,7 @@ describe UsersController, type: :controller do
   end
 
   context '#edit' do
-    before { get :edit, params: {id: user }}
+    before { get :edit, params: { id: user } }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -36,7 +36,7 @@ describe UsersController, type: :controller do
   end
 
   context '#show' do
-    before { get :show, params: {id: user }}
+    before { get :show, params: { id: user } }
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -53,7 +53,7 @@ describe UsersController, type: :controller do
     context 'when successful' do
       context 'updates the same attributes' do
         before do
-          put :update, params: {id: user, user: user_attrs}
+          put :update, params: { id: user, user: user_attrs }
           user.reload
         end
 
@@ -77,14 +77,14 @@ describe UsersController, type: :controller do
 
     context 'when failed' do
       it 'renders "edit" template' do
-        put :update, params:{id: user, user: (attributes_for :invalid_user)}
+        put :update, params: { id: user, user: (attributes_for :invalid_user) }
         expect(response).to render_template('edit')
       end
     end
   end
 
   it 'sends an email' do
-    expect { user.send_reset_password_instructions }
-        .to change { ActionMailer::Base.deliveries.count }.by(1)
+    expect { user.send_reset_password_instructions }.to change { ActionMailer::Base.deliveries.count }.by(1)
   end
+
 end

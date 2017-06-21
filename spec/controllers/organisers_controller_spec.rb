@@ -8,11 +8,10 @@ RSpec.describe OrganisersController, type: :controller do
   let!(:candidate_0) { create :candidate, user_id: candidate_user.id }
   let!(:vacancy_0) { create :vacancy, user_id: user.id, region: region }
   let!(:sr_0) { create :staff_relation, vacancy_id: vacancy_0.id, candidate_id: candidate_0.id }
-
   let(:old_event) { o_e = build :event, will_begin_at: user.events.first.will_begin_at - 10.days,
                                 user_id: user.id, staff_relation_id: sr_0.id
-  o_e.save(validate: false)
-  o_e }
+                    o_e.save(validate: false)
+                    o_e }
   let(:sticker) { create :sticker }
   let!(:candidate) { create :candidate, user_id: candidate_user.id }
   let!(:vacancy) { create :vacancy, user_id: user.id, region: region }
@@ -330,4 +329,5 @@ RSpec.describe OrganisersController, type: :controller do
     #   end
     # end
   end
+
 end

@@ -222,9 +222,9 @@ ul.nav.navbar-nav > li > a {
 //  background: linear-gradient(to bottom, #663500 0%,#F0721C 45%,#f7f727 65%,#f9f32f 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3138f7', endColorstr='#f9f32f',GradientType=0 ); /* IE6-9 */
   color: #ffffff;
-
   @extend .items-list;
 }
+
 a, a:link, a:visited{
   text-decoration: none;
 }

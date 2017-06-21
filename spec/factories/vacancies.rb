@@ -1,6 +1,6 @@
 # coding: utf-8
-
 FactoryGirl.define do
+
   factory :vacancy do
     sequence(:name) { |n| "Вакансия_#{n}" }
     salary '550'
@@ -25,4 +25,5 @@ FactoryGirl.define do
     deleted_at Time.now
     status 'Закрыта'
   end
+
 end

@@ -1,6 +1,6 @@
 # coding: utf-8
-
 class StickersController < ApplicationController
+
   load_and_authorize_resource param_method: :sticker_params
 
   before_action :authenticate_user!
@@ -23,8 +23,7 @@ class StickersController < ApplicationController
         format.js
       else
         flash[:error] = 'Стикер не был создан!'
-        format.json { render json: @sticker.errors.full_messages,
-                             status: :unprocessable_entity }
+        format.json { render json: @sticker.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end
@@ -38,8 +37,7 @@ class StickersController < ApplicationController
         format.js
       else
         flash[:error] = 'Стикер не был обновлен!'
-        format.json { render json: @sticker.errors.full_messages,
-                             status: :unprocessable_entity }
+        format.json { render json: @sticker.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end
@@ -57,16 +55,16 @@ class StickersController < ApplicationController
   end
 
   private
+  def set_stickers
+    @stickers = current_user.stickers.order('created_at desc').page(params[:page]).per(11)
+  end
 
-    def set_stickers
-      @stickers = current_user.stickers.order('created_at desc').page(params[:page]).per(11)
-    end
+  def sticker_params
+    params.require(:sticker).permit(:description)
+  end
 
-    def sticker_params
-      params.require(:sticker).permit(:description)
-    end
+  def find_sticker
+    @sticker = Sticker.find(params[:id])
+  end
 
-    def find_sticker
-      @sticker = Sticker.find(params[:id])
-    end
 end

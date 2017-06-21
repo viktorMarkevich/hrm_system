@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CvSource, type: :model do
+  
   before { @cv_source = build(:cv_source) }
   subject { @cv_source }
 
@@ -21,4 +22,5 @@ RSpec.describe CvSource, type: :model do
 
     it { should_not be_valid }
   end
+  
 end

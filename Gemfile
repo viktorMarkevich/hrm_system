@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.4.0'
+
 gem 'rails', '5.0.1'
 gem 'pg'
 gem 'uglifier', '>= 1.3.0'
@@ -22,14 +23,11 @@ gem 'cancancan', '~> 1.10'
 gem 'simple_calendar', '~> 2.0'
 gem 'rufus-scheduler', '~> 3.1.3' #awesome scheduler gem!!!
 gem 'coffee-rails', '~> 4.1.0'
-
 gem 'capistrano', '~> 3.4'
 gem 'capistrano-rails', '~> 1.1.3'
 gem 'capistrano-rvm'
-
 gem 'yomu'
-
-gem 'docx', '~> 0.2.07', :require => ["docx"]
+gem 'docx', '~> 0.2.07', require: ['docx']
 gem 'bootstrap-sass'
 gem 'sass-rails'
 gem 'ejs'
@@ -38,9 +36,10 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'rubyzip', '~> 1.1.0'
 gem 'axlsx', '2.1.0.pre'
 gem 'axlsx_rails'
-gem 'acts_as_xlsx', git: "git://github.com/straydogstudio/acts_as_xlsx.git"
+gem 'acts_as_xlsx', git: 'git://github.com/straydogstudio/acts_as_xlsx.git'
 gem 'prawn-rails'
 gem 'wysiwyg-rails'
+
 group :development do
   gem 'letter_opener'
 end

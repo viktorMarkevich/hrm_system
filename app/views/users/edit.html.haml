@@ -1,12 +1,10 @@
 .row
   .col-lg-2.col-lg-offset-2
     = render partial: 'left_sidebar'
-
   .col-lg-6
     .tip
       %p
         = full_name_for(@user)
-
     - if @user.errors.any?
       %h3 Возникшие ошибки:
       %ul

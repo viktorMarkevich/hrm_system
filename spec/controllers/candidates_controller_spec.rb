@@ -27,24 +27,24 @@ RSpec.describe CandidatesController, type: :controller do
       expect(assigns(:candidates)).to eq([candidate])
     end
   end
+
   context 'index with params status: Паcсивен' do
-    before { get :index, params: {status: candidate_1.status} }
+    before { get :index, params: { status: candidate_1.status } }
     it 'has candidates list with params status: Паcсивен' do
      expect(assigns(:candidates).first.status).to eql 'Пассивен'
     end
   end
 
   context 'index with params status: В работе' do
-    before { get :index, params: {status: candidate.status} }
+    before { get :index, params: { status: candidate.status } }
     it 'has candidates list with params status: В работе' do
       expect(assigns(:candidates).map(&:status)).to include( 'В работе')
-
     end
   end
 
   context '#create' do
     context 'when successful' do
-      before { post :create, params: {candidate: attributes_for(:candidate) }}
+      before { post :create, params: { candidate: attributes_for(:candidate) } }
 
       it 'creates new Candidate object' do
         expect(assigns(:candidate)).to eq(Candidate.last)
@@ -73,7 +73,7 @@ RSpec.describe CandidatesController, type: :controller do
   end
 
   context '#edit' do
-    before { get :edit, params:{id: candidate} }
+    before { get :edit, params:{ id: candidate } }
 
     it 'responds with HTTP 200 status' do
       expect(response).to have_http_status(200)
@@ -85,7 +85,7 @@ RSpec.describe CandidatesController, type: :controller do
   end
 
   context '#show' do
-    before { get :show, params: {id: candidate} }
+    before { get :show, params: { id: candidate } }
 
     it 'responds with HTTP 200 status code' do
       expect(response).to have_http_status(200)
@@ -98,10 +98,10 @@ RSpec.describe CandidatesController, type: :controller do
 
   context '#update' do
     context 'when successful' do
-      let(:candidate_attrs) { { name: 'Rick Grimes', salary: '500'} }
+      let(:candidate_attrs) { { name: 'Rick Grimes', salary: '500' } }
 
       before do
-        put :update, params: {id: candidate, candidate: candidate_attrs}
+        put :update, params: { id: candidate, candidate: candidate_attrs }
         candidate.reload
       end
 
@@ -126,7 +126,7 @@ RSpec.describe CandidatesController, type: :controller do
 
     context 'when update  city_of_residence' do
       let!(:geo_alternate_name) { create(:geo_alternate_name) }
-      let(:candidate_attrs) { { name: 'Rick Grimes', salary: '500', city_of_residence: "Киев" } }
+      let(:candidate_attrs) { { name: 'Rick Grimes', salary: '500', city_of_residence: 'Киев' } }
 
       before do
         put :update, params: { id: candidate, candidate: candidate_attrs }
@@ -141,7 +141,7 @@ RSpec.describe CandidatesController, type: :controller do
   context '#upload_resume' do
     context 'when successful' do
       before do
-        post :upload_resume, params: {upload_resume: { file: fixture_file_upload("#{Rails.root}/spec/fixtures/files/CV_ENG.docx", 'text/docx') }}
+        post :upload_resume, params: { upload_resume: { file: fixture_file_upload("#{Rails.root}/spec/fixtures/files/CV_ENG.docx", 'text/docx') } }
         @candidate = Candidate.last
       end
 
@@ -165,17 +165,17 @@ RSpec.describe CandidatesController, type: :controller do
 
     it 'has return csv' do
       get :index, format: :csv
-      expect(response.content_type).to eq "text/csv"
+      expect(response.content_type).to eq 'text/csv'
     end
 
     it 'has return pdf' do
       get :index, format: :pdf
-      expect(response.content_type).to eq "application/pdf"
+      expect(response.content_type).to eq 'application/pdf'
     end
 
     it 'has return xlsx' do
       get :index, format: :xlsx
-      expect(response.content_type).to eq "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      expect(response.content_type).to eq 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     end
   end
 
@@ -183,12 +183,13 @@ RSpec.describe CandidatesController, type: :controller do
     context 'when update resume' do
       let(:candidate) { create(:candidate) }
 
-      it "change original_cv_data" do
+      it 'change original_cv_data' do
         put :update_resume, params: { format: :json, id: candidate, original_cv_data: 'data' }
         candidate.reload
-        expect(response.content_type).to eq "application/json"
+        expect(response.content_type).to eq 'application/json'
         expect(candidate.original_cv_data).to eql('data')
       end
     end
   end
+
 end

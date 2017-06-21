@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
+
   let(:user) { create :user}
   let(:vacancy) { create :vacancy }
 
@@ -22,4 +23,5 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
 end

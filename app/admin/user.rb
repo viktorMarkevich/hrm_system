@@ -38,7 +38,7 @@ ActiveAdmin.register User do
       f.input :last_name
       f.input :post, as: :select, collection: User::POST
       # f.input :region, as: :select, collection: Region::REGIONS, selected: resource.region, input_html: { name: 'region' }
-      f.input :region, :label => 'Регион', :as => :select, :collection => Region::REGIONS
+      f.input :region, label: 'Регион', as: :select, collection: Region::REGIONS
     end
     f.actions
   end
@@ -51,7 +51,6 @@ ActiveAdmin.register User do
   end
 
   controller do
-
     def update
       @user = User.find(params[:id])
       if @user.update_attributes(permitted_params[:user])
@@ -61,6 +60,6 @@ ActiveAdmin.register User do
         render 'edit'
       end
     end
-
   end
+
 end

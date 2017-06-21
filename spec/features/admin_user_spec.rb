@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'AdminUser', type: :feature do
+
   let(:admin_user) { create(:admin_user) }
   let(:user) { create(:user) }
 
@@ -120,4 +121,5 @@ RSpec.describe 'AdminUser', type: :feature do
     click_link 'Удалить User'
     expect(page).to_not have_content user.email
   end
+
 end

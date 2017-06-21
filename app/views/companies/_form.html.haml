@@ -23,7 +23,7 @@
       .col-sm-4.control-label
         = f.label :region, 'Регион:'
       .col-sm-6
-        = f.select(:region, options_for_select(Region::REGIONS, @company.region), {}, {class: 'form-control'})
+        = f.select(:region, options_for_select(Region::REGIONS, @company.region), {}, { class: 'form-control' })
   .form-group
     .row
       .col-sm-4.control-label

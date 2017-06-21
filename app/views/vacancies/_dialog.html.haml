@@ -1,11 +1,10 @@
-#dialog.modal.fade{ 'aria-hidden' => 'true', 'aria-labelledby' => 'myModalLabel',
-                    'data-backdrop' => 'static', 'data-keyboard' => 'true',
+#dialog.modal.fade{ aria: { hidden: 'true', labelledby: 'myModalLabel' }, data: { backdrop: 'static', keyboard: 'true' },
                     role: 'dialog', tabindex: '1' }
   .modal-dialog.modal-lg
     .modal-content
       .modal-header
-        %button.close{ 'aria-label' => 'Close', 'data-dismiss' => 'modal', type: 'button' }
-          %span{ 'aria-hidden' => 'true' } ×
+        %button.close{ aria: { label: 'Close' }, data: { dismiss: 'modal' }, type: 'button' }
+          %span{ aria: { hidden: 'true' } } ×
         %h4.modal-title
           Выберете из списка одного или нескольких кандидатов
       .modal-body

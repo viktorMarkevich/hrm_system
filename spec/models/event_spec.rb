@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
+
   describe 'check validations' do
     let(:user) { create :user }
-    let(:event) { Event.new(name: 'Name', will_begin_at: rand(Time.zone.now..Time.zone.now + 7.days), description: 'описание события', user_id: user.id) }
-    let(:invalid_event) { Event.new(name: nil, will_begin_at: rand(Time.zone.now..Time.zone.now + 7.days), description: 'описание события', user_id: user.id) }
+    let(:event) { Event.new(name: 'Name', will_begin_at: rand(Time.zone.now..Time.zone.now + 7.days),
+                            description: 'описание события', user_id: user.id) }
+    let(:invalid_event) { Event.new(name: nil, will_begin_at: rand(Time.zone.now..Time.zone.now + 7.days),
+                                    description: 'описание события', user_id: user.id) }
 
     context 'when valid'do
       it 'has valid factory' do
@@ -24,4 +27,5 @@ RSpec.describe Event, type: :model do
       end
     end
   end
+
 end

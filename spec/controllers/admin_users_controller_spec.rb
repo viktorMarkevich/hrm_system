@@ -56,14 +56,14 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
 
       it 'has HTTP 200 status' do
-        put :edit, params: {id: user, user: user_attrs}
+        put :edit, params: { id: user, user: user_attrs }
         expect(response).to have_http_status(200)
       end
     end
 
     context 'when failed' do
       it 'renders "edit" template' do
-        put :update, params: {id: user, user: (attributes_for :invalid_user)}
+        put :update, params: { id: user, user: (attributes_for :invalid_user) }
         expect(response).to render_template('edit')
       end
     end
@@ -71,7 +71,7 @@ RSpec.describe Admin::UsersController, type: :controller do
 
   context '#destroy' do
     it 'redirects to admin users index page' do
-      delete :destroy, params: {id: user}
+      delete :destroy, params: { id: user }
       expect(response).to redirect_to(admin_users_path)
     end
   end
@@ -81,4 +81,5 @@ RSpec.describe Admin::UsersController, type: :controller do
       expect{ user.deliver_invitation }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
+
 end
