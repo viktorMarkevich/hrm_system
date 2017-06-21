@@ -4,7 +4,7 @@ describe 'the sign_in process', type: :feature do
   let(:user) { create(:user) }
 
   scenario 'visit stickers#index page when signed in' do
-    sign_in_as(user, nil)
+    sign_in_as(user, 'user', nil)
     expect(page).to have_content('Signed in successfully.')
   end
 

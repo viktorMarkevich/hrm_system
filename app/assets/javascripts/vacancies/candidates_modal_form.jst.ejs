@@ -1,0 +1,19 @@
+<form class="new_staff_relation" id="new_staff_relation" action="/staff_relations" accept-charset="UTF-8" method="post">
+    <input name="utf8" value="✓" type="hidden">
+    <input value="<%= vacancy_id %>" name="staff_relation[vacancy_id]" id="staff_relation_vacancy_id" type="hidden">
+    <div class="panel panel-primary">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Зарплата</th>
+                <th>Примечание</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <button class="btn btn-default" data-dismiss="modal" type="button">Отменить</button>
+    <input name="commit" value="Выполнить" class="btn btn-primary" data-disable-with="Выполнить" type="submit">
+</form>

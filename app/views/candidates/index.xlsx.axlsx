@@ -1,0 +1,8 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Candidates") do |sheet|
+  sheet.add_row %w{Кандидат Должность Регион Зарплата Ответственный Добавлен Статус Примечание}
+  @candidates.each do |candidate|
+    sheet.add_row [candidate.name, candidate.desired_position, candidate.city_of_residence, candidate.salary, candidate.owner&.full_name,
+                   candidate.created_at.strftime('%F'), candidate.status, candidate.notice]
+  end
+end

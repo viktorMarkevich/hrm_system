@@ -1,76 +1,81 @@
 class EventsController < ApplicationController
 
   before_action :set_event, only: [:edit, :update, :destroy]
-  before_action :set_sr, only: [:new, :edit]
-  before_action :set_date
+  before_action :set_sr, only: [ :edit]
+  before_action :set_date, only: [:index, :edit, :update, :destroy]
   before_action :set_events_in_date_period, only: [:index, :update]
+  before_action :authenticate_user!
 
   def index
     respond_to do |format|
       format.html
-      format.js
+      format.json { render :index }
     end
   end
+  def show
+    @event= Event.find(params[:id])
+    !@event.staff_relation.nil? && !@event.staff_relation.vacancy.nil? ? v = @event.staff_relation.vacancy : v = nil
+    !@event.staff_relation.nil? && !@event.staff_relation.candidate.nil? ? c = @event.staff_relation.candidate : c = nil
+    render json: {e: @event, v: v, c: c}
+  end
 
-  def new
-    @event = Event.new
-    set_events_in_date_period
-    respond_to do |format|
-      format.html { render nothing: true }
-      format.js
-    end
+  def selected_day_events
+    @events = Event.where("DATE(will_begin_at) =  ?", params[:will_begin_at].to_date)
   end
 
   def edit
-    respond_to do |format|
-      format.html { render nothing: true }
-      format.js
-    end
   end
 
   def create
+    @vacancies=Vacancy.all
     @event = current_user.events.build(event_params)
-    set_event_sr if params[:event][:staff_relation].to_i != 0
+    if  !event_params[:staff_relation_attributes].nil? && !event_params[:staff_relation_attributes][:vacancy_id].nil? && event_params[:staff_relation_attributes][:vacancy_id]!='' ||  !event_params[:staff_relation_attributes].nil? && !event_params[:staff_relation_attributes][:candidate_id].nil?
+      event_params[:staff_relation_attributes].merge(status: 'Собеседование')
+      @event.staff_relation = StaffRelation.find_or_initialize_by(event_params[:staff_relation_attributes])
+    else
+      @event.staff_relation = nil
+    end
     respond_to do |format|
       if @event.save
-        set_events_in_date_period
-        format.js
+        format.html { flash[:notice] = 'Event created!' }
+        format.json { render @event, status: :created }
       else
-        set_events_in_date_period
-        format.json { render json: @event.errors.full_messages,
-                             status: :unprocessable_entity }
+        format.html { flash[:danger] = @event.errors.full_messages }
+        format.json { render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity }
       end
     end
   end
 
   def update
-    set_event_sr if params[:event][:staff_relation].to_i != 0
+    @event.assign_attributes(event_params)
+    if !event_params[:staff_relation_attributes].nil? && !event_params[:staff_relation_attributes][:vacancy_id].nil? && !event_params[:staff_relation_attributes][:candidate_id].nil? && !event_params[:staff_relation_attributes][:candidate_id].equal?('undefined')
+      event_params[:staff_relation_attributes].merge(status: 'Собеседование')
+      @event.staff_relation = StaffRelation.find_or_initialize_by(event_params[:staff_relation_attributes])
+    else
+      @event.staff_relation = nil
+    end
     respond_to do |format|
-      if @event.update(event_params)
-        format.js
+      if @event.save
+        !@event.staff_relation.nil? && !@event.staff_relation.vacancy.nil? ? v = @event.staff_relation.vacancy : v = nil
+        !@event.staff_relation.nil? && !@event.staff_relation.candidate.nil? ? c = @event.staff_relation.candidate : c = nil
+        format.html { flash[:notice] = 'Event updated!' }
+        format.json {render @event, v , c, status: :updated}
       else
-        format.json { render json: @event.errors.full_messages,
-                             status: :unprocessable_entity }
+        format.html { flash[:danger] = @event.errors.full_messages }
+        format.json { render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @event.staff_relation.update(event_id: nil) if @event.staff_relation
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Событие успешно удалено.' }
-      format.json { head :no_content }
+      format.json
     end
   end
 
   private
-
-  def set_event_sr
-    sr = StaffRelation.find(params[:event][:staff_relation])
-    @event.staff_relation = sr
-    @event.name = sr.status
-  end
 
   def set_event
     @event = Event.find(params[:id])
@@ -81,21 +86,19 @@ class EventsController < ApplicationController
   end
 
   def set_date
-    if params[:start_date].present?
-      @date_from = Time.zone.parse(params[:start_date])
-      @date_to = @date_from.end_of_day
-    else
-      @date_from = Time.zone.now
-      @date_to = @date_from.end_of_month
-    end
+    @date_from = Time.zone.parse(params[:start_date].to_s) || Time.zone.now
+    @date_from = @date_from.beginning_of_month if @date_from > Time.zone.now
+    @date_to = @date_from.end_of_month
   end
 
   def event_params
-    params.require(:event).permit(:name, :will_begin_at, :description, :user_id)
+    permitted_params = params.require(:event).permit(:name, :will_begin_at, :description, :user_id, staff_relation_attributes: [:vacancy_id, :candidate_id])
+    permitted_params&.tap {|p| p[:will_begin_at] = (params[:event][:will_begin_at]).to_datetime }
   end
 
   def set_events_in_date_period
-    @events = Event.events_of(current_user, @date_from, @date_to).order(will_begin_at: :asc)
-    @events_past = Event.events_of(current_user, Time.now.beginning_of_month, Time.now).order(will_begin_at: :asc)
+    @events = Event.events_of(current_user, @date_from, @date_to).includes(:staff_relation).order(will_begin_at: :asc)
+    @events_month = Event.events_of(current_user, @date_from.beginning_of_month, @date_to).order(will_begin_at: :asc)
+    @events_past = Event.events_of(current_user, @date_from.beginning_of_month, Time.zone.now.advance(minutes: -1)).includes(:staff_relation).order(will_begin_at: :asc)
   end
 end

@@ -1,4 +1,4 @@
-= javascript_include_tag 'vacancies'
+= javascript_include_tag 'vacancies/vacancies'
 
 = form_for @vacancy, html: { class: 'form-horizontal' } do |f|
   - if @vacancy.errors.any?
@@ -31,9 +31,9 @@
       = f.label :salary_format, 'По договоренности'
   .form-group
     .col-sm-2.control-label
-      = f.label :region_id, 'Регион:'
+      = f.label :region, 'Регион:'
     .col-sm-8
-      = select_tag(:region,  options_for_select(Region::REGIONS, @vacancy.region_name), class: 'form-control')
+      = f.select(:region, options_for_select(Region::REGIONS, @vacancy.region), {}, { class: 'form-control' })
   .form-group
     .col-sm-2.control-label
       = f.label :laguages, 'Языки:'
@@ -44,8 +44,8 @@
       = f.label :requirements, 'Требования:'
     .col-sm-8
       = f.text_area :requirements, rows: 5, class: 'form-control'
-  %hr
   .form-group
+    %hr
     .col-sm-12
-      = f.submit @vacancy.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-success'
-      = link_to 'Назад', :back, class: 'btn btn-default'
+      = f.submit @vacancy.new_record? ? 'Создать' : 'Обновить', class: 'btn paranoid_btn'
+      = link_to 'Назад', :back, class: 'btn paranoid_btn'

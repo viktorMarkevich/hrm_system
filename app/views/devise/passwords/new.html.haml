@@ -1,14 +1,19 @@
-%h2 Forgot your password?
+.panel.panel-primary
+  .panel-heading
+    .panel-title.tip
+      Log in
+  .panel-body
+    .row
+      .col-xs-12
+        %h2 Забыли пароль?
 
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-  = devise_error_messages!
+        = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+          = devise_error_messages!
+          .form-group
+            = f.label :email
+            %br
+            = f.email_field :email, autofocus: true, class: 'form-control'
+          .form-group
+            = f.submit 'Выслать инструкцию сброса пароля', class: 'btn btn-default'
 
-  .field
-    = f.label :email
-    %br
-    = f.email_field :email, autofocus: true
-
-  .actions
-    = f.submit 'Send me reset password instructions'
-
-= render 'devise/shared/links'
+        = render 'devise/shared/links'

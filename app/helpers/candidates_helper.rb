@@ -1,5 +1,14 @@
 module CandidatesHelper
 
+  def set_item_for(column, sub)
+    arr_column = [:email, :phone, :skype, :linkedin, :facebook, :vkontakte]
+    if arr_column.include?(column)
+      image_tag('icons/' + column.to_s + '.png')
+    else
+      sub
+    end
+  end
+
   def desired_salary_for(candidate)
     "#{candidate.salary} #{candidate.salary_format}"
   end
@@ -11,20 +20,20 @@ module CandidatesHelper
     ((100.0*current_attr_numbs)/attr_numbs).round(1)
   end
 
-  def get_sr_label_class(vacancy, candidate)
-    case sr_status(vacancy, candidate)
+  def get_sr_label_class(status)
+    case status
       when 'Найденные'
-        'btn-default'
+        'label-default'
       when 'Отобранные'
-        'btn-primary'
+        'label-primary'
       when 'Собеседование'
-        'btn-info'
+        'label-info'
       when 'Утвержден'
-        'btn-success'
+        'label-success'
       when 'Не подходит'
-        'btn-warning'
+        'label-warning'
       when 'Отказался'
-        'btn-danger'
+        'label-danger'
       else
         []
     end

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   before_action :find_user, only: [:edit, :update, :show]
 
   def index
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :region_id, :skype, :phone, :post, image_attributes: :avatar)
+    params.require(:user).permit(:first_name, :last_name, :email, :region, :skype, :phone, :post, image_attributes: :avatar)
   end
 
 end

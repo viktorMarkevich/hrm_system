@@ -12,9 +12,10 @@
 #
 #= require jquery
 #= require jquery_ujs
-#= require spacelab
-#= require twitter/bootstrap
-#= require candidates
+#= require bootstrap-sprockets
+#= require moment
+#= require bootstrap-datetimepicker
+#= require delete_success_notice.js
 # require_tree .
 
 $(document).ready ->
@@ -41,10 +42,10 @@ $(document).ajaxError (event, xhr, options, exc) ->
   $('#error_explanation').html er
   return
 
+$(document).ready ->
+  $('body').on 'change', '#upload_resume_file', ->
+    $(this).closest("form").submit()
 
-
-
-
-
-
+  $('.resume_upload').on 'click', ->
+    $('#upload_resume_file').click()
 

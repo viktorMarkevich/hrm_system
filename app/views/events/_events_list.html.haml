@@ -1,30 +1,35 @@
-.items-list{ class: time_is.to_s }
-  %table.table.table-bordered{ class: time_is == :future ? 'table-hover' : nil }
+
+
+/ Modal
+= render :partial => 'edit_event_dialog'
+
+.items-list
+  %table.table.table-hover.table-bordered.table-striped
     %thead
-      %tr
+      %tr.table_head_color
         %th Событие
-        %th На вакансию
-        %th С кем
-        %th Время события
-        %th Описание
+        %th Имя Вакансии
+        %th Имя Кандидата
+        %th Дата
         %th Действия
     %tbody
       - events.each do |event|
-        %tr
-          %td
-            %span.label{ class: set_label_class(event) }= event.name
-          - if event.staff_relation
-            %td= event.staff_relation.vacancy.name
-            %td= event.staff_relation.candidate.name
+        %tr{ class: "event#{event.id}" }
+          %td.event_name
+            = link_to truncate(event.name, length: 20), event
+          - if event.staff_relation && event.staff_relation.vacancy
+            %td.event_vacancy= event.staff_relation.vacancy.name
           - else
-            %td= '------'
-            %td= '------'
+            %td.event_vacancy= '------'
+          -if event.staff_relation && event.staff_relation.candidate
+            %td.event_candidate= event.staff_relation.candidate.name
+          - else
+            %td.event_candidate= '------'
+          %td.event_will_begin_at
+            %span.label.label-warning
+              = event.will_begin_at.strftime('%e %b %H:%M')
           %td
-            %span.label.label-primary= event.will_begin_at.strftime('%H:%M')
-            = event.will_begin_at.strftime('%d/%m/%Y')
-          %td= event.description
-          %td
-            - if can? :update, event
-              = link_to '', edit_event_path(event), class: 'glyphicon glyphicon-edit', remote: true
-            - if can? :destroy, event
-              = link_to '', event, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'glyphicon glyphicon-remove'
+            %a.glyphicon.glyphicon-edit.edit-event{'data-eventid' => event.id}
+            %a.glyphicon.glyphicon-remove.remove-event{ 'data-eventid' => event.id}
+
+

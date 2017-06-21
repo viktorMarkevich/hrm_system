@@ -1,13 +1,8 @@
-.row
-  .col-lg-12
-    .tip
-      %p
-        Добавить кандидата
-%hr
-.row
-  .col-lg-3
-    = render partial: 'candidates/left_sidebar'
-
-  .col-lg-9
-    = render partial: 'candidates/form'
+.container
+  .row
+    .col-lg-10.col-lg-offset-1{ style: "border-bottom: 1px solid #FFF;" }
+      .tip
+        %p
+          Добавить кандидата
+      = render partial: 'candidates/form'
 

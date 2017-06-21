@@ -15,22 +15,25 @@ Rails.application.routes.draw do
   resources :candidates, except: [:destroy] do
     member do
       get :set_vacancies
+      put :update_resume
     end
     collection do
       post :upload_resume
     end
   end
 
-  resources :events, except: [:show]
-  get 'events/:id', to: 'events#index'
+  resources :events, except: [:edit]
+  get '/selected_day_events', to: 'events#selected_day_events'
+  get '/edit/:id', to: 'events#edit'
+  get '/v_candidates/:id', to: 'vacancies#vacancy_candidates'
 
-  resources :staff_relations, only: [:new, :create] do
-    collection do
-      delete ':candidate_id/:vacancy_id', to: 'staff_relations#destroy', as: :destroy
-    end
-  end
+  resources :staff_relations, only: [:new, :create, :destroy]
+
+  resources :geo_names, only: [:index]
 
   get 'archives/:object_name', to: 'archives#index', as: :archives
   delete 'archives/:object_name/:id', to: 'archives#destroy', as: :restore_object
+
+  resources :cv_sources, only: :index
   
 end

@@ -1,34 +1,14 @@
 = render partial: 'share/search'
+= stylesheet_link_tag 'candidates/candidates'
+= javascript_include_tag 'candidates/candidates'
 
-.row
-  .col-lg-10.col-lg-offset-1
-    .tip
-      %p
-        Кандидаты
+%br
+%br
+.container.candidates_partial
+  .row
+    .col-lg-12
+      .pull-right.button_paranoid
+        = link_to 'Архив Кандидатов', archives_path(object_name: 'candidates'), class: 'paranoid_btn'
+  = render partial: 'candidate_show', :locals => { candidates: @candidates, status: @status }
 
-    .items-list
-      %table.table.table-bordered.table-hover
-        %thead
-          %tr
-            %th Кандидат
-            %th Должность
-            %th Регион
-            %th Зарплата
-            %th Ответственный
-            %th Добавлен
-            %th Статус
-            %th Примечание
-        %tbody
-          - @candidates.each do |candidate|
-            %tr
-              %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
-              %td= candidate.desired_position
-              %td= display_field_value_for(candidate.city_of_residence)
-              %td= display_field_value_for(candidate.salary)
-              %td= full_name_for(candidate.owner)
-              %td= candidate.created_at.strftime('%F')
-              %td= candidate.status
-              %td= candidate.notice
-.row
-  .col-lg-3
-    = paginate @candidates
+

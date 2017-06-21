@@ -2,13 +2,13 @@
 
 FactoryGirl.define do
   factory :vacancy do
-    sequence(:name) { |n| "Вакансия#{n}" }
+    sequence(:name) { |n| "Вакансия_#{n}" }
     salary '550'
     salary_format 'usd'
     status 'Не задействована'
     languages 'Английский, Русский'
     requirements 'Ответственный'
-    region
+    region Region::REGIONS.sample
     association :owner, factory: :user
   end
 

@@ -1,0 +1,239 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ */
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'bootstrap-datetimepicker';
+@import 'organiser';
+@import 'events';
+@import 'stickers';
+
+body {
+  background-color: #d9d9d9;
+}
+
+.form-horizontal {
+  input, textarea, select {
+    border: 1px solid #FFF;
+  }
+  input:focus, textarea:focus, select:focus {
+    border: 1px solid #F0721C;
+    -webkit-box-shadow: 0px 0px 5px #663500 !important;
+    -moz-box-shadow: 0px 0px 5px #663500 !important;
+    box-shadow: 0px 0px 5px #663500 !important;
+  }
+}
+
+#header {
+  height: 70px;
+  border-bottom: 1px solid #fff;
+  background-color: #222;
+}
+
+.pagination > li > a,
+.paranoid_btn {
+  background-color: #d9d9d9;
+  color: #fff;
+  font-weight: bold;
+  border: 1px solid #fff;
+  padding: 5px;
+}
+
+.button_paranoid {
+  padding-bottom: 15px;
+}
+
+.btn-dialog {
+  min-width: 60px;
+  text-align: center;
+}
+
+.pagination > .active > a, .pagination > .active > a:hover,
+a.paranoid_btn:hover {
+  color: #663500 !important;
+  border: 1px solid #F0721C;
+  background-color: #f2f2f2;
+}
+
+.container .items-list .table-bordered,
+.container-fluid .items-list .table-bordered,
+.calendar-table {
+  tbody, thead {
+    tr {
+      td, th {
+        border: 1px solid #fff !important;
+        color: #333;
+        a {
+          color: #333;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.pagination > li:hover a,
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #663500;
+  color: #fff !important;
+    a {
+      color: #fff !important;
+  }
+}
+
+.table_head_color, .calendar-table > thead > tr{
+  background-color: #F0721C;
+}
+
+.btn.search {
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.current {
+  border-bottom: 2px solid #F0721C;
+}
+
+ul.nav.navbar-nav > li > a {
+  padding-bottom: 3px;
+  padding-top: 3px;
+  text-align: center;
+}
+
+.navbar-right{
+  li{
+    height: 50px;
+    padding: 12px 0px;
+  }
+}
+
+.tip {
+  color: #333;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 18px;
+  padding-bottom: 6px;
+  p.subscription {
+    font-size: 14px;
+  }
+}
+
+.add-shadows {
+  -webkit-box-shadow: 8px 8px 6px -6px #999 !important;
+  -moz-box-shadow: 8px 8px 6px -6px #999 !important;
+  box-shadow: 8px 8px 6px -6px #999 !important;
+}
+
+.items-list {
+  color: #212121;
+  .table-bordered > thead > tr > th,
+  .table-bordered > tbody > tr > th,
+  .table-bordered > tfoot > tr > th,
+  .table-bordered > thead > tr > td,
+  .table-bordered > tbody > tr > td,
+  .table-bordered > tfoot > tr > td {
+    border: 1px solid #0e80e5 !important;
+  }
+  table {
+    thead {
+      background-image: linear-gradient(#7bbdf7, #3399f3 50%, #208ff2);
+      background-repeat: no-repeat;
+      filter: none;
+      color: #fff;
+      font-size: 12px;
+    }
+    td {
+      height: auto;
+      width: auto;
+      line-height: 30px;
+      .label {
+        vertical-align: middle;
+      }
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.items-list.past {
+  color: #868686;
+  .table-bordered > thead > tr > th,
+  .table-bordered > tbody > tr > th,
+  .table-bordered > tfoot > tr > th,
+  .table-bordered > thead > tr > td,
+  .table-bordered > tbody > tr > td,
+  .table-bordered > tfoot > tr > td {
+    border: 1px solid #275693 !important;
+  }
+  table {
+    thead {
+      background-image: linear-gradient(#3F6589, #14577C 50%, #12487F);
+      background-repeat: no-repeat;
+      filter: none;
+      color: #aeaeae;
+      font-size: 12px;
+    }
+    td {
+      height: auto;
+      width: auto;
+      line-height: 30px;
+      .label {
+        vertical-align: middle;
+      }
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.past .label-success {
+  background-color: rgba(60, 181, 33, 0.23);
+}
+.past .label-info {
+  background-color: rgba(51, 153, 243, 0.22);
+}
+
+.past .label-default {
+  background-color: rgba(71, 73, 73, 0.22);
+}
+
+.td-primary {
+//.has-events {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3138f7+0,7db9e8+45,f7f727+65,f9f32f+100 */
+  background: #663500; /* Old browsers */
+//  background: -moz-linear-gradient(top, #663500 0%, #F0721C 45%, #f7f727 65%, #f9f32f 100%); /* FF3.6+ */
+//  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#663500), color-stop(45%,#F0721C), color-stop(65%,#f7f727), color-stop(100%,#f9f32f)); /* Chrome,Safari4+ */
+//  background: -webkit-linear-gradient(top, #663500 0%,#F0721C 45%,#f7f727 65%,#f9f32f 100%); /* Chrome10+,Safari5.1+ */
+//  background: -o-linear-gradient(top, #663500 0%,#F0721C 45%,#f7f727 65%,#f9f32f 100%); /* Opera 11.10+ */
+//  background: -ms-linear-gradient(top, #663500 0%,#F0721C 45%,#f7f727 65%,#f9f32f 100%); /* IE10+ */
+//  background: linear-gradient(to bottom, #663500 0%,#F0721C 45%,#f7f727 65%,#f9f32f 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3138f7', endColorstr='#f9f32f',GradientType=0 ); /* IE6-9 */
+  color: #ffffff;
+
+  @extend .items-list;
+}
+a, a:link, a:visited{
+  text-decoration: none;
+}
+a.login-link{
+  padding-left: 15px;
+  color: black;
+  font-weight: bold;
+
+}
+.new_user .flash{
+  color:red;
+}

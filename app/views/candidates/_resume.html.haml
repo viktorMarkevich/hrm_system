@@ -1,0 +1,3 @@
+= link_to 'Редактировать', update_resume_candidate_path(@candidate), class: 'btn btn-default resume-edit-btn', method: :post
+.froala-editor
+  = simple_format(@candidate.original_cv_data, {}, :sanitize => false)

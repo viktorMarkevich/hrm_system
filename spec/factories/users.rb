@@ -8,7 +8,7 @@ FactoryGirl.define do
     last_name 'Marly'
     post 'Директор'
     sequence(:phone) { |n| "+38-050-000-000#{n}" }
-    region
+    region Region::REGIONS.sample
 
     factory :user_with_events do
       transient do
@@ -16,7 +16,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        create_list(:event, evaluator.events_count, user: user)
+        create_list(:event, evaluator.events_count, user: user, staff_relation_id: 1)
       end
     end
   end

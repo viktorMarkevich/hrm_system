@@ -4,11 +4,12 @@
     %title Faceit-hrm
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
+    %link{:href =>"https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css", rel: "stylesheet"}/
+
     = csrf_meta_tags
   %body
-    .row{ style: 'padding-top: 60px;' }
-    .container-fluid
-      %nav.navbar.navbar-inverse
+    .container-fluid#header
+      %nav.navbar-inverse.container
         .navbar-header
           %button.navbar-toggle.collapsed{ 'aria-expanded' => 'false', 'data-target' => '#bs-navbar-collapse-1', 'data-toggle' => 'collapse', type: 'button' }
             %span.sr-only Toggle navigation
@@ -42,8 +43,8 @@
                     %a.resume_upload
                       %i.glyphicon.glyphicon-download-alt
                       Загрузить из файла
-                    = form_for :upload_resume, html: { multipart: true, hidden: true }, method: 'POST', url: upload_resume_candidates_path do |f|
-                      = f.file_field :file, multiple: true
+                    = form_for :upload_resume, html: { hidden: true }, method: 'POST', url: upload_resume_candidates_path do |f|
+                      = f.file_field :file
                       = f.submit 'save'
 
             %li
@@ -63,7 +64,6 @@
                 %i.glyphicon.glyphicon-off
                 = 'Выйти'
     .row{ style: 'padding-top: 60px;' }
-    .container-fluid
-      .flash-container
-        = render 'share/flash_messages'
-      = yield
+    .flash-container
+      = render 'share/flash_messages'
+    = yield

@@ -1,0 +1,23 @@
+//= require froala_editor.min
+//= require froala_style.min
+
+.resume {
+  white-space: pre-wrap;
+}
+
+.items-list table thead #dropdownMenuLink {
+  font-size: 12px;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+.export-to-file {
+  font-size: 10px;
+  a {
+    color: red;
+  }
+}
+
+.dropdown .active {
+  font-style: italic;
+  color: red;
+}

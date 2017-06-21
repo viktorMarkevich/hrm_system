@@ -1,39 +1,59 @@
 class StaffRelation < ActiveRecord::Base
+
+  include Support
+
   belongs_to :vacancy
   belongs_to :candidate
-  belongs_to :event
+  has_many :events
+  # has_many :histories, as: :historyable
 
-  STATUSES = %w(Нейтральный Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
+  validates :vacancy_id,  uniqueness: { scope: :candidate_id }, presence: true
+  STATUSES = %w(Убрать Найденные Отобранные Собеседование Утвержден Не\ подходит Отказался)
 
-  after_create :set_found_status, unless: 'event_id.present?'
+  # after_create :create_history_event
+  after_update :update_history_event
 
-  # after_update :check_event
-  #
-  # def check_event
-  #   if event_id_changed? && !event_id_was.nil?
-  #     Event.find(event_id_was).destroy
-  #   end
-  # end
-
-  def set_found_status
-    self.update_attributes(status: 'Найденные')
-    unless vacancy.status == Vacancy::STATUSES[1]
-      vacancy.update_attributes(status: Vacancy::STATUSES[1])
-    end
+  def set_owner
+    vacancy.owner
   end
 
   def self.return_status(options)
     staff_relation = where(candidate_id: options[:vacancy][:candidate_id], vacancy_id: options[:id]).first
     status = staff_relation.status
-    if options[:vacancy][:sr_status] == 'Нейтральный'
+    if options[:vacancy][:sr_status] == 'Убрать'
       staff_relation.delete
     else
       staff_relation.update_attributes(status: options[:vacancy][:sr_status])
+      staff_relation.histories.create( old_status: status, new_status: options[:vacancy][:sr_status], user_id: options[:vacancy][:user_id] )
     end
     status
   end
 
   def self.get_without_event
-    StaffRelation.where('status IN (?) and event_id IS NULL', ['Собеседование', 'Утвержден'])
+    StaffRelation.where('status IN (?)', ['Собеседование', 'Утвержден'])
   end
+
+  private
+
+    def create_history_event
+      History.create_with_attrs(old_status: 'Пасивен',
+                                new_status: 'Найденные',
+                                responsible: { full_name: vacancy.owner.full_name,
+                                               id: vacancy.user_id },
+                                action: "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>")
+    end
+
+    def update_history_event
+      unless self.status_was == status
+        History.create_with_attrs(was_changed: set_changes, action: 'update', historyable_type: self.class.name, historyable_id: id)
+      end
+    end
+
+    def set_changes
+      changes = self.changes
+      changes.delete('created_at')
+      changes.delete('updated_at')
+      changes.delete('id')
+      changes
+    end
 end

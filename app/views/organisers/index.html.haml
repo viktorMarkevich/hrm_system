@@ -2,67 +2,92 @@
 = javascript_include_tag 'stickers'
 = javascript_include_tag 'charCount'
 
-.row
-  .col-lg-5
-    .tip
-      %p
-        = 'Предстоящие события'
-    - if @events.present?
-      %table.table.table-striped.table-responsive
-        %tbody
-          - @events.each do |event|
-            %tr
-              %td
-                %span.label{ class: set_label_class(event) }= event.name
-              - if event.staff_relation
-                %td= event.staff_relation.vacancy.name
-                %td= event.staff_relation.candidate.name
-              - else
-                %td= '------'
-                %td= '------'
-              %td
-                %span.label.label-primary= event.will_begin_at.strftime('%H:%M')
-                = event.will_begin_at.strftime('%d/%m/%Y')
-    - else
-      %ul.list-group
-        %li.list-group-item.list-group-item-warning
-          У Вас нет ни единого события!
-    %hr
-    .tip
-      %p
-        = 'Последние действия над вакансиями'
-    - if @staff_relations.present?
-      %table.table.table-striped.table-responsive
-        %tbody
-          - @staff_relations.each do |sr|
-            %tr
-              %td= link_to sr.vacancy.try(:name), vacancy_path(sr.vacancy || '#'), id: 'vacancy-name'
-              %td= "кандидат: #{link_to sr.candidate.try(:name), candidate_path(sr.candidate || '#')}".html_safe
-              %td
-                %span{ class: "label label-#{return_status_label(sr)}" }
-                  = sr.status
-              %td
-                .label.label-info
-                  = sr.updated_at.strftime('%e %b %H:%M')
-    - else
-      %ul.list-group
-        %li.list-group-item.list-group-item-warning
-          У Вас нет вакансий!
-  .col-lg-7
-    .tip
-      %p
-        = 'Список стикеров'
-
-    .pull-left{ style: 'padding-right: 15px; padding-bottom: 15px;' }
-      .panel-body{ style: 'background-color: #777; min-height: 125px; width: 223px;' }
-        = link_to 'Добавить стикер', new_sticker_path, remote: true, class: 'btn btn-success btn-block'
-        = link_to 'Закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-warning btn-block'
-    .stickers
-      = render partial: 'sticker', collection: @stickers
-
-    .row
-      .col-xs-12
-        #stickers-pagination
-          = render partial: 'stickers_pagination', locals: { stickers: @stickers }
-
-= render 'stickers/dialog'
+.container
+  .row
+    .col-md-12
+      .tip
+        %p
+          = 'Предстоящие события'
+      - if @events.present?
+        .items-list
+          %table.table.table-hover.table-bordered.table-striped
+            %thead
+              %tr.table_head_color
+                %th Событие
+                %th Имя Вакансии
+                %th Имя Кандидата
+                %th Дата
+            %tbody
+              - @events.each do |event|
+                %tr
+                  %td
+                    = link_to event.name, event, class: 'tooltips', title: [event.name,' - ', event.description], data: { toggle: 'tooltip', placement: 'top' }
+                  - if event.staff_relation
+                    %td= event.staff_relation.vacancy.name
+                    %td= event.staff_relation.candidate.name
+                  - else
+                    %td= '------'
+                    %td= '------'
+                  %td
+                    %span.label.label-warning
+                      = event.will_begin_at.strftime('%e %b %H:%M')
+        .row
+          .col-lg-3
+            = paginate @events
+      - else
+        %ul.list-group
+          %li.list-group-item.list-group-item-warning
+            У Вас нет ни единого события!
+      .row
+        .col-md-12{ style: 'min-height: 5px; background-color: #222; border: 1px solid #fff;' }
+  .row
+    .col-md-12
+      .tip
+        %p
+          = 'Последние действия на сайте: '
+      - if @histories.present?
+        .items-list
+          %table.table.table-hover.table-bordered.table-striped.history
+            %thead
+              %tr.table_head_color
+                %th Действие
+                %th Ответственный
+                %th Изменения
+                %th Дата
+            %tbody
+              - @histories.each  do |history|
+                %tr
+                  %td
+                    = set_action_for(history)
+                  %td
+                    = set_owner_for_historyable(history)
+                  %td
+                    = set_status_for(history)
+                  %td
+                    %span.label.label-warning
+                      = history.created_at.strftime('%e %b %H:%M')
+        .row
+          .col-lg-3
+            = paginate @histories
+      - else
+        %ul.list-group
+          %li.list-group-item.list-group-item-warning
+            У Вас нет ни единого события!
+  -#.col-lg-offset-1.col-lg-5.col-lg-offset-1{ style: 'background-color: #E2E4DF;' }   TODO НЕ УДАЛЯТЬ.
+-#    .tip
+-#      %p
+-#        = 'Список стикеров'
+-#
+-#    .pull-left{ style: 'padding-right: 15px; padding-bottom: 15px;' }
+-#      .panel-body{ style: 'background-color: #777; min-height: 125px; width: 223px;' }
+-#        = link_to 'Добавить стикер', new_sticker_path, remote: true, class: 'btn btn-success btn-block'
+-#        = link_to 'Закрытые стикеры', archives_path(object_name: 'stickers'), class: 'btn btn-warning btn-block'
+-#    .stickers
+-#      = render partial: 'sticker', collection: @stickers
+-#
+-#    .row
+-#      .col-xs-12
+-#        #stickers-pagination
+-#          = render partial: 'stickers_pagination', locals: { stickers: @stickers }
+-#
+-#= render 'stickers/dialog'

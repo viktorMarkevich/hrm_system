@@ -11,8 +11,26 @@ Company.delete_all
 Region.delete_all
 StaffRelation.delete_all
 Event.delete_all
+User.delete_all
+History.delete_all
 
 Region.create(name: Region::REGIONS[0])
+
+User.create!([
+    {
+        first_name: 'User',
+        last_name: 'Test',
+        email: 'user@mail.com',
+        phone: '0811111111',
+        skype: 'usertest',
+        password: '123456',
+        post: 'test',
+        region_id: Region.first.id,
+        reset_password_token: nil,
+        reset_password_sent_at: nil,
+        remember_created_at: nil,
+    }
+  ])
 
 for i in 1..10 do
   Vacancy.create(
@@ -25,14 +43,33 @@ for i in 1..10 do
   )
 end
 
-for i in 1..10 do
-  Candidate.create(
+for i in 1..15 do
+  Candidate.create!(
       name: 'Тирион Ланистер' + i.to_s,
       desired_position: 'Программист, язык руби',
       city_of_residence: 'Запорожье',
       salary: '300-500 USD',
       status: 'В работе',
-      source: 'Имяфайла.docx'
+      email: "user#{i}@mail.com",
+      phone: "081111111#{i+1}",
+      skype: "usertes#{i}",
+      source: "Имяфайла#{i}.docx",
+      user_id: User.first.id
+  )
+end
+
+for i in 16..30 do
+  Candidate.create!(
+      name: 'Тирион Ланистер' + i.to_s,
+      desired_position: 'Программист, язык руби',
+      city_of_residence: 'Запорожье',
+      salary: '300-500 USD',
+      status: 'Пассивен',
+      email: "user#{i+1}@mail.com",
+      phone: "081111111#{i+1}",
+      skype: "usertes#{i}",
+      source: "Имяфайла#{i}.docx",
+      user_id: User.first.id
   )
 end
 

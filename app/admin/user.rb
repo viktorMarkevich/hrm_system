@@ -1,7 +1,5 @@
 ActiveAdmin.register User do
-  include RegionSupporter
-
-  permit_params :first_name, :last_name, :email, :post, :region_id
+  permit_params :first_name, :last_name, :email, :post, :region
 
   actions :all
 
@@ -11,7 +9,6 @@ ActiveAdmin.register User do
       redirect_to new_admin_user_path
     else
       @user = User.invite!(permitted_params[:user])
-      @user.associate_with_region(params[:region])
 
       flash[:notice] = 'Пользователь успешно приглашен.'
       redirect_to admin_users_path
@@ -27,7 +24,7 @@ ActiveAdmin.register User do
     column :skype
     column :phone
     column :post
-    column :region_id do |user| user.region_name end
+    column :region
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
@@ -40,7 +37,8 @@ ActiveAdmin.register User do
       f.input :first_name
       f.input :last_name
       f.input :post, as: :select, collection: User::POST
-      f.input :region, as: :select, collection: Region::REGIONS, selected: resource.region_name, input_html: { name: 'region' }
+      # f.input :region, as: :select, collection: Region::REGIONS, selected: resource.region, input_html: { name: 'region' }
+      f.input :region, :label => 'Регион', :as => :select, :collection => Region::REGIONS
     end
     f.actions
   end
@@ -56,7 +54,6 @@ ActiveAdmin.register User do
 
     def update
       @user = User.find(params[:id])
-      @user.associate_with_region(params[:region])
       if @user.update_attributes(permitted_params[:user])
         flash[:notice] = 'Пользователь успешно обновлен.'
         redirect_to admin_user_path(@user)

@@ -34,8 +34,8 @@
 
     1.3. Пишем тесты с помощью этих инструментов - RSpec, Capybara, Cucumber, FactoryGirl.
 
- 2. Проект, на данный момент, разрабатывается на rails 4.2.1 и ruby 2.2.2
-    для обозначения верси руби используем файл .ruby-version - внутри  ruby-2.2.2
+ 2. Проект, на данный момент, разрабатывается на rails 5.0.1 и ruby 2.4.0
+    для обозначения верси руби используем файл .ruby-version - внутри  ruby-2.4.0
     для обозначения gemset используем файл .ruby-gemset - внутри имя_гемсета
 
     В гемфайле обязательно указываем версию гема, который устанавливаем.
@@ -89,13 +89,13 @@
                    git add (название_файла) # добавит конкретный файл
 
                Название коммита не должно быть километровым, и недолжно быть длиной в одно слово.
-               Коммит должен начинаться со строк - 'add', 'remove', 'change', 'fix', 'refactor' и других слов в настоящем
+               Коммит должен начинаться со строк - 'Add', 'Remove', 'Change', 'Fix', 'Refactor' и других слов в настоящем
                времени.
 
                = Пример:
-                   git ci -am 'add column "first_name" to user table' # это норма
+                   git ci -am 'Add column "first_name" to user table' # это норма
 
-                   git ci -am 'added columns the first_name to the user table, which I have created after my super lunch' # это-
+                   git ci -am 'Added columns the first_name to the user table, which I have created after my super lunch' # это-
                        сами поимаете бред.
 
                    можно писать с заглавием и описанием.

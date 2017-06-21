@@ -1,0 +1,32 @@
+.row
+  .col-lg-12
+    .row
+      .col-md-6
+        .tip
+          %p
+            Архив Кандидатов
+      .col-md-6
+        .pull-right
+          = link_to 'Вернуться назад', candidates_path, class: 'paranoid_btn'
+.row
+  .col-md-12
+    .items-list
+      %table.table.table-hover.table-bordered.table-striped
+        %thead
+          %tr.table_head_color
+            %th Кандидат
+            %th Должность
+            %th Регион
+            %th Зарплата
+            %th Ответственный
+        %tbody
+          - candidates.each do |candidate|
+            %tr
+              %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
+              %td= candidate.desired_position
+              %td= candidate.city_of_residence
+              %td= candidate.salary
+              %td= full_name_for(candidate.owner)
+.row
+  .col-lg-3
+    = paginate candidates

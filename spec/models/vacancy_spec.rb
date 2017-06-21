@@ -24,7 +24,7 @@ RSpec.describe Vacancy, type: :model do
       end
 
       it %q{ region is blank } do
-        expect(build(:vacancy, region_id: nil)).to_not be_valid
+        expect(build(:vacancy, region: nil)).to_not be_valid
       end
 
       it %q{ status is blank } do
@@ -38,6 +38,13 @@ RSpec.describe Vacancy, type: :model do
       it 'salary is not integer' do
         expect(build(:vacancy,  salary: '1000.5')).to_not be_valid
       end
+    end
+  end
+
+  context 'check history_event after create vacancy' do
+    it 'increase history_events count by 1' do
+      @candidate = build(:candidate)
+      expect { @candidate.save }.to change( Candidate, :count).by(1)
     end
   end
 end

@@ -1,0 +1,55 @@
+.row
+  .col-md-12
+    .items-list
+      %table.table.table-hover.table-bordered.table-striped
+        %thead
+          %tr.table_head_color
+            %th Кандидат
+            %th Должность
+            %th Регион
+            %th Зарплата
+            %th Ответственный
+            %th
+              .dropdown.show
+                %a#dropdownMenuLink.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#"}
+                  Статус
+                  %i.glyphicon.glyphicon-arrow-down
+                .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
+                  = link_to "Все", candidates_path, remote: true, class: "dropdown-item #{'active' unless @status }"
+                  %br
+                  = link_to "Пассивен", candidates_path(status: 'Пассивен'), remote: true, class: "dropdown-item #{'active' if @status == 'Пассивен'}"
+                  %br
+                  = link_to "В работе", candidates_path(status: 'В работе'), remote: true, class: "dropdown-item #{'active' if @status == 'В работе'}"
+            %th Примечание
+        %tbody
+          - @candidates.each do |candidate|
+            %tr
+              %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
+              %td= candidate.desired_position
+              %td= candidate.city_of_residence
+              %td= candidate.salary
+              %td= full_name_for(candidate.owner)
+              %td= candidate.status
+              %td= candidate.notice
+      .pull-right.export-to-file
+        Экспортировать в:
+        = link_to 'csv', candidates_path(format: :csv), class: 'export'
+        |
+        = link_to 'xlsx', candidates_path(format: :xlsx), class: 'export'
+        |
+        = link_to 'pdf', candidates_path(format: :pdf), class: 'export'
+.row
+  .col-lg-3
+    = paginate @candidates
+
+-#.dialog
+.modal.fade{id: 'exportCandidates',tabindex: "-1", role: 'dialog', 'aria-labelledby': 'exportCandidatesLabel'}
+  .modal-dialog.modal-sm{role: 'document'}
+    .modal-content
+      .modal-body
+        %p Экспортировать кандидатов только с текущей страницы или экспортировать всех существующих кандидатов?
+        .btn-group.btn-group-justified
+          %a.btn.btn-default.btn-sm.export-modal.export-current Текущее
+          %a.btn.btn-default.btn-sm.export-modal.export-all Все
+          %a.btn.btn-default.btn-sm.export-modal.export-cancel Отмена
+
