@@ -1,8 +1,17 @@
+-#.row
+-#  .col-lg-8.col-lg-offset-2
+-#    .panel-body
+-#      .input-group
+-#        %span.input-group-btn
+-#          = link_to '#', class: 'btn search' do
+-#            %i.glyphicon.glyphicon-search
+-#        %input.form-control{ placeholder: 'Search for...', type: 'text', style: 'border: 1px solid #fff' }
 .row
   .col-lg-8.col-lg-offset-2
     .panel-body
       .input-group
         %span.input-group-btn
-          = link_to '#', class: 'btn search' do
-            %i.glyphicon.glyphicon-search
-        %input.form-control{ placeholder: 'Search for...', type: 'text', style: 'border: 1px solid #fff' }
+          = form_tag candidates_path, method: :get do
+            = text_field_tag :tags, params[:tags], required: 'true', style: 'border: 1px solid #fff', placeholder: 'Search for...', class: 'form-control'
+            = button_tag(type: 'submit', class: 'btn search', value: 'Search', name: 'commit') do
+              %span.glyphicon.glyphicon-search

@@ -7,7 +7,11 @@ class CandidatesController < ApplicationController
 
   def index
     @status = params[:status]
-    @candidates = Candidate.where(filter_condition).preload(:owner, [taggings: :tags], :tags ).order('id').page(params[:page]).per(10)
+    if params[:tags]
+      @candidates = Candidate.tagged_with(params[:tags]).page(params[:page]).per(10)
+    else
+      @candidates = Candidate.preload(:owner).where(filter_condition).order('id').page(params[:page]).per(10)
+    end
 
     respond_to do |format|
       format.html

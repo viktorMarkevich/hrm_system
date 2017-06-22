@@ -20,8 +20,6 @@ $(document).ready ->
     $('#exportCandidates').modal 'hide'
   )
 
-$(document).ready ->
-
   split = (val) ->
     val.split /,\s*/
   extractLast = (term) ->
@@ -51,3 +49,7 @@ $(document).ready ->
       @value = terms.join(', ')
       false
   return
+
+  return $('#tags').autocomplete({
+  source: $('#tags').data('autocomplete-source')
+  });
