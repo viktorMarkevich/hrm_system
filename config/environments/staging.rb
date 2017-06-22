@@ -30,7 +30,7 @@ Rails.application.configure do
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   config.assets.css_compressor = :sass
-  config.serve_static_files = true
+  config.public_file_server.enabled = true
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = true
@@ -95,5 +95,5 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: '192.168.0.251', port: '3001' }
 
   config.action_mailer.perform_deliveries = true
-
+  config.public_file_server.enabled = true
 end
