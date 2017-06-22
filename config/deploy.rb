@@ -60,8 +60,8 @@ namespace :deploy do
       within "#{fetch(:deploy_to)}/current" do
         # execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
         # execute :bundle, :exec, "setsid rails s -p3001 -e #{fetch(:rails_env)}"
-        #  execute :bundle, :exec, "setsid unicorn_rails -p 3001 -E #{fetch(:rails_env)}"
-        execute :bundle, :exec, "rake history:delete_all RAILS_ENV=staging"
+        execute :bundle, :exec, "setsid unicorn_rails -p 3001 -E #{fetch(:rails_env)}"
+        # execute :bundle, :exec, "rake history:delete_all RAILS_ENV=staging"
       end
     end
   end
