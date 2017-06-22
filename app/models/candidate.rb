@@ -1,11 +1,13 @@
 # encoding: utf-8
 class Candidate < ActiveRecord::Base
 
+  acts_as_taggable_on :tags
+
   acts_as_paranoid
   include Support
 
-  acts_as_xlsx columns: [:name, :desired_position, :city_of_residence, :salary, :'owner.full_name',
-  :created_at, :status, :notice], i18n: true
+  acts_as_xlsx columns: [ :name, :desired_position, :city_of_residence, :salary, :'owner.full_name', :created_at,
+                          :status, :notice ], i18n: true
 
   scope :with_status, -> (status) { where(status: "#{status}") }
 
@@ -13,7 +15,7 @@ class Candidate < ActiveRecord::Base
   # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
-  belongs_to :company, :counter_cache => true
+  belongs_to :company, counter_cache: true
   belongs_to :geo_name, counter_cache: true
 
   has_one :image
@@ -78,12 +80,12 @@ class Candidate < ActiveRecord::Base
   end
 
   def self.to_csv
-    column_names =  %w{Кандидат Должность Регион Зарплата Ответственный Добавлен Статус Примечание}
+    column_names =  %w{ Кандидат Должность Регион Зарплата Ответственный Добавлен Статус Примечание }
     CSV.generate do |csv|
       csv << column_names
       all.each do |candidate|
-        csv << [candidate.name, candidate.desired_position, candidate.city_of_residence, candidate.salary,
-                candidate.owner&.full_name, candidate.created_at.strftime('%F'), candidate.status, candidate.notice]
+        csv << [ candidate.name, candidate.desired_position, candidate.city_of_residence, candidate.salary,
+                candidate.owner&.full_name, candidate.created_at.strftime('%F'), candidate.status, candidate.notice ]
       end
     end
   end
@@ -92,7 +94,7 @@ class Candidate < ActiveRecord::Base
   def check_geo_name
     self.geo_name_id = if city_of_residence.present?
                          GeoName.joins(:geo_alternate_names).find_by(fclass: 'P', geo_alternate_names: { name: self.city_of_residence })&.id
-                    end || nil
+                       end || nil
   end
 
   def add_history_event_after_create

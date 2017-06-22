@@ -12,7 +12,7 @@ RSpec.describe CvSourcesController, type: :controller do
     end
 
     it 'returns http success and list array of sources' do
-      get :index, format: 'json'
+      get :index, format: :json
       expect(response).to have_http_status(:success)
       expect(response.content_type).to eq 'application/json'
       expect(json['sources'].count).to eq(5)

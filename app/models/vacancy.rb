@@ -26,8 +26,7 @@ class Vacancy < ActiveRecord::Base
 
   def candidates_with_status(status)
     Candidate.select(%{ "candidates".* }).joins(:staff_relations)
-             .where(%{ "staff_relations"."vacancy_id" = #{self.id}
-                    AND "staff_relations"."status" = '#{status}' })
+             .where(%{ "staff_relations"."vacancy_id" = #{self.id} AND "staff_relations"."status" = '#{status}' })
   end
 
   def set_default_status

@@ -58,11 +58,11 @@ RSpec.describe EventsController, type: :controller do
 
       it 'creates new Event object' do
         json = JSON.parse((attributes_for :event).to_json).update(
-              vacancy_name: '------',
-              candidate_name: '------',
-              update_path: '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
-              destroy_path: '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
-              will_begin_at: "#{will_begin_at}" )
+              'vacancy_name' => '------',
+              'candidate_name' => '------',
+              'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
+              'destroy_path' => '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
+              'will_begin_at' => "#{will_begin_at}" )
         expect(json_response).to eq json
         expect(response).to have_http_status(:created)
       end
@@ -79,12 +79,12 @@ RSpec.describe EventsController, type: :controller do
 
       it 'creates new Event object' do
         json = JSON.parse((attributes_for :event).to_json).update(
-            name: 'Name',
-            vacancy_name: "#{Event.last.staff_relation.vacancy.name}",
-            candidate_name: "#{Event.last.staff_relation.candidate.name}",
-            update_path: '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
-            destroy_path: '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
-            will_begin_at: "#{will_begin_at}" )
+            'name' => 'Name',
+            'vacancy_name' => "#{Event.last.staff_relation.vacancy.name}",
+            'candidate_name' => "#{Event.last.staff_relation.candidate.name}",
+            'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
+            'destroy_path' => '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
+            'will_begin_at' => "#{will_begin_at}" )
         expect(json_response).to eq json
         expect(response).to have_http_status(:created)
       end

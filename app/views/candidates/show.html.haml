@@ -32,7 +32,8 @@
         - if @candidate.original_cv_data
           %button{ type: 'button', class: 'btn btn-info', data: { toggle: 'modal', target: '#ResumeModalWindow' } }
             Посмотреть резюме
-          %div{ class: 'modal fade bs-example-modal-lg', id: 'ResumeModalWindow', tabindex: '-1', role: 'dialog', aria: { labelledby: 'ResumeModalWindowLabel' } }
+          %div{ class: 'modal fade bs-example-modal-lg', id: 'ResumeModalWindow', tabindex: '-1', role: 'dialog',
+                aria: { labelledby: 'ResumeModalWindowLabel' } }
             %div{ class: 'modal-dialog modal-lg', role: 'document' }
               .modal-content
                 .modal-header
@@ -51,6 +52,13 @@
     = render partial: 'row_element', locals: { subscription: 'Желаемая должность:', column: :desired_position, candidate: @candidate }
     = render partial: 'row_element', locals: { subscription: 'Дата рождения:', column: :birthday, candidate: @candidate }
     = render partial: 'row_element', locals: { subscription: 'Город:', column: :city_of_residence, candidate: @candidate }
+    .col-md-4.text-right
+      .tip
+        %p.subscription
+          Навыки:
+    .col-md-1
+    .col-md-7
+      = @candidate.tag_list
     %hr
     = render partial: 'row_element', locals: { subscription: 'Почта:', column: :email, candidate: @candidate }
     = render partial: 'row_element', locals: { subscription: 'Телефон:', column: :phone, candidate: @candidate }

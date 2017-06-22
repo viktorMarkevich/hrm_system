@@ -6,6 +6,7 @@
           %tr.table_head_color
             %th Кандидат
             %th Должность
+            %th Навыки
             %th Регион
             %th Зарплата
             %th Ответственный
@@ -26,6 +27,7 @@
             %tr
               %td= link_to candidate.name, candidate_path(candidate), id: 'profile-name'
               %td= candidate.desired_position
+              %td= candidate.tag_list
               %td= candidate.city_of_residence
               %td= candidate.salary
               %td= full_name_for(candidate.owner)
