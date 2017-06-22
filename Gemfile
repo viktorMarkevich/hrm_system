@@ -47,8 +47,7 @@ group :development do
 end
 
 group :staging, :production do
-  gem 'unicorn'
-  gem 'unicorn-rails'
+  gem 'puma'
 end
 
 group :development, :test do
