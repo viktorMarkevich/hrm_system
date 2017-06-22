@@ -7,12 +7,7 @@ class CandidatesController < ApplicationController
 
   def index
     @status = params[:status]
-
-    if request.format != 'text/html' && request.format != 'application/javascript' && !params[:page]
-      @candidates = Candidate.where(filter_condition).order('id')
-    else
-      @candidates = Candidate.where(filter_condition).order('id').page(params[:page]).per(10)
-    end
+    @candidates = Candidate.where(filter_condition).preload(:owner, [taggings: :tags], :tags ).order('id').page(params[:page]).per(10)
 
     respond_to do |format|
       format.html
