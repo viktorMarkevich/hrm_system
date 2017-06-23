@@ -18,7 +18,6 @@ Rails.application.routes.draw do
       put :update_resume
     end
     collection do
-      get :autocomplete_tag_name
       post :upload_resume
     end
   end

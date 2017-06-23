@@ -1,17 +1,16 @@
--#.row
--#  .col-lg-8.col-lg-offset-2
--#    .panel-body
--#      .input-group
--#        %span.input-group-btn
--#          = link_to '#', class: 'btn search' do
--#            %i.glyphicon.glyphicon-search
--#        %input.form-control{ placeholder: 'Search for...', type: 'text', style: 'border: 1px solid #fff' }
-.row
+.row{ style: 'padding-bottom: 30px;' }
   .col-lg-8.col-lg-offset-2
     .panel-body
-      .input-group
-        %span.input-group-btn
-          = form_tag candidates_path, method: :get do
-            = text_field_tag :tags, params[:tags], required: 'true', style: 'border: 1px solid #fff', placeholder: 'Search for...', class: 'form-control'
-            = button_tag(type: 'submit', class: 'btn search', value: 'Search', name: 'commit') do
-              %span.glyphicon.glyphicon-search
+      = form_tag path, method: :get do
+        .input-group
+          = text_field_tag :tags, params[:tags], style: 'border: 1px solid #fff', id: 'tags',
+                                                 placeholder: 'Search for...', class: 'form-control',
+                                                 data: { autocomplete_source: searches_path }
+          %span.input-group-btn
+            = button_to '#', class: 'btn search', style: 'border-radius: 4px; border-bottom-left-radius: 0; border-top-left-radius: 0;' do
+              %i.glyphicon.glyphicon-search
+        - if objects.blank?
+          %section
+            .text-center
+              %h3
+                Please try modifying your search to get more results.

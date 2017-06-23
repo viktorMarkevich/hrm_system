@@ -8,7 +8,7 @@ class CandidatesController < ApplicationController
   def index
     @status = params[:status]
     if params[:tags]
-      @candidates = Candidate.tagged_with(params[:tags]).page(params[:page]).per(10)
+      @candidates = Candidate.tagged_with(params[:tags], any: true).where('name ILIKE ?', "%#{params[:term]}%").page(params[:page]).per(10)
     else
       @candidates = Candidate.preload(:owner).where(filter_condition).order('id').page(params[:page]).per(10)
     end
@@ -37,6 +37,7 @@ class CandidatesController < ApplicationController
   end
 
   def edit
+    # @candidate.tag_list = @candidate.tag_list.join(', ')
   end
 
   def create
