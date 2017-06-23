@@ -15,8 +15,8 @@ class Candidate < ActiveRecord::Base
   # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
-  belongs_to :company, counter_cache: true
-  belongs_to :geo_name, counter_cache: true
+  belongs_to :company
+  belongs_to :geo_name
 
   has_one :image
 

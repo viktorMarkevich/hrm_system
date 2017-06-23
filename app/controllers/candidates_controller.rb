@@ -37,7 +37,6 @@ class CandidatesController < ApplicationController
   end
 
   def edit
-    # @candidate.tag_list = @candidate.tag_list.join(', ')
   end
 
   def create
