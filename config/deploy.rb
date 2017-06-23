@@ -20,6 +20,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'pids', 'cache', 'sockets'
 set :puma_conf, -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
 set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/pids/puma.pid" }
 set :puma_sockets, -> { "#{fetch(:deploy_to)}/shared/sockets/puma.sock" }
+set :use_sudo, false
 
 # Default value for keep_releases is 5
 set :keep_releases, 3

@@ -20,16 +20,16 @@ set :assets_roles, [ :web, :app ]
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-role :app, %w{admin@192.168.137.75}
-role :web, %w{admin@192.168.137.75}
-role :db,  %w{admin@192.168.137.75}
+role :app, %w{production@192.168.0.251}
+role :web, %w{production@192.168.0.251}
+role :db,  %w{production@192.168.0.251}
 
 # Custom SSH Options
 # ------------------------------------
-server '192.168.137.75',
-       user: 'admin',
+server 'production@192.168.0.251',
+       user: 'production',
        roles: %w{app db web},
-       ssh_options: { keys: %w(/home/admin/.ssh/id_rsa),
+       ssh_options: { keys: %w(/home/production/.ssh/id_rsa),
                       forward_agent: true,
                       auth_methods: %w(publickey password),
                       password: ENV['PRODUCTION_SSH_PASSWORD'] }
