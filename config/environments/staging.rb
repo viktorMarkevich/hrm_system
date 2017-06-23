@@ -30,7 +30,7 @@ Rails.application.configure do
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   config.assets.css_compressor = :sass
-  config.serve_static_files = true
+  config.public_file_server.enabled = true
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = true
@@ -57,6 +57,9 @@ Rails.application.configure do
 
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+  end
 
   # Use a different cache store in staging.
   # config.cache_store = :mem_cache_store
@@ -95,5 +98,5 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: '192.168.0.251', port: '3001' }
 
   config.action_mailer.perform_deliveries = true
-
+  config.public_file_server.enabled = true
 end

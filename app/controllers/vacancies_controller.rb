@@ -2,7 +2,7 @@
 class VacanciesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_vacancy, only: [:show, :edit, :update, :destroy]
+  before_action :set_vacancy, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @vacancies = Vacancy.includes(:owner).order('id').page(params[:page]).per(10)
@@ -85,7 +85,7 @@ class VacanciesController < ApplicationController
   end
 
   def set_vacancy
-    if Vacancy.where(:id => params[:id]).present?
+    if Vacancy.where(id: params[:id]).present?
       @vacancy = Vacancy.find(params[:id])
     else
       redirect_to vacancies_url
