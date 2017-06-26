@@ -67,7 +67,8 @@ class Candidate < ActiveRecord::Base
     self.salary = content.scan(/^*\s*(?=[-~])*[0-9]{2,7}\s*(?=грн|ГРН|usd|USD|долл|\$)/).to_a.compact.first.to_s.strip
     self.city_of_residence = content.scan(/(?<=Город:|Регион:|Адрес:)\s*$*.*(?=$)/).to_a.compact.first.to_s.strip
     self.file_name = data.original_filename
-    self.languages = content.scan(/(?:English|Английский|Англійська|Russian|Русский|Російська|Ukrainian|Украинский|Українська|Français|French|Французский|Французька|Deutsch|German|Немецкий|Німецька|Polish|Polski|Польский|Польська)(?=[\.\-\/,:;\s$])/).to_a.compact.join(', ')
+    self.tag_list = content.scan(/(?:Ruby|Rails|Ruby on Rails|RoR|PHP|Python|JavaScript|HTML|CSS|SQL|MySQL|PostgreSQL|Linux|MacOS|MVC|Git|ООП|)/i).to_a.compact.join(', ').to_s.downcase.strip
+    self.languages = content.scan(/(?:English|Английский|Англійська|Russian|Русский|Російська|Ukrainian|Украинский|Українська|Français|French|Французский|Французька|Deutsch|German|Немецкий|Німецька|Polish|Polski|Польский|Польська)(?=[\.\-\/,:;\s$])/i).to_a.compact.uniq.join(', ')
     self.email = content.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i).to_a.compact.first.to_s.strip
     self.phone = content.scan(/\b((?:[\s()\d-]{11,}\d)|\d{10,})\b/).to_a.compact.join(', ')
     self.skype = content.scan(/(?<=[Ss]kype:)\s*[a-zA-Z]+\w*(?:[-.:]\w+)*(?=[\s$])/).to_a.compact.first.to_s.strip
