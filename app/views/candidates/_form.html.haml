@@ -67,15 +67,16 @@
     .col-sm-3.control-label
       = f.label :tag_list, 'Навыки:'
     .col-sm-9
-      = f.text_field :tag_list, required: 'true', class: 'form-control', data: { autocomplete_source: searches_path }
+      = f.text_field :tag_list, required: 'true', value: @candidate.tag_list.to_s, class: 'form-control',
+                                id: 'tags', data: { autocomplete_source: searches_path }
   .form-group
     .col-sm-3.control-label
-      = f.label :education, 'Образование'
+      = f.label :education, 'Образование:'
     .col-sm-9
       = f.text_field :education, class: 'form-control'
   .form-group
     .col-sm-3.control-label
-      = f.label :languages, 'Языки'
+      = f.label :languages, 'Языки:'
     .col-sm-9
       = f.text_field :languages, class: 'form-control'
 
