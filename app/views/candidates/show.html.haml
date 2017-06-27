@@ -52,13 +52,8 @@
     = render partial: 'row_element', locals: { subscription: 'Желаемая должность:', column: :desired_position, candidate: @candidate }
     = render partial: 'row_element', locals: { subscription: 'Дата рождения:', column: :birthday, candidate: @candidate }
     = render partial: 'row_element', locals: { subscription: 'Город:', column: :city_of_residence, candidate: @candidate }
-    .col-md-4.text-right
-      .tip
-        %p.subscription
-          Навыки:
-    .col-md-1
-    .col-md-7
-      = @candidate.tag_list
+    = render partial: 'row_element', locals: { subscription: 'Навыки:', column: :tag_list, candidate: @candidate }
+
     %hr
     = render partial: 'row_element', locals: { subscription: 'Почта:', column: :email, candidate: @candidate }
     = render partial: 'row_element', locals: { subscription: 'Телефон:', column: :phone, candidate: @candidate }
