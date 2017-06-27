@@ -19,7 +19,7 @@ module OrganizersHelper
   def set_status_for(history)
     history.was_changed.map do |attribute, v|
       values = v.gsub(/["\[\]]/, '').split(', ')
-      if "#{values[1]}" != ''
+      if "#{values[1]}" != '' && !in_exception_list?(attribute, history)
         (t("activerecord.attributes.#{set_model_name(history)}.#{attribute}") +
          t(set_locales_path(history) + '.changes', val_from: (values[0] == 'nil' || values[0] == '' ? 'Пусто' : values[0]),
                                                      val_to: (values[1] == 'nil' ? nil : values[1])))
@@ -33,6 +33,10 @@ module OrganizersHelper
 
   def set_model_name(history)
     history.historyable_type.gsub(/([a-z])([A-Z])/, '\1_\2').downcase
+  end
+
+  def in_exception_list?(attr, history)
+    Object.const_get(history.historyable_type)::TRANSLATE_EXCEPTION.include?(attr)
   end
 
 end

@@ -1,4 +1,29 @@
 ru:
+  date:
+    abbr_day_names:
+    - Вс
+    - Пн
+    - Вт
+    - Ср
+    - Чт
+    - Пт
+    - Сб
+    month_names:
+    - Декабрь
+    - Январь
+    - Февраль
+    - Март
+    - Апрель
+    - Май
+    - Июнь
+    - Июль
+    - Август
+    - Сентябрь
+    - Октябрь
+    - Ноябрь
+  simple_calendar:
+    previous: Предыдущий
+    next: Следующий
   time:
    formats:
      long: "%Y-%m-%d %H:%M:%S"
@@ -25,7 +50,10 @@ ru:
         salary: 'Зарплата'
         source: 'Источник'
         ready_to_relocate: 'Готов(а) к переезду:'
-        company_id: 'Компания'
+        email: 'Почта'
+        phone: Телефон
+        file_name: Имя файла
+        tag_list: Тэги
         owner:
           full_name: 'Ответственный'
         created_at: Добавлен
