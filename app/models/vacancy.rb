@@ -43,7 +43,7 @@ class Vacancy < ActiveRecord::Base
   end
 
   def add_history_event_after_update
-    History.create_with_attrs(was_changed: set_changes, action: 'update', historyable_type: 'Vacancy', historyable_id: id)
+    History.create_with_attrs(was_changed: set_changes, action: 'update')
   end
 
   # def add_history_event_after_destroy   # TODO  old status

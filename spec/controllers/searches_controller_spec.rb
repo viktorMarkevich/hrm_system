@@ -4,8 +4,12 @@ RSpec.describe SearchesController, type: :controller do
 
   let(:json) { JSON.parse(response.body) }
   let(:candidate) { create :candidate }
+  let(:user) { create :user }
 
   describe 'GET #index' do
+    before :each do
+      sign_in user
+    end
 
     it 'has HTTP 200 status' do
       expect(response).to have_http_status(200)

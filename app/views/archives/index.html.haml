@@ -1,4 +1,4 @@
-= render partial: 'share/search'
+= render partial: 'share/search', locals: { path: object_path(@objects), objects: @objects }
 .container
   %br
   %br
