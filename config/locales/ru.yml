@@ -50,7 +50,10 @@ ru:
         salary: 'Зарплата'
         source: 'Источник'
         ready_to_relocate: 'Готов(а) к переезду:'
-        company_id: 'Компания'
+        email: 'Почта'
+        phone: Телефон
+        file_name: Имя файла
+        tag_list: Тэги
         owner:
           full_name: 'Ответственный'
         created_at: Добавлен

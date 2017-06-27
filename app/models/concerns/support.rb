@@ -2,6 +2,8 @@ module Support
 
   extend ActiveSupport::Concern
 
+  TRANSLATE_EXCEPTION = %w(original_cv_data company_id)
+
   def set_owner
     owner
   end
