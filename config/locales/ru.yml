@@ -54,6 +54,7 @@ ru:
         phone: Телефон
         file_name: Имя файла
         tag_list: Тэги
+        skype: Skype
         owner:
           full_name: 'Ответственный'
         created_at: Добавлен

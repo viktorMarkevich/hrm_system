@@ -16,6 +16,7 @@ RSpec.describe OrganisersController, type: :controller do
   let!(:candidate) { create :candidate, user_id: candidate_user.id }
   let!(:vacancy) { create :vacancy, user_id: user.id, region: region }
   let!(:sr) { create :staff_relation, vacancy_id: vacancy.id, candidate_id: candidate.id }
+  let(:event) { create :event, user_id: user.id, staff_relation_id: sr.id }
 
   before :each do
     sign_in user
@@ -34,8 +35,8 @@ RSpec.describe OrganisersController, type: :controller do
       end
 
       it 'to get the events' do
-        expect(assigns(:events).count).to eq(5)
-        expect(assigns(:events)).to eq(user.events.where(will_begin_at: Time.zone.now..(Time.zone.now + 7.days)).
+        expect(assigns(:events).count).to eq(6)
+        expect(assigns(:events).order(will_begin_at: :asc)).to eq(user.events.where(will_begin_at: Time.zone.now..(Time.zone.now + 7.days)).
                                                    order(will_begin_at: :asc))
         expect(assigns(:events)).to_not include(old_event)
       end
