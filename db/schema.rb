@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170627112911) do
+ActiveRecord::Schema.define(version: 20170629141835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(version: 20170627112911) do
     t.hstore   "was_changed"
     t.index ["historyable_id"], name: "index_histories_on_historyable_id", using: :btree
     t.index ["historyable_type"], name: "index_histories_on_historyable_type", using: :btree
-    t.index ["was_changed"], name: "index_histories_on_was_changed", using: :gin
+    t.index ["was_changed"], name: "index_histories_on_was_changed", using: :gist
   end
 
   create_table "images", force: :cascade do |t|
