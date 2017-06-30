@@ -119,9 +119,9 @@
         %p Мои компании:
   .form-group
     .col-sm-3.control-label
-      = f.label :company_id, 'Компания:'
+      = f.label :company_ids, 'Компании:'
     .col-sm-9
-      = f.select(:company_id, @companies.presence || '', {}, class: 'form-control')
+      = f.text_field :company_ids, class: 'form-control'
 
   %hr
 
