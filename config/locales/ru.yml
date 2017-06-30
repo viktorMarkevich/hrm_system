@@ -55,6 +55,8 @@ ru:
         file_name: Имя файла
         tag_list: Тэги
         skype: Skype
+        birthday: День рождения
+        languages: Языки
         owner:
           full_name: 'Ответственный'
         created_at: Добавлен

@@ -1,9 +1,11 @@
 class Event < ActiveRecord::Base
+  include Support
 
   MONTHS = %w(Январь Февраль Март Апрель Май Июнь Июль Август Сентябрь Октябрь Ноябрь Декабрь)
 
   belongs_to :user
   belongs_to :staff_relation, dependent: :destroy
+  has_many :histories, as: :historyable
 
   accepts_nested_attributes_for :staff_relation
 
