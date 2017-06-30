@@ -12,7 +12,7 @@ class Event < ActiveRecord::Base
   validates :name, :description, :user_id, presence: true
   validate :future_event?
 
-  # after_create :add_history_event_after_create
+  after_create :add_history_event_after_create
   # after_update :add_history_event_after_update
 
   def future_event?

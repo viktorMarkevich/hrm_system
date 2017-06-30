@@ -57,22 +57,20 @@ RSpec.describe OrganisersController, type: :controller do
       end
 
       it 'should return histories with target data' do
-        expect(assigns(:histories).count).to eq 4
+        expect(assigns(:histories).count).to eq 9
         expect(assigns(:histories).pluck(:historyable_id, :historyable_type)).to eq [[vacancy.id, 'Vacancy'],
                                                                                      [candidate.id, 'Candidate'],
-                                                                                     [vacancy_0.id, 'Vacancy'],
-                                                                                     [candidate_0.id, 'Candidate']]
+                                                                                     [vacancy_0.id, 'Vacancy']
+                                                                                     ] + user.events.map{ |e| [e.id, 'Event'] }.reverse + [[candidate_0.id, 'Candidate']]
         expect(assigns(:histories).pluck(:was_changed)).to eq [
                                                                   set_vacancy_hash(vacancy),
                                                                   set_candidate_hash(candidate),
                                                                   set_vacancy_hash(vacancy_0),
+                                                                  set_events_hash(user.events),
                                                                   set_candidate_hash(candidate_0)
-                                                              ]
+                                                              ].flatten
 
-        expect(assigns(:histories).pluck(:action)).to eq [ 'create',
-                                                           'create',
-                                                           'create',
-                                                           'create' ]
+        expect(assigns(:histories).pluck(:action)).to eq [ 'create', 'create', 'create', 'create', 'create', 'create', 'create', 'create', 'create' ]
       end
     end
 
@@ -84,7 +82,7 @@ RSpec.describe OrganisersController, type: :controller do
 
       it 'should return histories with target data' do
         get :index
-        expect(assigns(:histories).count).to eq 5
+        expect(assigns(:histories).count).to eq 10
         expect(assigns(:histories).pluck(:was_changed)).to eq [ {"salary"=>"[\"550\", \"100\"]",
                                                                  "status"=>"[\"Не задействована\", \"Не вана\"]",
                                                                  "languages"=>"[\"Английский, Русский\", \"задейство\"]",
@@ -94,7 +92,7 @@ RSpec.describe OrganisersController, type: :controller do
                                                                 set_candidate_hash(candidate),
                                                                 set_vacancy_hash(vacancy_0),
                                                                 set_candidate_hash(candidate_0)
-                                                              ]
+                                                              ].flatten
         expect(assigns(:histories).pluck(:action)).to eq [ 'update',
                                                            'create',
                                                            'create',
@@ -111,7 +109,7 @@ RSpec.describe OrganisersController, type: :controller do
 
       it 'should return histories with target data' do
         get :index
-        expect(assigns(:histories).count).to eq 5
+        expect(assigns(:histories).count).to eq 10
         expect(assigns(:histories).pluck(:was_changed)).to eq [ { "status"=>"[\"Найденные\", \"Собеседование\"]" },
                                                                 set_vacancy_hash(vacancy),
                                                                 set_candidate_hash(candidate),
@@ -225,5 +223,14 @@ RSpec.describe OrganisersController, type: :controller do
      "desired_position"=>"[nil, \"Программист, язык руби\"]",
      "city_of_residence"=>"[nil, \"Киев\"]",
      "ready_to_relocate"=>"[nil, \"yes\"]"}
+  end
+
+  def set_events_hash(events)
+    events.reverse.each_with_object([]).each do |obj, res|
+      res << {"name" => "[nil, \"#{obj.name}\"]",
+       "will_begin_at" => "[nil, #{obj.will_begin_at.strftime('%a, %d %b %Y %T UTC +00:00')}]",
+      "description" => "[nil, \"#{obj.description}\"]",
+      "staff_relation_id" => "[nil, #{obj.staff_relation_id}]" }
+    end
   end
 end
