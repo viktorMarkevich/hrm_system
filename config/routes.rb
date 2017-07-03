@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       put :update_resume
     end
     collection do
+      get :search_companies
       post :upload_resume
     end
   end

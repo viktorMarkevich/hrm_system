@@ -80,7 +80,3 @@ $(document).ready ->
       @value = terms.join(', ')
       false
   return
-
-#autocomplete candidates.company
-  return $('#candidate_company_ids').autocomplete
-    sourse: [ 'apple', 'aard', 'askme']

@@ -29,6 +29,7 @@ class CandidatesController < ApplicationController
 
   def new
     @candidate = Candidate.new
+    @company = @candidate.companies.new
   end
 
   def show
@@ -41,8 +42,8 @@ class CandidatesController < ApplicationController
 
   def create
     CvSource.find_or_create_by(name: candidate_params[:source])
-    @candidate = current_user.candidates.build(candidate_params)
-    if @candidate.save!
+    @candidate = current_user.candidates.create!(candidate_params)
+    if @candidate.save
       @candidate.reload
       flash[:success] = 'Кандидат был успешно добавлен.'
       redirect_to candidates_path
@@ -98,6 +99,14 @@ class CandidatesController < ApplicationController
     end
   end
 
+  def search_companies
+    companies = Company.order(:name).where('name ILIKE ?', "%#{params[:term]}%")
+
+    respond_to do |format|
+      format.json { render json: companies.map(&:name) }
+    end
+  end
+
   private
   def set_companies
     @companies = Company.get_company_name
@@ -105,9 +114,9 @@ class CandidatesController < ApplicationController
 
   def candidate_params
     params.require(:candidate).permit(:name, :birthday, :salary, :salary_format, :notice, :education, :languages,
-                                      :city_of_residence, :company_ids, :ready_to_relocate, :desired_position, :status,
-                                      :source, :description, :email, :phone, :linkedin, :facebook, :vkontakte, :google_plus,
-                                      :full_info, :skype, :home_page, :file_name, :tag_list)
+                                      :city_of_residence, :ready_to_relocate, :desired_position, :status, :source,
+                                      :description, :email, :phone, :linkedin, :facebook, :vkontakte, :google_plus,
+                                      :full_info, :skype, :home_page, :file_name, :tag_list, companies_attributes: [:id, :name] )
   end
 
   def find_candidate
