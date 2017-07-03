@@ -123,6 +123,32 @@ RSpec.describe OrganisersController, type: :controller do
                                                            'create', 'create', 'create', 'create', 'create', 'create' ]
       end
     end
+
+    context 'when in event UPDATE occurs' do
+      let(:user_event) { user.events.last }
+      let(:name) { user_event.name }
+
+      before do
+        user_event.update_attributes(name: 'Собеседование')
+      end
+
+      it 'should return histories with target data' do
+        get :index
+        expect(assigns(:histories).count).to eq 10
+        expect(assigns(:histories).pluck(:was_changed)).to eq [ { "name"=>"[\"Name\", \"Собеседование\"]" },
+                                                                set_vacancy_hash(vacancy),
+                                                                set_candidate_hash(candidate),
+                                                                set_vacancy_hash(vacancy_0),
+                                                                set_events_hash(user.events),
+                                                                set_candidate_hash(candidate_0)
+                                                                ].flatten
+        expect(assigns(:histories).pluck(:action)).to eq [ 'update',
+                                                           'create',
+                                                           'create',
+                                                           'create', 'create', 'create', 'create', 'create', 'create', 'create' ]
+      end
+    end
+
     #
     # context 'when in vacancy UPDATE occurs' do
     #   before do
@@ -199,9 +225,9 @@ RSpec.describe OrganisersController, type: :controller do
 
   def set_vacancy_hash(vacancy)
     {"name"=>"[nil, \"#{vacancy.name}\"]",
+     "region"=>"[nil, \"#{vacancy.region}\"]",
      "salary"=>"[nil, \"550\"]",
      "languages"=>"[nil, \"Английский, Русский\"]",
-     "region"=>"[nil, \"#{vacancy.region}\"]",
      "requirements"=>"[nil, \"Ответственный\"]",
      "salary_format"=>"[nil, \"usd\"]"}
   end
@@ -227,11 +253,12 @@ RSpec.describe OrganisersController, type: :controller do
   end
 
   def set_events_hash(events)
-    events.reverse.each_with_object([]).each do |obj, res|
-      res << {"name" => "[nil, \"#{obj.name}\"]",
-       "will_begin_at" => "[nil, #{obj.will_begin_at.strftime('%a, %d %b %Y %T UTC +00:00')}]",
-      "description" => "[nil, \"#{obj.description}\"]",
-      "staff_relation_id" => "[nil, #{obj.staff_relation_id}]" }
+    events.first(5).reverse.each_with_object([]).each do |obj, res|
+      res << { "name" => "[nil, \"Name\"]",
+               "description" => "[nil, \"#{obj.description}\"]",
+               "will_begin_at" => "[nil, #{obj.will_begin_at.strftime('%a, %d %b %Y %T UTC +00:00')}]",
+               "staff_relation_id" => "[nil, #{obj.staff_relation_id}]"
+             }
     end
   end
 end
