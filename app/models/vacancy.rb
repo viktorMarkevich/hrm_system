@@ -18,10 +18,9 @@ class Vacancy < ActiveRecord::Base
   validates :salary, numericality: { only_integer: true, greater_than: 0 }, unless: 'salary_format == "По договоренности"'
 
   after_restore :set_default_status
-  after_destroy :set_closed_status
   after_create :add_history_event_after_create
   after_update :add_history_event_after_update
-  # after_destroy :add_history_event_after_destroy
+  after_destroy :add_history_event_after_destroy
   # after_restore :add_history_event_after_restore
 
   def candidates_with_status(status)
@@ -33,10 +32,6 @@ class Vacancy < ActiveRecord::Base
     self.update(status: 'Не задействована')
   end
 
-  def set_closed_status
-    self.update(status: 'Закрыта')
-  end
-
   private
   def add_history_event_after_create
     histories.create_with_attrs(was_changed: set_changes, action: 'create')
@@ -46,14 +41,12 @@ class Vacancy < ActiveRecord::Base
     History.create_with_attrs(was_changed: set_changes, action: 'update')
   end
 
-  # def add_history_event_after_destroy   # TODO  old status
-  #   History.create_with_attrs(new_status: 'В архиве',
-  #                           responsible: {
-  #                               full_name: owner.full_name,
-  #                               id: user_id },
-  #                           action: "Вакансия <strong>#{name}</strong> перемещена в архив")
-  # end
-  #
+  def add_history_event_after_destroy
+    status = self.status
+    self.update_columns(status: 'Закрыта')
+    History.create_with_attrs(was_changed: {'status' => "[\"#{status}\", \"Закрыта\"]"}, action: 'destroy')
+  end
+
   # def add_history_event_after_restore # TODO  old status
   #   History.create_with_attrs(new_status: 'Восстановлена',
   #                             responsible: {

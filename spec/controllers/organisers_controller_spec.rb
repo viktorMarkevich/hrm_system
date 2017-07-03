@@ -101,6 +101,30 @@ RSpec.describe OrganisersController, type: :controller do
       end
     end
 
+    context 'when in vacancy DESTROY occurs' do
+      let(:vacancy_to_destroy) {vacancy}
+      before do
+        vacancy.destroy
+      end
+
+      it 'should return histories with target data' do
+        get :index
+        expect(assigns(:histories).count).to eq 10
+        expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"Не задействована\", \"Закрыта\"]"},
+                                                                set_vacancy_hash(vacancy_to_destroy),
+                                                                set_candidate_hash(candidate),
+                                                                set_vacancy_hash(vacancy_0),
+                                                                set_events_hash(user.events),
+                                                                set_candidate_hash(candidate_0)
+                                                              ].flatten
+        expect(assigns(:histories).pluck(:action)).to eq [ 'destroy',
+                                                           'create',
+                                                           'create',
+                                                           'create',
+                                                           'create', 'create', 'create', 'create', 'create', 'create' ]
+      end
+    end
+
     context 'when in staff_relation UPDATE occurs' do
 
       before do
