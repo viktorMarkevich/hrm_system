@@ -16,7 +16,6 @@ RSpec.describe OrganisersController, type: :controller do
   let!(:candidate) { create :candidate, user_id: candidate_user.id }
   let!(:vacancy) { create :vacancy, user_id: user.id, region: region }
   let!(:sr) { create :staff_relation, vacancy_id: vacancy.id, candidate_id: candidate.id }
-  # let!(:event) { create :event, user_id: user.id, staff_relation_id: sr.id }
 
   before :each do
     sign_in user
@@ -91,13 +90,14 @@ RSpec.describe OrganisersController, type: :controller do
                                                                 set_vacancy_hash(vacancy),
                                                                 set_candidate_hash(candidate),
                                                                 set_vacancy_hash(vacancy_0),
+                                                                set_events_hash(user.events),
                                                                 set_candidate_hash(candidate_0)
                                                               ].flatten
         expect(assigns(:histories).pluck(:action)).to eq [ 'update',
                                                            'create',
                                                            'create',
                                                            'create',
-                                                           'create' ]
+                                                           'create', 'create', 'create', 'create', 'create', 'create' ]
       end
     end
 
@@ -114,12 +114,13 @@ RSpec.describe OrganisersController, type: :controller do
                                                                 set_vacancy_hash(vacancy),
                                                                 set_candidate_hash(candidate),
                                                                 set_vacancy_hash(vacancy_0),
-                                                                set_candidate_hash(candidate_0) ]
+                                                                set_events_hash(user.events),
+                                                                set_candidate_hash(candidate_0) ].flatten
         expect(assigns(:histories).pluck(:action)).to eq [ 'update',
                                                            'create',
                                                            'create',
                                                            'create',
-                                                           'create' ]
+                                                           'create', 'create', 'create', 'create', 'create', 'create' ]
       end
     end
     #
