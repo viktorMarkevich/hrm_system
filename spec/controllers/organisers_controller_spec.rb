@@ -68,192 +68,198 @@ RSpec.describe OrganisersController, type: :controller do
                                                                   set_candidate_hash(candidate),
                                                                   {"vacancy_id"=>"[nil, #{sr_0.vacancy_id}]", "candidate_id"=>"[nil, #{sr_0.candidate_id}]"},
                                                                   set_vacancy_hash(vacancy_0),
-                                                                  set_events_hash(user.events)
+                                                                  set_events_hash(user.events, 5)
                                                               ].flatten
-
         expect(assigns(:histories).pluck(:action)).to eq [ 'create', 'create', 'create', 'create', 'create', 'create', 'create', 'create', 'create', 'create' ]
       end
     end
 
-    # context 'Vacancy actions' do
-    #   context 'when in vacancy UPDATE occurs' do
-    #
-    #     before do
-    #       vacancy.update_attributes(salary: '100', salary_format: 'задейство', languages: 'задейство', status: "Не вана", requirements: 'nil')
-    #     end
-    #
-    #     it 'should return histories with target data' do
-    #       get :index
-    #       expect(assigns(:histories).count).to eq 10
-    #       expect(assigns(:histories).pluck(:was_changed)).to eq [ {"salary"=>"[\"550\", \"100\"]",
-    #                                                                "status"=>"[\"Не задействована\", \"Не вана\"]",
-    #                                                                "languages"=>"[\"Английский, Русский\", \"задейство\"]",
-    #                                                                "requirements"=>"[\"Ответственный\", \"nil\"]",
-    #                                                                "salary_format"=>"[\"usd\", \"задейство\"]"},
-    #                                                               set_vacancy_hash(vacancy),
-    #                                                               set_candidate_hash(candidate),
-    #                                                               set_vacancy_hash(vacancy_0),
-    #                                                               set_events_hash(user.events),
-    #                                                               set_candidate_hash(candidate_0)
-    #                                                             ].flatten
-    #       expect(assigns(:histories).pluck(:action)).to eq [ 'update',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create', 'create', 'create', 'create', 'create', 'create' ]
-    #     end
-    #   end
-    #
-    #   context 'when in vacancy DESTROY occurs' do
-    #     let(:vacancy_to_destroy) {vacancy}
-    #     before do
-    #       vacancy.destroy
-    #     end
-    #
-    #     it 'should return histories with target data' do
-    #       get :index
-    #       expect(assigns(:histories).count).to eq 10
-    #       expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"Не задействована\", \"В Архиве\"]"},
-    #                                                               set_vacancy_hash(vacancy_to_destroy),
-    #                                                               set_candidate_hash(candidate),
-    #                                                               set_vacancy_hash(vacancy_0),
-    #                                                               set_events_hash(user.events),
-    #                                                               set_candidate_hash(candidate_0)
-    #                                                             ].flatten
-    #       expect(assigns(:histories).pluck(:action)).to eq [ 'destroy',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create', 'create', 'create', 'create', 'create', 'create' ]
-    #     end
-    #   end
-    #
-    #   context 'when RESTORE occurs' do
-    #     before do
-    #       vacancy.update_columns(deleted_at: DateTime.now)
-    #       vacancy.restore
-    #     end
-    #
-    #     it 'should return histories with target data' do
-    #       get :index
-    #       expect(assigns(:histories).count).to eq 10
-    #       expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"Не задействована\", \"Не задействована\"]"},
-    #                                                               set_vacancy_hash(vacancy),
-    #                                                               set_candidate_hash(candidate),
-    #                                                               set_vacancy_hash(vacancy_0),
-    #                                                               set_events_hash(user.events),
-    #                                                               set_candidate_hash(candidate_0)
-    #                                                             ].flatten
-    #       expect(assigns(:histories).pluck(:action)).to eq [ 'restore',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create', 'create', 'create', 'create', 'create', 'create' ]
-    #     end
-    #   end
-    # end
-    #
-    # context 'Candidate actions' do
-    #   context 'when in Candidate DESTROY occurs' do
-    #     let(:candidate_to_destroy) { candidate }
-    #     before do
-    #       candidate.destroy
-    #     end
-    #
-    #     it 'should return histories with target data' do
-    #       get :index
-    #       expect(assigns(:histories).count).to eq 10
-    #       expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"В работе\", \"В Архиве\"]"},
-    #                                                               set_vacancy_hash(vacancy),
-    #                                                               set_candidate_hash(candidate_to_destroy),
-    #                                                               set_vacancy_hash(vacancy_0),
-    #                                                               set_events_hash(user.events),
-    #                                                               set_candidate_hash(candidate_0)
-    #                                                             ].flatten
-    #       expect(assigns(:histories).pluck(:action)).to eq [ 'destroy',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create', 'create', 'create', 'create', 'create', 'create' ]
-    #     end
-    #   end
-    #
-    #   context 'when RESTORE occurs' do
-    #     before do
-    #       candidate.update_columns(deleted_at: DateTime.now)
-    #       candidate.restore
-    #     end
-    #
-    #     it 'should return histories with target data' do
-    #       get :index
-    #       expect(assigns(:histories).count).to eq 10
-    #       expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"В работе\", \"Пассивен\"]"},
-    #                                                               set_vacancy_hash(vacancy),
-    #                                                               set_candidate_hash(candidate),
-    #                                                               set_vacancy_hash(vacancy_0),
-    #                                                               set_events_hash(user.events),
-    #                                                               set_candidate_hash(candidate_0)
-    #                                                             ].flatten
-    #       expect(assigns(:histories).pluck(:action)).to eq [ 'restore',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create', 'create', 'create', 'create', 'create', 'create' ]
-    #     end
-    #   end
-    # end
-    #
-    #
-    # context 'StaffRelation actions' do
-    #   context 'when in staff_relation UPDATE occurs' do
-    #     before do
-    #       sr.update_attributes(status: 'Собеседование')
-    #     end
-    #
-    #     it 'should return histories with target data' do
-    #       get :index
-    #       expect(assigns(:histories).count).to eq 10
-    #       expect(assigns(:histories).pluck(:was_changed)).to eq [ { "status"=>"[\"Найденные\", \"Собеседование\"]" },
-    #                                                               set_vacancy_hash(vacancy),
-    #                                                               set_candidate_hash(candidate),
-    #                                                               set_vacancy_hash(vacancy_0),
-    #                                                               set_events_hash(user.events),
-    #                                                               set_candidate_hash(candidate_0) ].flatten
-    #       expect(assigns(:histories).pluck(:action)).to eq [ 'update',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create', 'create', 'create', 'create', 'create', 'create' ]
-    #     end
-    #   end
-    # end
-    #
-    # context 'Event actions' do
-    #   context 'when in event UPDATE occurs' do
-    #     let(:user_event) { user.events.last }
-    #     let(:name) { user_event.name }
-    #
-    #     before do
-    #       user_event.update_attributes(name: 'Собеседование')
-    #     end
-    #
-    #     it 'should return histories with target data' do
-    #       get :index
-    #       expect(assigns(:histories).count).to eq 10
-    #       expect(assigns(:histories).pluck(:was_changed)).to eq [ { "name"=>"[\"Name\", \"Собеседование\"]" },
-    #                                                               set_vacancy_hash(vacancy),
-    #                                                               set_candidate_hash(candidate),
-    #                                                               set_vacancy_hash(vacancy_0),
-    #                                                               set_events_hash(user.events),
-    #                                                               set_candidate_hash(candidate_0)
-    #                                                             ].flatten
-    #       expect(assigns(:histories).pluck(:action)).to eq [ 'update',
-    #                                                          'create',
-    #                                                          'create',
-    #                                                          'create', 'create', 'create', 'create', 'create', 'create', 'create' ]
-    #     end
-    #   end
-    # end
+    context 'Vacancy actions' do
+      context 'when in vacancy UPDATE occurs' do
+
+        before do
+          vacancy.update_attributes(salary: '100', salary_format: 'задейство', languages: 'задейство', status: "Не вана", requirements: 'nil')
+        end
+
+        it 'should return histories with target data' do
+          get :index
+          expect(assigns(:histories).count).to eq 10
+          expect(assigns(:histories).pluck(:was_changed)).to eq [ {"salary"=>"[\"550\", \"100\"]",
+                                                                   "status"=>"[\"Не задействована\", \"Не вана\"]",
+                                                                   "languages"=>"[\"Английский, Русский\", \"задейство\"]",
+                                                                   "requirements"=>"[\"Ответственный\", \"nil\"]",
+                                                                   "salary_format"=>"[\"usd\", \"задейство\"]"},
+                                                                  {"vacancy_id"=>"[nil, #{sr.vacancy_id}]", "candidate_id"=>"[nil, #{sr.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy),
+                                                                  set_candidate_hash(candidate),
+                                                                  {"vacancy_id"=>"[nil, #{sr_0.vacancy_id}]", "candidate_id"=>"[nil, #{sr_0.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy_0),
+                                                                  set_events_hash(user.events, 4)
+                                                                ].flatten
+          expect(assigns(:histories).pluck(:action)).to eq [ 'update',
+                                                             'create',
+                                                             'create',
+                                                             'create',
+                                                             'create', 'create', 'create', 'create', 'create', 'create' ]
+        end
+      end
+
+      context 'when in vacancy DESTROY occurs' do
+        let(:vacancy_to_destroy) {vacancy}
+        before do
+          vacancy.destroy
+        end
+
+        it 'should return histories with target data' do
+          get :index
+          expect(assigns(:histories).count).to eq 10
+          expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"Не задействована\", \"В Архиве\"]"},
+                                                                  {"vacancy_id"=>"[nil, #{sr.vacancy_id}]", "candidate_id"=>"[nil, #{sr.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy),
+                                                                  set_candidate_hash(candidate),
+                                                                  {"vacancy_id"=>"[nil, #{sr_0.vacancy_id}]", "candidate_id"=>"[nil, #{sr_0.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy_0),
+                                                                  set_events_hash(user.events, 4)
+                                                                ].flatten
+          expect(assigns(:histories).pluck(:action)).to eq [ 'destroy',
+                                                             'create',
+                                                             'create',
+                                                             'create',
+                                                             'create', 'create', 'create', 'create', 'create', 'create' ]
+        end
+      end
+
+      context 'when RESTORE occurs' do
+        before do
+          vacancy.update_columns(deleted_at: DateTime.now)
+          vacancy.restore
+        end
+
+        it 'should return histories with target data' do
+          get :index
+          expect(assigns(:histories).count).to eq 10
+          expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"Не задействована\", \"Не задействована\"]"},
+                                                                  {"vacancy_id"=>"[nil, #{sr.vacancy_id}]", "candidate_id"=>"[nil, #{sr.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy),
+                                                                  set_candidate_hash(candidate),
+                                                                  {"vacancy_id"=>"[nil, #{sr_0.vacancy_id}]", "candidate_id"=>"[nil, #{sr_0.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy_0),
+                                                                  set_events_hash(user.events, 4)
+                                                                ].flatten
+          expect(assigns(:histories).pluck(:action)).to eq [ 'restore',
+                                                             'create',
+                                                             'create',
+                                                             'create',
+                                                             'create', 'create', 'create', 'create', 'create', 'create' ]
+        end
+      end
+    end
+
+    context 'Candidate actions' do
+      context 'when in Candidate DESTROY occurs' do
+        let(:candidate_to_destroy) { candidate }
+        before do
+          candidate.destroy
+        end
+
+        it 'should return histories with target data' do
+          get :index
+          expect(assigns(:histories).count).to eq 10
+          expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"В работе\", \"В Архиве\"]"},
+                                                                  {"vacancy_id"=>"[nil, #{sr.vacancy_id}]", "candidate_id"=>"[nil, #{sr.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy),
+                                                                  set_candidate_hash(candidate),
+                                                                  {"vacancy_id"=>"[nil, #{sr_0.vacancy_id}]", "candidate_id"=>"[nil, #{sr_0.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy_0),
+                                                                  set_events_hash(user.events, 4)
+                                                                ].flatten
+          expect(assigns(:histories).pluck(:action)).to eq [ 'destroy',
+                                                             'create',
+                                                             'create',
+                                                             'create',
+                                                             'create', 'create', 'create', 'create', 'create', 'create' ]
+        end
+      end
+
+      context 'when RESTORE occurs' do
+        before do
+          candidate.update_columns(deleted_at: DateTime.now)
+          candidate.restore
+        end
+
+        it 'should return histories with target data' do
+          get :index
+          expect(assigns(:histories).count).to eq 10
+          expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"В работе\", \"Пассивен\"]"},
+                                                                  {"vacancy_id"=>"[nil, #{sr.vacancy_id}]", "candidate_id"=>"[nil, #{sr.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy),
+                                                                  set_candidate_hash(candidate),
+                                                                  {"vacancy_id"=>"[nil, #{sr_0.vacancy_id}]", "candidate_id"=>"[nil, #{sr_0.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy_0),
+                                                                  set_events_hash(user.events, 4)
+                                                                ].flatten
+          expect(assigns(:histories).pluck(:action)).to eq [ 'restore',
+                                                             'create',
+                                                             'create',
+                                                             'create',
+                                                             'create', 'create', 'create', 'create', 'create', 'create' ]
+        end
+      end
+    end
+
+
+    context 'StaffRelation actions' do
+      context 'when in staff_relation UPDATE occurs' do
+        before do
+          sr.update_attributes(status: 'Собеседование')
+        end
+
+        it 'should return histories with target data' do
+          get :index
+          expect(assigns(:histories).count).to eq 10
+          expect(assigns(:histories).pluck(:was_changed)).to eq [ { "status"=>"[\"Найденные\", \"Собеседование\"]" },
+                                                                  {"vacancy_id"=>"[nil, #{sr.vacancy_id}]", "candidate_id"=>"[nil, #{sr.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy),
+                                                                  set_candidate_hash(candidate),
+                                                                  {"vacancy_id"=>"[nil, #{sr_0.vacancy_id}]", "candidate_id"=>"[nil, #{sr_0.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy_0),
+                                                                  set_events_hash(user.events, 4) ].flatten
+          expect(assigns(:histories).pluck(:action)).to eq [ 'update',
+                                                             'create',
+                                                             'create',
+                                                             'create',
+                                                             'create', 'create', 'create', 'create', 'create', 'create' ]
+        end
+      end
+    end
+
+    context 'Event actions' do
+      context 'when in event UPDATE occurs' do
+        let(:user_event) { user.events.last }
+        let(:name) { user_event.name }
+
+        before do
+          user_event.update_attributes(name: 'Собеседование')
+        end
+
+        it 'should return histories with target data' do
+          get :index
+          expect(assigns(:histories).count).to eq 10
+          expect(assigns(:histories).pluck(:was_changed)).to eq [ { "name"=>"[\"Name\", \"Собеседование\"]" },
+                                                                  {"vacancy_id"=>"[nil, #{sr.vacancy_id}]", "candidate_id"=>"[nil, #{sr.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy),
+                                                                  set_candidate_hash(candidate),
+                                                                  {"vacancy_id"=>"[nil, #{sr_0.vacancy_id}]", "candidate_id"=>"[nil, #{sr_0.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy_0),
+                                                                  set_events_hash(user.events, 4)
+                                                                ].flatten
+          expect(assigns(:histories).pluck(:action)).to eq [ 'update',
+                                                             'create',
+                                                             'create',
+                                                             'create', 'create', 'create', 'create', 'create', 'create', 'create' ]
+        end
+      end
+    end
   end
 
   def set_vacancy_hash(vacancy)
@@ -285,8 +291,8 @@ RSpec.describe OrganisersController, type: :controller do
      "ready_to_relocate"=>"[nil, \"yes\"]"}
   end
 
-  def set_events_hash(events)
-    events.first(5).reverse.each_with_object([]).each do |obj, res|
+  def set_events_hash(events, n)
+    events.last(n).reverse.each_with_object([]).each do |obj, res|
       res << { "name" => "[nil, \"Name\"]",
                "description" => "[nil, \"#{obj.description}\"]",
                "will_begin_at" => "[nil, #{obj.will_begin_at.strftime('%a, %d %b %Y %T UTC +00:00')}]",
