@@ -12,7 +12,6 @@ class Candidate < ActiveRecord::Base
   scope :with_status, -> (status) { where(status: "#{status}") }
 
   STATUSES = %w(Пассивен В\ работе)
-  # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   belongs_to :company, counter_cache: true
@@ -112,6 +111,6 @@ class Candidate < ActiveRecord::Base
   def add_history_after_paranoid_actions(action, new_status)
     old_status = self.status
     self.update_columns(status: new_status)
-    histories.create_with_attrs(was_changed: {'status' => "[\"#{old_status}\", \"#{new_status}\"]"}, action: action)
+    histories.create_with_attrs(was_changed: { 'status' => "[\"#{old_status}\", \"#{new_status}\"]" }, action: action)
   end
 end

@@ -12,8 +12,8 @@ class Event < ActiveRecord::Base
   validates :name, :description, :user_id, presence: true
   validate :future_event?
 
-  after_create :add_history_event_after_create
-  after_update :add_history_event_after_update
+  after_create -> { add_history_event_after_('create') }
+  after_update -> { add_history_event_after_('update') }
 
   def future_event?
     errors.add(:will_begin_at, 'должна быть предстоящей') unless will_begin_at.future?
@@ -49,12 +49,8 @@ class Event < ActiveRecord::Base
   end
 
   private
-    def add_history_event_after_create
-      histories.create_with_attrs(was_changed: set_changes, action: 'create')
-    end
 
-    def add_history_event_after_update
-      histories.create_with_attrs(was_changed: set_changes, action: 'update')
+    def add_history_event_after_(action)
+      histories.create_with_attrs(was_changed: set_changes, action: action)
     end
-
 end

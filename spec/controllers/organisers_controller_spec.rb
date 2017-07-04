@@ -244,54 +244,6 @@ RSpec.describe OrganisersController, type: :controller do
                                                            'create', 'create', 'create', 'create', 'create', 'create', 'create' ]
       end
     end
-
-    #
-    # context 'when in vacancy UPDATE occurs' do
-    #   before do
-    #     vacancy.update_attributes(name: 'Vacancy name')
-    #   end
-    #
-    #   it 'should return histories with target data' do
-    #     get :index
-    #     expect(assigns(:histories).count).to eq 5
-    #     expect(assigns(:histories).pluck(:new_status)).to eq [ 'Собеседование', 'Найденные', 'Не задействована', 'Пассивен' ]
-    #     expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name } ]
-    #     expect(assigns(:histories).pluck(:action)).to eq [ "В вакансии <strong>#{vacancy.name}</strong> для кандидата <strong>#{candidate.name}</strong> произошли изменения",
-    #                                                        "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>",
-    #                                                        "В систему добавлена вакансия: <strong>#{vacancy.name}</strong>",
-    #                                                        "В систему добавлен кандидат: <strong>#{candidate.name}</strong>" ]
-    #   end
-    # end
-    #
-    # context 'when DESTROY occurs' do
-    #   let(:vacancy_name) { vacancy.name }
-    #   let(:candidate_name) { candidate.name }
-    #
-    #   before do
-    #     candidate.destroy
-    #     vacancy.destroy
-    #   end
-    #
-    #   it 'should return histories with target data' do
-    #     get :index
-    #     expect(assigns(:histories).count).to eq 5
-    #     expect(assigns(:histories).pluck(:new_status)).to eq [ 'В архиве', 'В архиве', 'Найденные', 'Не задействована', 'Пассивен' ]
-    #     expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name } ]
-    #     expect(assigns(:histories).pluck(:action)).to eq [ "Вакансия <strong>#{vacancy_name}</strong> перемещена в архив",
-    #                                                        "Кандидат <strong>#{candidate_name}</strong> перемещен в архив",
-    #                                                        "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>",
-    #                                                        "В систему добавлена вакансия: <strong>#{vacancy.name}</strong>",
-    #                                                        "В систему добавлен кандидат: <strong>#{candidate.name}</strong>" ]
-    #   end
-    # end
-    #
   end
 
   def set_vacancy_hash(vacancy)
