@@ -1,6 +1,7 @@
 # coding 'utf-8'
 #=require jquery.ui.dialog
 #=require jquery.ui.autocomplete
+#=require select2
 
 $(document).ready ->
 
@@ -21,34 +22,8 @@ $(document).ready ->
     $('#exportCandidates').modal 'hide'
   )
 
-  #autocomplete candidate.companies
+  #multiple select candidate.companies
 
-  split = (val) ->
-    val.split /,\s*/
-  extractLast = (term) ->
-    split(term).pop()
+  $("#candidate_company_ids").select2(
 
-  $('#candidate_companies_list').autocomplete
-    minLength: 0
-    delay: 0
-    source: (request, response) ->
-      $.ajax
-        url: '/candidates/search_companies'
-        data: term: extractLast(request.term)
-        dataType: 'json'
-        type: 'GET'
-        success: (data) ->
-          response data
-      return
-    focus: ->
-      false
-    select: (event, ui) ->
-      terms = split(@value)
-      terms.pop()
-      terms.push ui.item.value
-      jQuery.uniqueSort(terms)
-      console.log(ui.item.value)
-      terms.push ''
-      @value = terms.join(', ')
-      false
-  return
+  );

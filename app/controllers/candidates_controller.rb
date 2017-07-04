@@ -8,7 +8,8 @@ class CandidatesController < ApplicationController
   def index
     @status = params[:status]
     if params[:tags]
-      @candidates = Candidate.preload(:owner).tagged_with(params[:tags], any: true).where('name ILIKE ?', "%#{params[:term]}%").page(params[:page]).per(10)
+      @candidates = Candidate.preload(:owner).tagged_with(params[:tags], any: true).where('name ILIKE ?', "%#{params[:term]}%")
+                             .page(params[:page]).per(10)
     else
       @candidates = Candidate.preload(:owner).where(filter_condition).order('id').page(params[:page]).per(10)
     end
@@ -29,7 +30,6 @@ class CandidatesController < ApplicationController
 
   def new
     @candidate = Candidate.new
-    @company = @candidate.companies.new
   end
 
   def show
@@ -42,7 +42,7 @@ class CandidatesController < ApplicationController
 
   def create
     CvSource.find_or_create_by(name: candidate_params[:source])
-    @candidate = current_user.candidates.create!(candidate_params)
+    @candidate = current_user.candidates.build(candidate_params)
     if @candidate.save
       @candidate.reload
       flash[:success] = 'Кандидат был успешно добавлен.'
@@ -99,14 +99,6 @@ class CandidatesController < ApplicationController
     end
   end
 
-  def search_companies
-    companies = Company.order(:name).where('name ILIKE ?', "%#{params[:term]}%")
-
-    respond_to do |format|
-      format.json { render json: companies.map(&:name) }
-    end
-  end
-
   private
   def set_companies
     @companies = Company.get_company_name
@@ -116,7 +108,7 @@ class CandidatesController < ApplicationController
     params.require(:candidate).permit(:name, :birthday, :salary, :salary_format, :notice, :education, :languages,
                                       :city_of_residence, :ready_to_relocate, :desired_position, :status, :source,
                                       :description, :email, :phone, :linkedin, :facebook, :vkontakte, :google_plus,
-                                      :full_info, :skype, :home_page, :file_name, :tag_list, companies_attributes: [:id, :name] )
+                                      :full_info, :skype, :home_page, :file_name, :tag_list, company_ids: [])
   end
 
   def find_candidate

@@ -118,17 +118,11 @@
       .tip
         %p Мои компании:
   .form-group
-    = f.fields_for :companies do |company|
-      .col-sm-3.control-label
-        = company.label :name, 'Компании:'
-      .col-sm-9
-        = company.text_field :name, class: 'form-control', id: 'candidate_companies_list', data: { autocomplete_source: search_companies_candidates_path }
-  -#.form-group
-  -#  .col-sm-3.control-label
-  -#    = f.label :company_ids, 'Компании:'
-  -#  .col-sm-9
-  -#    = f.text_field :company_ids, class: 'form-control', id: 'candidate_companies_list', value: @candidate.companies.to_s,
-  -#                                  data: { autocomplete_source: search_companies_candidates_path }
+    .col-sm-3.control-label
+      = f.label :company_ids, 'Компании:'
+    .col-sm-9
+      = hidden_field_tag 'candidate[company_ids][]', nil
+      = f.select :company_ids, @companies, {}, multiple: true, include_blank: true
 
   %hr
 

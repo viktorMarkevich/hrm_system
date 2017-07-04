@@ -26,7 +26,7 @@ class Candidate < ActiveRecord::Base
   has_and_belongs_to_many :companies, counter_cache: true
 
   accepts_nested_attributes_for :image
-  accepts_nested_attributes_for :companies
+  accepts_nested_attributes_for :companies, allow_destroy: true
 
   validates :status, presence: true
   # validates :name, :status, presence: true
