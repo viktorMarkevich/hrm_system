@@ -27,7 +27,7 @@ class Candidate < ActiveRecord::Base
   accepts_nested_attributes_for :image
 
   validates :status, presence: true
-  # validates :name, :status, presence: true
+  validates :name, :status, presence: true
   # validates :source, presence: true, if: 'file_name.nil?'
   # validates :source, uniqueness: true, if: 'source.present?'
   # validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
@@ -45,10 +45,10 @@ class Candidate < ActiveRecord::Base
 
   before_validation :check_geo_name
 
-  after_create :add_history_event_after_create
-  after_update :add_history_event_after_update
-  # after_destroy :add_history_event_after_destroy
-  # after_restore :add_history_event_after_restore
+  after_create -> { add_history_event_after_('create') }
+  after_update -> { add_history_event_after_('update') }
+  after_destroy  -> { add_history_after_paranoid_actions('destroy', 'В Архиве') }
+  after_restore  -> { add_history_after_paranoid_actions('restore', 'Пассивен') }
 
   def status_for_vacancy(vacancy)
     StaffRelation.find_by_candidate_id_and_vacancy_id(self.id, vacancy.id).status
@@ -105,27 +105,13 @@ class Candidate < ActiveRecord::Base
                        end || nil
   end
 
-  def add_history_event_after_create
-    histories.create_with_attrs(was_changed: set_changes, action: 'create')
+  def add_history_event_after_(action)
+    histories.create_with_attrs(was_changed: set_changes, action: action)
   end
 
-  def add_history_event_after_update
-    # histories.create_with_attrs(was_changed: { status: 'Пассивен' }, action: 'create')
-    # p '*'*100
-    # p self.changes
-    # p '*'*100
+  def add_history_after_paranoid_actions(action, new_status)
+    old_status = self.status
+    self.update_columns(status: new_status)
+    histories.create_with_attrs(was_changed: {'status' => "[\"#{old_status}\", \"#{new_status}\"]"}, action: action)
   end
-
-  def add_history_event_after_destroy
-    History.create_with_attrs(new_status: 'В архиве',
-                              responsible: { full_name: owner.full_name, id: user_id },
-                              action: "Кандидат <strong>#{name}</strong> перемещен в архив")
-  end
-
-  def add_history_event_after_restore
-    History.create_with_attrs(new_status: 'Восстановлен',
-                              responsible: { full_name: owner.full_name, id: user_id },
-                              action: "Кандидат <strong>#{name}</strong> восстановлен из архива")
-  end
-
 end

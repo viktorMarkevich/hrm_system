@@ -110,7 +110,7 @@ RSpec.describe OrganisersController, type: :controller do
       it 'should return histories with target data' do
         get :index
         expect(assigns(:histories).count).to eq 10
-        expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"Не задействована\", \"Закрыта\"]"},
+        expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"Не задействована\", \"В Архиве\"]"},
                                                                 set_vacancy_hash(vacancy_to_destroy),
                                                                 set_candidate_hash(candidate),
                                                                 set_vacancy_hash(vacancy_0),
@@ -135,6 +135,54 @@ RSpec.describe OrganisersController, type: :controller do
         get :index
         expect(assigns(:histories).count).to eq 10
         expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"Не задействована\", \"Не задействована\"]"},
+                                                                set_vacancy_hash(vacancy),
+                                                                set_candidate_hash(candidate),
+                                                                set_vacancy_hash(vacancy_0),
+                                                                set_events_hash(user.events),
+                                                                set_candidate_hash(candidate_0)
+                                                              ].flatten
+        expect(assigns(:histories).pluck(:action)).to eq [ 'restore',
+                                                           'create',
+                                                           'create',
+                                                           'create',
+                                                           'create', 'create', 'create', 'create', 'create', 'create' ]
+      end
+    end
+
+    context 'when in vacancy DESTROY occurs' do
+      let(:candidate_to_destroy) { candidate }
+      before do
+        candidate.destroy
+      end
+
+      it 'should return histories with target data' do
+        get :index
+        expect(assigns(:histories).count).to eq 10
+        expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"В работе\", \"В Архиве\"]"},
+                                                                set_vacancy_hash(vacancy),
+                                                                set_candidate_hash(candidate_to_destroy),
+                                                                set_vacancy_hash(vacancy_0),
+                                                                set_events_hash(user.events),
+                                                                set_candidate_hash(candidate_0)
+                                                              ].flatten
+        expect(assigns(:histories).pluck(:action)).to eq [ 'destroy',
+                                                           'create',
+                                                           'create',
+                                                           'create',
+                                                           'create', 'create', 'create', 'create', 'create', 'create' ]
+      end
+    end
+
+    context 'when RESTORE occurs' do
+      before do
+        candidate.update_columns(deleted_at: DateTime.now)
+        candidate.restore
+      end
+
+      it 'should return histories with target data' do
+        get :index
+        expect(assigns(:histories).count).to eq 10
+        expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"В работе\", \"Пассивен\"]"},
                                                                 set_vacancy_hash(vacancy),
                                                                 set_candidate_hash(candidate),
                                                                 set_vacancy_hash(vacancy_0),

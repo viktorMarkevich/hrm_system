@@ -19,7 +19,7 @@ class Vacancy < ActiveRecord::Base
 
   after_create -> { add_history_event_after_('create') }
   after_update -> { add_history_event_after_('update') }
-  after_destroy  -> { add_history_after_paranoid_actions('destroy', 'Закрыта') }
+  after_destroy  -> { add_history_after_paranoid_actions('destroy', 'В Архиве') }
   after_restore  -> { add_history_after_paranoid_actions('restore', 'Не задействована') }
 
   def candidates_with_status(status)
