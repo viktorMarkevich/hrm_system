@@ -125,6 +125,30 @@ RSpec.describe OrganisersController, type: :controller do
       end
     end
 
+    context 'when RESTORE occurs' do
+      before do
+        vacancy.update_columns(deleted_at: DateTime.now)
+        vacancy.restore
+      end
+
+      it 'should return histories with target data' do
+        get :index
+        expect(assigns(:histories).count).to eq 10
+        expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"Не задействована\", \"Не задействована\"]"},
+                                                                set_vacancy_hash(vacancy),
+                                                                set_candidate_hash(candidate),
+                                                                set_vacancy_hash(vacancy_0),
+                                                                set_events_hash(user.events),
+                                                                set_candidate_hash(candidate_0)
+                                                              ].flatten
+        expect(assigns(:histories).pluck(:action)).to eq [ 'restore',
+                                                           'create',
+                                                           'create',
+                                                           'create',
+                                                           'create', 'create', 'create', 'create', 'create', 'create' ]
+      end
+    end
+
     context 'when in staff_relation UPDATE occurs' do
 
       before do
@@ -220,31 +244,6 @@ RSpec.describe OrganisersController, type: :controller do
     #   end
     # end
     #
-    # context 'when RESTORE occurs' do
-    #   let(:candidate_restore) { create :candidate, user_id: candidate_user.id, deleted_at: DateTime.now }
-    #   let(:vacancy_restore) { create :vacancy, user_id: user.id, deleted_at: DateTime.now }
-    #
-    #   before do
-    #     candidate_restore.restore
-    #     vacancy_restore.restore
-    #   end
-    #
-    #   it 'should return histories with target data' do
-    #     get :index
-    #     expect(assigns(:histories).count).to eq 5
-    #     expect(assigns(:histories).pluck(:new_status)).to eq [ 'Восстановлена', 'Не задействована', 'Восстановлен', 'Пассивен', 'Найденные' ]
-    #     expect(assigns(:histories).pluck(:responsible)).to eq [ { 'id' => user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => candidate_user.id.to_s, 'full_name' => user.full_name },
-    #                                                             { 'id' => user.id.to_s, 'full_name' => user.full_name } ]
-    #         expect(assigns(:histories).pluck(:action)).to eq [ "Вакансия <strong>#{vacancy_restore.name}</strong> восстановлена из архива",
-    #                                                            "В систему добавлена вакансия: <strong>#{vacancy_restore.name}</strong>",
-    #                                                        "Кандидат <strong>#{candidate_restore.name}</strong> восстановлен из архива",
-    #                                                        "В систему добавлен кандидат: <strong>#{candidate_restore.name}</strong>",
-    #                                                        "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>" ]
-    #   end
-    # end
   end
 
   def set_vacancy_hash(vacancy)
