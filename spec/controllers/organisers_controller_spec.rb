@@ -166,15 +166,16 @@ RSpec.describe OrganisersController, type: :controller do
           get :index
           expect(assigns(:histories).count).to eq 10
           expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"В работе\", \"В Архиве\"]"},
+                                                                  {"status"=>"[\"Найденные\", \"Убрать\"]"},
                                                                   {"vacancy_id"=>"[nil, #{sr.vacancy_id}]", "candidate_id"=>"[nil, #{sr.candidate_id}]"},
                                                                   set_vacancy_hash(vacancy),
                                                                   set_candidate_hash(candidate),
                                                                   {"vacancy_id"=>"[nil, #{sr_0.vacancy_id}]", "candidate_id"=>"[nil, #{sr_0.candidate_id}]"},
                                                                   set_vacancy_hash(vacancy_0),
-                                                                  set_events_hash(user.events, 4)
+                                                                  set_events_hash(user.events, 3)
                                                                 ].flatten
           expect(assigns(:histories).pluck(:action)).to eq [ 'destroy',
-                                                             'create',
+                                                             'destroy',
                                                              'create',
                                                              'create',
                                                              'create', 'create', 'create', 'create', 'create', 'create' ]
@@ -225,6 +226,31 @@ RSpec.describe OrganisersController, type: :controller do
                                                                   set_vacancy_hash(vacancy_0),
                                                                   set_events_hash(user.events, 4) ].flatten
           expect(assigns(:histories).pluck(:action)).to eq [ 'update',
+                                                             'create',
+                                                             'create',
+                                                             'create',
+                                                             'create', 'create', 'create', 'create', 'create', 'create' ]
+        end
+      end
+
+      context 'when in StaffRelation DESTROY occurs' do
+        let(:sr_to_destroy) { sr }
+        before do
+          sr.destroy
+        end
+
+        it 'should return histories with target data' do
+          get :index
+          expect(assigns(:histories).count).to eq 10
+          expect(assigns(:histories).pluck(:was_changed)).to eq [ {"status"=>"[\"Найденные\", \"Убрать\"]"},
+                                                                  {"vacancy_id"=>"[nil, #{sr.vacancy_id}]", "candidate_id"=>"[nil, #{sr.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy),
+                                                                  set_candidate_hash(candidate),
+                                                                  {"vacancy_id"=>"[nil, #{sr_0.vacancy_id}]", "candidate_id"=>"[nil, #{sr_0.candidate_id}]"},
+                                                                  set_vacancy_hash(vacancy_0),
+                                                                  set_events_hash(user.events, 4)
+                                                                ].flatten
+          expect(assigns(:histories).pluck(:action)).to eq [ 'destroy',
                                                              'create',
                                                              'create',
                                                              'create',

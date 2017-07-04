@@ -14,7 +14,7 @@ class StaffRelation < ActiveRecord::Base
 
   after_create -> { add_history_event_after_('create') }
   after_update -> { add_history_event_after_('update') }
-  # after_destroy  -> { add_history_after_paranoid_actions('destroy', 'В Архиве') }
+  after_destroy -> { add_history_after_paranoid_actions('destroy', 'Убрать') }
 
   def set_owner
     vacancy.owner
@@ -53,12 +53,14 @@ class StaffRelation < ActiveRecord::Base
   end
 
   def add_history_event_after_(action)
-    histories.create_with_attrs(was_changed: set_changes, action: action)
+    # unless self.status_was == status && action == 'create'
+      histories.create_with_attrs(was_changed: set_changes, action: action)
+    # end
   end
 
   def add_history_after_paranoid_actions(action, new_status)
     old_status = self.status
-    self.update_columns(status: new_status)
+    # self.update_columns(status: new_status)
     histories.create_with_attrs(was_changed: { 'status' => "[\"#{old_status}\", \"#{new_status}\"]" }, action: action)
   end
 
