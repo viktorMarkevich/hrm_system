@@ -12,7 +12,7 @@ class StaffRelation < ActiveRecord::Base
 
   validates :vacancy_id,  uniqueness: { scope: :candidate_id }, presence: true
 
-  # after_create -> { add_history_event_after_('create') }
+  after_create -> { add_history_event_after_('create') }
   after_update -> { add_history_event_after_('update') }
   # after_destroy  -> { add_history_after_paranoid_actions('destroy', 'В Архиве') }
 
