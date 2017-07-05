@@ -42,6 +42,8 @@ gem 'wysiwyg-rails'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'rails-jquery-autocomplete'
 gem 'select2-rails', '~> 3.5.7'
+gem 'selectize-rails'
+
 
 group :development do
   gem 'letter_opener'

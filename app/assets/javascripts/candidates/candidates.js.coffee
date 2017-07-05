@@ -2,6 +2,7 @@
 #=require jquery.ui.dialog
 #=require jquery.ui.autocomplete
 #=require select2
+#=require selectize
 
 $(document).ready ->
 
@@ -24,6 +25,5 @@ $(document).ready ->
 
   #multiple select candidate.companies
 
-  $("#candidate_company_ids").select2(
-
-  );
+  $(".selectize").selectize()
+  return

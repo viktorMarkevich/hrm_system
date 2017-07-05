@@ -67,8 +67,8 @@
     .col-sm-3.control-label
       = f.label :tag_list, 'Навыки:'
     .col-sm-9
-      = f.text_field :tag_list, required: 'true', value: @candidate.tag_list.to_s, class: 'form-control',
-                                id: 'tags', data: { autocomplete_source: searches_path }
+      = f.text_field :tag_list, required: 'true', class: 'form-control', id: 'tags', value: @candidate.tag_list.to_s,
+                                data: { autocomplete_source: searches_path }
   .form-group
     .col-sm-3.control-label
       = f.label :education, 'Образование:'
@@ -121,8 +121,7 @@
     .col-sm-3.control-label
       = f.label :company_ids, 'Компании:'
     .col-sm-9
-      = hidden_field_tag 'candidate[company_ids][]', nil
-      = f.select :company_ids, @companies, {}, multiple: true, include_blank: true
+      = f.select :company_ids, Company.all.pluck(:name, :id), {}, { multiple: true, class: 'selectize' }
 
   %hr
 
@@ -168,3 +167,13 @@
     .col-sm-12
       = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn paranoid_btn'
       = link_to 'Назад', :back, class: 'btn paranoid_btn'
+
+  .modal.fade.company-modal{ aria: { labelledby: 'myModalLabel' }, role: 'dialog', tabindex: '-1' }
+  .modal-dialog.modal-md{ role: 'document' }
+    .modal-content
+      .modal-header
+        %button.close{ aria: { label: 'Close' }, data: { dismiss: 'modal' }, type: 'button' }
+          %span{ aria: { hidden: 'true' } } ×
+        %h4#myModalLabel.modal-title Add Company
+      .modal-body
+        = render partial: 'companies/form'
