@@ -24,6 +24,7 @@ module Faceit
     config.assets.paths << "#{Rails}/vendor/assets/fonts"
     config.time_zone = 'UTC'
     config.active_record.time_zone_aware_types = [:datetime]
+    config.i18n.default_locale = :ru
 
 
     # Bower asset paths

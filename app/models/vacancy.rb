@@ -17,50 +17,26 @@ class Vacancy < ActiveRecord::Base
   validates :name, :region, :status, :user_id, presence: true
   validates :salary, numericality: { only_integer: true, greater_than: 0 }, unless: 'salary_format == "По договоренности"'
 
-  after_restore :set_default_status
-  after_destroy :set_closed_status
-  after_create :add_history_event_after_create
-  after_update :add_history_event_after_update
-  # after_destroy :add_history_event_after_destroy
-  # after_restore :add_history_event_after_restore
+  after_create -> { add_history_event_after_('create') }
+  after_update -> { add_history_event_after_('update') }
+  after_destroy  -> { add_history_after_paranoid_actions('destroy', 'В Архиве') }
+  after_restore  -> { add_history_after_paranoid_actions('restore', 'Не задействована') }
 
   def candidates_with_status(status)
     Candidate.select(%{ "candidates".* }).joins(:staff_relations)
              .where(%{ "staff_relations"."vacancy_id" = #{self.id} AND "staff_relations"."status" = '#{status}' })
   end
 
-  def set_default_status
-    self.update(status: 'Не задействована')
-  end
-
-  def set_closed_status
-    self.update(status: 'Закрыта')
-  end
-
   private
-  def add_history_event_after_create
-    histories.create_with_attrs(was_changed: set_changes, action: 'create')
-  end
 
-  def add_history_event_after_update
-    History.create_with_attrs(was_changed: set_changes, action: 'update')
-  end
+    def add_history_event_after_(action)
+      histories.create_with_attrs(was_changed: set_changes, action: action)
+    end
 
-  # def add_history_event_after_destroy   # TODO  old status
-  #   History.create_with_attrs(new_status: 'В архиве',
-  #                           responsible: {
-  #                               full_name: owner.full_name,
-  #                               id: user_id },
-  #                           action: "Вакансия <strong>#{name}</strong> перемещена в архив")
-  # end
-  #
-  # def add_history_event_after_restore # TODO  old status
-  #   History.create_with_attrs(new_status: 'Восстановлена',
-  #                             responsible: {
-  #                                 full_name: owner.full_name,
-  #                                 id: user_id },
-  #                             action: "Вакансия <strong>#{name}</strong> восстановлена из архива")
-  # end
-
+    def add_history_after_paranoid_actions(action, new_status)
+      old_status = self.status
+      self.update_columns(status: new_status)
+      histories.create_with_attrs(was_changed: { 'status' => "[\"#{old_status}\", \"#{new_status}\"]" }, action: action)
+    end
 end
 
