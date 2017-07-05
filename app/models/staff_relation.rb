@@ -38,38 +38,13 @@ class StaffRelation < ActiveRecord::Base
 
   private
 
-  def create_history_event
-    History.create_with_attrs(old_status: 'Пасивен',
-                              new_status: 'Найденные',
-                              responsible: { full_name: vacancy.owner.full_name,
-                                             id: vacancy.user_id },
-                              action: "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>")
-  end
-
-  def update_history_event
-    unless self.status_was == status
-      History.create_with_attrs(was_changed: set_changes, action: 'update', historyable_type: self.class.name, historyable_id: id)
-    end
-  end
-
-  def add_history_event_after_(action)
-    # unless self.status_was == status && action == 'create'
+    def add_history_event_after_(action)
       histories.create_with_attrs(was_changed: set_changes, action: action)
-    # end
-  end
+    end
 
-  def add_history_after_paranoid_actions(action, new_status)
-    old_status = self.status
-    # self.update_columns(status: new_status)
-    histories.create_with_attrs(was_changed: { 'status' => "[\"#{old_status}\", \"#{new_status}\"]" }, action: action)
-  end
-
-  def set_changes
-    changes = self.changes
-    changes.delete('created_at')
-    changes.delete('updated_at')
-    changes.delete('id')
-    changes
-  end
-
+    def add_history_after_paranoid_actions(action, new_status)
+      old_status = self.status
+      # self.update_columns(status: new_status)
+      histories.create_with_attrs(was_changed: { 'status' => "[\"#{old_status}\", \"#{new_status}\"]" }, action: action)
+    end
 end

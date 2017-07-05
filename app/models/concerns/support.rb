@@ -12,7 +12,7 @@ module Support
     changes = self.changes
     changes.delete('created_at')
     changes.delete('updated_at')
-    changes.delete('user_id') if user_id
+    changes.delete('user_id') if try(:user_id)
     changes.delete('id')
     changes
   end
