@@ -21,8 +21,8 @@ module OrganizersHelper
       values = v.gsub(/["\[\]]/, '').split(', ')
       if "#{values[1]}" != '' && !in_exception_list?(attribute, history)
         (t("activerecord.attributes.#{set_model_name(history)}.#{attribute}") +
-         t(set_locales_path(history) + '.changes', val_from: (values[0] == 'nil' || values[0] == '' ? 'Пусто' : values[0]),
-                                                     val_to: (values[1] == 'nil' ? nil : values[1])))
+            t(set_locales_path(history) + '.changes', val_from: (values[0] == 'nil' || values[0] == '' ? 'Пусто' : values[0]),
+              val_to: (values[1] == 'nil' ? nil : values[1])))
       end
     end.compact.join('; ').html_safe
   end

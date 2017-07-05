@@ -271,7 +271,8 @@ RSpec.describe OrganisersController, type: :controller do
         it 'should return histories with target data' do
           get :index
           expect(assigns(:histories).count).to eq 10
-          expect(assigns(:histories).pluck(:was_changed)).to eq [ { "name"=>"[\"Name\", \"Собеседование\"]" },
+          expect(assigns(:histories).pluck(:was_changed)).to eq [ { "name"=>"[\"Name\", \"Собеседование\"]",
+                                                                    "will_begin_at"=>"[nil, \"#{I18n.l(user_event.will_begin_at, format: '%d %B(%A) в %T')}\"]"},
                                                                   {"vacancy_id"=>"[nil, #{sr.vacancy_id}]", "candidate_id"=>"[nil, #{sr.candidate_id}]"},
                                                                   set_vacancy_hash(vacancy),
                                                                   set_candidate_hash(candidate),
@@ -318,10 +319,11 @@ RSpec.describe OrganisersController, type: :controller do
   end
 
   def set_events_hash(events, n)
+    # I18n.default_locale = 'ru'
     events.last(n).reverse.each_with_object([]).each do |obj, res|
       res << { "name" => "[nil, \"Name\"]",
                "description" => "[nil, \"#{obj.description}\"]",
-               "will_begin_at" => "[nil, #{obj.will_begin_at.strftime('%a, %d %b %Y %T UTC +00:00')}]",
+               "will_begin_at" => "[nil, \"#{I18n.l(obj.will_begin_at, format: '%d %B(%A) в %T')}\"]",
                "staff_relation_id" => "[nil, #{obj.staff_relation_id}]"
              }
     end

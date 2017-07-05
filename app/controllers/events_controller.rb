@@ -28,7 +28,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    @vacancies=Vacancy.all
+    @vacancies = Vacancy.all
     @event = current_user.events.build(event_params)
     if  !event_params[:staff_relation_attributes].nil? &&
         !event_params[:staff_relation_attributes][:vacancy_id].nil? &&

@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
 
   MONTHS = %w(Январь Февраль Март Апрель Май Июнь Июль Август Сентябрь Октябрь Ноябрь Декабрь)
 
-  belongs_to :user
+  belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   belongs_to :staff_relation, dependent: :destroy
   has_many :histories, as: :historyable
 
