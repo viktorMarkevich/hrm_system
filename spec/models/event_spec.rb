@@ -23,7 +23,7 @@ RSpec.describe Event, type: :model do
       it 'created in the past' do
         event = Event.new(name: 'Name', will_begin_at: Date.yesterday, description: 'описание события', user_id: user.id)
         expect(event).to_not be_valid
-        expect(event.errors[:will_begin_at]).to include('должна быть предстоящей')
+        expect(event.errors[:will_begin_at]).to include('должно быть предстоящим')
       end
     end
   end
