@@ -9,6 +9,10 @@ module OrganizersHelper
     if history.historyable_type != 'StaffRelation'
       t(set_locales_path(history) + '.notice', object_name: (link_to history.historyable.name, polymorphic_url(history.historyable))).html_safe
     else
+      p '*'*100
+      p history.historyable
+      p '*'*100
+
       vacancy = history.historyable.vacancy
       candidate = history.historyable.candidate
       t(set_locales_path(history) + '.notice', vacancy_name: (link_to vacancy.name, vacancy_path(vacancy)),

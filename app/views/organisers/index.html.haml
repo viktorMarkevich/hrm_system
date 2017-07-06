@@ -23,12 +23,8 @@
                   %td
                     = link_to event.name, event, class: 'tooltips', title: [ event.name,' - ', event.description ],
                                                  data: { toggle: 'tooltip', placement: 'top' }
-                  - if event.staff_relation
-                    %td= event.staff_relation.vacancy.name
-                    %td= event.staff_relation.candidate.name
-                  - else
-                    %td= '------'
-                    %td= '------'
+                  %td= event.staff_relation.try(:vacancy).try(:name) || '------'
+                  %td= event.staff_relation.try(:candidate).try(:name) || '------'
                   %td
                     %span.label.label-warning
                       = event.will_begin_at.strftime('%e %b %H:%M')
