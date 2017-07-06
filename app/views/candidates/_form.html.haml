@@ -2,7 +2,7 @@
 = javascript_include_tag 'candidates/candidates_form'
 = javascript_include_tag 'candidates/candidates'
 
-= form_for @candidate, html: { class: 'form-horizontal candidate-form' } do |f|
+= form_for @candidate, html: { class: 'form-horizontal' } do |f|
   - if @candidate.errors.any?
     %h2 Возникшие ошибки:
     %ul
@@ -168,12 +168,43 @@
       = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn paranoid_btn'
       = link_to 'Назад', :back, class: 'btn paranoid_btn'
 
-  .modal.fade.company-modal{ aria: { labelledby: 'myModalLabel' }, role: 'dialog', tabindex: '-1' }
+.modal.fade.company-modal{ aria: { labelledby: 'myModalLabel' }, role: 'dialog', tabindex: '-1' }
   .modal-dialog.modal-md{ role: 'document' }
     .modal-content
       .modal-header
         %button.close{ aria: { label: 'Close' }, data: { dismiss: 'modal' }, type: 'button' }
           %span{ aria: { hidden: 'true' } } ×
-        %h4#myModalLabel.modal-title Add Company
+        %h4#myModalLabel.modal-title Добавить новую компанию
       .modal-body
-        = render partial: 'companies/form'
+        = form_for Company.new, html: { class: 'form-horizontal' } do |f|
+          .form-group
+            .row
+              .col-sm-4.control-label
+                = f.label :name, 'Имя:'
+              .col-sm-6
+                = f.text_field :name, class: 'form-control'
+          .form-group
+            .row
+              .col-sm-4.control-label
+                = f.label :url do
+                  Страница компании:
+              .col-sm-6
+                = f.text_field :url, class: 'form-control', placeholder: 'http://www.company-name.com'
+          .form-group
+            .row
+              .col-sm-4.control-label
+                = f.label :region, 'Регион:'
+              .col-sm-6
+                -#= f.select(:region, options_for_select(Region::REGIONS, @company.region), {}, { class: 'form-control' })
+                = f.select :region, Region::REGIONS, {},selected: @candidate.companies.pluck(:region), class: 'form-control'
+          .form-group
+            .row
+              .col-sm-4.control-label
+                = f.label :description, 'Описание:'
+              .col-sm-6
+                = f.text_area :description, rows: 5, class: 'form-control'
+          .form-group
+            %hr
+            .col-sm-12
+              = f.submit 'Создать', class: 'btn btn-default'
+              = link_to 'Назад', :back, class: 'btn btn-default'

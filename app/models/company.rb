@@ -9,7 +9,7 @@ class Company < ActiveRecord::Base
                              message: 'address is invalid' }
 
   def self.get_company_name
-    ['Не работал'] + self.all.map{ |p| [p.name, p.id] }
+    self.pluck(:name, :id)
   end
 
 end

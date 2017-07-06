@@ -2,8 +2,8 @@
 class CandidatesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :find_candidate, only: [ :show, :edit, :update, :set_vacancies, :update_resume ]
-  before_action :set_companies, only: [ :new, :edit ]
+  before_action :find_candidate, only: [:show, :edit, :update, :set_vacancies, :update_resume]
+  before_action :set_companies, only: [:new, :edit]
 
   def index
     @status = params[:status]
@@ -30,6 +30,7 @@ class CandidatesController < ApplicationController
 
   def new
     @candidate = Candidate.new
+    @company = Company.new
   end
 
   def show
@@ -38,6 +39,7 @@ class CandidatesController < ApplicationController
   end
 
   def edit
+    @companies = @candidate.companies
   end
 
   def create
@@ -108,7 +110,7 @@ class CandidatesController < ApplicationController
     params.require(:candidate).permit(:name, :birthday, :salary, :salary_format, :notice, :education, :languages,
                                       :city_of_residence, :ready_to_relocate, :desired_position, :status, :source,
                                       :description, :email, :phone, :linkedin, :facebook, :vkontakte, :google_plus,
-                                      :full_info, :skype, :home_page, :file_name, :tag_list, :company_ids)
+                                      :full_info, :skype, :home_page, :file_name, :tag_list, company_ids: [])
   end
 
   def find_candidate

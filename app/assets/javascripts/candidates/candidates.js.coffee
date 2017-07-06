@@ -1,8 +1,5 @@
 # coding 'utf-8'
 #=require jquery.ui.dialog
-#=require jquery.ui.autocomplete
-#=require select2
-#=require selectize
 
 $(document).ready ->
 
@@ -22,8 +19,3 @@ $(document).ready ->
   $('body').on('click','.export-modal', (e)->
     $('#exportCandidates').modal 'hide'
   )
-
-  #multiple select candidate.companies
-
-  $(".selectize").selectize()
-  return

@@ -50,7 +50,7 @@ $(document).ready ->
   $('.resume_upload').on 'click', ->
     $('#upload_resume_file').click()
 
-#search candidates by tags
+#search candidates by tags with autocomplete
   split = (val) ->
     val.split /,\s*/
   extractLast = (term) ->
