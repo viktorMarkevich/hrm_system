@@ -23,10 +23,11 @@
           %textarea#event_description.form-control{ rows: '3', name: 'event[description]' }
         .form-group
           %select{ name: 'event[staff_relation_attributes][vacancy_id]', id: 'event_staff_relation_attributes_vacancy_id' }
+          %input{ type: 'hidden', id: 'staff_relation_attributes_status', name: 'staff_relation_attributes[status]', value: 'Собеседование' }
             %option{ value: '' }
-            -Vacancy.all.each do |vacancy|
+            - Vacancy.all.each do |vacancy|
               %option{ value: vacancy.id }
-                =vacancy.name
+                = vacancy.name
           .candidates_list
             %table.table.table-bordered.table-hover.cand-list{ style: 'display: none' }
               %thead

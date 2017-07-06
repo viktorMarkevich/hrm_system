@@ -117,22 +117,9 @@ RSpec.describe EventsController, type: :controller do
     let (:candidate) { create(:candidate) }
     let (:will_begin_at) { (Time.zone.now.utc + 1.day + 12.minutes).round.iso8601(0) }
     let (:event_attrs) { {  description: 'Редактирование описания', name: 'Name', will_begin_at: "#{ will_begin_at }",
-                            staff_relation_attributes: { vacancy_id: vacancy.id, candidate_id: candidate.id } } }
+                            staff_relation_attributes: { vacancy_id: vacancy.id, candidate_id: candidate.id, status: 'Собеседование' } } }
 
     context 'when successful should return updated event' do
-      before do
-        put :update, params: { id: event, event: event_attrs }
-        event.reload
-      end
-
-      it 'has updated name' do
-        expect(assigns(:event).description).to eq 'Редактирование описания'
-        expect(assigns(:event).name).to eq 'Name'
-        expect(assigns(:event).will_begin_at).to eq will_begin_at
-      end
-    end
-
-    context 'when successful' do
       before do
         put :update, params: { id: event, event: event_attrs }
         event.reload
@@ -142,6 +129,14 @@ RSpec.describe EventsController, type: :controller do
         expect(response).to have_http_status(204)
       end
 
+      it 'has updated attrs' do
+         p assigns(:event).staff_relation
+        expect(assigns(:event).description).to eq 'Редактирование описания'
+        expect(assigns(:event).name).to eq 'Name'
+        expect(assigns(:event).will_begin_at).to eq will_begin_at
+        expect(assigns(:event).staff_relation).to eq StaffRelation.last
+        expect(assigns(:event).staff_relation.status).to eq StaffRelation.last.status
+      end
     end
 
     context 'when failed' do
