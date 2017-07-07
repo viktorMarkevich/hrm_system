@@ -247,3 +247,9 @@ section {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+.resume-upload {
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -121,7 +121,7 @@
     .col-sm-3.control-label
       = f.label :company_ids, 'Компании:'
     .col-sm-9
-      = f.select :company_ids, Company.all.pluck(:name, :id), {}, { multiple: true, class: 'selectize' }
+      = f.select :company_ids, Company.all.pluck(:name, :id), {}, selected: @candidate.companies.pluck(&:name), multiple: true, class: 'selectize'
 
   %hr
 
@@ -168,6 +168,7 @@
       = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn paranoid_btn'
       = link_to 'Назад', :back, class: 'btn paranoid_btn'
 
+-# modal for add new company if candidate have not company
 .modal.fade.company-modal{ aria: { labelledby: 'myModalLabel' }, role: 'dialog', tabindex: '-1' }
   .modal-dialog.modal-md{ role: 'document' }
     .modal-content
@@ -195,8 +196,7 @@
               .col-sm-4.control-label
                 = f.label :region, 'Регион:'
               .col-sm-6
-                -#= f.select(:region, options_for_select(Region::REGIONS, @company.region), {}, { class: 'form-control' })
-                = f.select :region, Region::REGIONS, {},selected: @candidate.companies.pluck(:region), class: 'form-control'
+                = f.select :region, Region::REGIONS, {}, selected: @candidate.companies.pluck(:region), class: 'form-control'
           .form-group
             .row
               .col-sm-4.control-label
