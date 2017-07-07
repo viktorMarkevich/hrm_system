@@ -1,3 +1,7 @@
+//= require events/templates/table
+//= require events/templates/event
+//= require events/templates/candidates_list
+
 $(document).ready(function() {
   var add_candidate_to_table, add_event, alertMessage, bindShowEvent, clear_table, format_date, open_modal_at_day, resetForm, show_event_modal;
   $('.btn-dialog').click(function() {
@@ -177,6 +181,7 @@ $(document).ready(function() {
     formData.append('event[staff_relation_attributes][vacancy_id]', $('#editEvent #event_staff_relation_attributes_vacancy_id').val());
     formData.append('event[staff_relation_attributes[candidate_id]]', $('#editEvent #event_candidate').val());
     url = "events/" + p;
+    console.log('here');
     return $.ajax({
       url: url,
       type: 'PUT',
