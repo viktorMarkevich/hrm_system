@@ -6,7 +6,7 @@
     %dt Страница компании:
     %dd= display_field_value_for(@company.url)
     %dt Регион:
-    %dd= @company.region.try(:name)
+    %dd= @company.region
     %dt Полная информация:
     %dd= display_field_value_for(@company.description)
   %hr
