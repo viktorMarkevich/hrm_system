@@ -201,7 +201,7 @@ ru:
             description:
               blank: не может быть пустым
             will_begin_at:
-              blank: должна быть предстоящей
+              blank: должно быть предстоящим
         vacancy:
           attributes:
             name:
@@ -245,6 +245,7 @@ ru:
         notice: "В систему добавлен новый кандидат: <b>%{object_name}</b>"
         changes: " <b>%{val_to}</b>"
       update:
+        notice: "Изменен кандидат: <b>%{object_name}</b>"
         changes: " изменен с <b>%{val_from}</b> на <b>%{val_to}</b>"
       destroy:
       restore:
