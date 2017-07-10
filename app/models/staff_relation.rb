@@ -8,12 +8,13 @@ class StaffRelation < ActiveRecord::Base
   belongs_to :candidate
 
   has_many :events
-  # has_many :histories, as: :historyable
+  has_many :histories, as: :historyable
 
   validates :vacancy_id,  uniqueness: { scope: :candidate_id }, presence: true
 
-  # after_create :create_history_event
-  after_update :update_history_event
+  after_create -> { add_history_event_after_('create') }
+  after_update -> { add_history_event_after_('update') }
+  after_destroy -> { add_history_after_paranoid_actions('destroy', 'Убрать') }
 
   def set_owner
     vacancy.owner
@@ -36,26 +37,14 @@ class StaffRelation < ActiveRecord::Base
   end
 
   private
-  def create_history_event
-    History.create_with_attrs(old_status: 'Пасивен',
-                              new_status: 'Найденные',
-                              responsible: { full_name: vacancy.owner.full_name,
-                                             id: vacancy.user_id },
-                              action: "В вакансию <strong>#{vacancy.name}</strong> добавили нового кандидата <strong>#{candidate.name}</strong>")
-  end
 
-  def update_history_event
-    unless self.status_was == status
-      History.create_with_attrs(was_changed: set_changes, action: 'update', historyable_type: self.class.name, historyable_id: id)
+    def add_history_event_after_(action)
+      histories.create_with_attrs(was_changed: set_changes, action: action)
     end
-  end
 
-  def set_changes
-    changes = self.changes
-    changes.delete('created_at')
-    changes.delete('updated_at')
-    changes.delete('id')
-    changes
-  end
-
+    def add_history_after_paranoid_actions(action, new_status)
+      old_status = self.status
+      # self.update_columns(status: new_status)
+      histories.create_with_attrs(was_changed: { 'status' => "[\"#{old_status}\", \"#{new_status}\"]" }, action: action)
+    end
 end

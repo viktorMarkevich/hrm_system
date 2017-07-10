@@ -9,6 +9,10 @@ module OrganizersHelper
     if history.historyable_type != 'StaffRelation'
       t(set_locales_path(history) + '.notice', object_name: (link_to history.historyable.name, polymorphic_url(history.historyable))).html_safe
     else
+      p '*'*100
+      p history.historyable
+      p '*'*100
+
       vacancy = history.historyable.vacancy
       candidate = history.historyable.candidate
       t(set_locales_path(history) + '.notice', vacancy_name: (link_to vacancy.name, vacancy_path(vacancy)),
@@ -21,8 +25,8 @@ module OrganizersHelper
       values = v.gsub(/["\[\]]/, '').split(', ')
       if "#{values[1]}" != '' && !in_exception_list?(attribute, history)
         (t("activerecord.attributes.#{set_model_name(history)}.#{attribute}") +
-         t(set_locales_path(history) + '.changes', val_from: (values[0] == 'nil' || values[0] == '' ? 'Пусто' : values[0]),
-                                                     val_to: (values[1] == 'nil' ? nil : values[1])))
+            t(set_locales_path(history) + '.changes', val_from: (values[0] == 'nil' || values[0] == '' ? 'Пусто' : values[0]),
+              val_to: (values[1] == 'nil' ? nil : values[1])))
       end
     end.compact.join('; ').html_safe
   end
