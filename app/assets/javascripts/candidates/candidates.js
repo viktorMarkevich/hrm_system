@@ -9,10 +9,9 @@ $(document).ready(function() {
     var exportCandidates = $('#exportCandidates');
 
     body.on('click', '.export', function(e) {
-        var all_href, current_href;
         e.preventDefault();
-        current_href = $(this).attr('href') + '?page=' + $('.pagination li.active a').text();
-        all_href = $(this).attr('href');
+        var current_href = $(this).attr('href') + '?page=' + $('.pagination li.active a').text();
+        var all_href = $(this).attr('href');
         if (dropdown_active.text() !== 'Все') {
             current_href += '&status=' + dropdown_active.text();
             all_href += '?status=' + dropdown_active.text();

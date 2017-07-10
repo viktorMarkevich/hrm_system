@@ -1,5 +1,4 @@
 // coding 'utf-8'
-//=require jquery_ujs
 //=require jquery.ui.datepicker
 //=require jquery.ui.datepicker-ru
 //=require candidates/datepicker
@@ -26,7 +25,7 @@ $(document).ready(function() {
     company_modal.on('hide.bs.modal', function(e) {
         if (selectizeCallback != null) {
             selectizeCallback();
-            selecitzeCallback = null;
+            selectizeCallback = null;
         }
 
         new_company.trigger('reset');

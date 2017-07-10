@@ -179,6 +179,7 @@ ru:
       company:
         region: 'Регион'
         name: 'Имя'
+        url: 'URL адрес'
       staff_relation:
         status: 'Статус'
       event:
@@ -221,6 +222,8 @@ ru:
           attributes:
             region:
               blank: не может быть пустым
+            url:
+              invalid: не валиден
         admin_user:
           attributes:
             email:

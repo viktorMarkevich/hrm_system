@@ -20,11 +20,14 @@ class CompaniesController < ApplicationController
 
   def create
     @company = current_user.companies.build(company_params)
-    if @company.save
-      flash[:notice] = 'Компания была успешно создана.'
-      redirect_to companies_path
-    else
-      render 'new'
+    respond_to do |format|
+      if @company.save
+        format.html { redirect_to companies_path, notice: 'Компания была успешно создана.' }
+        format.json { render json: @company, status: :created }
+      else
+        format.html { render 'new' }
+        format.json { render json: {errors: @company.errors.full_messages}, status: :unprocessable_entity }
+      end
     end
   end
 

@@ -4,6 +4,7 @@ class CandidatesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_candidate, only: [:show, :edit, :update, :set_vacancies, :update_resume]
   before_action :set_companies, only: [:new, :edit]
+  before_action :set_company, only: [:edit, :update]
 
   def index
     @status = params[:status]
@@ -39,7 +40,6 @@ class CandidatesController < ApplicationController
   end
 
   def edit
-    @companies = @candidate.companies
   end
 
   def create
@@ -102,6 +102,10 @@ class CandidatesController < ApplicationController
   end
 
   private
+  def set_company
+    @company = @candidate.company_ids
+  end
+
   def set_companies
     @companies = Company.get_company_name
   end
