@@ -121,7 +121,7 @@
     .col-sm-3.control-label
       = f.label :company_ids, 'Компании:'
     .col-sm-9
-      = f.select :company_ids, Company.all.pluck(:name, :id), {}, selected: @candidate.companies.pluck(&:name), multiple: true, class: 'selectize'
+      = f.select :company_ids, Company.all.pluck(:name, :id), {}, { multiple: true, class: 'selectize' }
 
   %hr
 

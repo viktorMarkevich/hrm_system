@@ -20,12 +20,8 @@
               %tr
                 %td= link_to company.name, company_path(company), id: 'company-name'
                 %td= company.url
-<<<<<<< HEAD
                 -#%td= company.candidates.size != 0 ? (link_to company.candidates.size, candidates_path(company_id: company.id)) : '0'
                 %td= company.candidates.size
-=======
-                %td= company.candidates.size != 0 ? (link_to company.candidates.size, candidates_path(company_id: company.id)) : '0'
->>>>>>> e2ca32fee62f56c02fc1132cc51654fac8d89e31
                 %td= company.region
                 %td= company.created_at.strftime('%F')
                 %td= truncate(company.description, length: 50)

@@ -14,30 +14,30 @@ $(document).ready(function() {
         form: '.candidate-form',
         lang: 'ru'
     });
-
+});
 //selectize for choose company and modal for add new in candidate form
-// $(document).on("turbolinks:load", function() {
+$(document).ready(function() {
 
     var selectizeCallback = null;
-    var company_modal = $(".company-modal");
-    var new_company = $("#new_company");
+    var company_modal = $('.company-modal');
+    var new_company = $('#new_company');
 
 
-    company_modal.on("hide.bs.modal", function(e) {
+    company_modal.on('hide.bs.modal', function(e) {
         if (selectizeCallback != null) {
             selectizeCallback();
             selecitzeCallback = null;
         }
 
-        new_company.trigger("reset");
+        new_company.trigger('reset');
         $.rails.enableFormElements(new_company);
     });
 
-    new_company.on("submit", function(e) {
+    new_company.on('submit', function(e) {
         e.preventDefault();
         $.ajax({
-            method: "POST",
-            url: $(this).attr("action"),
+            method: 'POST',
+            url: $(this).attr('action'),
             data: $(this).serialize(),
             success: function(response) {
                 selectizeCallback({value: response.id, text: response.name});
@@ -48,12 +48,12 @@ $(document).ready(function() {
         });
     });
 
-    $(".selectize").selectize({
+    $('.selectize').selectize({
         create: function(input, callback) {
             selectizeCallback = callback;
 
             company_modal.modal();
-            $("#company_name").val(input);
+            $('#company_name').val(input);
         }
     });
 });
