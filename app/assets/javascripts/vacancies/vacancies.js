@@ -65,10 +65,10 @@ $(document).ready(function() {
         return false;
     });
     body.on('click', '.staff-relation', function(event) {
+        event.preventDefault();
 
         var modal_body = $('.modal-body');
 
-        event.preventDefault();
         $.ajax(this.href, {
             type: 'GET',
             dataType: 'json',

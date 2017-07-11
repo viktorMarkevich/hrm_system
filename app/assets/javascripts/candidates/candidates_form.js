@@ -14,14 +14,13 @@ $(document).ready(function() {
         lang: 'ru'
     });
 });
-//selectize for choose company and modal for add new in candidate form
-$(document).ready(function() {
 
+//selectize for choose company and modal for add new in candidate form
+
+$(document).ready(function() {
     var selectizeCallback = null;
     var company_modal = $('.company-modal');
     var new_company = $('#new_company');
-
-
     company_modal.on('hide.bs.modal', function(e) {
         if (selectizeCallback != null) {
             selectizeCallback();
@@ -43,6 +42,20 @@ $(document).ready(function() {
                 selectizeCallback = null;
 
                 company_modal.modal('toggle');
+            },
+            error: function(response) {
+                var errorBlock, item;
+                $.each(JSON.parse(response['responseText']), function(key, value){
+                    if (key == 'errors') {
+                        errorBlock = $('.error_block');
+                        item = errorBlock.find('li.item').clone();
+                        $(item).text(value);
+                        $(item).insertAfter(errorBlock.find('ul'));
+                        $(item).show();
+                    }
+                });
+                errorBlock.show();
+                $.rails.enableFormElements(new_company);
             }
         });
     });
@@ -55,4 +68,6 @@ $(document).ready(function() {
             $('#company_name').val(input);
         }
     });
+
+    $('div.error_block').hide();
 });

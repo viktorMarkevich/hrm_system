@@ -4,3 +4,11 @@
  *= require selectize
  *= require selectize.default
  */
+
+.error_block {
+  display: none;
+}
+
+li.item {
+  display: none;
+}

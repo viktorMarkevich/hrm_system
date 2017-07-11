@@ -103,7 +103,7 @@ class CandidatesController < ApplicationController
 
   private
   def set_company
-    @company = @candidate.company_ids
+    @company = @candidate.companies.pluck(:name)
   end
 
   def set_companies
