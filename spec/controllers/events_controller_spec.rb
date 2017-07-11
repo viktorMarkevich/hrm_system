@@ -139,7 +139,7 @@ RSpec.describe EventsController, type: :controller do
                              'eventId' => event.id,
                             'vacancyLink' => "<a href=\"/vacancies/#{event.staff_relation.vacancy_id}\">#{event.staff_relation.vacancy.name}</a>",
                             'candidateLink' => "<a href=\"/candidates/#{event.staff_relation.candidate_id}\">#{event.staff_relation.candidate.name}</a>",
-                            'eventData' => event.will_begin_at.strftime('%e %b %H:%M') })
+                            'eventDate' => event.will_begin_at.strftime('%e %b %H:%M') })
       end
     end
 
