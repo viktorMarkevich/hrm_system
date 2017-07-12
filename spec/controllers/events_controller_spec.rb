@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe EventsController, type: :controller do
 
-  render_views
   let(:json) { JSON.parse(response.body) }
+  render_views
 
   let! (:current_user) { create :user_with_events }
   let! (:user) { create :user_with_events, events_count: 2 }
@@ -118,12 +118,12 @@ RSpec.describe EventsController, type: :controller do
 
     context 'when successful should return updated event' do
       before do
-        put :update, params: { id: event, event: event_attrs }
+        put :update, params: { id: event, event: event_attrs, format: :json }
         event.reload
       end
 
       it 'has updated name' do
-        expect(response).to have_http_status(204)
+        expect(response).to have_http_status(200)
       end
 
       it 'has updated attrs' do
@@ -135,7 +135,11 @@ RSpec.describe EventsController, type: :controller do
       end
 
       it 'should return json data' do
-        expect(json).to eq
+        expect(json).to eq({ 'eventName' => event.name,
+                             'eventId' => event.id,
+                            'vacancyLink' => "<a href=\"/vacancies/#{event.staff_relation.vacancy_id}\">#{event.staff_relation.vacancy.name}</a>",
+                            'candidateLink' => "<a href=\"/candidates/#{event.staff_relation.candidate_id}\">#{event.staff_relation.candidate.name}</a>",
+                            'eventDate' => event.will_begin_at.strftime('%e %b %H:%M') })
       end
     end
 
