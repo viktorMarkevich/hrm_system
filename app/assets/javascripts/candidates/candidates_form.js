@@ -21,6 +21,8 @@ $(document).ready(function() {
     var selectizeCallback = null;
     var company_modal = $('.company-modal');
     var new_company = $('#new_company');
+    var errorBlock = $('.error_block');
+
     company_modal.on('hide.bs.modal', function(e) {
         if (selectizeCallback != null) {
             selectizeCallback();
@@ -42,20 +44,21 @@ $(document).ready(function() {
                 selectizeCallback = null;
 
                 company_modal.modal('toggle');
+                console.log(response);
             },
             error: function(response) {
-                var errorBlock, item;
+                var item;
                 $.each(JSON.parse(response['responseText']), function(key, value){
                     if (key == 'errors') {
-                        errorBlock = $('.error_block');
-                        item = errorBlock.find('li.item').clone();
-                        $(item).text(value);
-                        $(item).insertAfter(errorBlock.find('ul'));
-                        $(item).show();
+                        item = errorBlock.find('li.item');
+                        item.text(value);
+                        errorBlock.find('ul').append(item);
+                        item.show();
                     }
                 });
-                errorBlock.show();
                 $.rails.enableFormElements(new_company);
+                errorBlock.show();
+                console.log(response.responseJSON);
             }
         });
     });
@@ -68,6 +71,4 @@ $(document).ready(function() {
             $('#company_name').val(input);
         }
     });
-
-    $('div.error_block').hide();
 });

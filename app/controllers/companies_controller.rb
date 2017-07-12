@@ -3,7 +3,6 @@ class CompaniesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_company, only: [:edit, :update, :show]
 
-
   def index
     @companies = Company.includes([ :candidates, :owner ]).order('id').page(params[:page]).per(10)
   end
