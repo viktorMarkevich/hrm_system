@@ -178,8 +178,10 @@ $(document).ready(function() {
     formData.append('event[name]', $('#editEvent #event_name').val());
     formData.append('event[description]', $('#editEvent #event_description').val());
     formData.append('event[will_begin_at]', $('#editEvent #event_will_begin_at').val());
-    formData.append('event[staff_relation_attributes][vacancy_id]', $('#editEvent #event_staff_relation_attributes_vacancy_id').val());
-    formData.append('event[staff_relation_attributes[candidate_id]]', $('#editEvent #event_candidate').val());
+    if ($('#editEvent #event_staff_relation_attributes_vacancy_id').length && $('#editEvent #event_candidate').length) {
+      formData.append('event[staff_relation_attributes][vacancy_id]', $('#editEvent #event_staff_relation_attributes_vacancy_id').val());
+      formData.append('event[staff_relation_attributes][candidate_id]', $('#editEvent #event_candidate').val());
+    }
     url = "events/" + p;
     console.log('here');
     return $.ajax({
@@ -190,17 +192,11 @@ $(document).ready(function() {
       contentType: false,
       data: formData,
       success: function(data) {
-        var event_time, formated_date, hours, minutes, month;
-        event_time = new Date(data.e.will_begin_at);
-        month = (event_time.getMonth() + 1 < 10 && '0' || '') + (event_time.getMonth() + 1);
-        hours = (event_time.getUTCHours() < 10 && '0' || '') + event_time.getUTCHours();
-        minutes = (event_time.getMinutes() < 10 && '0' || '') + event_time.getMinutes();
-        formated_date = ((event_time.getDate() < 10 && '0' || '') + event_time.getDate()) + '/' + month + '/' + event_time.getFullYear();
-        $("tr.event" + data.e.id + ">td.event_name").html(data.e.name);
-        $("tr.event" + data.e.id + ">td.event_will_begin_at").html('<span class="label label-primary">' + (hours + ":" + minutes) + '</span>' + formated_date);
-        $("tr.event" + data.e.id + ">td.event_description").html(data.e.description);
-        $("tr.event" + data.e.id + ">td.event_vacancy").html(data.v === null ? data.v.name : void 0);
-        $("tr.event" + data.e.id + ">td.event_candidate").html(data.c !== null ? data.c.name : void 0);
+        var trToEdit = $('tr.event' + data.eventId);
+        trToEdit.find('.event_name').html(data.eventName);
+        trToEdit.find('.label-warning').text(data.eventDate);
+        trToEdit.find('.event_vacancy').html(data.vacancyLink);
+        trToEdit.find('.event_candidate').html(data.candidateLink);
         return $('#editEvent').modal('hide');
       }
     });
