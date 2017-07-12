@@ -135,7 +135,7 @@ RSpec.describe EventsController, type: :controller do
       end
 
       it 'should return json data' do
-        expect(json).to eq({ 'eventName' => event.name,
+        expect(json).to eq({ 'eventName' => "<a href=\"/events/#{event.id}\">#{event.name}</a>",
                              'eventId' => event.id,
                             'vacancyLink' => "<a href=\"/vacancies/#{event.staff_relation.vacancy_id}\">#{event.staff_relation.vacancy.name}</a>",
                             'candidateLink' => "<a href=\"/candidates/#{event.staff_relation.candidate_id}\">#{event.staff_relation.candidate.name}</a>",
