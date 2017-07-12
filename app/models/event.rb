@@ -1,17 +1,22 @@
 class Event < ActiveRecord::Base
+  include Support
 
   MONTHS = %w(Январь Февраль Март Апрель Май Июнь Июль Август Сентябрь Октябрь Ноябрь Декабрь)
 
-  belongs_to :user
-  belongs_to :staff_relation, dependent: :destroy
+  belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :staff_relation
+  has_many :histories, as: :historyable
 
   accepts_nested_attributes_for :staff_relation
 
   validates :name, :description, :user_id, presence: true
   validate :future_event?
 
+  after_create -> { add_history_event_after_('create') }
+  after_update -> { add_history_event_after_('update') }
+
   def future_event?
-    errors.add(:will_begin_at, 'должна быть предстоящей') unless will_begin_at.future?
+    errors.add(:will_begin_at, 'должно быть предстоящим') unless will_begin_at.future?
   end
 
   def self.events_of(user, from, to)
@@ -43,4 +48,9 @@ class Event < ActiveRecord::Base
     self.will_begin_at
   end
 
+  private
+
+    def add_history_event_after_(action)
+      histories.create_with_attrs(was_changed: set_changes, action: action)
+    end
 end

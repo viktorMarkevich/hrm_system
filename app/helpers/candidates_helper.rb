@@ -1,7 +1,7 @@
 module CandidatesHelper
 
   def set_item_for(column, sub)
-    arr_column = [:email, :phone, :skype, :linkedin, :facebook, :vkontakte]
+    arr_column = [ :email, :phone, :skype, :linkedin, :facebook, :vkontakte, :tag_list ]
     if arr_column.include?(column)
       image_tag('icons/' + column.to_s + '.png')
     else

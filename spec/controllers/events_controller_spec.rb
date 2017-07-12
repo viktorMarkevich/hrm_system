@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe EventsController, type: :controller do
 
+  let(:json) { JSON.parse(response.body) }
   render_views
 
   let! (:current_user) { create :user_with_events }
@@ -24,7 +25,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   def err_messages
-    [ 'Name не может быть пустым', 'Description не может быть пустым', 'Will begin at должна быть предстоящей' ]
+    [ 'Название не может быть пустым', 'Описание не может быть пустым', 'Начало должно быть предстоящим' ]
   end
 
   context '#index' do
@@ -50,20 +51,18 @@ RSpec.describe EventsController, type: :controller do
   describe '#create action;' do
     let (:event_params) { attributes_for :event }
     let (:will_begin_at) { (Time.zone.now.utc + 10.hours + 12.minutes).round.iso8601(0) }
-    let (:json_response) { JSON.parse(response.body) }
 
     context 'when successful without "staff_relations"' do
       before { post :create, params: { event: event_params.update(will_begin_at: will_begin_at,
                                                                   user_id: current_user.id), format: :json } }
 
       it 'creates new Event object' do
-        json = JSON.parse((attributes_for :event).to_json).update(
-              'vacancy_name' => '------',
-              'candidate_name' => '------',
-              'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
-              'destroy_path' => '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
-              'will_begin_at' => "#{will_begin_at}" )
-        expect(json_response).to eq json
+        expect(json).to eq JSON.parse((attributes_for :event).to_json).update(
+                               'vacancy_name' => '------',
+                               'candidate_name' => '------',
+                               'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
+                               'destroy_path' => '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
+                               'will_begin_at' => "#{will_begin_at}" )
         expect(response).to have_http_status(:created)
       end
     end
@@ -78,14 +77,13 @@ RSpec.describe EventsController, type: :controller do
                                                                   user_id: current_user.id), format: :json } }
 
       it 'creates new Event object' do
-        json = JSON.parse((attributes_for :event).to_json).update(
-            'name' => 'Name',
-            'vacancy_name' => "#{Event.last.staff_relation.vacancy.name}",
-            'candidate_name' => "#{Event.last.staff_relation.candidate.name}",
-            'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
-            'destroy_path' => '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
-            'will_begin_at' => "#{will_begin_at}" )
-        expect(json_response).to eq json
+        expect(json).to eq JSON.parse((attributes_for :event).to_json).update(
+                               'name' => 'Name',
+                               'vacancy_name' => "#{Event.last.staff_relation.vacancy.name}",
+                               'candidate_name' => "#{Event.last.staff_relation.candidate.name}",
+                               'update_path' => '<a class="glyphicon glyphicon-edit" data-remote="true" href='"#{event_path(Event.last)}"'></a>',
+                               'destroy_path' => '<a data-confirm="Вы уверены?" class="glyphicon glyphicon-remove" rel="nofollow" data-method="delete" href='"#{event_path(Event.last)}"'></a>',
+                               'will_begin_at' => "#{will_begin_at}" )
         expect(response).to have_http_status(:created)
       end
     end
@@ -95,17 +93,16 @@ RSpec.describe EventsController, type: :controller do
       before { post :create, params: invalid_event_params }
 
       it %q{ doesn't create new record } do
-        json = JSON.parse((attributes_for :event).to_json).update( vacancy_name: nil,
-                                                                   candidate_name: nil,
-                                                                   update_path: "#{event_path(Event.last)}",
-                                                                   destroy_path: "#{event_path(Event.last)}",
-                                                                   will_begin_at: nil )
-        expect(json_response).not_to eq json
+        expect(json).not_to eq JSON.parse((attributes_for :event).to_json).update( vacancy_name: nil,
+                                                                                   candidate_name: nil,
+                                                                                   update_path: "#{event_path(Event.last)}",
+                                                                                   destroy_path: "#{event_path(Event.last)}",
+                                                                                   will_begin_at: nil )
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'error messages' do
-        expect(json_response['errors']).to eq(err_messages)
+        expect(json['errors']).to eq(err_messages)
       end
     end
   end
@@ -117,18 +114,33 @@ RSpec.describe EventsController, type: :controller do
     let (:candidate) { create(:candidate) }
     let (:will_begin_at) { (Time.zone.now.utc + 1.day + 12.minutes).round.iso8601(0) }
     let (:event_attrs) { {  description: 'Редактирование описания', name: 'Name', will_begin_at: "#{ will_begin_at }",
-                            staff_relation_attributes: {vacancy_id: vacancy.id, candidate_id: candidate.id } } }
+                            staff_relation_attributes: { vacancy_id: vacancy.id, candidate_id: candidate.id, status: 'Собеседование' } } }
 
-    context 'when successful' do
+    context 'when successful should return updated event' do
       before do
-        put :update, params: { id: event, event: event_attrs }
+        put :update, params: { id: event, event: event_attrs, format: :json }
         event.reload
       end
 
       it 'has updated name' do
-        expect(response).to have_http_status(204)
+        expect(response).to have_http_status(200)
       end
 
+      it 'has updated attrs' do
+        expect(assigns(:event).description).to eq 'Редактирование описания'
+        expect(assigns(:event).name).to eq 'Name'
+        expect(assigns(:event).will_begin_at).to eq will_begin_at
+        expect(assigns(:event).staff_relation).to eq StaffRelation.last
+        expect(assigns(:event).staff_relation.status).to eq StaffRelation.last.status
+      end
+
+      it 'should return json data' do
+        expect(json).to eq({ 'eventName' => event.name,
+                             'eventId' => event.id,
+                            'vacancyLink' => "<a href=\"/vacancies/#{event.staff_relation.vacancy_id}\">#{event.staff_relation.vacancy.name}</a>",
+                            'candidateLink' => "<a href=\"/candidates/#{event.staff_relation.candidate_id}\">#{event.staff_relation.candidate.name}</a>",
+                            'eventDate' => event.will_begin_at.strftime('%e %b %H:%M') })
+      end
     end
 
     context 'when failed' do

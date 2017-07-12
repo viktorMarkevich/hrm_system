@@ -28,7 +28,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    @vacancies=Vacancy.all
+    @vacancies = Vacancy.all
     @event = current_user.events.build(event_params)
     if  !event_params[:staff_relation_attributes].nil? &&
         !event_params[:staff_relation_attributes][:vacancy_id].nil? &&
@@ -51,22 +51,11 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event.assign_attributes(event_params)
-    if !event_params[:staff_relation_attributes].nil? &&
-       !event_params[:staff_relation_attributes][:vacancy_id].nil? &&
-       !event_params[:staff_relation_attributes][:candidate_id].nil? &&
-       !event_params[:staff_relation_attributes][:candidate_id].equal?('undefined')
-      event_params[:staff_relation_attributes].merge(status: 'Собеседование')
-      @event.staff_relation = StaffRelation.find_or_initialize_by(event_params[:staff_relation_attributes])
-    else
-      @event.staff_relation = nil
-    end
     respond_to do |format|
-      if @event.save
-        !@event.staff_relation.nil? && !@event.staff_relation.vacancy.nil? ? v = @event.staff_relation.vacancy : v = nil
-        !@event.staff_relation.nil? && !@event.staff_relation.candidate.nil? ? c = @event.staff_relation.candidate : c = nil
+      @event = Event.preload(staff_relation: [:candidate, :vacancy]).where(id: params[:id]).first
+      if @event.update(event_params)
         format.html { flash[:notice] = 'Event updated!' }
-        format.json {render @event, v , c, status: :updated}
+        format.json
       else
         format.html { flash[:danger] = @event.errors.full_messages }
         format.json { render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity }
@@ -98,9 +87,12 @@ class EventsController < ApplicationController
   end
 
   def event_params
+    # p '*'*100
+    # p params
+    # p '*'*100
     permitted_params = params.require(:event).permit(:name, :will_begin_at, :description, :user_id,
-                                                     staff_relation_attributes: [ :vacancy_id, :candidate_id ])
-    permitted_params&.tap {|p| p[:will_begin_at] = (params[:event][:will_begin_at]).to_datetime }
+                                                     staff_relation_attributes: [ :vacancy_id, :candidate_id, :status ])
+    # permitted_params&.tap {|p| p[:will_begin_at] = (params[:event][:will_begin_at]).to_datetime }
   end
 
   def set_events_in_date_period

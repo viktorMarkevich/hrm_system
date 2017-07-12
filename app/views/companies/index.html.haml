@@ -1,4 +1,4 @@
-= render partial: 'share/search'
+= render partial: 'share/search', locals: { path: companies_path, objects: @companies }
 %br
 %br
 .container
@@ -21,7 +21,7 @@
                 %td= link_to company.name, company_path(company), id: 'company-name'
                 %td= company.url
                 %td= company.candidates.size != 0 ? (link_to company.candidates.size, candidates_path(company_id: company.id)) : '0'
-                %td= company.region.try(:name)
+                %td= company.region
                 %td= company.created_at.strftime('%F')
                 %td= truncate(company.description, length: 50)
   .row

@@ -1,7 +1,7 @@
 # encoding: utf-8
 class Candidate < ActiveRecord::Base
 
-  acts_as_taggable_on :tags
+  acts_as_taggable
 
   acts_as_paranoid
   include Support
@@ -12,7 +12,6 @@ class Candidate < ActiveRecord::Base
   scope :with_status, -> (status) { where(status: "#{status}") }
 
   STATUSES = %w(Пассивен В\ работе)
-  # STATUSES = %w(В\ активном\ поиске В\ пассивном\ поиске В\ резерве)
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   belongs_to :company, counter_cache: true
@@ -27,7 +26,7 @@ class Candidate < ActiveRecord::Base
   accepts_nested_attributes_for :image
 
   validates :status, presence: true
-  # validates :name, :status, presence: true
+  validates :name, :status, presence: true
   # validates :source, presence: true, if: 'file_name.nil?'
   # validates :source, uniqueness: true, if: 'source.present?'
   # validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
@@ -45,10 +44,10 @@ class Candidate < ActiveRecord::Base
 
   before_validation :check_geo_name
 
-  after_create :add_history_event_after_create
-  after_update :add_history_event_after_update
-  # after_destroy :add_history_event_after_destroy
-  # after_restore :add_history_event_after_restore
+  after_create -> { add_history_event_after_('create') }
+  after_update -> { add_history_event_after_('update') }
+  after_destroy  -> { add_history_after_paranoid_actions('destroy', 'В Архиве') }
+  after_restore  -> { add_history_after_paranoid_actions('restore', 'Пассивен') }
 
   def status_for_vacancy(vacancy)
     StaffRelation.find_by_candidate_id_and_vacancy_id(self.id, vacancy.id).status
@@ -60,6 +59,8 @@ class Candidate < ActiveRecord::Base
 
   def save_resume_to_candidate(data)
     content = Yomu.new(data).text.to_s
+    tags = 'full-stack|front-end|back-end|ruby|rails|ror|php|python|javascript|html|css|js|mysql|postgresql|mongodb|linux|macos|mvc|git|ооп|oop|bootstrap|scrum|crm|1c|agile|java|yii|wordpress|svn|jquery|ajax|xml|json|less|sass|redis|memcached|sphinx|kohana|zend|codeigniter|photoshop|jade|emmet|word|excel|power point|singleton|factory|composer|highload|silex|cms|apache|nginx|twig|lamp|xamp|php-fpm|fpm|apc|redmine|sqlite|angular|react|heroku|test|rspec|restful|api|cucumber|ansible|sinatra|amazon|sql|lisp|prolog|visio|coreldraw|internet'
+    lang = 'english|английский|англійська|russian|русский|російська|ukrainian|украинский|українська|français|french|французский|французька|deutsch|german|немецкий|німецька|polish|polski|польский|польська'
     self.name = content.scan(/(?:[A-Z]+[a-zA-Z]* [A-Z]+[a-zA-Z]*)|(?:[А-Я]+[а-яА-Я]* [А-Я]+[а-яА-Я]*)/).to_a.compact.first.to_s.strip
     self.birthday = content.scan(/\d{1,2}\-\d{1,2}\-\d{4}/).to_a.compact.first.to_s.strip ||
         content.scan(/\d{1,2}\/\d{1,2}\/\d{4}/).to_a.compact.first.to_s.strip ||
@@ -67,7 +68,8 @@ class Candidate < ActiveRecord::Base
     self.salary = content.scan(/^*\s*(?=[-~])*[0-9]{2,7}\s*(?=грн|ГРН|usd|USD|долл|\$)/).to_a.compact.first.to_s.strip
     self.city_of_residence = content.scan(/(?<=Город:|Регион:|Адрес:)\s*$*.*(?=$)/).to_a.compact.first.to_s.strip
     self.file_name = data.original_filename
-    self.languages = content.scan(/(?:English|Английский|Англійська|Russian|Русский|Російська|Ukrainian|Украинский|Українська|Français|French|Французский|Французька|Deutsch|German|Немецкий|Німецька|Polish|Polski|Польский|Польська)(?=[\.\-\/,:;\s$])/).to_a.compact.join(', ')
+    self.tag_list = content.scan(/(?:#{tags})/i).to_a.compact.uniq.join(', ')
+    self.languages = content.scan(/(?:#{lang})(?=[\.\-\/,:;\s$])/i).to_a.compact.uniq.join(', ')
     self.email = content.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i).to_a.compact.first.to_s.strip
     self.phone = content.scan(/\b((?:[\s()\d-]{11,}\d)|\d{10,})\b/).to_a.compact.join(', ')
     self.skype = content.scan(/(?<=[Ss]kype:)\s*[a-zA-Z]+\w*(?:[-.:]\w+)*(?=[\s$])/).to_a.compact.first.to_s.strip
@@ -97,27 +99,13 @@ class Candidate < ActiveRecord::Base
                        end || nil
   end
 
-  def add_history_event_after_create
-    histories.create_with_attrs(was_changed: set_changes, action: 'create')
+  def add_history_event_after_(action)
+    histories.create_with_attrs(was_changed: set_changes, action: action)
   end
 
-  def add_history_event_after_update
-    # histories.create_with_attrs(was_changed: { status: 'Пассивен' }, action: 'create')
-    # p '*'*100
-    # p self.changes
-    # p '*'*100
+  def add_history_after_paranoid_actions(action, new_status)
+    old_status = self.status
+    self.update_columns(status: new_status)
+    histories.create_with_attrs(was_changed: { 'status' => "[\"#{old_status}\", \"#{new_status}\"]" }, action: action)
   end
-
-  def add_history_event_after_destroy
-    History.create_with_attrs(new_status: 'В архиве',
-                              responsible: { full_name: owner.full_name, id: user_id },
-                              action: "Кандидат <strong>#{name}</strong> перемещен в архив")
-  end
-
-  def add_history_event_after_restore
-    History.create_with_attrs(new_status: 'Восстановлен',
-                              responsible: { full_name: owner.full_name, id: user_id },
-                              action: "Кандидат <strong>#{name}</strong> восстановлен из архива")
-  end
-
 end
