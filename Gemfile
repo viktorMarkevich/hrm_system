@@ -43,7 +43,6 @@ gem 'acts-as-taggable-on', '~> 4.0'
 gem 'rails-jquery-autocomplete'
 gem 'selectize-rails'
 
-
 group :development do
   gem 'letter_opener'
 end

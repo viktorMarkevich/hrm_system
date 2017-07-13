@@ -4,4 +4,4 @@
       .tip
         %p
           Добавить новую компанию
-      = render partial: 'companies/form'
+      = render partial: 'companies/form', locals: { company: @company }

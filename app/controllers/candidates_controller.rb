@@ -3,7 +3,7 @@ class CandidatesController < ApplicationController
 
   before_action :authenticate_user!
   before_action :find_candidate, only: [:show, :edit, :update, :set_vacancies, :update_resume]
-  before_action :set_companies, only: [:new, :edit]
+  before_action :set_companies, only: [:new, :edit, :update]
   before_action :set_company, only: [:edit, :update]
 
   def index
@@ -40,6 +40,7 @@ class CandidatesController < ApplicationController
   end
 
   def edit
+    @company = Company.new
   end
 
   def create
@@ -56,6 +57,7 @@ class CandidatesController < ApplicationController
   end
 
   def update
+    @company = Company.new
     if @candidate.update(candidate_params)
       flash[:notice] = 'Запись успешно обновлена.'
       redirect_to candidate_path(@candidate)

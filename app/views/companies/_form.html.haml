@@ -1,8 +1,8 @@
-= form_for @company, html: { class: 'form-horizontal' } do |f|
-  - if @company.errors.any?
+= form_for company, html: { class: 'form-horizontal' } do |f|
+  - if company.errors.any?
     %h2 Возникшие ошибки:
     %ul
-      - @company.errors.full_messages.each do |message|
+      - company.errors.full_messages.each do |message|
         %li
           = message
   .form-group
@@ -23,7 +23,7 @@
       .col-sm-4.control-label
         = f.label :region, 'Регион:'
       .col-sm-6
-        = f.select(:region, options_for_select(Region::REGIONS, @company.region), {}, { class: 'form-control' })
+        = f.select :region, Region::REGIONS, {}, { class: 'form-control' }
   .form-group
     .row
       .col-sm-4.control-label
@@ -33,5 +33,5 @@
   .form-group
     %hr
     .col-sm-12
-      = f.submit @company.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
+      = f.submit company.new_record? ? 'Создать' : 'Обновить', class: 'btn btn-default'
       = link_to 'Назад', :back, class: 'btn btn-default'

@@ -42,7 +42,6 @@ RSpec.describe CompaniesController, type: :controller do
       it 'redirects to companies index page' do
        expect(response).to redirect_to companies_path
       end
-
     end
 
     context 'when failed' do
