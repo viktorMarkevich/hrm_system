@@ -30,6 +30,7 @@ $(document).ready(function() {
         }
 
         new_company.trigger('reset');
+        errorBlock.hide();
         $.rails.enableFormElements(new_company);
     });
 

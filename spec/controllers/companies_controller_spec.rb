@@ -26,7 +26,7 @@ RSpec.describe CompaniesController, type: :controller do
 
   context '#create' do
     context 'when successful' do
-      let(:company_attrs) { { params: { company: attributes_for(:company), format: :json } } }
+      let(:company_attrs) { { params: { company: attributes_for(:company, format: :json) } } }
 
       before { post :create, company_attrs }
 
@@ -35,8 +35,8 @@ RSpec.describe CompaniesController, type: :controller do
         expect(Region::REGIONS.include?(assigns(:company).region)).to eq true
       end
 
-      it 'has HTTP 201 status' do
-        expect(response).to have_http_status(201)
+      it 'has HTTP 302 status' do
+        expect(response).to have_http_status(302)
       end
 
       it 'redirects to companies index page' do
