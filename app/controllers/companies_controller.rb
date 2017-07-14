@@ -25,7 +25,7 @@ class CompaniesController < ApplicationController
         format.json { render json: @company, status: :created }
       else
         format.html { render 'new' }
-        format.json { render json: {errors: @company.errors.full_messages}, status: :unprocessable_entity }
+        format.json { render json: {errors: @company.errors}, status: :unprocessable_entity }
       end
     end
   end

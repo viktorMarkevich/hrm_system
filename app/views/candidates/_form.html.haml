@@ -178,40 +178,5 @@
           %span{ aria: { hidden: 'true' } } ×
         %h4#myModalLabel.modal-title Добавить новую компанию
       .modal-body
-        = render partial: 'companies/form', locals: { company: @company }
-        -#= form_for Company.new, format: :json, html: { class: 'form-horizontal' } do |f|
-        -#  %div.error_block
-        -#    %h4 Возникшие ошибки:
-        -#    %ul
-        -#      %li.item
-        -#  .form-group
-        -#    .row
-        -#      .col-sm-4.control-label
-        -#        = f.label :name, 'Имя:'
-        -#      .col-sm-6
-        -#        = f.text_field :name, class: 'form-control'
-        -#  .form-group
-        -#    .row
-        -#      .col-sm-4.control-label
-        -#        = f.label :url do
-        -#          Страница компании:
-        -#      .col-sm-6
-        -#        = f.text_field :url, class: 'form-control', placeholder: 'http://www.company-name.com'
-        -#  .form-group
-        -#    .row
-        -#      .col-sm-4.control-label
-        -#        = f.label :region, 'Регион:'
-        -#      .col-sm-6
-        -#        = f.select :region, Region::REGIONS, {}, { class: 'form-control' }
-        -#        -#= f.select :region, Region::REGIONS, {}, selected: @candidate.companies.pluck(:region), class: 'form-control'
-        -#  .form-group
-        -#    .row
-        -#      .col-sm-4.control-label
-        -#        = f.label :description, 'Описание:'
-        -#      .col-sm-6
-        -#        = f.text_area :description, rows: 5, class: 'form-control'
-        -#  .form-group
-        -#    %hr
-        -#    .col-sm-12
-        -#      = f.submit 'Создать', class: 'btn btn-default'
-        -#      %button.btn.btn-default{type: 'button', data: { dismiss: 'modal' } } Назад
+        = render partial: 'companies/form', locals: { company: @company, format: :json }
+        -#%button.btn.btn-default{type: 'button', data: { dismiss: 'modal' } } Назад

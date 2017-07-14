@@ -1,9 +1,10 @@
-= form_for company, html: { class: 'form-horizontal' } do |f|
+= form_for company, html: { class: 'form-horizontal' }, format: format do |f|
+  -#%div.error_block
   - if company.errors.any?
     %h2 Возникшие ошибки:
     %ul
       - company.errors.full_messages.each do |message|
-        %li
+        %li.item
           = message
   .form-group
     .row
