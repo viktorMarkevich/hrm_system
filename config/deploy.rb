@@ -7,14 +7,14 @@ set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 set :rvm_type, :user                     # Defaults to: :auto
 set :rvm_ruby_version, -> { "2.4.0@#{fetch(:application)} --create" }
 
-set :tmp_dir, -> { "/home/#{fetch(:user)}/tmp" }
-
 # Default value for :format is :pretty
 set :format, :pretty
 
 # Default value for :linked_files is []; # Default value for linked_dirs is []
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', '.ruby-version', '.ruby-gemset', 'config/puma.rb')
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'pids', 'cache', 'sockets', 'vendor/bundle', 'public/system')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', '.ruby-version', '.ruby-gemset')
+# set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', '.ruby-version', '.ruby-gemset', 'config/puma.rb')
+# set :linked_dirs, fetch(:linked_dirs, []).push('log', 'pids', 'cache', 'sockets', 'vendor/bundle', 'public/system')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 
 
 # set :passenger_environment_variables, { :path => 'usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini/bin:$PATH' }
