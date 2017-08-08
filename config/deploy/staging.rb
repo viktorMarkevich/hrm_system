@@ -2,7 +2,6 @@
 # ======================
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
-set :application, 'faceit-hrm'
 set :rails_env, 'staging'
 set :branch, 'develop'
 set :user, 'stagin'
@@ -28,8 +27,8 @@ role :db,  %w{stagin@192.168.0.251}
 # ------------------------------------
 server 'stagin@192.168.0.251',
        user: 'stagin',
-       roles: %w{app db web},
-       ssh_options: { keys: %w(/home/stagin/.ssh/id_rsa),
-                      forward_agent: true,
-                      auth_methods: %w(publickey password),
-                      password: ENV['STAGING_SSH_PASSWORD'] }
+       roles: %w{app web}
+       # ssh_options: { keys: %w(/home/stagin/.ssh/id_rsa),
+       #                forward_agent: true,
+       #                auth_methods: %w(publickey password),
+       #                password: ENV['STAGING_SSH_PASSWORD'] }

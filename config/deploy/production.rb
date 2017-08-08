@@ -2,7 +2,6 @@
 # ======================
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
-set :application, 'faceit-hrm'
 set :rails_env, 'production'
 set :branch, 'master'
 set :user, 'production'
@@ -28,8 +27,8 @@ role :db,  %w{production@192.168.0.251}
 # ------------------------------------
 server 'production@192.168.0.251',
        user: 'production',
-       roles: %w{app db web},
-       ssh_options: { keys: %w(/home/production/.ssh/id_rsa),
-                      forward_agent: true,
-                      auth_methods: %w(publickey password),
-                      password: ENV['PRODUCTION_SSH_PASSWORD'] }
+       roles: %w{web app}
+       # ssh_options: { keys: %w(/home/production/.ssh/id_rsa),
+       #                forward_agent: true,
+       #                auth_methods: %w(publickey password),
+       #                password: ENV['PRODUCTION_SSH_PASSWORD'] }
