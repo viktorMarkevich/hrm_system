@@ -2,7 +2,6 @@
 # ======================
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
-set :application, 'faceit-hrm'
 set :rails_env, 'staging'
 set :branch, 'develop'
 set :user, 'stagin'

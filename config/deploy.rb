@@ -1,10 +1,9 @@
 # config valid only for current version of Capistrano
-lock '3.7.2'
+# lock '3.9.0'
 
-# set :application, 'my_app_name'
+set :application, 'faceit-hrm'
 set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 
-# deploy.rb or stage file (staging.rb, production.rb or else)
 set :rvm_type, :user                     # Defaults to: :auto
 set :rvm_ruby_version, -> { "2.4.0@#{fetch(:application)} --create" }
 
@@ -17,9 +16,13 @@ set :format, :pretty
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', '.ruby-version', '.ruby-gemset', 'config/puma.rb')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'pids', 'cache', 'sockets', 'vendor/bundle', 'public/system')
 
-set :puma_conf, -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
-set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/pids/puma.pid" }
-set :puma_sockets, -> { "#{fetch(:deploy_to)}/shared/sockets/puma.sock" }
+
+set :passenger_environment_variables, { :path => 'usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini/bin:$PATH' }
+set :passenger_restart_command, '//usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini/bin/passenger-config restart-app'
+
+# set :puma_conf, -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
+# set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/pids/puma.pid" }
+# set :puma_sockets, -> { "#{fetch(:deploy_to)}/shared/sockets/puma.sock" }
 set :use_sudo, false
 
 # Default value for keep_releases is 5
