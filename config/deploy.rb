@@ -17,8 +17,8 @@ set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', 
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'pids', 'cache', 'sockets', 'vendor/bundle', 'public/system')
 
 
-set :passenger_environment_variables, { :path => 'usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini/bin:$PATH' }
-set :passenger_restart_command, '//usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini/bin/passenger-config restart-app'
+# set :passenger_environment_variables, { :path => 'usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini/bin:$PATH' }
+# set :passenger_restart_command, '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini/bin/passenger-config restart-app'
 
 # set :puma_conf, -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
 # set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/pids/puma.pid" }
