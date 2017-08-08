@@ -23,9 +23,6 @@ gem 'cancancan', '~> 1.10'
 gem 'simple_calendar', '~> 2.0'
 gem 'rufus-scheduler', '~> 3.1.3' #awesome scheduler gem!!!
 gem 'coffee-rails', '~> 4.1.0'
-gem 'capistrano', '~> 3.4'
-gem 'capistrano-rails', '~> 1.1.3'
-gem 'capistrano-rvm'
 gem 'yomu'
 gem 'docx', '~> 0.2.07', require: ['docx']
 gem 'bootstrap-sass'
@@ -41,13 +38,15 @@ gem 'prawn-rails'
 gem 'wysiwyg-rails'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'rails-jquery-autocomplete'
+gem 'puma'
 
 group :development do
   gem 'letter_opener'
-end
-
-group :staging, :production do
-  gem 'puma'
+  gem 'capistrano', '~> 3.6'
+  gem 'capistrano-rails', '~> 1.3'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
+  gem 'capistrano-passenger', require: false, github: 'capistrano/passenger'
 end
 
 group :development, :test do
