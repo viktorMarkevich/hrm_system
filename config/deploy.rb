@@ -26,7 +26,7 @@ set :use_sudo, false
 # Default value for keep_releases is 5
 set :keep_releases, 3
 
-# namespace :deploy do
+namespace :deploy do
 #
 #   task :restart do
 #     on "#{fetch(:user)}@192.168.0.251" do
@@ -56,14 +56,13 @@ set :keep_releases, 3
 #     end
 #   end
 #
-#   task :any_task do #здесь можно размещать любые таски, которые нужно запустить в той или иной среде
-#     on "#{fetch(:user)}@192.168.0.251" do
-#       within "#{fetch(:deploy_to)}/current" do
-#         # execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
-#         execute :bundle, :exec, "rails s puma -p 3001 -e #{fetch(:rails_env)}"
-#         # execute :bundle, :exec, "rake history:delete_all RAILS_ENV=staging"
-#       end
-#     end
-#   end
-#
-# end
+  task :any_task do #здесь можно размещать любые таски, которые нужно запустить в той или иной среде
+    on "#{fetch(:user)}@192.168.0.251" do
+      within "#{fetch(:deploy_to)}/current" do
+        # execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
+        execute :bundle, :exec, "rails s puma -d -p 3002 -e #{fetch(:rails_env)}"
+        # execute :bundle, :exec, "rake history:delete_all RAILS_ENV=staging"
+      end
+    end
+  end
+end
