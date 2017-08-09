@@ -39,7 +39,6 @@ gem 'wysiwyg-rails'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'rails-jquery-autocomplete'
 gem 'puma'
-gem 'passenger'
 
 group :development do
   gem 'letter_opener'
