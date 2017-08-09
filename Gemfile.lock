@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/capistrano/passenger.git
-  revision: 6dc408ec690d0cbe8c2e9d86c33ad4f7977dfa73
-  specs:
-    capistrano-passenger (0.2.0)
-      capistrano (~> 3.0)
-
-GIT
   remote: git://github.com/straydogstudio/acts_as_xlsx.git
   revision: 94fc6aa730bb8f252e75c9debdcf64903d33fede
   specs:
@@ -121,6 +114,10 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    capistrano3-puma (3.1.1)
+      capistrano (~> 3.7)
+      capistrano-bundler
+      puma (~> 3.4)
     capybara (2.15.1)
       addressable
       mini_mime (>= 0.1.3)
@@ -424,9 +421,9 @@ DEPENDENCIES
   cancancan (~> 1.10)
   capistrano (~> 3.6)
   capistrano-bundler
-  capistrano-passenger!
   capistrano-rails (~> 1.3)
   capistrano-rvm
+  capistrano3-puma
   capybara
   coffee-rails (~> 4.1.0)
   cucumber-rails

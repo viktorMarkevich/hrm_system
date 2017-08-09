@@ -11,15 +11,16 @@ set :rvm_ruby_version, -> { "2.4.0@#{fetch(:application)} --create" }
 set :format, :pretty
 
 # Default value for :linked_files is []; # Default value for linked_dirs is []
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', '.ruby-version', '.ruby-gemset')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', '.ruby-version', '.ruby-gemset', 'config/puma.rb')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 
 # set :passenger_environment_variables, { :path => 'usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini/bin:$PATH' }
 # set :passenger_restart_command, '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini/bin/passenger-config restart-app'
 
-# set :puma_conf, -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
-# set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/pids/puma.pid" }
-# set :puma_sockets, -> { "#{fetch(:deploy_to)}/shared/sockets/puma.sock" }
+set :puma_conf, -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
+set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/pids/puma.pid" }
+set :puma_sockets, -> { "#{fetch(:deploy_to)}/shared/sockets/puma.sock" }
+
 set :use_sudo, false
 
 # Default value for keep_releases is 5
