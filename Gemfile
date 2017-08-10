@@ -47,7 +47,7 @@ group :development do
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
   # gem 'capistrano-passenger', require: false, github: 'capistrano/passenger'
-  gem 'capistrano3-puma'
+  gem 'capistrano3-puma', github: "seuros/capistrano-puma"
 end
 
 group :development, :test do
