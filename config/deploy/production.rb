@@ -6,7 +6,7 @@ set :rails_env, 'production'
 set :branch, 'master'
 set :user, 'production'
 
-set :deploy_to,  "/home/#{fetch(:user)}/#{fetch(:rails_env)}/#{fetch(:application)}"
+set :deploy_to,  "/home/#{fetch(:user)}/#{fetch(:application)}"
 
 # Defaults to 'db'
 # set :migration_role, 'migrator'
