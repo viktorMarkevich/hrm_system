@@ -18,7 +18,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # set :passenger_restart_command, '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini/bin/passenger-config restart-app'
 
 set :puma_conf, -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
-set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/puma.pid" }
+set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/pids/puma.pid" }
 set :puma_sockets, -> { "#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock" }
 
 set :use_sudo, false
