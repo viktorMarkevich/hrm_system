@@ -14,9 +14,13 @@ set :format, :pretty
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', 'config/puma.rb')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 
+set :puma_rackup, -> {"#{fetch(:deploy_to)}/current/config.ru" }
 set :puma_conf, -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
-set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/pids/puma.pid" }
+set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/puma.pid" }
 set :puma_sockets, -> { "#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock" }
+set :puma_state, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/puma.state" }
+set :puma_env, fetch(:rack_env, fetch(:rails_env, 'production'))
+
 set :puma_jungle_conf, '/etc/puma.conf'
 set :puma_run_path, '/usr/local/bin/run-puma'
 
