@@ -17,8 +17,6 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 set :puma_conf, -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
 set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/pids/puma.pid" }
 set :puma_sockets, -> { "#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock" }
-set :puma_jungle_conf, '/etc/puma.conf'
-set :puma_run_path, '/usr/local/bin/run-puma'
 
 set :use_sudo, false
 
