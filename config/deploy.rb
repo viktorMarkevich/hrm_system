@@ -19,7 +19,7 @@ set :puma_conf, -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
 set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/puma.pid" }
 set :puma_sockets, -> { "#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock" }
 set :puma_state, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/puma.state" }
-# set :puma_env, fetch(:rack_env, fetch(:rails_env, 'production'))
+set :puma_env, fetch(:rails_env)
 
 set :puma_jungle_conf, '/etc/puma.conf'
 set :puma_run_path, '/usr/local/bin/run-puma'
@@ -34,7 +34,7 @@ namespace :deploy do
     on "#{fetch(:user)}@192.168.0.251" do
       within "#{fetch(:deploy_to)}/current" do
         # execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
-        execute :bundle, :exec, "rails s puma -d -p 3002 -e #{fetch(:rails_env)}"
+        execute :bundle, :exec, "rails s puma -d -p 3001 -e #{fetch(:rails_env)}"
         # execute :bundle, :exec, "rake history:delete_all RAILS_ENV=staging"
       end
     end
