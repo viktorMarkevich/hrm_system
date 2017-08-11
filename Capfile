@@ -37,7 +37,6 @@ require 'capistrano/rails/migrations'
 require 'capistrano/puma'
 install_plugin Capistrano::Puma  # Default puma tasks
 install_plugin Capistrano::Puma::Jungle # if you need the jungle tasks
-# install_plugin Capistrano::Puma::Monit  # if you need the monit tasks
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
