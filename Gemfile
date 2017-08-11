@@ -38,7 +38,7 @@ gem 'prawn-rails'
 gem 'wysiwyg-rails'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'rails-jquery-autocomplete'
-gem 'puma'
+gem 'puma', '3.8.2'
 
 group :development do
   gem 'letter_opener'
@@ -47,7 +47,7 @@ group :development do
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
   # gem 'capistrano-passenger', require: false, github: 'capistrano/passenger'
-  gem 'capistrano3-puma', github: "seuros/capistrano-puma"
+  gem 'capistrano3-puma'
 end
 
 group :development, :test do
