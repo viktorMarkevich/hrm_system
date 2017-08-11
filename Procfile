@@ -1,1 +1,1 @@
-web: bundle exec unicorn -p $PORT
+web: bundle exec puma -e $RAILS_ENV -p 3002 -S ~/puma -C config/puma.rb
