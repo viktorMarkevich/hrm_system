@@ -19,7 +19,7 @@ set :puma_conf, -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
 set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/puma.pid" }
 set :puma_sockets, -> { "#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock" }
 set :puma_state, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/puma.state" }
-set :puma_env, fetch(:rack_env, fetch(:rails_env, 'production'))
+set :puma_env, fetch(:rails_env)
 
 set :puma_jungle_conf, '/etc/puma.conf'
 set :puma_run_path, '/usr/local/bin/run-puma'
@@ -30,40 +30,11 @@ set :use_sudo, false
 set :keep_releases, 3
 
 namespace :deploy do
-#
-#   task :restart do
-#     on "#{fetch(:user)}@192.168.0.251" do
-#       execute "if [ -f #{fetch(:puma_pid)} ] && [ -e /proc/$(cat #{fetch(:puma_pid)}) ]; then kill -USR2 `cat #{fetch(:puma_pid)}`; else cd #{fetch(:deploy_to)}/current && bundle exec puma -c #{fetch(:puma_conf)} -E #{fetch(:rails_env)} -D; fi"
-#     end
-#   end
-#
-#   task :start do
-#     on roles [:web, :app] do
-#       within "#{fetch(:deploy_to)}/current" do
-#         execute :bundle,:exec, "puma -c #{fetch(:puma_conf)} -E #{fetch(:rails_env)} -D"
-#       end
-#     end
-#   end
-#
-#   task :stop do
-#     on "#{fetch(:user)}@192.168.0.251" do
-#       execute "if [ -f #{fetch(:puma_pid)} ] && [ -e /proc/$(cat #{fetch(:puma_pid)}) ]; then kill -QUIT `cat #{fetch(:puma_pid)}`; fi"
-#     end
-#   end
-#
-#   task :reset do
-#     on "#{fetch(:user)}@192.168.0.251" do
-#       within "#{fetch(:deploy_to)}/current" do
-#         execute :bundle, :exec, "rake db:reset RAILS_ENV=#{fetch(:rails_env)}"
-#       end
-#     end
-#   end
-#
   task :any_task do #здесь можно размещать любые таски, которые нужно запустить в той или иной среде
     on "#{fetch(:user)}@192.168.0.251" do
       within "#{fetch(:deploy_to)}/current" do
         # execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
-        execute :bundle, :exec, "rails s puma -d -p 3002 -e #{fetch(:rails_env)}"
+        execute :bundle, :exec, "rails s puma -d -p 3001 -e #{fetch(:rails_env)}"
         # execute :bundle, :exec, "rake history:delete_all RAILS_ENV=staging"
       end
     end
