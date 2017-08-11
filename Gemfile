@@ -38,7 +38,7 @@ gem 'prawn-rails'
 gem 'wysiwyg-rails'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'rails-jquery-autocomplete'
-gem 'puma', '3.8.2'
+gem 'puma', '3.9.1'
 
 group :development do
   gem 'letter_opener'
