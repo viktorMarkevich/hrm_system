@@ -88,7 +88,7 @@ Rails.application.configure do
       password:              ENV['MAIL_SENDER_PASSWORD'],
       authentication:        'plain',
       enable_starttls_auto:  true }
-  config.action_mailer.default_url_options = { host: 'faceit-hrm.loc' }
+  config.action_mailer.default_url_options = { host: 'http://192.168.0.251', port: '3002' }
 
   config.action_mailer.perform_deliveries = true
 end
