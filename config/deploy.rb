@@ -19,7 +19,7 @@ set :puma_conf, -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
 set :puma_pid, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/puma.pid" }
 set :puma_sockets, -> { "#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock" }
 set :puma_state, -> { "#{fetch(:deploy_to)}/shared/tmp/pids/puma.state" }
-set :puma_env, fetch(:rails_env)
+set :puma_env, fetch(:rack_env, fetch(:rails_env))
 
 set :puma_jungle_conf, '/etc/puma.conf'
 set :puma_run_path, '/usr/local/bin/run-puma'
