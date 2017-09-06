@@ -22,6 +22,26 @@ body {
   background-color: #d9d9d9;
 }
 
+.authorization {
+  border: 1px solid #F0721C;
+  -webkit-box-shadow: 0px 0px 5px #663500 !important;
+  -moz-box-shadow: 0px 0px 5px #663500 !important;
+  box-shadow: 0px 0px 5px #663500 !important;
+  .panel-heading {
+    color: #fff;
+    background-color: #222;
+    border-bottom: 1px solid #F0721C;
+    -webkit-box-shadow: 0px 0px 5px #663500 !important;
+    -moz-box-shadow: 0px 0px 5px #663500 !important;
+    box-shadow: 0px 0px 5px #663500 !important;
+  }
+
+  .panel-body {
+    background-color: #f9f9f9;
+    color: #663500;
+  }
+}
+
 .form-horizontal {
   input, textarea, select {
     border: 1px solid #FFF;
@@ -119,7 +139,7 @@ ul.nav.navbar-nav > li > a {
 }
 
 .tip {
-  color: #333;
+  color: #f9f9f9;
   font-style: italic;
   font-weight: bold;
   font-size: 18px;
@@ -230,7 +250,7 @@ a, a:link, a:visited{
 }
 a.login-link{
   padding-left: 15px;
-  color: black;
+  color: #663500;
   font-weight: bold;
 
 }
