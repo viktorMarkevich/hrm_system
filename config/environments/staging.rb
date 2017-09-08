@@ -95,7 +95,7 @@ Rails.application.configure do
       authentication:        'plain',
       enable_starttls_auto:  true }
 
-  config.action_mailer.default_url_options = { host: '192.168.0.251', port: '3001' }
+  config.action_mailer.default_url_options = { host: '192.168.115.251', port: '3001' }
 
   config.action_mailer.perform_deliveries = true
   config.public_file_server.enabled = true
