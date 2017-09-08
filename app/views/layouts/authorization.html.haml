@@ -2,12 +2,12 @@
 %html
   %head
     %title Faceit-hrm
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
     = csrf_meta_tags
-  %body.jumbotron
+  %body
     .container-fluid
-      .row
+      .row{ style: 'padding-top: 100px;' }
         .col-sm-4.col-sm-offset-4
           = flash[:notice]
           = yield

@@ -1,4 +1,4 @@
-.panel.panel-primary
+.panel.panel-primary.authorization
   .panel-heading
     .panel-title.tip
       Log in
@@ -22,4 +22,4 @@
               = f.label :remember_me
             = link_to 'Забыли пароль?', new_password_path('user'), class: 'login-link'
           .form-group
-            = f.submit 'Log in', class: 'btn btn-default'
+            = f.submit 'Log in', class: 'btn btn-warning'
