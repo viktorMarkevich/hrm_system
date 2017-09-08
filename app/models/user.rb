@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
 
-  POST = %w(Директор HR\ Менеджер)
+  POST = %w(Директор HR\ Менеджер Tester)
 
-  cattr_accessor :current_user
+  attr_accessor :current_user
 
   has_one :image
 
