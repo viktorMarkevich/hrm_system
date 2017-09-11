@@ -8,16 +8,17 @@ module Support
     owner
   end
 
-  def set_changes
+  def set_changes(attrs, additation_opts)
     changes = self.changes
-    changes.delete('created_at')
-    changes.delete('updated_at')
-    changes.delete('user_id') if try(:user_id)
+    changes = remove_unnecessary_attributes(changes, attrs) if attrs
     if try(:will_begin_at)
       changes[:will_begin_at] = [nil, I18n.l(self.will_begin_at, format: '%d %B(%A) в %T')]
     end
-    changes.delete('id')
     changes
   end
 
+  def remove_unnecessary_attributes(changes, attrs)
+    attrs.each{ |attr| changes.delete(attr) }
+    changes
+  end
 end

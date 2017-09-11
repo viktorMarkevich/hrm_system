@@ -45,6 +45,8 @@ class StaffRelation < ActiveRecord::Base
     def add_history_after_paranoid_actions(action, new_status)
       old_status = self.status
       # self.update_columns(status: new_status)
+      # attrs = '%w(created_at deleted_at user_id)'
+      # histories.create_with_attrs(was_changed: set_changes(attrs, nil),
       histories.create_with_attrs(was_changed: { 'status' => "[\"#{old_status}\", \"#{new_status}\"]" }, action: action)
     end
 end

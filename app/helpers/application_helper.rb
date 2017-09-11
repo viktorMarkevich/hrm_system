@@ -16,7 +16,7 @@ module ApplicationHelper
     "#{full_name_for(object.owner)}"
   end
 
-  def return_upcoming_events(event)
+  def return_upcoming_events(event)   # ?????????????/
     "&nbsp; c #{link_to 'Ланистер', candidate_path('#')} на
      <div class= 'label label-info'>#{event.will_begin_at.strftime('%e %b %H:%M')}</div>
      на должность #{link_to 'Рубист', vacancy_path('#')}".html_safe

@@ -51,6 +51,7 @@ class Event < ActiveRecord::Base
   private
 
     def add_history_event_after_(action)
-      histories.create_with_attrs(was_changed: set_changes, action: action)
+      attrs = '%w(created_at deleted_at user_id)'
+      histories.create_with_attrs(was_changed: set_changes(attrs, nil), action: action)
     end
 end
