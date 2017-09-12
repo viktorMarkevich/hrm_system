@@ -8,12 +8,10 @@ module Support
     owner
   end
 
-  def set_changes(attrs, additation_opts)
+  def set_changes(attrs, addition_attrs = nil)
     changes = self.changes
     changes = remove_unnecessary_attributes(changes, attrs) if attrs
-    if try(:will_begin_at)
-      changes[:will_begin_at] = [nil, I18n.l(self.will_begin_at, format: '%d %B(%A) в %T')]
-    end
+    changes.merge!(addition_attrs) if addition_attrs
     changes
   end
 

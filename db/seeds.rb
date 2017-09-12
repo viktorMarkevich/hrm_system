@@ -11,20 +11,20 @@ Candidate.delete_all
 Company.delete_all
 StaffRelation.delete_all
 Event.delete_all
-User.delete_all
+# User.delete_all
 History.delete_all
 
-User.create!([ { first_name: 'User',
-                 last_name: 'Test',
-                 email: 'user@mail.com',
-                 phone: '0811111111',
-                 skype: 'usertest',
-                 password: '123456',
-                 post: 'test',
-                 region: Region::REGIONS.first,
-                 reset_password_token: nil,
-                 reset_password_sent_at: nil,
-                 remember_created_at: nil, } ])
+# User.create!([ { first_name: 'User',
+#                  last_name: 'Test',
+#                  email: 'user@mail.com',
+#                  phone: '0811111111',
+#                  skype: 'usertest',
+#                  password: '123456',
+#                  post: 'test',
+#                  region: Region::REGIONS.first,
+#                  reset_password_token: nil,
+#                  reset_password_sent_at: nil,
+#                  remember_created_at: nil, } ])
 
 for i in 1..10 do
   Vacancy.create( name: 'Программист руби' + i.to_s,

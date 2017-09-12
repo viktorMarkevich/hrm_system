@@ -100,8 +100,8 @@ class Candidate < ActiveRecord::Base
   end
 
   def add_history_event_after_(action)
-    attrs = '%w(created_at deleted_at user_id)'
-    histories.create_with_attrs(was_changed: set_changes(attrs, nil), action: action)
+    attrs = %w(created_at updated_at user_id id)
+    histories.create_with_attrs(was_changed: set_changes(attrs), action: action)
   end
 
   def add_history_after_paranoid_actions(action, new_status)
