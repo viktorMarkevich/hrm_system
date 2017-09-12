@@ -1,7 +1,6 @@
 .row
-  .col-md-4.text-right
+  .col-md-2.text-right
     .tip
-      %p.subscription
+      .subscription
         = set_item_for(column, subscription)
-  .col-md-1
-  .col-md-7.text-left= display_field_value_for(candidate.send(column))
+  .col-md-2.text-left= display_field_value_for(candidate.send(column))
