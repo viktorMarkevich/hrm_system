@@ -1,88 +1,126 @@
 = stylesheet_link_tag 'candidates/candidates'
 = javascript_include_tag 'candidates/vacancies_list'
 
-- perc = set_the_percentage_of_completed_fields(@candidate)
+
 .row
-  .col-lg-12
+  .col-xs-6
     .row
-      .col-md-3
-        %code
-          = "Источник резюме/файл: <strong>#{@candidate.file_name||@candidate.source}</strong>".html_safe
-      .col-md-6
-        = link_to edit_candidate_path(@candidate) do
-          .progress
-            .progress-bar.progress-bar-danger.progress-bar-striped.active{ aria: { valuemax: 100, valuemin: 0, valuenow: "#{perc}" },
-                                                                                   role: 'progressbar', style: "width: #{perc}%;" }
-              = "#{perc}%"
-      .col-md-2
-        .pull-right
-          %span.label.label-info
-            = display_field_value_for(@candidate.status)
-      .col-md-offset-1
-    %hr
-.row
-  .col-md-7
-    .row
-      .col-md-4
-        .tip
+      .col-xs-9.col-xs-offset-3
+        .label.header
           = @candidate.name
-      .col-md-8.text-right
-        = link_to 'Редактировать', edit_candidate_path(@candidate), class: 'btn btn-primary'
-        = link_to 'Назад', :back, class: 'btn btn-default'
-        - if @candidate.original_cv_data
-          %button{ type: 'button', class: 'btn btn-info', data: { toggle: 'modal', target: '#ResumeModalWindow' } }
-            Посмотреть резюме
-          %div{ class: 'modal fade bs-example-modal-lg', id: 'ResumeModalWindow', tabindex: '-1', role: 'dialog',
-                aria: { labelledby: 'ResumeModalWindowLabel' } }
-            %div{ class: 'modal-dialog modal-lg', role: 'document' }
-              .modal-content
-                .modal-header
-                  %button{ type: 'button', class: 'close', data: { dismiss: 'modal' }, aria: { label: 'Close ' } }
-                    %span{ aria: { hidden: 'true' } }
-                      &times;
-                  %h4#myModalLabel.modal-title.text-left
-                    Оригинальное резюме кандидата
-                .modal-body.text-left
-                  = render partial: 'candidates/resume'
-                .modal-footer
-                  %button{ type: 'button', class: 'btn btn-default', data: { dismiss: 'modal' } }
-                    Закрыть
-
-    %hr
-    = render partial: 'row_element', locals: { subscription: 'Желаемая должность:', column: :desired_position, candidate: @candidate }
-    = render partial: 'row_element', locals: { subscription: 'Дата рождения:', column: :birthday, candidate: @candidate }
-    = render partial: 'row_element', locals: { subscription: 'Город:', column: :city_of_residence, candidate: @candidate }
-    = render partial: 'row_element', locals: { subscription: 'Навыки:', column: :tag_list, candidate: @candidate }
-
-    %hr
-    = render partial: 'row_element', locals: { subscription: 'Почта:', column: :email, candidate: @candidate }
-    = render partial: 'row_element', locals: { subscription: 'Телефон:', column: :phone, candidate: @candidate }
-    = render partial: 'row_element', locals: { subscription: 'Skype:', column: :skype, candidate: @candidate }
-    = render partial: 'row_element', locals: { subscription: 'Linkedin:', column: :linkedin, candidate: @candidate }
-    = render partial: 'row_element', locals: { subscription: 'Facebook:', column: :facebook, candidate: @candidate }
-    = render partial: 'row_element', locals: { subscription: 'Vkontakte::', column: :vkontakte, candidate: @candidate }
-
+        %hr
     .row
-      .col-md-4.text-right
-        .tip
-          %p.subscription
-            Другое:
-      .col-md-1
-      .col-md-7
-    %hr
-    = render partial: 'row_element', locals: { subscription: 'Владение языками:', column: :languages, candidate: @candidate }
-    = render partial: 'row_element', locals: { subscription: 'Зарплатные ожидания:', column: :salary, candidate: @candidate }
-    %hr
-    = render partial: 'row_element', locals: { subscription: 'Опыт работы:', column: :experience, candidate: @candidate }
-    %hr
-    = render partial: 'row_element', locals: { subscription: 'Образование:', column: :education, candidate: @candidate }
-    %hr
-    = render partial: 'row_element', locals: { subscription: 'Примечание:', column: :notice, candidate: @candidate }
-  .col-md-4
-    .pull_left
-      = image_tag 'missing_medium.png'
-    .tip
-      %p Потенциальные вакансии:
-    .vacancies_list
-      = render partial: 'vacancies_list', locals: { candidate: @candidate, vacancies: @vacancies, staff_relations: @staff_relations }
-  .col-lg-offset-1
+      .col-xs-2.col-xs-offset-1
+        .row
+          .col-xs-12.center
+            = image_tag 'missing_128.png'
+        .row
+          .col-xs-12.center
+            = link_to edit_candidate_path(@candidate), class: 'btn btn-warning btn-sm' do
+              Редактирование
+              %span.glyphicon.glyphicon-pencil
+      .col-xs-9
+        .row
+          .col-xs-4.text-right
+            .label
+              Желаемая должность:
+          .col-xs-4.text-left.object-value= @candidate.desired_position
+        .row
+          .col-xs-4.text-right
+            .label
+              Зарплатные ожидания:
+          .col-xs-4.text-left.object-value= @candidate.salary
+        %hr
+        .row
+          .col-xs-4.text-right
+            .label
+              Дата рождения:
+          .col-xs-4.text-left.object-value= @candidate.birthday
+        .row
+          .col-xs-4.text-right
+            .label
+              Город:
+          .col-xs-4.text-left.object-value= @candidate.city_of_residence
+        .row
+          .col-xs-4.text-right
+            .label
+              Навыки:
+          .col-xs-4.text-left.object-value= @candidate.tag_list
+        .row
+          .col-xs-4.text-right
+            .label
+              Почта:
+          .col-xs-4.text-left.object-value= @candidate.email
+        .row
+          .col-xs-4.text-right
+            .label
+              Телефон:
+          .col-xs-4.text-left.object-value= @candidate.phone
+        .row
+          .col-xs-4.text-right
+            .label
+              Skype:
+          .col-xs-4.text-left.object-value= @candidate.skype
+        .row
+          .col-xs-4.text-right
+            .label
+              Linkedin:
+          .col-xs-4.text-left.object-value= @candidate.linkedin
+        .row
+          .col-xs-4.text-right
+            .label
+              Facebook:
+          .col-xs-4.text-left.object-value= @candidate.facebook
+        .row
+          .col-xs-4.text-right
+            .label
+              Vkontakte:
+          .col-xs-4.text-left.object-value= @candidate.vkontakte
+        .row
+          .col-xs-4.text-right
+            .label
+              Владение языками:
+          .col-xs-4.text-left.object-value= @candidate.languages
+        .row
+          .col-xs-4.text-right
+            .label
+              Опыт работы:
+          .col-xs-4.text-left.object-value= @candidate.experience
+        .row
+          .col-xs-4.text-right
+            .label
+              Образование:
+          .col-xs-4.text-left.object-value= @candidate.education
+        .row
+          .col-xs-4.text-right
+            .label
+              Примечание:
+          .col-xs-4.text-left.object-value= @candidate.notice
+  .col-xs-8.text-right
+    - if @candidate.original_cv_data
+      %button{ type: 'button', class: 'btn btn-info', data: { toggle: 'modal', target: '#ResumeModalWindow' } }
+        Посмотреть резюме
+      %div{ class: 'modal fade bs-example-modal-xs', id: 'ResumeModalWindow', tabindex: '-1', role: 'dialog',
+              aria: { labelledby: 'ResumeModalWindowLabel' } }
+        %div{ class: 'modal-dialog modal-xs', role: 'document' }
+          .modal-content
+            .modal-header
+              %button{ type: 'button', class: 'close', data: { dismiss: 'modal' }, aria: { label: 'Close ' } }
+                %span{ aria: { hidden: 'true' } }
+                  &times;
+              %h4#myModalLabel.modal-title.text-left
+                Оригинальное резюме кандидата
+            .modal-body.text-left
+              = render partial: 'candidates/resume'
+            .modal-footer
+              %button{ type: 'button', class: 'btn btn-default', data: { dismiss: 'modal' } }
+                Закрыть
+-#.row
+-#  .col-xs-4
+-#    .pull_left
+-#      = image_tag 'missing_medium.png'
+-#    .tip
+-#      %p Потенциальные вакансии:
+-#    .vacancies_list
+-#      = render partial: 'vacancies_list', locals: { candidate: @candidate, vacancies: @vacancies, staff_relations: @staff_relations }
+-#  .col-xs-offset-1
