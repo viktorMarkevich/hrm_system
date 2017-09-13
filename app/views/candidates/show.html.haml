@@ -31,15 +31,15 @@
 
     .row
       .col-lg-2.col-lg-offset-1
-        = image_tag 'missing_medium_128.png'
-        = link_to edit_candidate_path(@candidate), class: 'edit' do
-          %i.glyphicon.glyphicon-pencil
-      .col-lg-9
         .row
-          .col-md-2.text-right
-            .label
-              Желаемая должность:
-          .col-md-4.text-left.object-value= @candidate.desired_position
+          .col-lg-12.center
+            = image_tag 'missing_medium_128.png'
+        .row
+          .col-lg-12.center
+            = link_to edit_candidate_path(@candidate), class: 'btn btn-warning btn-sm' do
+              Редактирование
+              %span.glyphicon.glyphicon-pencil
+      .col-lg-9
         .row
           .col-md-2.text-right
             .label
@@ -90,6 +90,11 @@
             .label
               Владение языками:
           .col-md-4.text-left.object-value= @candidate.languages
+        .row
+          .col-md-2.text-right
+            .label
+              Желаемая должность:
+          .col-md-4.text-left.object-value= @candidate.desired_position
         .row
           .col-md-2.text-right
             .label
