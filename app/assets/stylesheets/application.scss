@@ -54,10 +54,10 @@ body {
   }
 }
 
-#header {
-  height: 70px;
+.container-fluid {
   border-bottom: 1px solid #fff;
-  background-color: #222;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .pagination > li > a,
