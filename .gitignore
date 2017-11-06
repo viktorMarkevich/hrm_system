@@ -25,6 +25,8 @@
 /public/assets/*
 
 /test/*
+/.ruby-version
+/.ruby-gemset
 /.env
 
 # Ignore database config file
