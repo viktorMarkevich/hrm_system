@@ -28,7 +28,3 @@ role :db,  %w{production@192.168.115.251}
 server 'production@192.168.115.251',
        user: 'production',
        roles: %w{web app}
-       # ssh_options: { keys: %w(/home/production/.ssh/id_rsa),
-       #                forward_agent: true,
-       #                auth_methods: %w(publickey password),
-       #                password: ENV['PRODUCTION_SSH_PASSWORD'] }
