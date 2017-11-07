@@ -13,7 +13,7 @@ set :format, :pretty
 
 # Default value for :linked_files is []; # Default value for linked_dirs is []
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', 'config/puma.rb',
-                                                 'config/nginx.conf', '.ruby-version', '.ruby-gemset')
+                                                 '.ruby-version', '.ruby-gemset')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 
 # set :puma_rackup, -> {"#{fetch(:deploy_to)}/current/config.ru" }
@@ -49,7 +49,7 @@ namespace :deploy do
     on "#{fetch(:user)}@192.168.115.251" do
       within "#{fetch(:deploy_to)}/current" do
         # execute :bundle, :exec, "rake assets:precompile RAILS_ENV=#{fetch(:rails_env)}"
-        execute :bundle, :exec, "rails s puma -d -p 3001 -e #{fetch(:rails_env)}"
+        execute :bundle, :exec, "rails s puma -d -p 3002 -e #{fetch(:rails_env)}"
         # execute :bundle, :exec, "rake history:delete_all RAILS_ENV=staging"
       end
     end
