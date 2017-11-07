@@ -46,7 +46,6 @@ group :development do
   gem 'capistrano-rails', '~> 1.3'
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
-  gem 'capistrano-passenger', require: false, github: 'capistrano/passenger'
 end
 
 group :development, :test do
