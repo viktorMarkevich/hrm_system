@@ -31,7 +31,7 @@ set :pty,             true
 set :use_sudo,        false
 set :stage,           :production
 set :deploy_via,      :remote_cache
-set :puma_bind,       "unix://#{fetch(:deploy_to)}/shared/tmp/sockets/#{fetch(:application)}-puma.sock"
+set :puma_bind,       "unix://#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock"
 set :puma_state,      "#{fetch(:deploy_to)}/shared/tmp/pids/puma.state"
 set :puma_pid,        "#{fetch(:deploy_to)}/shared/tmp/pids/puma.pid"
 set :puma_access_log, "#{fetch(:deploy_to)}/shared/log/puma.error.log"
@@ -40,8 +40,6 @@ set :puma_error_log,  "#{fetch(:deploy_to)}/shared/log/puma.access.log"
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
-# set :nginx_sites_available_path, "/etc/nginx/sites-available"
-# set :nginx_sites_enabled_path, "/etc/nginx/sites-enabled"
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
