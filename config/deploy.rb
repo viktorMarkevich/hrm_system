@@ -20,6 +20,15 @@ set :use_sudo, false
 # Default value for keep_releases is 5
 set :keep_releases, 3
 
+set :passenger_roles, :app
+set :passenger_restart_runner, :sequence
+set :passenger_restart_wait, 5
+set :passenger_restart_limit, 2
+set :passenger_restart_with_sudo, false
+set :passenger_environment_variables, {}
+set :passenger_restart_command, 'passenger-config restart-app'
+set :passenger_restart_options, -> { "#{fetch(:deploy_to)} --ignore-app-not-running" }
+
 namespace :deploy do
   task :any_task do #здесь можно размещать любые таски, которые нужно запустить в той или иной среде
     on "#{fetch(:user)}@192.168.115.251" do
