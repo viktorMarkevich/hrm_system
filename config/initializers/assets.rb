@@ -13,4 +13,4 @@ Rails.application.config.assets.precompile += %w(events/events.js stickers.js ch
                                                  candidates/candidates_form.css candidates/candidates.css candidates/candidates.js
                                                  candidates/vacancies_list.js vacancies/vacancies.js candidates/candidates_edit.js
                                                  candidates/autocomplete.js candidates/candidates_geo_names.js
-                                                 candidates/datepicker.js)
+                                                 candidates/datepicker.js authorization.scss authorization.js)

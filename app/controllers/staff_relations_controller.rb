@@ -21,7 +21,6 @@ class StaffRelationsController < ApplicationController
     @vacancy.candidates << Candidate.where(id: st_params[:candidate_id])
     @vacancy.update_attributes(status: 'В работе')
     @vacancy_candidates = @vacancy.candidates_with_status('Найденные')
-    @vacancy_status_class = get_label_class(@vacancy)
     respond_to do |format|
       format.html { head :ok }
       format.js
