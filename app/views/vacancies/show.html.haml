@@ -37,10 +37,31 @@
     %dd= get_author_vacancy(@vacancy)
 
 .col-lg-6
-  .tip
-    %p
-      Фильтр
+  .row
+    .col-lg-6
+      .tip
+        %p
+          Фильры
+    .col-lg-6
+      .btn-group
+        %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+          Выбирете Статус
+          %span.caret
+        %ul.dropdown-menu
+          %li{ class: get_active(@sr_status, 'Найденные') }
+            = link_to 'Найденные', vacancy_path(@vacancy, sr_status: 'Найденные')
+          %li{ class: get_active(@sr_status, 'Отобранные') }
+            = link_to 'Отобранные', vacancy_path(@vacancy, sr_status: 'Отобранные')
+          %li{ class: get_active(@sr_status, 'Собеседование') }
+            = link_to 'Собеседование', vacancy_path(@vacancy, sr_status: 'Собеседование')
+          %li{ class: get_active(@sr_status, 'Утвержден') }
+            = link_to 'Утвержден', vacancy_path(@vacancy, sr_status: 'Утвержден')
+          %li{ class: get_active(@sr_status, 'Не подходит') }
+            = link_to 'Не подходит', vacancy_path(@vacancy, sr_status: 'Не подходит')
+          %li{ class: get_active(@sr_status, 'Отказался') }
+            = link_to 'Отказался', vacancy_path(@vacancy, sr_status: 'Отказался')
   %hr
+  %p= "Выбран статус: <strong>#{ @sr_status }!</strong>".html_safe
   = render partial: 'vacancies/right_panel', locals: { example: nil }
 
 = render 'dialog'
