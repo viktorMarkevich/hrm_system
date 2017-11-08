@@ -1,9 +1,23 @@
 = javascript_include_tag 'vacancies/vacancies'
 
 .col-lg-6
-  .tip
-    %p
-      = @vacancy.name
+  .row
+    .col-lg-6
+      .tip
+        %p
+          = @vacancy.name
+    .col-lg-6
+      .btn-group
+        %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+          Действия
+          %span.caret
+        %ul.dropdown-menu
+          %li
+            = link_to 'Редактировать вакансию', edit_vacancy_path(@vacancy)
+          %li
+            = link_to 'Добавить кандидатов к этой вакансии', new_staff_relation_path(vacancy_id: @vacancy.id, sr_status: @sr_status), remote: true, class: 'staff-relation'
+          %li
+            = link_to 'Вернуться', :back
   %hr
   %dl.dl-horizontal
     %dt Зарплата:
@@ -21,21 +35,11 @@
       = render partial: 'vacancy_status', locals: { vacancy: @vacancy }
     %dt Ответственный:
     %dd= get_author_vacancy(@vacancy)
-  %hr
-  %span.tip
-    Вы можете:
-  .pull-right
-    = link_to 'Редактировать вакансию', edit_vacancy_path(@vacancy), class: 'btn btn-primary'
-    = link_to 'Вернуться', :back, class: 'btn btn-default'
-    %code
-      или
-    = link_to 'Добавить кандидатов к этой вакансии', new_staff_relation_path(vacancy_id: @vacancy.id, sr_status: @sr_status), remote: true, class: 'btn btn-success staff-relation'
-  %hr
 
 .col-lg-6
   .tip
     %p
-      Операции над кандидатами
+      Фильтр
   %hr
   = render partial: 'vacancies/right_panel', locals: { example: nil }
 
