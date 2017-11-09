@@ -12,7 +12,7 @@ set :format, :pretty
 
 # Default value for :linked_files is []; # Default value for linked_dirs is []
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', 'config/puma.rb',
-                                                 '.ruby-version', '.ruby-gemset')
+                                                 '.ruby-version', '.ruby-gemset', 'config/secrets.yml')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 
 set :pty,             true
