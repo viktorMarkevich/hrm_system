@@ -34,7 +34,7 @@ namespace :deploy do
   task :any_task do #здесь можно размещать любые таски, которые нужно запустить в той или иной среде
     on "#{fetch(:user)}@192.168.115.251" do
       within "#{fetch(:deploy_to)}/current" do
-        execute :bundle, :exec, "rake history:delete_all RAILS_ENV=production"
+        execute :bundle, :exec, "rake rake admin:update_admin  RAILS_ENV=production"
         # execute :bundle, :exec, "rake history:delete_all RAILS_ENV=staging"
       end
     end
