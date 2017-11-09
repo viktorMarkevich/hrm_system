@@ -8,16 +8,8 @@ set :user, 'production'
 
 set :deploy_to,  "/home/#{fetch(:user)}/www/#{fetch(:application)}"
 
-# Defaults to 'db'
-# set :migration_role, 'migrator'
-
 # Defaults to [:web]
 set :assets_roles, [ :web, :app ]
-
-# Defines a role with one or multiple servers. The primary server in each
-# group is considered to be the first unless any  hosts have the primary
-# property set. Specify the username and a domain or IP for the server.
-# Don't use `:all`, it's a meta role.
 
 role :app, %w{production@192.168.115.251}
 role :web, %w{production@192.168.115.251}
