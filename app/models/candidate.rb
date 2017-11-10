@@ -25,8 +25,7 @@ class Candidate < ActiveRecord::Base
 
   accepts_nested_attributes_for :image
 
-  validates :status, presence: true
-  validates :name, :status, presence: true
+  validates :name, presence: true
   # validates :source, presence: true, if: 'file_name.nil?'
   # validates :source, uniqueness: true, if: 'source.present?'
   # validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
@@ -42,7 +41,7 @@ class Candidate < ActiveRecord::Base
   #validates :birthday, format: { with: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/, multiline: true,
   #          message: 'wrong format' }, if: 'birthday.present?'
 
-  before_validation :check_geo_name
+  # before_validation :check_geo_name
 
   after_create -> { add_history_event_after_('create') }
   after_update -> { add_history_event_after_('update') }
@@ -78,7 +77,7 @@ class Candidate < ActiveRecord::Base
     self.vkontakte = content.scan(/(?<=[Vv]kontakte:|[Vv][Kk]:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
     self.google_plus = content.scan(/(?<=[Gg]oogle\+:|[Gg]oogle[Pp]lus:)\s*.*(?=[\s$])/).to_a.compact.first.to_s.strip
     self.original_cv_data = content
-    self.save!
+    self.save
   end
 
   def self.to_csv
