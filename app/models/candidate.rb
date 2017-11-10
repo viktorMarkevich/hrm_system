@@ -58,7 +58,7 @@ class Candidate < ActiveRecord::Base
   end
 
   def save_resume_to_candidate(data)
-    content = Yomu.new(data).text
+    content = Yomu.new(data).text.to_s.encode('utf-8')
     tags = 'full-stack|front-end|back-end|ruby|rails|ror|php|python|javascript|html|css|js|mysql|postgresql|mongodb|linux|macos|mvc|git|ооп|oop|bootstrap|scrum|crm|1c|agile|java|yii|wordpress|svn|jquery|ajax|xml|json|less|sass|redis|memcached|sphinx|kohana|zend|codeigniter|photoshop|jade|emmet|word|excel|power point|singleton|factory|composer|highload|silex|cms|apache|nginx|twig|lamp|xamp|php-fpm|fpm|apc|redmine|sqlite|angular|react|heroku|test|rspec|restful|api|cucumber|ansible|sinatra|amazon|sql|lisp|prolog|visio|coreldraw|internet'
     lang = 'english|английский|англійська|russian|русский|російська|ukrainian|украинский|українська|français|french|французский|французька|deutsch|german|немецкий|німецька|polish|polski|польский|польська'
     self.name = content.scan(/(?:[A-Z]+[a-zA-Z]* [A-Z]+[a-zA-Z]*)|(?:[А-Я]+[а-яА-Я]* [А-Я]+[а-яА-Я]*)/).to_a.compact.first.to_s.strip
