@@ -25,7 +25,7 @@ class Candidate < ActiveRecord::Base
 
   accepts_nested_attributes_for :image
 
-  validates :name, presence: true
+  # validates :name, presence: true
   # validates :source, presence: true, if: 'file_name.nil?'
   # validates :source, uniqueness: true, if: 'source.present?'
   # validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/,
