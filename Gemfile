@@ -23,7 +23,7 @@ gem 'cancancan', '~> 1.10'
 gem 'simple_calendar', '~> 2.0'
 gem 'rufus-scheduler', '~> 3.1.3' #awesome scheduler gem!!!
 gem 'coffee-rails', '~> 4.1.0'
-gem 'yomu'
+gem 'henkei'
 gem 'docx', '~> 0.2.07', require: ['docx']
 gem 'bootstrap-sass'
 gem 'sass-rails'
