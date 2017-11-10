@@ -81,7 +81,7 @@ class CandidatesController < ApplicationController
       flash[:notice] = 'Данные сохранились успешно'
       redirect_to edit_candidate_path(@candidate)
     else
-      flash[:error] = "I've see this error #{error}"
+      flash[:error] = "I've see an error"
       redirect_to new_candidate_path
     end
   end
