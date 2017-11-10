@@ -76,14 +76,14 @@ class CandidatesController < ApplicationController
   end
 
   def upload_resume
-    begin
       @candidate = current_user.candidates.build
-      @candidate.save_resume_to_candidate(params[:upload_resume][:file])
-      flash[:notice] = 'Данные сохранились успешно'
-      redirect_to edit_candidate_path(@candidate)
-    rescue Exception => error
-      flash[:error] = "I've see this error #{error}"
-      redirect_to new_candidate_path
+      if @candidate.save_resume_to_candidate(params[:upload_resume][:file])
+        flash[:notice] = 'Данные сохранились успешно'
+        redirect_to edit_candidate_path(@candidate)
+      else
+        flash[:error] = "I've see this error #{error}"
+        redirect_to new_candidate_path
+      end
     end
   end
 
