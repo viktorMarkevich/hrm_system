@@ -19,4 +19,4 @@ role :db,  %w{stagin@192.168.115.251}
 # ------------------------------------
 server 'stagin@192.168.115.251',
        user: 'stagin',
-       roles: %w{app web}
+       roles: %w{web app}
