@@ -4,8 +4,9 @@ lock '3.10.0'
 set :application, 'faceit-hrm'
 set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 
-set :rvm_type, :user                     # Defaults to: :auto
-set :rvm_ruby_version, -> { "2.4.0@#{fetch(:application)}" }
+# set :rvm_type, :user                     # Defaults to: :auto
+set :rvm_type, :system                     # Defaults to: :auto
+set :rvm_ruby_version, '2.4.0'
 
 # Default value for :format is :pretty
 set :format, :pretty
@@ -17,7 +18,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 
 set :puma_bind,       -> { "unix://#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock" }
 set :puma_rackup,     -> { "#{fetch(:deploy_to)}/current/config.ru" }
-set :puma_conf,       -> { "#{fetch(:deploy_to)}/current/config/puma.rb" }
+set :puma_conf,       -> { "#{fetch(:deploy_to)}/shared/config/puma.rb" }
 set :puma_pid,        -> { "#{fetch(:deploy_to)}/shared/tmp/pids/puma.pid" }
 set :puma_sockets,    -> { "#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock" }
 set :puma_state,      -> { "#{fetch(:deploy_to)}/shared/tmp/pids/puma.state" }
