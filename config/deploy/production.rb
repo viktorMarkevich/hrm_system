@@ -6,7 +6,7 @@ set :rails_env, 'production'
 set :branch, 'master'
 set :user, 'production'
 
-set :deploy_to,  "/home/#{fetch(:user)}/www/#{fetch(:application)}"
+set :deploy_to,  "/home/production/www/#{fetch(:application)}"
 
 # Defaults to [:web]
 set :assets_roles, [ :web, :app ]

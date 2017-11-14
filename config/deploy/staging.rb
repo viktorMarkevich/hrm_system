@@ -6,7 +6,7 @@ set :rails_env, 'staging'
 set :branch, 'develop'
 set :user, 'stagin'
 
-set :deploy_to,  "/home/#{fetch(:user)}/www/#{fetch(:application)}"
+set :deploy_to,  "/home/stagin/www/#{fetch(:application)}"
 
 # Defaults to [:web]
 set :assets_roles, [ :web, :app ]
