@@ -44,7 +44,12 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      invoke 'puma:restart'
+      execute :sudo,:restart, "puma app=/home/#{fetch(:user)}/www/faceit-hrm/current"
     end
   end
+
+  # before :starting,     :check_revision
+  # after  :finishing,    :compile_assets
+  # after  :finishing,    :cleanup
+  after  :finishing,    :restart
 end
