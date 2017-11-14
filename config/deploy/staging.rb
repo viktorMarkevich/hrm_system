@@ -4,19 +4,19 @@
 # You can define all roles on a single server, or split them:
 set :rails_env, 'staging'
 set :branch, 'develop'
-set :user, 'stagin'
+set :user, 'staging'
 
 set :deploy_to,  "/home/#{fetch(:user)}/www/#{fetch(:application)}"
 
 # Defaults to [:web]
 set :assets_roles, [ :web, :app ]
 
-role :app, %w{stagin@192.168.115.251}
-role :web, %w{stagin@192.168.115.251}
-role :db,  %w{stagin@192.168.115.251}
+role :app, %w{staging@192.168.115.251}
+role :web, %w{staging@192.168.115.251}
+role :db,  %w{staging@192.168.115.251}
 
 # Custom SSH Options
 # ------------------------------------
-server 'stagin@192.168.115.251',
-       user: 'stagin',
+server 'staging@192.168.115.251',
+       user: 'staging',
        roles: %w{web app}
