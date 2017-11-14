@@ -26,6 +26,7 @@ set :puma_error_log,  "#{fetch(:deploy_to)}/shared/log/puma.access.log"
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
+set :puma_restart_command, 'bundle exec puma'
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
