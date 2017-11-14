@@ -46,9 +46,4 @@ namespace :deploy do
       invoke 'puma:restart'
     end
   end
-
-  # before :starting,     :check_revision
-  # after  :finishing,    :compile_assets
-  # after  :finishing,    :cleanup
-  after  :finishing,    :restart
 end
