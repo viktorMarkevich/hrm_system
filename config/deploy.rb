@@ -31,6 +31,9 @@ set :puma_restart_command, 'bundle exec puma'
 # Default value for keep_releases is 5
 set :keep_releases, 3
 
+set :puma_jungle_conf, '/etc/puma.conf'
+set :puma_run_path, '/usr/local/bin/run-puma'
+
 namespace :deploy do
   task :any_task do #здесь можно размещать любые таски, которые нужно запустить в той или иной среде
     on "#{fetch(:user)}@192.168.115.251" do
@@ -40,16 +43,4 @@ namespace :deploy do
       end
     end
   end
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute :sudo,:restart, "puma app=/home/#{fetch(:user)}/www/faceit-hrm/current"
-    end
-  end
-
-  # before :starting,     :check_revision
-  # after  :finishing,    :compile_assets
-  # after  :finishing,    :cleanup
-  after  :finishing,    :restart
 end
