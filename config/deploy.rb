@@ -17,7 +17,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 
 set :puma_bind,       "unix://#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock"
 set :puma_rackup,     "#{fetch(:deploy_to)}/current/config.ru"
-set :puma_conf,       "/current/config/puma.rb"
+set :puma_conf,       "#{fetch(:deploy_to)}/current/config/puma.rb"
 set :puma_pid,        "#{fetch(:deploy_to)}/shared/tmp/pids/puma.pid"
 set :puma_sockets,    "#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock"
 set :puma_state,      "#{fetch(:deploy_to)}/shared/tmp/pids/puma.state"
