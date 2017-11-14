@@ -15,18 +15,22 @@ set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env', 
                                                  '.ruby-version', '.ruby-gemset', 'config/secrets.yml')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 
-set :pty,             true
-set :use_sudo,        false
-set :deploy_via,      :remote_cache
 set :puma_bind,       "unix://#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock"
-set :puma_state,      "#{fetch(:deploy_to)}/shared/tmp/pids/puma.state"
+set :puma_rackup,     "#{fetch(:deploy_to)}/current/config.ru"
+set :puma_conf,       "#{fetch(:deploy_to)}/current/config/puma.rb"
 set :puma_pid,        "#{fetch(:deploy_to)}/shared/tmp/pids/puma.pid"
+set :puma_sockets,    "#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock"
+set :puma_state,      "#{fetch(:deploy_to)}/shared/tmp/pids/puma.state"
 set :puma_access_log, "#{fetch(:deploy_to)}/shared/log/puma.error.log"
 set :puma_error_log,  "#{fetch(:deploy_to)}/shared/log/puma.access.log"
-set :puma_preload_app, true
-set :puma_worker_timeout, nil
-set :puma_init_active_record, true  # Change to false when not using ActiveRecord
-set :puma_restart_command, 'bundle exec puma'
+
+set :puma_env, fetch(:rack_env, fetch(:rails_env))
+
+set :puma_jungle_conf, '/etc/puma.conf'
+set :puma_run_path, '/usr/local/bin/run-puma'
+
+set :use_sudo, false
+
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
