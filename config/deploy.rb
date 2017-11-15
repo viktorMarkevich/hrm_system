@@ -6,7 +6,7 @@ set :repo_url, 'git@bitbucket.org:hrm_system_team/faceit-hrm.git'
 
 # set :rvm_type, :user                     # Defaults to: :auto
 set :rvm_type, :system                     # Defaults to: :auto
-set :rvm_ruby_version, '2.4.0'
+set :rvm_ruby_version, -> { "2.4.0@#{fetch(:application)}" }
 
 # Default value for :format is :pretty
 set :format, :pretty
