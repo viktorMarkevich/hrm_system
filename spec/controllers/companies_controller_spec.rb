@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CompaniesController, type: :controller do
 
+  let(:json) { JSON.parse(response.body) }
   let(:user) { create :user }
   let(:company) { create :company }
 
@@ -25,13 +26,17 @@ RSpec.describe CompaniesController, type: :controller do
 
   context '#create' do
     context 'when successful' do
-      let(:company_attrs) { { params: { company: attributes_for(:company) } } }
+      let(:company_attrs) { { params: { company: attributes_for(:company, format: :json) } } }
 
       before { post :create, company_attrs }
 
       it 'creates new Company object' do
         expect(Company.count).to eq(1)
         expect(Region::REGIONS.include?(assigns(:company).region)).to eq true
+      end
+
+      it 'has HTTP 302 status' do
+        expect(response).to have_http_status(302)
       end
 
       it 'redirects to companies index page' do
