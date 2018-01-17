@@ -17,18 +17,22 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-  def configure_devise_permitted_parameters
-    registration_params = [ :post, :last_name, :first_name, :email, :region, :password, :password_confirmation ]
+    def configure_devise_permitted_parameters
+      registration_params = [ :post, :last_name, :first_name, :email, :region, :password, :password_confirmation ]
 
-    if params[:action] == 'update'
-      devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(registration_params << :current_password) }
-    elsif params[:action] == 'create'
-      devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(registration_params) }
+      if params[:action] == 'update'
+        devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(registration_params << :current_password) }
+      elsif params[:action] == 'create'
+        devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(registration_params) }
+      end
     end
-  end
 
-  def set_current_user
-    User.current_user = current_user if current_user
-  end
-
+    def after_sign_in_path_for(resource)
+      sign_in_url = new_user_session_url
+      if request.referer == sign_in_url
+        super
+      else
+        stored_location_for(resource) || request.referer || root_path
+      end
+    end
 end

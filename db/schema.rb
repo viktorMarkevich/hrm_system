@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170630075958) do
+ActiveRecord::Schema.define(version: 20170629141835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,18 +71,13 @@ ActiveRecord::Schema.define(version: 20170630075958) do
     t.string   "home_page"
     t.string   "skype"
     t.integer  "user_id"
+    t.integer  "company_id"
     t.string   "notice"
     t.text     "experience"
     t.integer  "geo_name_id"
     t.string   "file_name"
     t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_candidates_on_deleted_at", using: :btree
-  end
-
-  create_table "candidates_companies", id: false, force: :cascade do |t|
-    t.integer "company_id",   null: false
-    t.integer "candidate_id", null: false
-    t.index ["company_id", "candidate_id"], name: "com_id_can_id", using: :btree
   end
 
   create_table "companies", force: :cascade do |t|
