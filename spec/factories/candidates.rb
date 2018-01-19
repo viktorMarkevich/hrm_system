@@ -22,5 +22,9 @@ FactoryGirl.define do
     sequence(:source) { |n| "CV_ENG#{n}.docx" }
     city_of_residence 'Киев'
   end
+  factory :deleted_candidate, parent: :candidate do
+    deleted_at Time.now
+    status 'В Архиве'
+  end
 
 end

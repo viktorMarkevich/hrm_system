@@ -22,6 +22,7 @@
             %th Ответственный
             %th Статус
             %th Кандидаты
+            %th Действия
         %tbody
           - vacancies.each do |vacancy|
             %tr
@@ -36,6 +37,8 @@
                     %p= link_to candidate.name, candidate_path(candidate)
                 - else
                   Нет
+              %td.text-center
+                = link_to '', restore_object_path( id: vacancy.id), method: :delete, class: 'glyphicon glyphicon-floppy-open'
 .row
   .col-lg-3
     = paginate vacancies
