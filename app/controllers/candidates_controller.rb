@@ -2,7 +2,7 @@
 class CandidatesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :find_candidate, only: [:show, :edit, :update, :set_vacancies, :update_resume]
+  before_action :find_candidate, only: [:show, :edit, :update, :set_vacancies, :update_resume, :destroy]
   before_action :set_companies, only: [:new, :edit, :update]
   before_action :set_company, only: [:edit, :update]
 
@@ -100,6 +100,14 @@ class CandidatesController < ApplicationController
           render json: {}
         end
       end
+    end
+  end
+
+  def destroy
+    @candidate.destroy
+    respond_to do |format|
+      format.html { redirect_to candidates_url, notice: 'Кандидаты успешно удалено.' }
+      format.json { head :no_content }
     end
   end
 
