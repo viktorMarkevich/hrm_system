@@ -5,7 +5,7 @@ class History < ActiveRecord::Base
   belongs_to :historyable, polymorphic: true
 
   def self.create_with_attrs(args)
-    create(args)
+    # create(args)
   end
 
 end
