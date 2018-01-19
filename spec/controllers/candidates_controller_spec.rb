@@ -191,5 +191,19 @@ RSpec.describe CandidatesController, type: :controller do
       end
     end
   end
+  describe '#destroy' do
+
+    before do
+      delete :destroy, params: { id: candidate }
+    end
+
+    it 'destroys candidate' do
+      expect(Candidate.pluck(:id)).not_to include(candidate.id)
+    end
+
+    it 'redirects to candidate index page' do
+      expect(response).to redirect_to(candidates_path)
+    end
+  end
 
 end
