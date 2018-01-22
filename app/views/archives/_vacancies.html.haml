@@ -38,7 +38,8 @@
                 - else
                   Нет
               %td.text-center
-                = link_to '', restore_object_path( id: vacancy.id), method: :delete, class: 'glyphicon glyphicon-floppy-open'
+                = link_to restore_object_path( id: vacancy.id), method: :delete do
+                  %i.glyphicon.glyphicon-floppy-open'
 .row
   .col-lg-3
     = paginate vacancies

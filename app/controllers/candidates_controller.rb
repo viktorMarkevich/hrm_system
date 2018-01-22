@@ -2,9 +2,9 @@
 class CandidatesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :find_candidate, only: [:show, :edit, :update, :set_vacancies, :update_resume, :destroy]
-  before_action :set_companies, only: [:new, :edit, :update]
-  before_action :set_company, only: [:edit, :update]
+  before_action :find_candidate, only: %i[show edit update set_vacancies update_resume destroy]
+  before_action :set_companies, only: %i[new edit update]
+  before_action :set_company, only: %i[edit update]
 
   def index
     @status = params[:status]
@@ -104,10 +104,12 @@ class CandidatesController < ApplicationController
   end
 
   def destroy
-    @candidate.destroy
-    respond_to do |format|
-      format.html { redirect_to candidates_url, notice: 'Кандидаты успешно удалено.' }
-      format.json { head :no_content }
+    unless @candidate.nil?
+      @candidate.destroy
+      respond_to do |format|
+        format.html { redirect_to candidates_url, notice: 'Кандидаты успешно удалено.' }
+        format.json { head :no_content }
+      end
     end
   end
 
