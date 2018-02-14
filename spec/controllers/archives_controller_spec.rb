@@ -5,6 +5,7 @@ RSpec.describe ArchivesController, type: :controller do
   let(:user) { create(:user) }
   let(:deleted_sticker) { create :deleted_sticker }
   let(:deleted_vacancy) { create :deleted_vacancy }
+  let(:deleted_candidate) { create :deleted_candidate }
 
   before { sign_in user }
 
@@ -33,6 +34,21 @@ RSpec.describe ArchivesController, type: :controller do
         expect(Vacancy.only_deleted.count).to eq 0
         expect(Vacancy.only_deleted).to eq([])
         expect(assigns(:object).status).to eq 'Не задействована'
+        expect(flash[:notice]).to eq 'Объект был успешно восстановлен.'
+      end
+    end
+
+    context 'should have the list os deleted candidates' do
+      it 'should have the list os deleted candidates' do
+        get :index, params: { object_name: 'candidates' }
+        expect(Candidate.only_deleted).to eq([deleted_candidate])
+      end
+
+      it 'should restore deleted candidate' do
+        delete :destroy, params: { object_name: 'candidates', id: deleted_candidate }
+        expect(Candidate.only_deleted.count).to eq 0
+        expect(Candidate.only_deleted).to eq([])
+        expect(assigns(:object).status).to eq 'Пассивен'
         expect(flash[:notice]).to eq 'Объект был успешно восстановлен.'
       end
     end
