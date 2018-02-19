@@ -24,7 +24,7 @@ FactoryGirl.define do
   end
   factory :deleted_candidate, parent: :candidate do
     deleted_at Time.now
-    status 'В Архиве'
+    status 'in_archive'
   end
 
 end
