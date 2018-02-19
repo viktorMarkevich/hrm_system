@@ -4,8 +4,7 @@ RSpec.describe CandidatesController, type: :controller do
 
   let(:user) { create(:user) }
   let(:candidate) { create(:candidate) }
-  let(:candidate_1) { create(:candidate, status: 'Пассивен') }
-  let(:candidate_2) { create(nil) }
+  let(:candidate_1) { create(:candidate, status: :passive) }
 
   before { sign_in user }
 
@@ -196,7 +195,6 @@ RSpec.describe CandidatesController, type: :controller do
 
     before do
       delete :destroy, params: { id: candidate }
-      delete :destroy, params: { id: candidate_2 }
     end
 
     it 'destroys candidate' do
