@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :cv_source do
     sequence(:name) { |n| "source#{n}" }

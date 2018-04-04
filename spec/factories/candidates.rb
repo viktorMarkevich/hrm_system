@@ -1,5 +1,5 @@
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :candidate do
     sequence(:name) { |n| "test_user#{n}" }

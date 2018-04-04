@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.4.0'
 
 gem 'rails', '5.0.3'
-gem 'pg'
+gem 'pg', '~> 0.21'
 gem 'uglifier', '>= 1.3.0'
 gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
@@ -58,7 +58,7 @@ end
 group :test do
   gem 'cucumber-rails', require: false
   gem 'capybara'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'simplecov', require: false
   gem 'database_cleaner'
   gem 'shoulda-matchers', require: false
