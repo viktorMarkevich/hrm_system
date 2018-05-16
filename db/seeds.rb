@@ -67,3 +67,5 @@ for i in  1..15 do
                   url: 'http://www.veloonline.com/view.shtml?id=8933',
                   description: 'Купить Шатуны Shimano FC-M361 ACERA 48/38/28 по хорошей цене в интернет-магазине VeloOnline.com, мы предлагаем широкий ассортимент Shimano и привлекательные цены на Шатуны для велосипеда.')
 end
+arr = ["full-stack", "front-end", "back-end", "ruby", "rails", "ror", "php", "python", "javascript", "html", "css", "js", "mysql", "postgresql", "mongodb", "linux", "macos", "mvc", "git", "ооп", "oop", "bootstrap", "scrum", "crm", "1c", "agile", "java", "yii", "wordpress", "svn", "jquery", "ajax", "xml", "json", "less", "sass", "redis", "memcached", "sphinx", "kohana", "zend", "codeigniter", "photoshop", "jade", "emmet", "word", "excel", "power point", "singleton", "factory", "composer", "highload", "silex", "cms", "apache", "nginx", "twig", "lamp", "xamp", "php-fpm", "fpm", "apc", "redmine", "sqlite", "angular", "react", "heroku", "test", "rspec", "restful", "api", "cucumber", "ansible", "sinatra", "amazon", "sql", "lisp", "prolog", "visio", "coreldraw", "internet"]
+arr.each{|a| ActsAsTaggableOn::Tag.create(name: a)}
