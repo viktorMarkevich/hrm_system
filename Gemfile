@@ -56,8 +56,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'cucumber-rails', require: false
-  gem 'capybara'
   gem 'factory_bot_rails'
   gem 'simplecov', require: false
   gem 'database_cleaner'
