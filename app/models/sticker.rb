@@ -11,4 +11,6 @@ class Sticker < ActiveRecord::Base
   validates :description, :user_id, presence: true
   validates :description, length: { maximum: 50, message: 'is too long' }
 
+  scope :not_blue, -> { where.not(bg_color: 'blue') }
+
 end
