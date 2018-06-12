@@ -4,7 +4,7 @@ RSpec.describe CandidatesController, type: :controller do
 
   let(:user) { create(:user) }
   let(:candidate) { create(:candidate) }
-  let(:candidate_1) { create(:candidate, status: 'Пассивен') }
+  let(:candidate_1) { create(:candidate, status: :passive) }
 
   before { sign_in user }
 
@@ -189,6 +189,20 @@ RSpec.describe CandidatesController, type: :controller do
         expect(response.content_type).to eq 'application/json'
         expect(candidate.original_cv_data).to eql('data')
       end
+    end
+  end
+  describe '#destroy' do
+
+    before do
+      delete :destroy, params: { id: candidate }
+    end
+
+    it 'destroys candidate' do
+      expect(Candidate.pluck(:id)).not_to include(candidate.id)
+    end
+
+    it 'redirects to candidate index page' do
+      expect(response).to redirect_to(candidates_path)
     end
   end
 

@@ -3,7 +3,6 @@ class CompaniesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_company, only: [:edit, :update, :show]
 
-
   def index
     @companies = Company.includes([ :candidates, :owner ]).order('id').page(params[:page]).per(10)
   end
@@ -20,11 +19,14 @@ class CompaniesController < ApplicationController
 
   def create
     @company = current_user.companies.build(company_params)
-    if @company.save
-      flash[:notice] = 'Компания была успешно создана.'
-      redirect_to companies_path
-    else
-      render 'new'
+    respond_to do |format|
+      if @company.save
+        format.html { redirect_to companies_path, notice: 'Компания была успешно создана.' }
+        format.json { render json: @company, status: :created }
+      else
+        format.html { render 'new' }
+        format.json { render json: {errors: @company.errors}, status: :unprocessable_entity }
+      end
     end
   end
 

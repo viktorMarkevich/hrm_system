@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :users, only: [ :update, :edit, :show, :index ]
   resources :vacancies
   resources :companies
-  resources :candidates, except: :destroy do
+  resources :candidates do
     member do
       get :set_vacancies
       put :update_resume

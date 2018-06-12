@@ -1,5 +1,5 @@
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :candidate do
     sequence(:name) { |n| "test_user#{n}" }
@@ -21,6 +21,10 @@ FactoryGirl.define do
     association :owner, factory: :user
     sequence(:source) { |n| "CV_ENG#{n}.docx" }
     city_of_residence 'Киев'
+  end
+  factory :deleted_candidate, parent: :candidate do
+    deleted_at Time.now
+    status 'in_archive'
   end
 
 end

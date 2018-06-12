@@ -1,5 +1,5 @@
 # coding: utf-8
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :vacancy do
     sequence(:name) { |n| "Вакансия_#{n}" }

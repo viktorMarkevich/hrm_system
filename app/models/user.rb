@@ -2,8 +2,6 @@ class User < ActiveRecord::Base
 
   POST = %w(Директор HR\ Менеджер Tester)
 
-  attr_accessor :current_user
-
   has_one :image
 
   has_many :vacancies

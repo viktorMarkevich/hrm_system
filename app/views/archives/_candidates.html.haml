@@ -19,6 +19,7 @@
             %th Регион
             %th Зарплата
             %th Ответственный
+            %th Действия
         %tbody
           - candidates.each do |candidate|
             %tr
@@ -27,6 +28,9 @@
               %td= candidate.city_of_residence
               %td= candidate.salary
               %td= full_name_for(candidate.owner)
+              %td.text-center
+                = link_to restore_object_path(id: candidate.id), method: :delete do
+                  %i.glyphicon.glyphicon-floppy-open
 .row
   .col-lg-3
     = paginate candidates

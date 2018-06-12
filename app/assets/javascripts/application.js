@@ -35,10 +35,10 @@ $(document).ready(function() {
 });
 
 $(document).ajaxError(function(event, xhr, options, exc) {
-    var er, errors, i, list;
-    errors = JSON.parse(xhr.responseText);
-    er = '<ul>';
-    i = 0;
+    var list;
+    var errors = JSON.parse(xhr.responseText);
+    var er = '<ul>';
+    var i = 0;
     while (i < errors.length) {
         list = errors[i];
         er += '<li>' + list + '</li>';
@@ -49,17 +49,20 @@ $(document).ajaxError(function(event, xhr, options, exc) {
 });
 
 $(document).ready(function() {
-    var extractLast, split;
+
     $('body').on('change', '#upload_resume_file', function() {
         return $(this).closest("form").submit();
     });
     $('.resume_upload').on('click', function() {
         return $('#upload_resume_file').click();
     });
-    split = function(val) {
+
+//search candidates by tags with autocomplete
+
+    var split = function(val) {
         return val.split(/,\s*/);
     };
-    extractLast = function(term) {
+    var extractLast = function(term) {
         return split(term).pop();
     };
     $('#tags').autocomplete({
@@ -82,8 +85,7 @@ $(document).ready(function() {
             return false;
         },
         select: function(event, ui) {
-            var terms;
-            terms = split(this.value);
+            var terms = split(this.value);
             terms.pop();
             terms.push(ui.item.value);
             jQuery.uniqueSort(terms);

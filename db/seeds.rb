@@ -11,20 +11,20 @@ Candidate.delete_all
 Company.delete_all
 StaffRelation.delete_all
 Event.delete_all
-# User.delete_all
+User.delete_all
 History.delete_all
 
-# User.create!([ { first_name: 'User',
-#                  last_name: 'Test',
-#                  email: 'user@mail.com',
-#                  phone: '0811111111',
-#                  skype: 'usertest',
-#                  password: '123456',
-#                  post: 'test',
-#                  region: Region::REGIONS.first,
-#                  reset_password_token: nil,
-#                  reset_password_sent_at: nil,
-#                  remember_created_at: nil, } ])
+User.create!([ { first_name: 'User',
+                 last_name: 'Test',
+                 email: 'user@mail.com',
+                 phone: '0811111111',
+                 skype: 'usertest',
+                 password: '123456',
+                 post: 'Директор',
+                 region: Region::REGIONS.first,
+                 reset_password_token: nil,
+                 reset_password_sent_at: nil,
+                 remember_created_at: nil, } ])
 
 for i in 1..10 do
   Vacancy.create( name: 'Программист руби' + i.to_s,
@@ -67,3 +67,5 @@ for i in  1..15 do
                   url: 'http://www.veloonline.com/view.shtml?id=8933',
                   description: 'Купить Шатуны Shimano FC-M361 ACERA 48/38/28 по хорошей цене в интернет-магазине VeloOnline.com, мы предлагаем широкий ассортимент Shimano и привлекательные цены на Шатуны для велосипеда.')
 end
+arr = ["full-stack", "front-end", "back-end", "ruby", "rails", "ror", "php", "python", "javascript", "html", "css", "js", "mysql", "postgresql", "mongodb", "linux", "macos", "mvc", "git", "ооп", "oop", "bootstrap", "scrum", "crm", "1c", "agile", "java", "yii", "wordpress", "svn", "jquery", "ajax", "xml", "json", "less", "sass", "redis", "memcached", "sphinx", "kohana", "zend", "codeigniter", "photoshop", "jade", "emmet", "word", "excel", "power point", "singleton", "factory", "composer", "highload", "silex", "cms", "apache", "nginx", "twig", "lamp", "xamp", "php-fpm", "fpm", "apc", "redmine", "sqlite", "angular", "react", "heroku", "test", "rspec", "restful", "api", "cucumber", "ansible", "sinatra", "amazon", "sql", "lisp", "prolog", "visio", "coreldraw", "internet"]
+arr.each{|a| ActsAsTaggableOn::Tag.create(name: a)}

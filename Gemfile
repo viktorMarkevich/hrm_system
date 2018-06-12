@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.4.0'
 
 gem 'rails', '5.0.3'
-gem 'pg'
+gem 'pg', '~> 0.21'
 gem 'uglifier', '>= 1.3.0'
 gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
@@ -39,6 +39,7 @@ gem 'wysiwyg-rails'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'rails-jquery-autocomplete'
 gem 'puma'
+gem 'selectize-rails'
 
 group :development do
   gem 'letter_opener'
@@ -55,9 +56,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'cucumber-rails', require: false
-  gem 'capybara'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'simplecov', require: false
   gem 'database_cleaner'
   gem 'shoulda-matchers', require: false

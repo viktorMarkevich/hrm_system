@@ -8,9 +8,10 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 
+FactoryBot.allow_class_lookup = false
 require 'rspec/rails'
 require 'capybara/rails'
-require 'factory_girl'
+require 'factory_bot'
 require 'database_cleaner'
 require 'shoulda/matchers'
 
@@ -47,7 +48,8 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
+
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Warden::Test::Helpers
 

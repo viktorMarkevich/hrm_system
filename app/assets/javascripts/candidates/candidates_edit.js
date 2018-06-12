@@ -23,7 +23,7 @@ $(document).ready(function() {
         $.ajax({
             url: $(this).attr('href'),
             data: {
-                original_cv_data: $('div.froala-editor').froalaEditor('html.get')
+                original_cv_data: $('div', froala_editor).froalaEditor('html.get')
             },
             type: 'PUT',
             dataType: 'json'

@@ -22,6 +22,7 @@
                   %br
                   = link_to 'В работе', candidates_path(status: 'В работе'), remote: true, class: "dropdown-item #{'active' if @status == 'В работе'}"
             %th Примечание
+            %th Действия
         %tbody
           - @candidates.each do |candidate|
             %tr
@@ -33,6 +34,9 @@
               %td= full_name_for(candidate.owner)
               %td= candidate.status
               %td= candidate.notice
+              %td.text-center
+                = link_to candidate , method: :delete do
+                  %i.glyphicon.glyphicon-remove
       .pull-right.export-to-file
         Экспортировать в:
         = link_to 'csv', candidates_path(format: :csv), class: 'export'

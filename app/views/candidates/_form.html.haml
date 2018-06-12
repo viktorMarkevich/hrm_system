@@ -2,7 +2,7 @@
 = javascript_include_tag 'candidates/candidates_form'
 = javascript_include_tag 'candidates/candidates'
 
-= form_for @candidate, html: { class: 'form-horizontal candidate-form' } do |f|
+= form_for @candidate, html: { class: 'form-horizontal' } do |f|
   - if @candidate.errors.any?
     %h2 Возникшие ошибки:
     %ul
@@ -67,8 +67,8 @@
     .col-sm-3.control-label
       = f.label :tag_list, 'Навыки:'
     .col-sm-9
-      = f.text_field :tag_list, required: 'true', value: @candidate.tag_list.to_s, class: 'form-control',
-                                id: 'tags', data: { autocomplete_source: searches_path }
+      = f.text_field :tag_list, required: 'true', class: 'form-control', id: 'tags', value: @candidate.tag_list.to_s,
+                                data: { autocomplete_source: searches_path }
   .form-group
     .col-sm-3.control-label
       = f.label :education, 'Образование:'
@@ -119,9 +119,9 @@
         %p Мои компании:
   .form-group
     .col-sm-3.control-label
-      = f.label :company_id, 'Компания:'
+      = f.label :company_ids, 'Компании:'
     .col-sm-9
-      = f.select(:company_id, @companies.presence || '', {}, class: 'form-control')
+      = f.select :company_ids, @companies, {}, { multiple: true, class: 'selectize' }
 
   %hr
 
@@ -167,3 +167,16 @@
     .col-sm-12
       = f.submit @candidate.new_record? ? 'Создать' : 'Обновить', class: 'btn paranoid_btn'
       = link_to 'Назад', :back, class: 'btn paranoid_btn'
+
+-# modal for add new company if candidate have not company
+
+.modal.fade.company-modal{ aria: { labelledby: 'myModalLabel' }, role: 'dialog', tabindex: '-1' }
+  .modal-dialog.modal-md{ role: 'document' }
+    .modal-content
+      .modal-header
+        %button.close{ aria: { label: 'Close' }, data: { dismiss: 'modal' }, type: 'button' }
+          %span{ aria: { hidden: 'true' } } ×
+        %h4#myModalLabel.modal-title Добавить новую компанию
+      .modal-body
+        = render partial: 'companies/form', locals: { company: @company, format: :json }
+        -#%button.btn.btn-default{type: 'button', data: { dismiss: 'modal' } } Назад

@@ -2,13 +2,15 @@
 class CandidatesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :find_candidate, only: [ :show, :edit, :update, :set_vacancies, :update_resume ]
-  before_action :set_companies, only: [ :new, :edit ]
+  before_action :find_candidate, only: %i[show edit update set_vacancies update_resume destroy]
+  before_action :set_companies, only: %i[new edit update]
+  before_action :set_company, only: %i[edit update]
 
   def index
     @status = params[:status]
     if params[:tags]
-      @candidates = Candidate.preload(:owner).tagged_with(params[:tags], any: true).where('name ILIKE ?', "%#{params[:term]}%").page(params[:page]).per(10)
+      @candidates = Candidate.preload(:owner).tagged_with(params[:tags], any: true).where('name ILIKE ?', "%#{params[:term]}%")
+                             .page(params[:page]).per(10)
     else
       @candidates = Candidate.preload(:owner).where(filter_condition).order('id').page(params[:page]).per(10)
     end
@@ -29,6 +31,7 @@ class CandidatesController < ApplicationController
 
   def new
     @candidate = Candidate.new
+    @company = Company.new
   end
 
   def show
@@ -37,12 +40,13 @@ class CandidatesController < ApplicationController
   end
 
   def edit
+    @company = Company.new
   end
 
   def create
     CvSource.find_or_create_by(name: candidate_params[:source])
     @candidate = current_user.candidates.build(candidate_params)
-    if @candidate.save!
+    if @candidate.save
       @candidate.reload
       flash[:success] = 'Кандидат был успешно добавлен.'
       redirect_to candidates_path
@@ -53,6 +57,7 @@ class CandidatesController < ApplicationController
   end
 
   def update
+    @company = Company.new
     if @candidate.update(candidate_params)
       flash[:notice] = 'Запись успешно обновлена.'
       redirect_to candidate_path(@candidate)
@@ -98,16 +103,30 @@ class CandidatesController < ApplicationController
     end
   end
 
+  def destroy
+    unless @candidate.nil?
+      @candidate.destroy
+      respond_to do |format|
+        format.html { redirect_to candidates_url, notice: 'Кандидаты успешно удалено.' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
   private
+  def set_company
+    @company = @candidate.companies.pluck(:name)
+  end
+
   def set_companies
     @companies = Company.get_company_name
   end
 
   def candidate_params
     params.require(:candidate).permit(:name, :birthday, :salary, :salary_format, :notice, :education, :languages,
-                                      :city_of_residence, :company_id, :ready_to_relocate, :desired_position, :status,
-                                      :source, :description, :email, :phone, :linkedin, :facebook, :vkontakte, :google_plus,
-                                      :full_info, :skype, :home_page, :file_name, :tag_list)
+                                      :city_of_residence, :ready_to_relocate, :desired_position, :status, :source,
+                                      :description, :email, :phone, :linkedin, :facebook, :vkontakte, :google_plus,
+                                      :full_info, :skype, :home_page, :file_name, :tag_list, company_ids: [])
   end
 
   def find_candidate

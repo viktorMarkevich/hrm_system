@@ -2,6 +2,24 @@ require 'rails_helper'
 
 RSpec.describe Sticker, type: :model do
 
+  context 'when return not_blue color'do
+    let(:red_sticker) { create :sticker, bg_color: 'red' }
+    let(:yellow_sticker) { create :sticker, bg_color: 'yellow' }
+    let(:blue_sticker) { create :sticker, bg_color: 'blue' }
+
+    before do
+      red_sticker.reload
+      yellow_sticker.reload
+      blue_sticker.reload
+    end
+
+    it 'should return object  color' do
+      not_blue = Sticker.not_blue
+      expect(not_blue.count).to eq 2
+      expect(not_blue.pluck(:bg_color)).to_not include('blue')
+    end
+  end
+
   context 'check validations' do
     context 'when valid'do
       it 'has valid factory' do

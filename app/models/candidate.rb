@@ -2,7 +2,6 @@
 class Candidate < ActiveRecord::Base
 
   acts_as_taggable
-
   acts_as_paranoid
   include Support
 
@@ -14,7 +13,6 @@ class Candidate < ActiveRecord::Base
   STATUSES = %w(Пассивен В\ работе)
 
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
-  belongs_to :company, counter_cache: true
   belongs_to :geo_name, counter_cache: true
 
   has_one :image
@@ -22,6 +20,8 @@ class Candidate < ActiveRecord::Base
   has_many :staff_relations, dependent: :destroy
   has_many :vacancies, through: :staff_relations, source: :vacancy
   has_many :histories, as: :historyable
+
+  has_and_belongs_to_many :companies, counter_cache: true
 
   accepts_nested_attributes_for :image
 
