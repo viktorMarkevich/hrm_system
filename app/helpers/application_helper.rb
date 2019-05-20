@@ -8,6 +8,10 @@ module ApplicationHelper
     "#{full_name_for(object.owner)} #{object.created_at.strftime('%F')}"
   end
 
+  def full_name_for(user)
+    user.present? ? "#{user.first_name} #{user.last_name}" : 'Нет'
+  end
+
   def get_date_when_added(object)
     object.created_at.strftime('%F')
   end

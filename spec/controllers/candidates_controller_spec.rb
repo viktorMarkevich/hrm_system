@@ -4,7 +4,7 @@ RSpec.describe CandidatesController, type: :controller do
 
   let(:user) { create(:user) }
   let(:candidate) { create(:candidate) }
-  let(:candidate_1) { create(:candidate, status: :passive) }
+  let(:candidate_1) { create(:candidate, status: 'Пассивен') }
 
   before { sign_in user }
 
