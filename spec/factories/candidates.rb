@@ -4,8 +4,8 @@ FactoryBot.define do
   factory :candidate do
     sequence(:name) { |n| "test_user#{n}" }
     birthday '06-12-2015'
-    salary '300-500 USD'
-    # salary_format 'usd'
+    salary '300'
+    salary_format 'usd'
     education 'Oxford'
     languages 'Английский, Русский'
     ready_to_relocate 'yes'
