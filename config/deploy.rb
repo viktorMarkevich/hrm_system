@@ -35,9 +35,6 @@ set :use_sudo, false
 # Default value for keep_releases is 5
 set :keep_releases, 3
 
-set :puma_jungle_conf, '/etc/puma.conf'
-set :puma_run_path, '/usr/local/bin/run-puma'
-
 namespace :deploy do
   task :any_task do #здесь можно размещать любые таски, которые нужно запустить в той или иной среде
     on "#{fetch(:user)}@192.168.115.251" do

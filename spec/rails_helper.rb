@@ -10,12 +10,9 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 
 FactoryBot.allow_class_lookup = false
 require 'rspec/rails'
-require 'capybara/rails'
 require 'factory_bot'
 require 'database_cleaner'
 require 'shoulda/matchers'
-
-include CapybaraHelpers
 
 ActiveRecord::Migration.maintain_test_schema!
 
