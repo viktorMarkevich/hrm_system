@@ -19,7 +19,7 @@ RSpec.describe OrganizersHelper, type: :helper do
     context 'set_action_for' do
       it 'method set_action_for VACATION' do
         #temp
-        expect(helper.set_action_for(history)).to eq("<span class=\"translation_missing\" title=\"translation missing: ru.history.vacancy.notice, object_name: &lt;a href=&quot;http://test.host/vacancies/#{vacancy.id}&quot;&gt;Вакансия_#{vacancy.id}&lt;/a&gt;\">Notice</span>")
+        expect(helper.set_action_for(history)).to eq("<span class=\"translation_missing\" title=\"translation missing: ru.history.vacancy.notice, object_name: &lt;a href=&quot;http://test.host/vacancies/#{history.historyable.id}&quot;&gt;Вакансия_#{history.historyable.id}&lt;/a&gt;\">Notice</span>")
       end
 
       it 'method set_action_for STAFF_RELATION' do
@@ -30,6 +30,7 @@ RSpec.describe OrganizersHelper, type: :helper do
 
     context 'set_status_for' do
       it 'method set_status_for' do
+        #temp
         expect(helper.set_status_for(history_sr)).to eq("<span class=\"translation_missing\" title=\"translation missing: ru.activerecord.attributes.staff_relation.salary\">Salary</span><span class=\"translation_missing\" title=\"translation missing: ru.history.staff_relation.changes, val_from: 550, val_to: 100\">Changes</span>")
       end
     end
