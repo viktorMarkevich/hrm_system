@@ -2,7 +2,7 @@ class StaffRelationsController < ApplicationController
 
   # skip_before_filter :verify_authenticity_token
   # before_action :authenticate_user!
-  include VacancyHelper
+  include VacanciesHelper
 
   def new
     @vacancy = Vacancy.find(params[:vacancy_id]) || Vacancy.only_deleted.where(id: params[:vacancy_id])
