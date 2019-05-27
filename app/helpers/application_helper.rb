@@ -21,13 +21,13 @@ module ApplicationHelper
   end
 
   def return_upcoming_events(event)   # ?????????????/
-    "&nbsp; c #{link_to 'Ланистер', candidate_path('#')} на
+    "&nbsp; c #{link_to 'Ланистер', candidate_path(event.staff_relation.candidate.id)} на
      <div class= 'label label-info'>#{event.will_begin_at.strftime('%e %b %H:%M')}</div>
-     на должность #{link_to 'Рубист', vacancy_path('#')}".html_safe
+     на должность #{link_to 'Рубист', vacancy_path(event.staff_relation.vacancy.id)}".html_safe
   end
 
-  def return_status_label(sr)
-    case sr.status
+  def return_status_label(status)
+    case status
       when 'Найденные'
         'default'
       when 'Отобранные'

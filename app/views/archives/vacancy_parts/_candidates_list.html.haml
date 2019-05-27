@@ -15,7 +15,8 @@
             %span.label.label-info
               = candidate.updated_at.strftime('%F в %I:%M')
           %td
-            %span.label{ class: "label-#{return_status_label(StaffRelation.where(vacancy_id: vacancy, candidate_id: candidate).first)}" }
+            -# todo fix n+1 error
+            %span.label{ class: "label-#{return_status_label(StaffRelation.where(vacancy_id: vacancy, candidate_id: candidate).first.status)}"}
               = candidate.status_for_vacancy(vacancy)
 - else
   %p

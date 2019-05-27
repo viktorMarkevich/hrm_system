@@ -25,7 +25,7 @@
                   %p{ style: 'font-size: 14px' }
                     Имеет статус
                     &nbsp;
-                    %span{ class: "label label-#{return_status_label(sr)}" }
+                    %span{ class: "label label-#{return_status_label(sr.status)}" }
                       = sr.status
                     &nbsp;
                     для вакансии
