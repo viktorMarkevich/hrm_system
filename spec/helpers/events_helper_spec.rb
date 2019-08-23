@@ -6,11 +6,15 @@ RSpec.describe EventsHelper, type: :helper do
   let(:vacancy) { create :vacancy, user_id: user.id }
   let(:candidate) { create :candidate, user_id: user.id }
   let!(:staff_relation) { create :staff_relation, vacancy_id: vacancy.id, candidate_id: candidate.id }
-
+  let(:month) do { 1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель', 5 => 'Май', 6 => 'Июнь',
+                   7 => 'Июль', 8 => 'Август', 9 => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декарь' }
+  end
+  let(:time) {Time.zone.now.utc + 10.hours + 12.minutes}
+  let(:numb) {time.month}
   # let(:history) { create :history, historyable_type: 'Vacancy', historyable_id: vacancy.id }
   #
   # let(:history_sr) { create :history, historyable_type: 'StaffRelation', historyable_id: staff_relation.id, was_changed: { "salary"=>"[\"550\", \"100\"]" } }
-  let!(:event) do  create :event, name: 'fdfdf', will_begin_at: (Time.zone.now.utc + 10.hours + 12.minutes).round.iso8601(0),
+  let!(:event) do  create :event, name: 'fdfdf', will_begin_at: time.round.iso8601(0),
                           description: 'description', user_id: user.id, staff_relation_id: staff_relation.id
   end
 
@@ -22,15 +26,15 @@ RSpec.describe EventsHelper, type: :helper do
 
     context 'method set_events_list_title' do
       it 'date is nil' do
-        expect(helper.set_events_list_title([event])).to eq('Список предстоящих событий за Май')
+        expect(helper.set_events_list_title([event])).to eq("Список предстоящих событий за #{month[numb]}")
       end
 
       it 'date is "Time.zone.now.utc + 10.hours"' do
-        expect(helper.set_events_list_title([event], (Time.zone.now.utc))).to eq('Список предстоящих событий за Май')
+        expect(helper.set_events_list_title([event], (Time.zone.now.utc))).to eq("Список предстоящих событий за #{month[numb]}")
       end
 
       it 'events are nil' do
-        expect(helper.set_events_list_title([], (Time.zone.now.utc))).to eq('Список предстоящих событий за Май пуст')
+        expect(helper.set_events_list_title([], (Time.zone.now.utc))).to eq("Список предстоящих событий за #{month[numb]} пуст")
       end
 
       it 'date and event are nil' do
