@@ -18,19 +18,19 @@ RSpec.describe OrganizersHelper, type: :helper do
 
     context 'set_action_for' do
       it 'method set_action_for VACATION' do
-        #temp
+        pending
         expect(helper.set_action_for(history)).to eq("<span class=\"translation_missing\" title=\"translation missing: ru.history.vacancy.notice, object_name: &lt;a href=&quot;http://test.host/vacancies/#{history.historyable.id}&quot;&gt;Вакансия_#{history.historyable.id}&lt;/a&gt;\">Notice</span>")
       end
 
       it 'method set_action_for STAFF_RELATION' do
-        #temp
+        pending
         expect(helper.set_action_for(history_sr)).to eq("<span class=\"translation_missing\" title=\"translation missing: ru.history.staff_relation.notice, vacancy_name: &lt;a href=&quot;/vacancies/#{history_sr.historyable.vacancy.id}&quot;&gt;Вакансия_#{history_sr.historyable.vacancy.id}&lt;/a&gt;, candidate_name: &lt;a href=&quot;/candidates/#{history_sr.historyable.candidate.id}&quot;&gt;#{history_sr.historyable.candidate.name}&lt;/a&gt;\">Notice</span>")
       end
     end
 
     context 'set_status_for' do
       it 'method set_status_for' do
-        #temp
+        pending
         expect(helper.set_status_for(history_sr)).to eq("<span class=\"translation_missing\" title=\"translation missing: ru.activerecord.attributes.staff_relation.salary\">Salary</span><span class=\"translation_missing\" title=\"translation missing: ru.history.staff_relation.changes, val_from: 550, val_to: 100\">Changes</span>")
       end
     end

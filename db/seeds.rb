@@ -13,6 +13,7 @@ StaffRelation.delete_all
 Event.delete_all
 User.delete_all
 History.delete_all
+AdminUser.delete_all
 
 User.create!([ { first_name: 'User',
                  last_name: 'Test',
@@ -69,3 +70,4 @@ for i in  1..15 do
 end
 arr = ["full-stack", "front-end", "back-end", "ruby", "rails", "ror", "php", "python", "javascript", "html", "css", "js", "mysql", "postgresql", "mongodb", "linux", "macos", "mvc", "git", "ооп", "oop", "bootstrap", "scrum", "crm", "1c", "agile", "java", "yii", "wordpress", "svn", "jquery", "ajax", "xml", "json", "less", "sass", "redis", "memcached", "sphinx", "kohana", "zend", "codeigniter", "photoshop", "jade", "emmet", "word", "excel", "power point", "singleton", "factory", "composer", "highload", "silex", "cms", "apache", "nginx", "twig", "lamp", "xamp", "php-fpm", "fpm", "apc", "redmine", "sqlite", "angular", "react", "heroku", "test", "rspec", "restful", "api", "cucumber", "ansible", "sinatra", "amazon", "sql", "lisp", "prolog", "visio", "coreldraw", "internet"]
 arr.each{|a| ActsAsTaggableOn::Tag.create(name: a)}
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
