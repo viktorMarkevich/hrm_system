@@ -7,7 +7,7 @@ RSpec.describe EventsHelper, type: :helper do
   let(:candidate) { create :candidate, user_id: user.id }
   let!(:staff_relation) { create :staff_relation, vacancy_id: vacancy.id, candidate_id: candidate.id }
   let(:month) do { 1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель', 5 => 'Май', 6 => 'Июнь',
-                   7 => 'Июль', 8 => 'Август', 9 => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декарь' }
+                   7 => 'Июль', 8 => 'Август', 9 => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декабрь' }
   end
   let(:time) {Time.zone.now.utc + 10.hours + 12.minutes}
   let(:numb) {time.month}
