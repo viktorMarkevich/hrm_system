@@ -396,6 +396,7 @@ DEPENDENCIES
   axlsx_rails
   bootstrap-sass
   bootstrap3-datetimepicker-rails (~> 4.17.47)
+  bundler (= 1.17.3)
   cancancan (~> 1.10)
   capistrano (~> 3.6)
   capistrano-bundler
@@ -441,7 +442,7 @@ DEPENDENCIES
   wysiwyg-rails
 
 RUBY VERSION
-   ruby 2.4.0p0
+   ruby 2.5.1p57
 
 BUNDLED WITH
-   2.2.3
+   1.17.3

@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.4.0'
+ruby '2.5.1'
 
+gem 'bundler', '1.17.3'
 gem 'rails', '5.0.3'
 gem 'pg', '~> 0.21'
 gem 'uglifier', '>= 1.3.0'
